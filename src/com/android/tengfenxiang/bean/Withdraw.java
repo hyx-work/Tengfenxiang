@@ -1,5 +1,7 @@
 package com.android.tengfenxiang.bean;
 
+import java.util.List;
+
 /**
  * 提现记录实体类
  * @author ccz
@@ -7,72 +9,84 @@ package com.android.tengfenxiang.bean;
  */
 public class Withdraw {
 
-	/**
-	 * 记录id
-	 */
-	private int id;
+	private List<record> records;
 
-	/**
-	 * 请求的时间
-	 */
-	private String requestTime;
-
-	/**
-	 * 提现的金额
-	 */
-	private float requestPoints;
-
-	/**
-	 * 审核状态
-	 * isPermitted为0表示未审核
-	 * isPermitted为-1为审核不通过
-	 * isPermitted为1表示审核通过
-	 */
-	private int isPermitted;
-
-	/**
-	 * isPermitted为1的时候isWithdraw代表是否提现
-	 */
-	private int isWithdraw;
-
-	public int getId() {
-		return id;
+	public List<record> getRecords() {
+		return records;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setRecords(List<record> records) {
+		this.records = records;
 	}
 
-	public String getRequestTime() {
-		return requestTime;
-	}
+	public static class record {
+		/**
+		 * 记录id
+		 */
+		private int id;
 
-	public void setRequestTime(String requestTime) {
-		this.requestTime = requestTime;
-	}
+		/**
+		 * 请求的时间
+		 */
+		private String requestTime;
 
-	public float getRequestPoints() {
-		return requestPoints;
-	}
+		/**
+		 * 提现的金额
+		 */
+		private float requestPoints;
 
-	public void setRequestPoints(float requestPoints) {
-		this.requestPoints = requestPoints;
-	}
+		/**
+		 * 审核状态
+		 * isPermitted为0表示未审核
+		 * isPermitted为-1为审核不通过
+		 * isPermitted为1表示审核通过
+		 */
+		private int isPermitted;
 
-	public int getIsPermitted() {
-		return isPermitted;
-	}
+		/**
+		 * isPermitted为1的时候isWithdraw代表是否提现
+		 */
+		private int isWithdraw;
 
-	public void setIsPermitted(int isPermitted) {
-		this.isPermitted = isPermitted;
-	}
+		public int getId() {
+			return id;
+		}
 
-	public int getIsWithdraw() {
-		return isWithdraw;
-	}
+		public void setId(int id) {
+			this.id = id;
+		}
 
-	public void setIsWithdraw(int isWithdraw) {
-		this.isWithdraw = isWithdraw;
+		public String getRequestTime() {
+			return requestTime;
+		}
+
+		public void setRequestTime(String requestTime) {
+			this.requestTime = requestTime;
+		}
+
+		public float getRequestPoints() {
+			return requestPoints;
+		}
+
+		public void setRequestPoints(float requestPoints) {
+			this.requestPoints = requestPoints;
+		}
+
+		public int getIsPermitted() {
+			return isPermitted;
+		}
+
+		public void setIsPermitted(int isPermitted) {
+			this.isPermitted = isPermitted;
+		}
+
+		public int getIsWithdraw() {
+			return isWithdraw;
+		}
+
+		public void setIsWithdraw(int isWithdraw) {
+			this.isWithdraw = isWithdraw;
+		}
 	}
 
 }

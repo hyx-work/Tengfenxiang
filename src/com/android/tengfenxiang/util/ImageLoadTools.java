@@ -52,7 +52,7 @@ public class ImageLoadTools {
 	/**
 	 * 清除内存缓存
 	 */
-	public void clearMemoryCache() {
+	public static void clearMemoryCache() {
     	ImageLoader.getInstance().clearMemoryCache();
 	}
 

@@ -15,4 +15,12 @@ public class MainApplication extends Application {
 		// 初始化ImageLoader对象
 		ImageLoadTools.initImageLoader(getApplicationContext());
 	}
+
+	@Override
+	public void onLowMemory() {
+		// TODO Auto-generated method stub
+		super.onLowMemory();
+		// 内存不足时清除缓存
+		ImageLoadTools.clearMemoryCache();
+	}
 }

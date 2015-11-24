@@ -53,6 +53,7 @@ public final class R {
         public static final int app_name=0x7f060000;
         public static final int clear_cache_success=0x7f060003;
         public static final int hello_world=0x7f060001;
+        public static final int unknown_error=0x7f06000a;
         public static final int xlistview_footer_hint_normal=0x7f060008;
         public static final int xlistview_footer_hint_ready=0x7f060009;
         public static final int xlistview_header_hint_loading=0x7f060006;

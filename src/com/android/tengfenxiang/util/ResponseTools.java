@@ -3,9 +3,8 @@ package com.android.tengfenxiang.util;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.android.tengfenxiang.R;
+import com.alibaba.fastjson.JSON;
 import com.android.tengfenxiang.bean.ResponseResult;
-import com.google.gson.Gson;
 
 /**
  * 处理通用响应
@@ -16,26 +15,33 @@ import com.google.gson.Gson;
 public class ResponseTools {
 
 	/**
-	 * 处理通用响应
+	 * 处理服务器返回的响应信息
 	 * 
 	 * @param context
-	 * @param response
+	 * @param response 响应的json字符串
+	 * @param bean 返回结果的类类型
+	 * @return
 	 */
-	public static void handleCommonResponse(Context context, String response) {
-		Gson gson = new Gson();
-		ResponseResult result = gson.fromJson(response, ResponseResult.class);
+	@SuppressWarnings("unchecked")
+	public static Object handleResponse(Context context, String response,
+			@SuppressWarnings("rawtypes") Class bean) {
 
-		// 如果不包含data属性则提示未知错误
+		// 解析返回结果，取出code和data字段
+		ResponseResult result = JSON.parseObject(response, ResponseResult.class);
+
+		// 如果data字段为空则直接返回
 		if (null == result.getData()) {
-			Toast.makeText(context,
-					context.getResources().getString(R.string.unknown_error),
-					Toast.LENGTH_SHORT).show();
+			return null;
 		}
-		// 直接显示服务器返回的错误信息
-		else {
-			Toast.makeText(context, result.getData().toString(),
-					Toast.LENGTH_SHORT).show();
-		}
-	}
 
+		String data = result.getData().toString();
+		// 如果返回的code=200，说明没有错误，需要取出data信息
+		if (200 == result.getCode()) {
+			return JSON.parseObject(data, bean);
+		}
+
+		// 提示错误信息
+		Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
+		return null;
+	}
 }

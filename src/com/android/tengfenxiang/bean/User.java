@@ -10,12 +10,12 @@ public class User {
 	/**
 	 * 用户的id
 	 */
-	private int userId;
+	private int id;
 
 	/**
 	 * 用户昵称
 	 */
-	private String nickname;
+	private String nickName;
 
 	/**
 	 * 手机号码
@@ -27,6 +27,9 @@ public class User {
 	 */
 	private String alipay;
 
+	/**
+	 * 头像URL地址
+	 */
 	private String avatar;
 
 	/**
@@ -64,20 +67,20 @@ public class User {
 	 */
 	private String inviteCode;
 
-	public int getUserId() {
-		return userId;
+	public int getId() {
+		return id;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getPhone() {

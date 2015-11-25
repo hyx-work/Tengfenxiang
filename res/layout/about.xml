@@ -8,10 +8,38 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000000"
+        android:background="@color/title_bar_color"
         android:gravity="center_vertical"
         titlebar:title="@string/about_app"
         titlebar:titleLeftImg="@drawable/left_arrow"
         titlebar:titleTextColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_launcher" />
+
+    <ListView
+        android:id="@+id/link_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/logo"
+        android:layout_marginTop="60dp" >
+    </ListView>
+    
+    <ListView
+        android:id="@+id/simple_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/link_list"
+        android:layout_marginTop="25dp" >
+    </ListView>
 
 </RelativeLayout>

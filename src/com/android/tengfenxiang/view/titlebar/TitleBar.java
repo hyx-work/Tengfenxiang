@@ -44,7 +44,7 @@ public class TitleBar extends RelativeLayout {
 				R.styleable.TitleBar);
 		titleText = array.getString(R.styleable.TitleBar_title);
 		titleTextColor = array.getColor(R.styleable.TitleBar_titleTextColor,
-				0xFFFFFF);
+				R.color.white);
 		titleTextSize = array.getDimension(R.styleable.TitleBar_titleTextSize,
 				20);
 		leftImage = array.getDrawable(R.styleable.TitleBar_titleLeftImg);
@@ -124,6 +124,7 @@ public class TitleBar extends RelativeLayout {
 
 	public void setTitleText(String titleText) {
 		this.titleText = titleText;
+		titleTextView.setText(titleText);
 	}
 
 	public int getTitleTextColor() {

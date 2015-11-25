@@ -8,63 +8,18 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#000000"
+        android:background="@color/title_bar_color"
         android:gravity="center_vertical"
         titlebar:title="@string/my_subordinate"
         titlebar:titleLeftImg="@drawable/left_arrow"
         titlebar:titleTextColor="@color/white" />
 
-    <TextView
-        android:id="@+id/subordinate_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/title_bar"
-        android:padding="10dp"
-        android:textSize="18sp"
-        android:text="@string/my_subordinate_count" />
-
-    <TextView
-        android:id="@+id/number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/title_bar"
-        android:padding="10dp"
-        android:textSize="18sp"
-        android:text="@string/people" />
-
-    <View
-        android:id="@+id/line"
+    <ListView
+        android:id="@+id/subordinate_info"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/number"
-        android:background="@color/black" />
-
-    <TextView
-        android:id="@+id/subordinate_profit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/line"
-        android:padding="10dp"
-        android:textSize="18sp"
-        android:text="@string/my_subordinate_points"  />
-
-    <TextView
-        android:id="@+id/profit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/line"
-        android:padding="10dp"
-        android:textSize="18sp"
-        android:text="@string/yuan"  />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/profit"
-        android:background="@color/black" />
+        android:layout_below="@id/title_bar" >
+    </ListView>
 
 </RelativeLayout>

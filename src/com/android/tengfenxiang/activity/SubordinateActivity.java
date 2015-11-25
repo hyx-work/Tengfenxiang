@@ -1,6 +1,9 @@
 package com.android.tengfenxiang.activity;
 
+import java.util.ArrayList;
+
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.adapter.SimpleListAdapter;
 import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.Subordinate;
 import com.android.tengfenxiang.bean.User;
@@ -17,7 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class SubordinateActivity extends Activity {
@@ -25,8 +28,7 @@ public class SubordinateActivity extends Activity {
 	private Subordinate subordinate;
 	private User currentUser;
 
-	private TextView numberTextView;
-	private TextView profitTextView;
+	private ListView subordinateListView;
 	private TitleBar titleBar;
 	private LoadingDialog dialog;
 
@@ -45,20 +47,27 @@ public class SubordinateActivity extends Activity {
 	}
 
 	private void initView() {
-		numberTextView = (TextView) findViewById(R.id.number);
-		profitTextView = (TextView) findViewById(R.id.profit);
+		subordinateListView = (ListView) findViewById(R.id.subordinate_info);
+		ArrayList<String> infos = new ArrayList<String>();
+		infos.add(getString(R.string.my_subordinate_count));
+		infos.add(getString(R.string.my_subordinate_points));
 
-		String count = subordinate.getSubordinateCount() + numberTextView.getText().toString();
-		numberTextView.setText(count);
-		String profit = subordinate.getSubordinatePoints() + profitTextView.getText().toString();
-		profitTextView.setText(profit);
+		ArrayList<String> values = new ArrayList<String>();
+		values.add(subordinate.getSubordinateCount()
+				+ getString(R.string.people));
+		values.add(subordinate.getSubordinatePoints()
+				+ getString(R.string.yuan));
+
+		SimpleListAdapter adapter = new SimpleListAdapter(
+				SubordinateActivity.this, infos, values);
+		subordinateListView.setAdapter(adapter);
 
 		titleBar = (TitleBar) findViewById(R.id.title_bar);
 		titleBar.setOnClickListener(new OnTitleClickListener() {
 
 			@Override
 			public void OnClickRight() {
-				
+
 			}
 
 			@Override
@@ -69,7 +78,7 @@ public class SubordinateActivity extends Activity {
 	}
 
 	private void getSubordinate(int userId) {
-		String url = Constant.SUBORDINATE_URL + "?userId="+ userId;
+		String url = Constant.SUBORDINATE_URL + "?userId=" + userId;
 
 		// 请求成功的回调函数
 		Listener<String> listener = new Listener<String>() {
@@ -78,7 +87,7 @@ public class SubordinateActivity extends Activity {
 				subordinate = (Subordinate) ResponseTools.handleResponse(
 						getApplicationContext(), response, Subordinate.class);
 				initView();
-				if(dialog.isShowing()) {
+				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
 			}
@@ -87,12 +96,11 @@ public class SubordinateActivity extends Activity {
 		ErrorListener errorListener = new ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				if(dialog.isShowing()) {
+				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(),
-						getString(R.string.unknow_error), Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(getApplication(), R.string.unknow_error,
+						Toast.LENGTH_SHORT).show();
 			}
 		};
 

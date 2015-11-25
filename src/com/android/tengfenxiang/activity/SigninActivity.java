@@ -122,7 +122,7 @@ public class SigninActivity extends Activity {
 				signinStatus = (SigninStatus) ResponseTools.handleResponse(
 						getApplication(), response, SigninStatus.class);
 				initView();
-				if(dialog.isShowing()) {
+				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
 			}
@@ -131,12 +131,11 @@ public class SigninActivity extends Activity {
 		ErrorListener errorListener = new ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				if(dialog.isShowing()) {
+				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(),
-						getString(R.string.unknow_error), Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(getApplication(), R.string.unknow_error,
+						Toast.LENGTH_SHORT).show();
 			}
 		};
 
@@ -156,24 +155,22 @@ public class SigninActivity extends Activity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				if(dialog.isShowing()) {
+				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(),
-						getString(R.string.signin_success), Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(getApplication(), R.string.signin_success,
+						Toast.LENGTH_SHORT).show();
 			}
 		};
 		// 请求失败的回调函数
 		ErrorListener errorListener = new ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				if(dialog.isShowing()) {
+				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(),
-						getString(R.string.unknow_error), Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(getApplication(), R.string.unknow_error,
+						Toast.LENGTH_SHORT).show();
 			}
 		};
 		StringRequest stringRequest = new StringRequest(Method.POST, url,

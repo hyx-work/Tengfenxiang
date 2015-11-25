@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:titlebar="http://schemas.android.com/apk/res/com.android.tengfenxiang"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.android.tengfenxiang.view.titlebar.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_bar_color"
+        android:gravity="center_vertical"
+        titlebar:title="@string/person_info"
+        titlebar:titleLeftImg="@drawable/left_arrow"
+        titlebar:titleTextColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/user_head"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_bar" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:padding="10dp"
+            android:text="@string/user_head"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/user_head"
+            android:paddingRight="15dp"
+            android:src="@drawable/ic_launcher" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/head"
+            android:background="@color/line_color" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/person_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/user_head"
+        android:layout_marginTop="20dp" >
+    </ListView>
+
+</RelativeLayout>

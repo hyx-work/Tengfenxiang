@@ -21,11 +21,30 @@
 
     <string name="system_message">系统消息</string>
 
-    <string name="feedback">问题反馈</string>
+    
 
     <string name="about_app">关于腾分享</string>
+    <string name="function_introduction">功能介绍</string>
+    <string name="help_center">帮助中心</string>
+    <string name="feedback">问题反馈</string>
+    <string name="score">评&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;分</string>
+    <string name="qq_group">QQ群</string>
+    <string name="contact_phone">客服电话</string>
+    <string name="copy_success">已复制到剪贴板</string>
+    <string name="no_app_market">没有找到应用市场</string>
 
     <string name="withdraw_records">已提现</string>
+
+    <string name="person_info">个人资料</string>
+    <string name="user_head">用户头像</string>
+    <string name="phone_number">手机号码</string>
+    <string name="wechat_account">微&#160;&#8201;信&#160;&#8201;号</string>
+    <string name="nickname">昵&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;称</string>
+    <string name="gender">性&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;别</string>
+    <string name="place">地&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;区</string>
+    <string name="alipay_account">支&#160;&#8201;付&#160;&#8201;宝</string>
+    <string name="invite_code">邀&#160;&#8201;请&#160;&#8201;码</string>
+    <string name="invite_others">我要邀请</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

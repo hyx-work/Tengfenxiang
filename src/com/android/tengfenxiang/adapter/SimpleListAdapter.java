@@ -13,10 +13,13 @@ import android.widget.TextView;
 public class SimpleListAdapter extends BaseAdapter {
 
 	private List<String> infos;
+	private List<String> values;
 	private Activity context;
 
-	public SimpleListAdapter(Activity context, List<String> infos) {
+	public SimpleListAdapter(Activity context, List<String> infos,
+			List<String> values) {
 		this.infos = infos;
+		this.values = values;
 		this.context = context;
 	}
 
@@ -42,9 +45,10 @@ public class SimpleListAdapter extends BaseAdapter {
 			convertView = context.getLayoutInflater().inflate(
 					R.layout.simple_list_item, null);
 			viewHolder = new ViewHolder();
-			viewHolder.info = (TextView) convertView
-					.findViewById(R.id.info);
+			viewHolder.info = (TextView) convertView.findViewById(R.id.info);
+			viewHolder.value = (TextView) convertView.findViewById(R.id.value);
 			viewHolder.info.setText(infos.get(position));
+			viewHolder.value.setText(values.get(position));
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -55,5 +59,6 @@ public class SimpleListAdapter extends BaseAdapter {
 
 	public class ViewHolder {
 		public TextView info;
+		public TextView value;
 	}
 }

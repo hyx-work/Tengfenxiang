@@ -38,7 +38,7 @@
             android:label="@string/system_message" >
         </activity>
         <activity
-            android:name="com.android.tengfenxiang.activity.FeedbackActivity"
+            android:name="com.android.tengfenxiang.activity.WebActivity"
             android:label="@string/feedback" >
         </activity>
         <activity
@@ -46,8 +46,12 @@
             android:label="@string/about_app" >
         </activity>
         <activity
-            android:name="com.android.tengfenxiang.activity.WithdrawActivityActivity"
+            android:name="com.android.tengfenxiang.activity.WithdrawActivity"
             android:label="@string/withdraw_records" >
+        </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.PersonInfoActivity"
+            android:label="@string/person_info" >
         </activity>
     </application>
 

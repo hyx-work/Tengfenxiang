@@ -13,6 +13,16 @@ public class Constant {
 	public final static String SERVER_ADDRESS = "http://112.124.29.147:8080/TengShare_AppInterface";
 
 	/**
+	 * 联系QQ
+	 */
+	public final static String QQ_GROUP = "111111111";
+
+	/**
+	 * 联系电话
+	 */
+	public final static String CONTACT_PHONE = "020-11111111";
+
+	/**
 	 * 登陆的URL
 	 */
 	public final static String LOGIN_URL = SERVER_ADDRESS + "/user/login/";

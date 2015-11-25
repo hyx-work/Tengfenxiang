@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   name=""
+   repos="https://192.168.0.245:8098/svn/test"
+   revision="3314"
+   last-author="Chengzg"
+   uuid="1a7a8caf-712f-444b-a536-0181eba150e2"
+   url="https://192.168.0.245:8098/svn/test/Guidance/res/anim"
+   committed-rev="3308"
+   kind="dir"
+   committed-date="2015-03-23T14:08:30.188476Z"/>
+<entry
+   name="dialog_load_animation.xml"
+   revision="3321"
+   checksum="32b0be7c8f9ad2b17fd214f4f4c6ca4e"
+   last-author="Chengzg"
+   text-time="2015-04-09T03:19:15.000000Z"
+   committed-rev="3321"
+   kind="file"
+   committed-date="2015-04-09T03:32:51.896000Z"
+   prop-time="2015-04-07T07:17:47.000000Z"/>
+</wc-entries>

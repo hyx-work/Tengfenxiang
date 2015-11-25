@@ -9,17 +9,19 @@ import java.util.List;
  */
 public class SigninStatus {
 
-	private boolean status;
+	private String signinDate;
+
+	private int status;
 
 	private float points;
 
-	private List<SigninPoint> recent;
+	private List<SigninStatus> recent;
 
-	public boolean isStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
@@ -31,50 +33,20 @@ public class SigninStatus {
 		this.points = points;
 	}
 
-	public List<SigninPoint> getRecent() {
+	public List<SigninStatus> getRecent() {
 		return recent;
 	}
 
-	public void setRecent(List<SigninPoint> recent) {
+	public void setRecent(List<SigninStatus> recent) {
 		this.recent = recent;
 	}
 
-	/**
-	 * 内部类
-	 * @author ccz
-	 *
-	 */
-	public class SigninPoint {
-
-		private String signinDate;
-
-		private int status;
-
-		private float points;
-
-		public String getSigninDate() {
-			return signinDate;
-		}
-
-		public void setSigninDate(String signinDate) {
-			this.signinDate = signinDate;
-		}
-
-		public int getStatus() {
-			return status;
-		}
-
-		public void setStatus(int status) {
-			this.status = status;
-		}
-
-		public float getPoints() {
-			return points;
-		}
-
-		public void setPoints(float points) {
-			this.points = points;
-		}
-
+	public String getSigninDate() {
+		return signinDate;
 	}
+
+	public void setSigninDate(String signinDate) {
+		this.signinDate = signinDate;
+	}
+
 }

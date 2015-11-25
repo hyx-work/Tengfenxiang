@@ -8,10 +8,46 @@
 package com.android.tengfenxiang;
 
 public final class R {
+    public static final class anim {
+        public static final int dialog_load_animation=0x7f040000;
+    }
     public static final class attr {
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int title=0x7f010000;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int titleLeftImg=0x7f010003;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int titleRightImg=0x7f010004;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int titleTextColor=0x7f010001;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int titleTextSize=0x7f010002;
     }
     public static final class color {
-        public static final int white=0x7f040000;
+        public static final int black=0x7f050001;
+        public static final int white=0x7f050000;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -21,54 +57,106 @@ public final class R {
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f050000;
-        public static final int activity_vertical_margin=0x7f050001;
+        public static final int activity_horizontal_margin=0x7f060000;
+        public static final int activity_vertical_margin=0x7f060001;
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
-        public static final int xlistview_arrow=0x7f020001;
+        public static final int icon_loading=0x7f020001;
+        public static final int left_arrow=0x7f020002;
+        public static final int loading_dialog_bg=0x7f020003;
+        public static final int right_arrow=0x7f020004;
+        public static final int xlistview_arrow=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f090009;
-        public static final int xlistview_footer_content=0x7f090000;
-        public static final int xlistview_footer_hint_textview=0x7f090002;
-        public static final int xlistview_footer_progressbar=0x7f090001;
-        public static final int xlistview_header_arrow=0x7f090007;
-        public static final int xlistview_header_content=0x7f090003;
-        public static final int xlistview_header_hint_textview=0x7f090005;
-        public static final int xlistview_header_progressbar=0x7f090008;
-        public static final int xlistview_header_text=0x7f090004;
-        public static final int xlistview_header_time=0x7f090006;
+        public static final int action_settings=0x7f0a001b;
+        public static final int dialog_view=0x7f0a0001;
+        public static final int img=0x7f0a0002;
+        public static final int info=0x7f0a000b;
+        public static final int line=0x7f0a000e;
+        public static final int messages=0x7f0a0011;
+        public static final int number=0x7f0a000d;
+        public static final int profit=0x7f0a0010;
+        public static final int recent_list=0x7f0a0007;
+        public static final int rencent_info=0x7f0a0006;
+        public static final int signin_button=0x7f0a0004;
+        public static final int signin_date=0x7f0a0008;
+        public static final int signin_profit=0x7f0a000a;
+        public static final int signin_status=0x7f0a0009;
+        public static final int subordinate_number=0x7f0a000c;
+        public static final int subordinate_profit=0x7f0a000f;
+        public static final int tipTextView=0x7f0a0003;
+        public static final int title_bar=0x7f0a0000;
+        public static final int today_info=0x7f0a0005;
+        public static final int xlistview_footer_content=0x7f0a0012;
+        public static final int xlistview_footer_hint_textview=0x7f0a0014;
+        public static final int xlistview_footer_progressbar=0x7f0a0013;
+        public static final int xlistview_header_arrow=0x7f0a0019;
+        public static final int xlistview_header_content=0x7f0a0015;
+        public static final int xlistview_header_hint_textview=0x7f0a0017;
+        public static final int xlistview_header_progressbar=0x7f0a001a;
+        public static final int xlistview_header_text=0x7f0a0016;
+        public static final int xlistview_header_time=0x7f0a0018;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int xlistview_footer=0x7f030001;
-        public static final int xlistview_header=0x7f030002;
+        public static final int about=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int feedback=0x7f030002;
+        public static final int loading_dialog_view=0x7f030003;
+        public static final int signin=0x7f030004;
+        public static final int signin_info_item=0x7f030005;
+        public static final int simple_list_item=0x7f030006;
+        public static final int subordinate=0x7f030007;
+        public static final int system_message=0x7f030008;
+        public static final int withdraw_records=0x7f030009;
+        public static final int xlistview_footer=0x7f03000a;
+        public static final int xlistview_header=0x7f03000b;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
+        public static final int main=0x7f090000;
     }
     public static final class string {
-        public static final int action_settings=0x7f060002;
-        public static final int app_name=0x7f060000;
-        public static final int clear_cache_success=0x7f060003;
-        public static final int hello_world=0x7f060001;
-        public static final int xlistview_footer_hint_normal=0x7f060008;
-        public static final int xlistview_footer_hint_ready=0x7f060009;
-        public static final int xlistview_header_hint_loading=0x7f060006;
-        public static final int xlistview_header_hint_normal=0x7f060004;
-        public static final int xlistview_header_hint_ready=0x7f060005;
-        public static final int xlistview_header_last_time=0x7f060007;
+        public static final int about_app=0x7f070011;
+        public static final int action_settings=0x7f070014;
+        public static final int app_name=0x7f070000;
+        public static final int clear_cache_success=0x7f070015;
+        public static final int feedback=0x7f070010;
+        public static final int get_profit_info=0x7f07000b;
+        public static final int have_signin=0x7f07000d;
+        public static final int hello_world=0x7f070013;
+        public static final int my_subordinate=0x7f070001;
+        public static final int my_subordinate_count=0x7f070002;
+        public static final int my_subordinate_points=0x7f070003;
+        public static final int not_signin=0x7f07000e;
+        public static final int not_signin_today=0x7f070008;
+        public static final int people=0x7f070004;
+        public static final int profit_info=0x7f07000c;
+        public static final int recent_signin_info=0x7f07000a;
+        public static final int signin=0x7f070006;
+        public static final int signin_success=0x7f070009;
+        public static final int signin_today=0x7f070007;
+        public static final int system_message=0x7f07000f;
+        public static final int unknow_error=0x7f07001c;
+        public static final int withdraw_records=0x7f070012;
+        public static final int xlistview_footer_hint_normal=0x7f07001a;
+        public static final int xlistview_footer_hint_ready=0x7f07001b;
+        public static final int xlistview_header_hint_loading=0x7f070018;
+        public static final int xlistview_header_hint_normal=0x7f070016;
+        public static final int xlistview_header_hint_ready=0x7f070017;
+        public static final int xlistview_header_last_time=0x7f070019;
+        public static final int yuan=0x7f070005;
     }
     public static final class style {
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
         
 
         Base application theme for API 11+. This theme completely replaces
@@ -82,10 +170,96 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
+        public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppTheme=0x7f080001;
+        public static final int LoadingDialog=0x7f080002;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a TitleBar.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #TitleBar_title com.android.tengfenxiang:title}</code></td><td></td></tr>
+           <tr><td><code>{@link #TitleBar_titleLeftImg com.android.tengfenxiang:titleLeftImg}</code></td><td></td></tr>
+           <tr><td><code>{@link #TitleBar_titleRightImg com.android.tengfenxiang:titleRightImg}</code></td><td></td></tr>
+           <tr><td><code>{@link #TitleBar_titleTextColor com.android.tengfenxiang:titleTextColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #TitleBar_titleTextSize com.android.tengfenxiang:titleTextSize}</code></td><td></td></tr>
+           </table>
+           @see #TitleBar_title
+           @see #TitleBar_titleLeftImg
+           @see #TitleBar_titleRightImg
+           @see #TitleBar_titleTextColor
+           @see #TitleBar_titleTextSize
+         */
+        public static final int[] TitleBar = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#title}
+          attribute's value can be found in the {@link #TitleBar} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.android.tengfenxiang:title
+        */
+        public static final int TitleBar_title = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#titleLeftImg}
+          attribute's value can be found in the {@link #TitleBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.android.tengfenxiang:titleLeftImg
+        */
+        public static final int TitleBar_titleLeftImg = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#titleRightImg}
+          attribute's value can be found in the {@link #TitleBar} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.android.tengfenxiang:titleRightImg
+        */
+        public static final int TitleBar_titleRightImg = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#titleTextColor}
+          attribute's value can be found in the {@link #TitleBar} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          @attr name com.android.tengfenxiang:titleTextColor
+        */
+        public static final int TitleBar_titleTextColor = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#titleTextSize}
+          attribute's value can be found in the {@link #TitleBar} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.android.tengfenxiang:titleTextSize
+        */
+        public static final int TitleBar_titleTextSize = 2;
+    };
 }

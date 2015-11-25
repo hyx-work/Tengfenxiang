@@ -25,6 +25,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.SigninActivity"
+            android:label="@string/signin" >
+        </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.SubordinateActivity"
+            android:label="@string/my_subordinate" >
+        </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.MessageActivity"
+            android:label="@string/system_message" >
+        </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.FeedbackActivity"
+            android:label="@string/feedback" >
+        </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.AboutActivity"
+            android:label="@string/about_app" >
+        </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.WithdrawActivityActivity"
+            android:label="@string/withdraw_records" >
+        </activity>
     </application>
 
 </manifest>

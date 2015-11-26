@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:titlebar="http://schemas.android.com/apk/res/com.android.tengfenxiang"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.android.tengfenxiang.view.titlebar.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_bar_color"
+        android:gravity="center_vertical"
+        titlebar:titleLeftImg="@drawable/left_arrow"
+        titlebar:titleRightImg="@drawable/save_btn"
+        titlebar:titleTextColor="@color/white" />
+
+    <EditText
+        android:id="@+id/infomation"
+        android:inputType="text"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title_bar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp" >
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>

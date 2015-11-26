@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SimpleListAdapter extends BaseAdapter {
@@ -20,6 +21,11 @@ public class SimpleListAdapter extends BaseAdapter {
 			List<String> values) {
 		this.infos = infos;
 		this.values = values;
+		this.context = context;
+	}
+
+	public SimpleListAdapter(Activity context, List<String> infos) {
+		this.infos = infos;
 		this.context = context;
 	}
 
@@ -47,8 +53,12 @@ public class SimpleListAdapter extends BaseAdapter {
 			viewHolder = new ViewHolder();
 			viewHolder.info = (TextView) convertView.findViewById(R.id.info);
 			viewHolder.value = (TextView) convertView.findViewById(R.id.value);
+			viewHolder.arrow = (ImageView) convertView.findViewById(R.id.arrow);
 			viewHolder.info.setText(infos.get(position));
-			viewHolder.value.setText(values.get(position));
+			if (null != values && position < values.size()) {
+				viewHolder.value.setText(values.get(position));
+				viewHolder.arrow.setVisibility(View.GONE);
+			}
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -60,5 +70,6 @@ public class SimpleListAdapter extends BaseAdapter {
 	public class ViewHolder {
 		public TextView info;
 		public TextView value;
+		public ImageView arrow;
 	}
 }

@@ -54,9 +54,9 @@ public class SubordinateActivity extends Activity {
 
 		ArrayList<String> values = new ArrayList<String>();
 		values.add(subordinate.getSubordinateCount()
-				+ getString(R.string.people));
+				+ getString(R.string.unit_people));
 		values.add(subordinate.getSubordinatePoints()
-				+ getString(R.string.yuan));
+				+ getString(R.string.unit_yuan));
 
 		SimpleListAdapter adapter = new SimpleListAdapter(
 				SubordinateActivity.this, infos, values);

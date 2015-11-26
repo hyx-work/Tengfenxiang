@@ -8,16 +8,18 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class LinkListAdapter extends BaseAdapter {
-
+public class MyProfitListAdapter extends BaseAdapter {
 	private List<String> infos;
+	private List<String> values;
 	private Activity context;
 
-	public LinkListAdapter(Activity context, List<String> infos) {
-		this.infos = infos;
+	public MyProfitListAdapter(Activity context, List<String> infos, List<String> values) {
 		this.context = context;
+		this.infos = infos;
+		this.values = values;
 	}
 
 	@Override
@@ -26,13 +28,13 @@ public class LinkListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int arg0) {
-		return infos.get(arg0);
+	public Object getItem(int position) {
+		return infos.get(position);
 	}
 
 	@Override
-	public long getItemId(int arg0) {
-		return arg0;
+	public long getItemId(int position) {
+		return position;
 	}
 
 	@Override
@@ -40,14 +42,19 @@ public class LinkListAdapter extends BaseAdapter {
 		ViewHolder viewHolder = null;
 		if (convertView == null) {
 			convertView = context.getLayoutInflater().inflate(
-					R.layout.link_list_item, null);
+					R.layout.my_profit_list_item, null);
 			viewHolder = new ViewHolder();
-			viewHolder.info = (TextView) convertView
-					.findViewById(R.id.info);
-			viewHolder.info.setText(infos.get(position));
+			viewHolder.info = (TextView) convertView.findViewById(R.id.info);
+			viewHolder.value = (TextView) convertView.findViewById(R.id.value);
+			viewHolder.arrow = (ImageView) convertView.findViewById(R.id.arrow);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
+		}
+
+		viewHolder.info.setText(infos.get(position));
+		if (position < values.size()) {
+			viewHolder.value.setText(values.get(position));
 		}
 
 		return convertView;
@@ -55,5 +62,7 @@ public class LinkListAdapter extends BaseAdapter {
 
 	public class ViewHolder {
 		public TextView info;
+		public TextView value;
+		public ImageView arrow;
 	}
 }

@@ -3,9 +3,10 @@ package com.android.tengfenxiang.activity;
 import java.util.ArrayList;
 
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.adapter.LinkListAdapter;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
 import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.view.titlebar.TitleBar;
+import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -25,6 +26,7 @@ public class AboutActivity extends Activity {
 
 	private ListView linkListView;
 	private ListView simpleListView;
+	private TitleBar titleBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,20 @@ public class AboutActivity extends Activity {
 		simpleListView = (ListView) findViewById(R.id.simple_list);
 		fillLinkList();
 		fillSimpleList();
+
+		titleBar = (TitleBar) findViewById(R.id.title_bar);
+		titleBar.setOnClickListener(new OnTitleClickListener() {
+
+			@Override
+			public void OnClickLeft() {
+				finish();
+			}
+
+			@Override
+			public void OnClickRight() {
+				
+			}
+		});
 	}
 
 	private void fillSimpleList() {
@@ -79,7 +95,7 @@ public class AboutActivity extends Activity {
 		infos.add(getString(R.string.help_center));
 		infos.add(getString(R.string.feedback));
 		infos.add(getString(R.string.score));
-		LinkListAdapter adapter = new LinkListAdapter(AboutActivity.this, infos);
+		SimpleListAdapter adapter = new SimpleListAdapter(AboutActivity.this, infos);
 		linkListView.setAdapter(adapter);
 
 		linkListView.setOnItemClickListener(new OnItemClickListener() {

@@ -62,7 +62,7 @@ public class SigninListAdapter extends BaseAdapter {
 			viewHolder.status.setText(context.getString(R.string.not_signin));
 		}
 
-		String profit = points.get(position) + context.getString(R.string.profit_info);
+		String profit = points.get(position).getPoints() + context.getString(R.string.profit_info);
 		viewHolder.profit.setText(profit);
 
 		return convertView;

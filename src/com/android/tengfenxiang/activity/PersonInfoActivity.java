@@ -6,15 +6,20 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.PersonInfoListAdapter;
 import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.User;
+import com.android.tengfenxiang.view.titlebar.TitleBar;
+import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -29,6 +34,7 @@ public class PersonInfoActivity extends Activity {
 
 	private ImageView headImageView;
 	private RelativeLayout headLayout;
+	private TitleBar titleBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +64,58 @@ public class PersonInfoActivity extends Activity {
 			}
 		});
 
+		titleBar = (TitleBar) findViewById(R.id.title_bar);
+		titleBar.setOnClickListener(new OnTitleClickListener() {
+
+			@Override
+			public void OnClickLeft() {
+				finish();
+			}
+
+			@Override
+			public void OnClickRight() {
+				
+			}
+		});
+
 		loadHead();
+		fillList();
+		setItemClick();
+	}
+
+	private void setItemClick() {
+		userInfos.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Intent intent = null;
+				switch (arg2) {
+				case 1:
+					intent = new Intent(PersonInfoActivity.this, EditActivity.class);
+					intent.putExtra("attributeName", "wechat_account");
+					intent.putExtra("attributeValue", currentUser.getWechat());
+					intent.putExtra("title", getString(R.string.wechat_account));
+					break;
+
+				default:
+					break;
+				}
+				if (null != intent) {
+					startActivity(intent);
+				}
+			}
+		});
+	}
+
+	private void fillList() {
 		ArrayList<String> infos = new ArrayList<String>();
 		infos.add(getString(R.string.phone_number));
 		infos.add(getString(R.string.wechat_account));
 		infos.add(getString(R.string.nickname));
 		infos.add(getString(R.string.gender));
 		infos.add(getString(R.string.place));
-		infos.add(getString(R.string.alipay_account));
+		infos.add(getString(R.string.alipay));
 		infos.add(getString(R.string.invite_code));
 		infos.add(getString(R.string.invite_others));
 

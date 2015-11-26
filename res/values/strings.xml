@@ -6,8 +6,6 @@
     <string name="my_subordinate">我的下级</string>
     <string name="my_subordinate_count">我的下级人数</string>
     <string name="my_subordinate_points">我的下级总收益</string>
-    <string name="people">人</string>
-    <string name="yuan">元</string>
 
     <string name="signin">签到</string>
     <string name="signin_today">今日已签到</string>
@@ -21,7 +19,12 @@
 
     <string name="system_message">系统消息</string>
 
-    
+    <string name="my_profit">我的收益</string>
+    <string name="realtime_points">今日积分</string>
+    <string name="yesterday_points">昨日积分</string>
+    <string name="total_points">历史总积分</string>
+    <string name="withdraw_points">已提现收益</string>
+    <string name="withdrawable_points">可提现收益</string>
 
     <string name="about_app">关于腾分享</string>
     <string name="function_introduction">功能介绍</string>
@@ -34,6 +37,16 @@
     <string name="no_app_market">没有找到应用市场</string>
 
     <string name="withdraw_records">已提现</string>
+    <string name="withdraw_data">提现日期</string>
+    <string name="withdraw_count">提现金额</string>
+
+    <string name="withdraw_apply">申请提现</string>
+    <string name="apply_withdraw_points">申请提现金额</string>
+    <string name="alipay_account">支付宝账号</string>
+    <string name="apply_withdraw">提现</string>
+    <string name="submit_success">提交成功</string>
+    <string name="zero_warn">提现金额不能为0</string>
+    <string name="overflow_warn">提现金额不能超过最大可提现金额</string>
 
     <string name="person_info">个人资料</string>
     <string name="user_head">用户头像</string>
@@ -42,7 +55,7 @@
     <string name="nickname">昵&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;称</string>
     <string name="gender">性&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;别</string>
     <string name="place">地&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;区</string>
-    <string name="alipay_account">支&#160;&#8201;付&#160;&#8201;宝</string>
+    <string name="alipay">支&#160;&#8201;付&#160;&#8201;宝</string>
     <string name="invite_code">邀&#160;&#8201;请&#160;&#8201;码</string>
     <string name="invite_others">我要邀请</string>
 
@@ -56,5 +69,8 @@
     <string name="xlistview_footer_hint_normal">查看更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
     <string name="unknow_error">未知错误</string>
+    <string name="unit_people">人</string>
+    <string name="unit_yuan">元</string>
+    <string name="unit_point">分</string>
 
 </resources>

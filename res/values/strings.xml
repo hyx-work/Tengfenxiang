@@ -59,6 +59,9 @@
     <string name="invite_code">邀&#160;&#8201;请&#160;&#8201;码</string>
     <string name="invite_others">我要邀请</string>
 
+    <string name="user_info">用户信息</string>
+    <string name="today_signin">今日签到</string>
+
     <string name="modify_password">修改密码</string>
     <string name="old_password">原始密码</string>
     <string name="old_password_hint">请输入原始密码</string>

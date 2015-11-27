@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
             	MainApplication application = ((MainApplication) getApplication());
         		User user = (User) ResponseTools.handleResponse(getApplication(), response, User.class);
         		application.setCurrentUser(user);
-        		Intent intent = new Intent(MainActivity.this, SigninActivity.class);
+        		Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
                 startActivity(intent);
             }
         }, new ErrorListener() {

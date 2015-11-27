@@ -136,6 +136,7 @@ public class SigninActivity extends Activity {
 				}
 				Toast.makeText(getApplication(), R.string.unknow_error,
 						Toast.LENGTH_SHORT).show();
+				finish();
 			}
 		};
 
@@ -162,6 +163,9 @@ public class SigninActivity extends Activity {
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.signin_success,
 							Toast.LENGTH_SHORT).show();
+					// 刷新界面
+					dialog.showDialog();
+					getSigninStatus(userId);
 				}
 			}
 		};

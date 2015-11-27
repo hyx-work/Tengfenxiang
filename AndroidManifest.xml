@@ -82,6 +82,10 @@
             android:name="com.android.tengfenxiang.activity.ModifyActivity"
             android:label="@string/modify_password" >
         </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.UserInfoActivity"
+            android:label="@string/user_info" >
+        </activity>
     </application>
 
 </manifest>

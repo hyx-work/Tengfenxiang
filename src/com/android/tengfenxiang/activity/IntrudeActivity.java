@@ -66,7 +66,7 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent();
-				intent.setClass(IntrudeActivity.this, MainActivity.class);
+				intent.setClass(IntrudeActivity.this, LoginActivity.class);
 				IntrudeActivity.this.startActivity(intent);
 				finish();
 			}

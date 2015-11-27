@@ -3,6 +3,8 @@
 
     <string name="app_name">腾分享</string>
 
+    <string name="login">登录</string>
+
     <string name="my_subordinate">我的下级</string>
     <string name="my_subordinate_count">我的下级人数</string>
     <string name="my_subordinate_points">我的下级总收益</string>

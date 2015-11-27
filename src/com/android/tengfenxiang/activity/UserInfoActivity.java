@@ -67,26 +67,26 @@ public class UserInfoActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Intent intent;
+				Intent intent = new Intent();
 				switch (arg2) {
 				case 0:
-					intent = new Intent(UserInfoActivity.this,
+					intent.setClass(UserInfoActivity.this,
 							PersonInfoActivity.class);
 					break;
 				case 1:
-					intent = new Intent(UserInfoActivity.this,
+					intent.setClass(UserInfoActivity.this,
 							SigninActivity.class);
 					break;
 				case 2:
-					intent = new Intent(UserInfoActivity.this,
+					intent.setClass(UserInfoActivity.this,
 							SubordinateActivity.class);
 					break;
 				case 3:
-					intent = new Intent(UserInfoActivity.this,
+					intent.setClass(UserInfoActivity.this,
 							MessageActivity.class);
 					break;
 				default:
-					intent = new Intent(UserInfoActivity.this,
+					intent.setClass(UserInfoActivity.this,
 							AboutActivity.class);
 					break;
 				}

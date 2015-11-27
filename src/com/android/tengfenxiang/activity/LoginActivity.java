@@ -17,60 +17,31 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.widget.Toast;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.widget.Toast;
 
-public class WelcomeActivity extends Activity {
+public class LoginActivity extends Activity {
 
-	private final int SPLASH_DISPLAY_LENGHT = 2000;
-	private SharedPreferences preferences;
-	private Editor editor;
 	private LoadingDialog dialog;
+	private SharedPreferences preferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.login);
 
-		dialog = new LoadingDialog(this);
-		RequestManager.init(getApplication());
 		preferences = getSharedPreferences(getPackageName(),
 				Context.MODE_PRIVATE);
-		new Handler().postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				if (preferences.getBoolean("firststart", true)) {
-					editor = preferences.edit();
-					editor.putBoolean("firststart", false);
-					editor.commit();
-					Intent intent = new Intent();
-					intent.setClass(WelcomeActivity.this, IntrudeActivity.class);
-					WelcomeActivity.this.startActivity(intent);
-					WelcomeActivity.this.finish();
-				} else {
-					String phone = preferences.getString("phone", "");
-					String password = preferences.getString("password", "");
-
-					if (phone.equals("") || password.equals("")) {
-						Intent intent = new Intent();
-						intent.setClass(WelcomeActivity.this,
-								LoginActivity.class);
-						startActivity(intent);
-						finish();
-					} else {
-						dialog.showDialog();
-						login(phone, password);
-					}
-				}
-			}
-		}, SPLASH_DISPLAY_LENGHT);
+		dialog = new LoadingDialog(this);
+		
+		dialog.showDialog();
+		login("13826473672", "cczccz");
 	}
 
 	private void login(final String phone, final String password) {
@@ -87,7 +58,12 @@ public class WelcomeActivity extends Activity {
 						getApplication(), response, User.class);
 				application.setCurrentUser(user);
 
-				Intent intent = new Intent(WelcomeActivity.this,
+				Editor editor = preferences.edit();
+				editor.putString("phone", phone);
+				editor.putString("password", password);
+				editor.commit();
+
+				Intent intent = new Intent(LoginActivity.this,
 						MainActivity.class);
 				startActivity(intent);
 				finish();

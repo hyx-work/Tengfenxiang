@@ -83,6 +83,18 @@
             android:label="@string/person_info" >
         </activity>
         <activity
+            android:name="com.android.tengfenxiang.activity.ProvinceActivity"
+            android:label="@string/select_address_title" >
+        </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.CityActivity"
+            android:label="@string/select_address_title" >
+        </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.GenderActivity"
+            android:label="@string/select_gender_title" >
+        </activity>
+        <activity
             android:name="com.android.tengfenxiang.activity.ModifyActivity"
             android:label="@string/modify_password" >
         </activity>

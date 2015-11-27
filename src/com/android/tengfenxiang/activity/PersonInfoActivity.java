@@ -57,10 +57,10 @@ public class PersonInfoActivity extends Activity {
 		headImageView = (ImageView) findViewById(R.id.head);
 		headLayout = (RelativeLayout) findViewById(R.id.user_head);
 		headLayout.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				
+
 			}
 		});
 
@@ -74,7 +74,7 @@ public class PersonInfoActivity extends Activity {
 
 			@Override
 			public void OnClickRight() {
-				
+
 			}
 		});
 
@@ -92,12 +92,29 @@ public class PersonInfoActivity extends Activity {
 				Intent intent = null;
 				switch (arg2) {
 				case 1:
-					intent = new Intent(PersonInfoActivity.this, EditActivity.class);
+					intent = new Intent(PersonInfoActivity.this,
+							EditActivity.class);
 					intent.putExtra("attributeName", "wechat_account");
 					intent.putExtra("attributeValue", currentUser.getWechat());
-					intent.putExtra("title", getString(R.string.wechat_account));
+					intent.putExtra("title",
+							getString(R.string.edit_wechat_title));
 					break;
-
+				case 2:
+					break;
+				case 3:
+					intent = new Intent(PersonInfoActivity.this,
+							GenderActivity.class);
+					break;
+				case 4:
+					intent = new Intent(PersonInfoActivity.this,
+							ProvinceActivity.class);
+					break;
+				case 5:
+					break;
+				case 6:
+					break;
+				case 7:
+					break;
 				default:
 					break;
 				}

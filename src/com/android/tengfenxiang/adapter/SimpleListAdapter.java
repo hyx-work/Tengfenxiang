@@ -54,16 +54,16 @@ public class SimpleListAdapter extends BaseAdapter {
 			viewHolder.info = (TextView) convertView.findViewById(R.id.info);
 			viewHolder.value = (TextView) convertView.findViewById(R.id.value);
 			viewHolder.arrow = (ImageView) convertView.findViewById(R.id.arrow);
-			viewHolder.info.setText(infos.get(position));
-			if (null != values && position < values.size()) {
-				viewHolder.value.setText(values.get(position));
-				viewHolder.arrow.setVisibility(View.GONE);
-			}
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
-		}
 
+		}
+		viewHolder.info.setText(infos.get(position));
+		if (null != values && position < values.size()) {
+			viewHolder.value.setText(values.get(position));
+			viewHolder.arrow.setVisibility(View.GONE);
+		}
 		return convertView;
 	}
 

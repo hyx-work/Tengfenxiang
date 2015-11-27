@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="libs/fastjson-1.2.4.jar"/>
 	<classpathentry kind="lib" path="libs/universal-image-loader-1.9.3.jar"/>
 	<classpathentry kind="lib" path="libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="libs/gson-2.2.4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

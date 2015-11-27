@@ -60,6 +60,11 @@
     <string name="alipay">支&#160;&#8201;付&#160;&#8201;宝</string>
     <string name="invite_code">邀&#160;&#8201;请&#160;&#8201;码</string>
     <string name="invite_others">我要邀请</string>
+    <string name="edit_wechat_title">微信号</string>
+    <string name="select_address_title">所在地区</string>
+    <string name="select_gender_title">性别</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
 
     <string name="user_info">用户信息</string>
     <string name="today_signin">今日签到</string>

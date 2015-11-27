@@ -1,6 +1,7 @@
 package com.android.tengfenxiang.activity;
 
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.util.CityUtil;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +15,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+        CityUtil.getInstance(getApplication());
         Intent intent = new Intent(this, UserInfoActivity.class);
         startActivity(intent);
     }

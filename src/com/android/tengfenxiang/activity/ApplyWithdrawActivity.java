@@ -8,6 +8,7 @@ import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.ResponseTools;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -57,6 +58,12 @@ public class ApplyWithdrawActivity extends Activity {
 		withdrawPoints = intent.getFloatExtra("withdrawPoints", 1);
 
 		dialog = new LoadingDialog(this);
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 		initView();
 	}
 
@@ -132,9 +139,12 @@ public class ApplyWithdrawActivity extends Activity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.submit_success,
-						Toast.LENGTH_SHORT).show();
-				finish();
+				Object result = ResponseTools.handleResponse(getApplication(), response, null);
+				if (null != result) {
+					Toast.makeText(getApplication(), R.string.submit_success,
+							Toast.LENGTH_SHORT).show();
+					finish();
+				}
 			}
 		};
 		// 请求失败的回调函数

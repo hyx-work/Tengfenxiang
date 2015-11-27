@@ -158,8 +158,11 @@ public class SigninActivity extends Activity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.signin_success,
-						Toast.LENGTH_SHORT).show();
+				Object result = ResponseTools.handleResponse(getApplication(), response, null);
+				if (null != result) {
+					Toast.makeText(getApplication(), R.string.signin_success,
+							Toast.LENGTH_SHORT).show();
+				}
 			}
 		};
 		// 请求失败的回调函数

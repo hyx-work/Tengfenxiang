@@ -18,8 +18,10 @@ public class ResponseTools {
 	 * 处理服务器返回的响应信息
 	 * 
 	 * @param context
-	 * @param response 响应的json字符串
-	 * @param bean 返回结果的类类型
+	 * @param response
+	 *            响应的json字符串
+	 * @param bean
+	 *            返回结果的类类型
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
@@ -27,7 +29,8 @@ public class ResponseTools {
 			@SuppressWarnings("rawtypes") Class bean) {
 
 		// 解析返回结果，取出code和data字段
-		ResponseResult result = JSON.parseObject(response, ResponseResult.class);
+		ResponseResult result = JSON
+				.parseObject(response, ResponseResult.class);
 
 		// 如果data字段为空则直接返回
 		if (null == result.getData()) {
@@ -37,7 +40,10 @@ public class ResponseTools {
 		String data = result.getData().toString();
 		// 如果返回的code=200，说明没有错误，需要取出data信息
 		if (200 == result.getCode()) {
-			return JSON.parseObject(data, bean);
+			if (null == bean)
+				return new Object();
+			else
+				return JSON.parseObject(data, bean);
 		}
 
 		// 提示错误信息

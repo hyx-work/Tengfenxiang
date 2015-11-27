@@ -59,8 +59,21 @@
     <string name="invite_code">邀&#160;&#8201;请&#160;&#8201;码</string>
     <string name="invite_others">我要邀请</string>
 
+    <string name="modify_password">修改密码</string>
+    <string name="old_password">原始密码</string>
+    <string name="old_password_hint">请输入原始密码</string>
+    <string name="new_password">新&#160;&#8201;密&#160;&#8201;码</string>
+    <string name="new_password_hint">请设置新密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="confirm_password_hint">请确认新密码</string>
+    <string name="confirm_modify">确&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;认</string>
+    <string name="empty_old_password">密码不能为空</string>
+    <string name="different_password">两次输入的密码不一致</string>
+    <string name="modify_success">修改成功</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="try_now">立即体验</string>
     <string name="clear_cache_success">缓存已清除</string>
 	<string name="xlistview_header_hint_normal">下拉刷新</string>
     <string name="xlistview_header_hint_ready">松开刷新数据</string>

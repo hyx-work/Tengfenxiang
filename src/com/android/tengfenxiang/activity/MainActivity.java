@@ -57,7 +57,7 @@ public class MainActivity extends Activity {
             	MainApplication application = ((MainApplication) getApplication());
         		User user = (User) ResponseTools.handleResponse(getApplication(), response, User.class);
         		application.setCurrentUser(user);
-        		Intent intent = new Intent(MainActivity.this, MyProfitActivity.class);
+        		Intent intent = new Intent(MainActivity.this, SigninActivity.class);
                 startActivity(intent);
             }
         }, new ErrorListener() {
@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map = new HashMap<String,String>();
                 map.put("phone", "13826473672");
-				map.put("password", "testtest");
+				map.put("password", "cczccz");
 				map.put("deviceId", "1");
 				map.put("deviceInfo", "1");
 				map.put("pushToken", "22");

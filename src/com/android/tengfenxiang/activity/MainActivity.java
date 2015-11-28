@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         CityUtil.getInstance(getApplication());
-        Intent intent = new Intent(this, UserInfoActivity.class);
+        Intent intent = new Intent(this, MyProfitActivity.class);
         startActivity(intent);
     }
 

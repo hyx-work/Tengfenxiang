@@ -31,6 +31,7 @@ public class MyProfitActivity extends Activity {
 
 	private User currentUser;
 	private Summary summary;
+	private ArrayList<String> titles = new ArrayList<String>();
 
 	private LoadingDialog dialog;
 
@@ -60,20 +61,21 @@ public class MyProfitActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Intent intent;
+				Intent intent = new Intent();
 				switch (arg2) {
 				case 0:
 				case 1:
 				case 2:
-					intent = new Intent(MyProfitActivity.this,
+					intent.setClass(MyProfitActivity.this,
 							IntegralActivity.class);
+					intent.putExtra("title", titles.get(arg2));
 					break;
 				case 3:
-					intent = new Intent(MyProfitActivity.this,
+					intent.setClass(MyProfitActivity.this,
 							WithdrawActivity.class);
 					break;
 				default:
-					intent = new Intent(MyProfitActivity.this,
+					intent.setClass(MyProfitActivity.this,
 							ApplyWithdrawActivity.class);
 					intent.putExtra("withdrawPoints",
 							summary.getWithdrawablePoints());
@@ -85,12 +87,12 @@ public class MyProfitActivity extends Activity {
 	}
 
 	private void fillList() {
-		ArrayList<String> infos = new ArrayList<String>();
-		infos.add(getString(R.string.realtime_points));
-		infos.add(getString(R.string.yesterday_points));
-		infos.add(getString(R.string.total_points));
-		infos.add(getString(R.string.withdraw_points));
-		infos.add(getString(R.string.withdrawable_points));
+		titles = new ArrayList<String>();
+		titles.add(getString(R.string.realtime_points));
+		titles.add(getString(R.string.yesterday_points));
+		titles.add(getString(R.string.total_points));
+		titles.add(getString(R.string.withdraw_points));
+		titles.add(getString(R.string.withdrawable_points));
 		ArrayList<String> values = new ArrayList<String>();
 		values.add(summary.getRealtimePoints() + getString(R.string.unit_point));
 		values.add(summary.getYesterdayPoints()
@@ -100,7 +102,7 @@ public class MyProfitActivity extends Activity {
 		values.add(summary.getWithdrawablePoints()
 				+ getString(R.string.unit_yuan));
 		MyProfitListAdapter adapter = new MyProfitListAdapter(
-				MyProfitActivity.this, infos, values);
+				MyProfitActivity.this, titles, values);
 		summaryListView.setAdapter(adapter);
 	}
 
@@ -119,7 +121,6 @@ public class MyProfitActivity extends Activity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				System.err.println(response);
 				summary = (Summary) ResponseTools.handleResponse(
 						getApplication(), response, Summary.class);
 				if (dialog.isShowing()) {

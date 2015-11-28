@@ -102,6 +102,10 @@
             android:name="com.android.tengfenxiang.activity.UserInfoActivity"
             android:label="@string/user_info" >
         </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.InviteCodeActivity"
+            android:label="@string/invite_others" >
+        </activity>
     </application>
 
 </manifest>

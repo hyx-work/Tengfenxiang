@@ -42,7 +42,7 @@ public class ApplyWithdrawActivity extends Activity {
 	private RelativeLayout alipayLayout;
 
 	private LoadingDialog dialog;
-
+	private MainApplication application;
 	private float withdrawPoints;
 
 	@Override
@@ -51,9 +51,7 @@ public class ApplyWithdrawActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.withdraw_apply);
 
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
-
+		application = ((MainApplication) getApplication());
 		Intent intent = getIntent();
 		withdrawPoints = intent.getFloatExtra("withdrawPoints", 1);
 
@@ -64,6 +62,7 @@ public class ApplyWithdrawActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		currentUser = application.getCurrentUser();
 		initView();
 	}
 

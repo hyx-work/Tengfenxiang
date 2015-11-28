@@ -31,6 +31,7 @@ public class PersonInfoActivity extends Activity {
 	private User currentUser;
 
 	private PersonInfoListAdapter adapter;
+	private MainApplication application;
 
 	private ImageView headImageView;
 	private RelativeLayout headLayout;
@@ -41,7 +42,7 @@ public class PersonInfoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.person_info);
 
-		MainApplication application = ((MainApplication) getApplication());
+		application = ((MainApplication) getApplication());
 		currentUser = application.getCurrentUser();
 	}
 
@@ -49,6 +50,7 @@ public class PersonInfoActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		currentUser = application.getCurrentUser();
 		initView();
 	}
 
@@ -94,7 +96,7 @@ public class PersonInfoActivity extends Activity {
 				case 1:
 					intent = new Intent(PersonInfoActivity.this,
 							EditActivity.class);
-					intent.putExtra("attributeName", "wechat_account");
+					intent.putExtra("attributeName", "wechat");
 					intent.putExtra("attributeValue", currentUser.getWechat());
 					intent.putExtra("title",
 							getString(R.string.edit_wechat_title));
@@ -114,6 +116,8 @@ public class PersonInfoActivity extends Activity {
 				case 6:
 					break;
 				case 7:
+					intent = new Intent(PersonInfoActivity.this,
+							InviteCodeActivity.class);
 					break;
 				default:
 					break;

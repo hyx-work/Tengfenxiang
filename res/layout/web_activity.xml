@@ -13,4 +13,11 @@
         titlebar:titleLeftImg="@drawable/left_arrow"
         titlebar:titleTextColor="@color/white" />
 
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title_bar" />
+
 </RelativeLayout>

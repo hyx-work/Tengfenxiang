@@ -65,6 +65,8 @@
     <string name="select_gender_title">性别</string>
     <string name="male">男</string>
     <string name="female">女</string>
+    <string name="invite_code_hint">邀请码:</string>
+    <string name="generate_code_fail">生成二维码失败</string>
 
     <string name="user_info">用户信息</string>
     <string name="today_signin">今日签到</string>

@@ -66,9 +66,14 @@ public class EditActivity extends Activity {
 
 			@Override
 			public void OnClickRight() {
-				dialog.showDialog();
-				saveInformation(currentUser.getId(), attributeName, information
-						.getText().toString());
+				String info = information.getText().toString();
+				if (info != null && !info.equals("")) {
+					dialog.showDialog();
+					saveInformation(currentUser.getId(), attributeName, info);
+				} else {
+					Toast.makeText(getApplication(), R.string.empty_input,
+							Toast.LENGTH_SHORT).show();
+				}
 			}
 
 			@Override

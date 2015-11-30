@@ -31,9 +31,9 @@ public class CityUtil {
 	public static CityUtil instance;
 
 	private CityUtil(Context context) {
-		String area_str = FileUtil.readAssets(context, "area.json");
-		province_list = getJSONParserResult(area_str, "area0");
-		city_map = getJSONParserResultArray(area_str, "area1");
+		String area_str = FileUtil.readAssets(context, "city.json");
+		province_list = getJSONParserResult(area_str, "province");
+		city_map = getJSONParserResultArray(area_str, "city");
 	}
 
 	/**

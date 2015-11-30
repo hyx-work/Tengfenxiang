@@ -1,11 +1,14 @@
 package com.android.tengfenxiang.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.PersonInfoListAdapter;
 import com.android.tengfenxiang.application.MainApplication;
+import com.android.tengfenxiang.bean.CityInfo;
 import com.android.tengfenxiang.bean.User;
+import com.android.tengfenxiang.util.CityUtil;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -102,6 +105,12 @@ public class PersonInfoActivity extends Activity {
 							getString(R.string.edit_wechat_title));
 					break;
 				case 2:
+					intent = new Intent(PersonInfoActivity.this,
+							EditActivity.class);
+					intent.putExtra("attributeName", "nickName");
+					intent.putExtra("attributeValue", currentUser.getNickName());
+					intent.putExtra("title",
+							getString(R.string.edit_nickname_title));
 					break;
 				case 3:
 					intent = new Intent(PersonInfoActivity.this,
@@ -112,6 +121,11 @@ public class PersonInfoActivity extends Activity {
 							ProvinceActivity.class);
 					break;
 				case 5:
+					intent = new Intent(PersonInfoActivity.this,
+							EditActivity.class);
+					intent.putExtra("attributeName", "alipay");
+					intent.putExtra("attributeValue", currentUser.getAlipay());
+					intent.putExtra("title", getString(R.string.alipay_account));
 					break;
 				case 6:
 					break;
@@ -144,8 +158,14 @@ public class PersonInfoActivity extends Activity {
 		values.add(currentUser.getPhone());
 		values.add(currentUser.getWechat());
 		values.add(currentUser.getNickName());
-		// values.add(currentUser.getGender());
-		// values.add(currentUser.getProvince());
+		if (currentUser.getGender() == 0) {
+			values.add(getString(R.string.male));
+		}
+		else {
+			values.add(getString(R.string.female));
+		}
+		
+		values.add(getArea(currentUser.getProvince(), currentUser.getCity()));
 		values.add(currentUser.getAlipay());
 
 		adapter = new PersonInfoListAdapter(this, infos, values);
@@ -170,5 +190,27 @@ public class PersonInfoActivity extends Activity {
 						headImageView.setImageBitmap(loadedImage);
 					}
 				});
+	}
+
+	private String getArea(int province, int city) {
+		CityUtil cityUtil = CityUtil.getInstance(getApplication());
+		List<CityInfo> provinces = cityUtil.getProvince_list();
+		String result = "";
+		for (CityInfo cityInfo : provinces) {
+			if (cityInfo.getId().equals(province + "")) {
+				result = cityInfo.getCity_name() + " ";
+				break;
+			}
+		}
+
+		List<CityInfo> citys = cityUtil.getCity_map().get(province + "");
+		for (CityInfo cityInfo : citys) {
+			if (cityInfo.getId().equals(city + "")) {
+				result += cityInfo.getCity_name();
+				break;
+			}
+		}
+		
+		return result;
 	}
 }

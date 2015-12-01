@@ -24,6 +24,7 @@ import android.widget.TextView;
 public class UserInfoActivity extends Activity {
 
 	private User currentUser;
+	private MainApplication application;
 
 	private ListView userInfoListView;
 	private TextView phoneTextView;
@@ -35,9 +36,15 @@ public class UserInfoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
 
-		MainApplication application = ((MainApplication) getApplication());
+		application = ((MainApplication) getApplication());
 		currentUser = application.getCurrentUser();
+	}
 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		currentUser = application.getCurrentUser();
 		initView();
 	}
 

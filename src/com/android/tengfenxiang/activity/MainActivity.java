@@ -1,37 +1,66 @@
 package com.android.tengfenxiang.activity;
 
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.util.CityUtil;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AbstractActivityGroup {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        CityUtil.getInstance(getApplication());
-        Intent intent = new Intent(this, UserInfoActivity.class);
-        startActivity(intent);
-    }
+	private static final String CONTENT_0 = "taskActivity";
+	private static final String CONTENT_1 = "articleActivity";
+	private static final String CONTENT_2 = "myProfitActivity";
+	private static final String CONTENT_3 = "userInfoActivity";
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		setContentView(R.layout.activity_main);
+		super.onCreate(savedInstanceState);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+		((RadioButton) findViewById(R.id.radio_button0)).setChecked(true);
+		setContainerView(CONTENT_0, TaskActivity.class);
+	}
+
+	@Override
+	protected ViewGroup getContainer() {
+		return (ViewGroup) findViewById(R.id.container);
+	}
+
+	@Override
+	protected void initTabBarButtons() {
+		initTabBarButton(R.id.radio_button0);
+		initTabBarButton(R.id.radio_button1);
+		initTabBarButton(R.id.radio_button2);
+		initTabBarButton(R.id.radio_button3);
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		if (isChecked) {
+			switch (buttonView.getId()) {
+
+			case R.id.radio_button0:
+				setContainerView(CONTENT_0, TaskActivity.class);
+				break;
+
+			case R.id.radio_button1:
+				setContainerView(CONTENT_1, ArticleActivity.class);
+				break;
+
+			case R.id.radio_button2:
+				setContainerView(CONTENT_2, MyProfitActivity.class);
+				break;
+
+			case R.id.radio_button3:
+				setContainerView(CONTENT_3, UserInfoActivity.class);
+				break;
+
+			default:
+				break;
+			}
+		}
+	}
+
 }

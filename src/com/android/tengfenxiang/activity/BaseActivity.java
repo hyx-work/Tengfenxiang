@@ -1,5 +1,6 @@
 package com.android.tengfenxiang.activity;
 
+import com.android.tengfenxiang.util.ImageLoadTools;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.app.Activity;
@@ -42,6 +43,13 @@ public abstract class BaseActivity extends Activity {
         initComponent();
         initData();
         addListener();
+    }
+    
+    @Override
+    protected void onDestroy() {
+    	// TODO Auto-generated method stub
+    	super.onDestroy();
+    	ImageLoadTools.clearMemoryCache();
     }
 
 }

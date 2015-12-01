@@ -111,13 +111,13 @@ public class AboutActivity extends Activity {
 		builder.setTitle(R.string.select_qq_number);
 
 		int size = qqGroup.size();
-		final String[] cities = (String[]) qqGroup.toArray(new String[size]);
+		final String[] number = (String[]) qqGroup.toArray(new String[size]);
 
-		builder.setItems(cities, new OnClickListener() {
+		builder.setItems(number, new OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-				cmb.setPrimaryClip(ClipData.newPlainText(null, cities[which]));
+				cmb.setPrimaryClip(ClipData.newPlainText(null, number[which]));
 				Toast.makeText(getApplication(), R.string.copy_success,
 						Toast.LENGTH_SHORT).show();
 			}

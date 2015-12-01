@@ -106,6 +106,14 @@
             android:name="com.android.tengfenxiang.activity.InviteCodeActivity"
             android:label="@string/invite_others" >
         </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.TaskActivity"
+            android:label="@string/task_list" >
+        </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.ArticleActivity"
+            android:label="@string/article_list" >
+        </activity>
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.tengfenxiang.R;
@@ -53,6 +54,7 @@ public class MessageListAdapter extends BaseAdapter {
 			viewHolder.content = (TextView) convertView
 					.findViewById(R.id.content);
 			viewHolder.time = (TextView) convertView.findViewById(R.id.time);
+			viewHolder.arrow = (ImageView) convertView.findViewById(R.id.arrow);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -62,8 +64,10 @@ public class MessageListAdapter extends BaseAdapter {
 		viewHolder.isOpen = isOpen.get(position);
 		if (viewHolder.isOpen) {
 			viewHolder.content.setSingleLine(false);
+			viewHolder.arrow.setVisibility(View.INVISIBLE);
 		} else {
 			viewHolder.content.setSingleLine(true);
+			viewHolder.arrow.setVisibility(View.VISIBLE);
 		}
 		viewHolder.content.setText(messages.get(position).getDetail());
 		viewHolder.time.setText(messages.get(position).getCreateDate());
@@ -75,6 +79,7 @@ public class MessageListAdapter extends BaseAdapter {
 		public TextView title;
 		public TextView content;
 		public TextView time;
+		public ImageView arrow;
 		public boolean isOpen = true;
 	}
 }

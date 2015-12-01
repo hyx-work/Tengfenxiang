@@ -11,6 +11,7 @@
         android:background="@color/title_bar_color"
         android:gravity="center_vertical"
         titlebar:titleLeftImg="@drawable/left_arrow"
+        titlebar:titleRightImg="@drawable/share_btn"
         titlebar:titleTextColor="@color/white" />
 
     <WebView

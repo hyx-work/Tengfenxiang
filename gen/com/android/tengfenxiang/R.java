@@ -10,6 +10,8 @@ package com.android.tengfenxiang;
 public final class R {
     public static final class anim {
         public static final int dialog_load_animation=0x7f040000;
+        public static final int push_bottom_in=0x7f040001;
+        public static final int push_bottom_out=0x7f040002;
     }
     public static final class attr {
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
@@ -72,18 +74,21 @@ containing a value of this type.
         public static final int icon_loading=0x7f020004;
         public static final int left_arrow=0x7f020005;
         public static final int loading_dialog_bg=0x7f020006;
-        public static final int right_arrow=0x7f020007;
-        public static final int right_arrow_dark=0x7f020008;
-        public static final int save_btn=0x7f020009;
-        public static final int share_btn=0x7f02000a;
-        public static final int xlistview_arrow=0x7f02000b;
+        public static final int moment_icon=0x7f020007;
+        public static final int right_arrow=0x7f020008;
+        public static final int right_arrow_dark=0x7f020009;
+        public static final int save_btn=0x7f02000a;
+        public static final int share_btn=0x7f02000b;
+        public static final int wechat_icon=0x7f02000c;
+        public static final int xlistview_arrow=0x7f02000d;
     }
     public static final class id {
-        public static final int alipay_account=0x7f090039;
-        public static final int alipay_account_layout=0x7f090038;
-        public static final int apply_button=0x7f09003a;
+        public static final int alipay_account=0x7f09003f;
+        public static final int alipay_account_layout=0x7f09003e;
+        public static final int apply_button=0x7f090040;
         public static final int arrow=0x7f090014;
         public static final int button=0x7f09000d;
+        public static final int cancel_btn=0x7f09002f;
         public static final int confirm_button=0x7f090021;
         public static final int confirm_password=0x7f09001f;
         public static final int confirm_password_hint=0x7f09001e;
@@ -91,6 +96,8 @@ containing a value of this type.
         public static final int content=0x7f090017;
         public static final int dialog_view=0x7f090010;
         public static final int head=0x7f090026;
+        public static final int hint_text=0x7f09002e;
+        public static final int icons=0x7f09002b;
         public static final int img=0x7f090011;
         public static final int info=0x7f090023;
         public static final int infomation=0x7f09000a;
@@ -106,51 +113,54 @@ containing a value of this type.
         public static final int logo=0x7f090001;
         public static final int main_tabs=0x7f090004;
         public static final int messages=0x7f090013;
+        public static final int moment_btn=0x7f09002d;
         public static final int new_password=0x7f09001c;
         public static final int new_password_hint=0x7f09001b;
         public static final int old_password=0x7f090019;
         public static final int old_password_hint=0x7f090018;
         public static final int person_info=0x7f090028;
-        public static final int phone=0x7f090032;
+        public static final int phone=0x7f090038;
+        public static final int pop_layout=0x7f09002a;
         public static final int radio_button0=0x7f090005;
         public static final int radio_button1=0x7f090006;
         public static final int radio_button2=0x7f090007;
         public static final int radio_button3=0x7f090008;
-        public static final int recent_list=0x7f09002d;
-        public static final int records_list=0x7f09003e;
-        public static final int rencent_info=0x7f09002c;
-        public static final int signin_button=0x7f09002a;
-        public static final int signin_date=0x7f09002e;
-        public static final int signin_profit=0x7f090030;
-        public static final int signin_status=0x7f09002f;
+        public static final int recent_list=0x7f090033;
+        public static final int records_list=0x7f090044;
+        public static final int rencent_info=0x7f090032;
+        public static final int signin_button=0x7f090030;
+        public static final int signin_date=0x7f090034;
+        public static final int signin_profit=0x7f090036;
+        public static final int signin_status=0x7f090035;
         public static final int simple_list=0x7f090003;
-        public static final int subordinate_info=0x7f090031;
+        public static final int subordinate_info=0x7f090037;
         public static final int summary=0x7f090022;
         public static final int time=0x7f090016;
         public static final int tipTextView=0x7f090012;
         public static final int title=0x7f090015;
         public static final int title_bar=0x7f090000;
-        public static final int today_info=0x7f09002b;
-        public static final int top_bar=0x7f09003b;
-        public static final int unit_yuan=0x7f090036;
+        public static final int today_info=0x7f090031;
+        public static final int top_bar=0x7f090041;
+        public static final int unit_yuan=0x7f09003c;
         public static final int user_head=0x7f090025;
-        public static final int user_info_list=0x7f090033;
+        public static final int user_info_list=0x7f090039;
         public static final int value=0x7f090024;
         public static final int viewpager=0x7f09000b;
-        public static final int web_view=0x7f090034;
-        public static final int withdraw_count=0x7f09003d;
-        public static final int withdraw_data=0x7f09003c;
-        public static final int withdraw_points=0x7f090037;
-        public static final int withdrawable_points=0x7f090035;
-        public static final int xlistview_footer_content=0x7f09003f;
-        public static final int xlistview_footer_hint_textview=0x7f090041;
-        public static final int xlistview_footer_progressbar=0x7f090040;
-        public static final int xlistview_header_arrow=0x7f090046;
-        public static final int xlistview_header_content=0x7f090042;
-        public static final int xlistview_header_hint_textview=0x7f090044;
-        public static final int xlistview_header_progressbar=0x7f090047;
-        public static final int xlistview_header_text=0x7f090043;
-        public static final int xlistview_header_time=0x7f090045;
+        public static final int web_view=0x7f09003a;
+        public static final int wechat_btn=0x7f09002c;
+        public static final int withdraw_count=0x7f090043;
+        public static final int withdraw_data=0x7f090042;
+        public static final int withdraw_points=0x7f09003d;
+        public static final int withdrawable_points=0x7f09003b;
+        public static final int xlistview_footer_content=0x7f090045;
+        public static final int xlistview_footer_hint_textview=0x7f090047;
+        public static final int xlistview_footer_progressbar=0x7f090046;
+        public static final int xlistview_header_arrow=0x7f09004c;
+        public static final int xlistview_header_content=0x7f090048;
+        public static final int xlistview_header_hint_textview=0x7f09004a;
+        public static final int xlistview_header_progressbar=0x7f09004d;
+        public static final int xlistview_header_text=0x7f090049;
+        public static final int xlistview_header_time=0x7f09004b;
     }
     public static final class layout {
         public static final int about=0x7f030000;
@@ -170,18 +180,19 @@ containing a value of this type.
         public static final int person_info=0x7f03000e;
         public static final int person_info_list_item=0x7f03000f;
         public static final int select_infos_layout=0x7f030010;
-        public static final int signin=0x7f030011;
-        public static final int signin_info_item=0x7f030012;
-        public static final int simple_list_item=0x7f030013;
-        public static final int subordinate=0x7f030014;
-        public static final int task=0x7f030015;
-        public static final int user_info=0x7f030016;
-        public static final int web_activity=0x7f030017;
-        public static final int welcome=0x7f030018;
-        public static final int withdraw_apply=0x7f030019;
-        public static final int withdraw_records=0x7f03001a;
-        public static final int xlistview_footer=0x7f03001b;
-        public static final int xlistview_header=0x7f03001c;
+        public static final int share_menu=0x7f030011;
+        public static final int signin=0x7f030012;
+        public static final int signin_info_item=0x7f030013;
+        public static final int simple_list_item=0x7f030014;
+        public static final int subordinate=0x7f030015;
+        public static final int task=0x7f030016;
+        public static final int user_info=0x7f030017;
+        public static final int web_activity=0x7f030018;
+        public static final int welcome=0x7f030019;
+        public static final int withdraw_apply=0x7f03001a;
+        public static final int withdraw_records=0x7f03001b;
+        public static final int xlistview_footer=0x7f03001c;
+        public static final int xlistview_header=0x7f03001d;
     }
     public static final class string {
         public static final int about_app=0x7f070015;
@@ -191,8 +202,9 @@ containing a value of this type.
         public static final int apply_withdraw=0x7f070025;
         public static final int apply_withdraw_points=0x7f070023;
         public static final int article_list=0x7f07004d;
+        public static final int cancel=0x7f07005e;
         public static final int change_head=0x7f07003b;
-        public static final int clear_cache_success=0x7f07004f;
+        public static final int clear_cache_success=0x7f070052;
         public static final int confirm_modify=0x7f070048;
         public static final int confirm_password=0x7f070046;
         public static final int confirm_password_hint=0x7f070047;
@@ -201,7 +213,7 @@ containing a value of this type.
         public static final int different_password=0x7f07004a;
         public static final int edit_nickname_title=0x7f070034;
         public static final int edit_wechat_title=0x7f070033;
-        public static final int empty_input=0x7f07005a;
+        public static final int empty_input=0x7f07005d;
         public static final int empty_old_password=0x7f070049;
         public static final int feedback=0x7f070018;
         public static final int female=0x7f070038;
@@ -245,6 +257,7 @@ containing a value of this type.
         public static final int select_from_gallery=0x7f07003c;
         public static final int select_gender_title=0x7f070036;
         public static final int select_qq_number=0x7f07001c;
+        public static final int share_title=0x7f07004e;
         public static final int signin=0x7f070005;
         public static final int signin_success=0x7f070008;
         public static final int signin_today=0x7f070006;
@@ -253,33 +266,39 @@ containing a value of this type.
         public static final int task_list=0x7f07004c;
         public static final int today_signin=0x7f070040;
         public static final int total_points=0x7f070012;
-        public static final int try_now=0x7f07004e;
-        public static final int unit_people=0x7f070057;
-        public static final int unit_point=0x7f070059;
-        public static final int unit_yuan=0x7f070058;
-        public static final int unknow_error=0x7f070056;
+        public static final int try_now=0x7f070051;
+        public static final int unit_people=0x7f07005a;
+        public static final int unit_point=0x7f07005c;
+        public static final int unit_yuan=0x7f07005b;
+        public static final int unknow_error=0x7f070059;
         public static final int user_head=0x7f07002a;
         public static final int user_info=0x7f07003f;
         public static final int wechat_account=0x7f07002c;
+        public static final int wechat_friend=0x7f07004f;
+        public static final int wechat_moment=0x7f070050;
         public static final int withdraw_apply=0x7f070022;
         public static final int withdraw_count=0x7f070021;
         public static final int withdraw_data=0x7f070020;
         public static final int withdraw_points=0x7f070013;
         public static final int withdraw_records=0x7f07001f;
         public static final int withdrawable_points=0x7f070014;
-        public static final int xlistview_footer_hint_normal=0x7f070054;
-        public static final int xlistview_footer_hint_ready=0x7f070055;
-        public static final int xlistview_header_hint_loading=0x7f070052;
-        public static final int xlistview_header_hint_normal=0x7f070050;
-        public static final int xlistview_header_hint_ready=0x7f070051;
-        public static final int xlistview_header_last_time=0x7f070053;
+        public static final int xlistview_footer_hint_normal=0x7f070057;
+        public static final int xlistview_footer_hint_ready=0x7f070058;
+        public static final int xlistview_header_hint_loading=0x7f070055;
+        public static final int xlistview_header_hint_normal=0x7f070053;
+        public static final int xlistview_header_hint_ready=0x7f070054;
+        public static final int xlistview_header_last_time=0x7f070056;
         public static final int yesterday_points=0x7f070011;
         public static final int zero_warn=0x7f070027;
     }
     public static final class style {
+        public static final int AnimBottom=0x7f080005;
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+
+
 
 
     
@@ -287,6 +306,9 @@ containing a value of this type.
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
+
+
 
 
         

@@ -94,8 +94,6 @@ public class MessageActivity extends Activity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				System.err.println(response);
-
 				ResponseResult result = JSON.parseObject(response,
 						ResponseResult.class);
 				messages = JSON.parseArray(result.getData().toString(),

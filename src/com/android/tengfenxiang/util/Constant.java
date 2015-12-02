@@ -19,6 +19,11 @@ public class Constant {
 	public final static String LOGIN_URL = SERVER_ADDRESS + "/user/login/";
 
 	/**
+	 * 注销的URL
+	 */
+	public final static String LOGOUT_URL = SERVER_ADDRESS + "/user/logout/";
+
+	/**
 	 * 修改密码的URL
 	 */
 	public final static String MODIFY_PASSWORD_URL = SERVER_ADDRESS
@@ -105,9 +110,10 @@ public class Constant {
 	 */
 	public final static String MESSAGE_URL = SERVER_ADDRESS
 			+ "/system/message/list/";
-	
+
 	/**
 	 * 获取QQ群和客服电话的URL
 	 */
-	public final static String SETTING_URL = SERVER_ADDRESS + "/static/config.json";
+	public final static String SETTING_URL = SERVER_ADDRESS
+			+ "/static/config.json";
 }

@@ -37,14 +37,16 @@ public class ProvinceActivity extends Activity {
 	private void initView() {
 		getProvinces();
 		provinceListView = (ListView) findViewById(R.id.list);
-		SimpleListAdapter adapter = new SimpleListAdapter(ProvinceActivity.this, name);
+		SimpleListAdapter adapter = new SimpleListAdapter(
+				ProvinceActivity.this, name);
 		provinceListView.setAdapter(adapter);
 		provinceListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Intent intent = new Intent(ProvinceActivity.this, CityActivity.class);
+				Intent intent = new Intent(ProvinceActivity.this,
+						CityActivity.class);
 				intent.putExtra("provinceCode", code.get(arg2));
 				startActivityForResult(intent, 0);
 			}
@@ -74,10 +76,10 @@ public class ProvinceActivity extends Activity {
 		}
 	}
 
-	@Override  
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {  
-	    if(requestCode==0 && resultCode==-1) {  
-	        finish();  
-	    }  
-	} 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 0 && resultCode == -1) {
+			finish();
+		}
+	}
 }

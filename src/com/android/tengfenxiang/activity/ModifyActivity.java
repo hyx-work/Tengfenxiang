@@ -151,7 +151,6 @@ public class ModifyActivity extends Activity {
 				}
 				Toast.makeText(getApplication(), R.string.unknow_error,
 						Toast.LENGTH_SHORT).show();
-				finish();
 			}
 		};
 		StringRequest stringRequest = new StringRequest(Method.POST, url,

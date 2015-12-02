@@ -1,6 +1,7 @@
 package com.android.tengfenxiang.view.xlistview;
 
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.view.xlistview.XListViewFooter.OnLoadMoreClick;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,7 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 
-public class XListView extends ListView implements OnScrollListener {
+public class XListView extends ListView implements OnScrollListener,
+		OnLoadMoreClick {
 
 	private float mLastY = -1;
 	private Scroller mScroller;
@@ -74,6 +76,7 @@ public class XListView extends ListView implements OnScrollListener {
 		addHeaderView(mHeaderView);
 
 		mFooterView = new XListViewFooter(context);
+		mFooterView.setListener(this);
 
 		mHeaderView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new OnGlobalLayoutListener() {
@@ -302,5 +305,11 @@ public class XListView extends ListView implements OnScrollListener {
 		public void onRefresh();
 
 		public void onLoadMore();
+	}
+
+	@Override
+	public void onLoadMore() {
+		// TODO Auto-generated method stub
+		startLoadMore();
 	}
 }

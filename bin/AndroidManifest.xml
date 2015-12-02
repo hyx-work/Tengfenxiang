@@ -114,6 +114,10 @@
             android:name="com.android.tengfenxiang.activity.ArticleActivity"
             android:label="@string/article_list" >
         </activity>
+        <activity
+            android:name="com.android.tengfenxiang.activity.SettingActivity"
+            android:label="@string/system_setting" >
+        </activity>
     </application>
 
 </manifest>

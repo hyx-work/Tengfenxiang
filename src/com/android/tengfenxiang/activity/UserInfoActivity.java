@@ -60,6 +60,7 @@ public class UserInfoActivity extends Activity {
 		infos.add(getString(R.string.person_info));
 		infos.add(getString(R.string.today_signin));
 		infos.add(getString(R.string.my_subordinate));
+		infos.add(getString(R.string.system_setting));
 		infos.add(getString(R.string.system_message));
 		infos.add(getString(R.string.about_app));
 		SimpleListAdapter adapter = new SimpleListAdapter(
@@ -81,8 +82,7 @@ public class UserInfoActivity extends Activity {
 							PersonInfoActivity.class);
 					break;
 				case 1:
-					intent.setClass(UserInfoActivity.this,
-							SigninActivity.class);
+					intent.setClass(UserInfoActivity.this, SigninActivity.class);
 					break;
 				case 2:
 					intent.setClass(UserInfoActivity.this,
@@ -90,11 +90,14 @@ public class UserInfoActivity extends Activity {
 					break;
 				case 3:
 					intent.setClass(UserInfoActivity.this,
+							SettingActivity.class);
+					break;
+				case 4:
+					intent.setClass(UserInfoActivity.this,
 							MessageActivity.class);
 					break;
 				default:
-					intent.setClass(UserInfoActivity.this,
-							AboutActivity.class);
+					intent.setClass(UserInfoActivity.this, AboutActivity.class);
 					break;
 				}
 				startActivity(intent);

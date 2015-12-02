@@ -19,6 +19,9 @@
     <string name="have_signin">已签到</string>
     <string name="not_signin">未签到</string>
 
+    <string name="system_setting">系统设置</string>
+    <string name="logout">注销登录</string>
+    <string name="clear_cache">清除缓存</string>
     <string name="system_message">系统消息</string>
 
     <string name="my_profit">我的收益</string>
@@ -109,5 +112,6 @@
     <string name="unit_point">分</string>
     <string name="empty_input">输入内容不能为空</string>
     <string name="cancel">取消</string>
+    <string name="double_click_exit">再按一次退出程序</string>
 
 </resources>

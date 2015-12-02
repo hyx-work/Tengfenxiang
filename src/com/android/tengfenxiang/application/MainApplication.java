@@ -2,17 +2,20 @@ package com.android.tengfenxiang.application;
 
 import android.app.Application;
 
+import com.android.tengfenxiang.activity.MainActivity;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.ImageLoadTools;
 
 /**
  * 复写application，初始化图片加载的参数
+ * 
  * @author ccz
- *
+ * 
  */
 public class MainApplication extends Application {
 
 	private static User currentUser;
+	private static MainActivity mainActivity;
 
 	public void onCreate() {
 		super.onCreate();
@@ -35,6 +38,20 @@ public class MainApplication extends Application {
 	@SuppressWarnings("static-access")
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
+	}
+
+	public MainActivity getMainActivity() {
+		return mainActivity;
+	}
+
+	@SuppressWarnings("static-access")
+	public void setMainActivity(MainActivity mainActivity) {
+		this.mainActivity = mainActivity;
+	}
+
+	public void logout() {
+		mainActivity.finish();
+		currentUser = null;
 	}
 
 }

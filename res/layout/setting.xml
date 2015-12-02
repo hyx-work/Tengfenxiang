@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:titlebar="http://schemas.android.com/apk/res/com.android.tengfenxiang"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.android.tengfenxiang.view.titlebar.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_bar_color"
+        android:gravity="center_vertical"
+        titlebar:title="@string/system_setting"
+        titlebar:titleLeftImg="@drawable/left_arrow"
+        titlebar:titleTextColor="@color/white" >
+    </com.android.tengfenxiang.view.titlebar.TitleBar>
+
+    <ListView
+        android:id="@+id/modify_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title_bar" >
+    </ListView>
+
+    <ListView
+        android:id="@+id/clear_cache"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/modify_password" >
+    </ListView>
+
+    <Button
+        android:id="@+id/logout_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/clear_cache"
+        android:layout_margin="10dp"
+        android:text="@string/logout"
+        android:textSize="20sp" />
+
+</RelativeLayout>

@@ -4,13 +4,10 @@ import java.util.ArrayList;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.android.tengfenxiang.application.MainApplication;
-import com.android.tengfenxiang.bean.User;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -21,10 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class UserInfoActivity extends Activity {
-
-	private User currentUser;
-	private MainApplication application;
+public class UserInfoActivity extends BaseActivity {
 
 	private ListView userInfoListView;
 	private TextView phoneTextView;
@@ -35,16 +29,12 @@ public class UserInfoActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
-
-		application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		currentUser = application.getCurrentUser();
 		initView();
 	}
 

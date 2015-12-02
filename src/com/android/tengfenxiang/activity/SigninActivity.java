@@ -5,9 +5,7 @@ import java.util.Map;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SigninListAdapter;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.SigninStatus;
-import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.util.ResponseTools;
@@ -21,7 +19,6 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,7 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SigninActivity extends Activity {
+public class SigninActivity extends BaseActivity {
 
 	private TextView statusTextView;
 	private Button signinButton;
@@ -39,7 +36,6 @@ public class SigninActivity extends Activity {
 	private SigninStatus signinStatus;
 	private SigninListAdapter adapter;
 
-	private User currentUser;
 	private LoadingDialog dialog;
 	private TitleBar titleBar;
 
@@ -48,9 +44,6 @@ public class SigninActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.signin);
-
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();

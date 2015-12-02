@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
@@ -19,13 +18,12 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class EditActivity extends Activity {
+public class EditActivity extends BaseActivity {
 
 	private String attributeName;
 	private String attributeValue;
@@ -34,7 +32,6 @@ public class EditActivity extends Activity {
 	private EditText information;
 	private TitleBar titleBar;
 
-	private User currentUser;
 	private LoadingDialog dialog;
 
 	@Override
@@ -43,10 +40,7 @@ public class EditActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit);
 
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 		Intent intent = getIntent();
-
 		// 提交到后台接收的属性名称
 		attributeName = intent.getStringExtra("attributeName");
 		// 提交到后台接收的属性值
@@ -99,9 +93,7 @@ public class EditActivity extends Activity {
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
-					MainApplication application = ((MainApplication) getApplication());
-					currentUser = result;
-					application.setCurrentUser(currentUser);
+					application.setCurrentUser(result);
 					finish();
 				}
 			}

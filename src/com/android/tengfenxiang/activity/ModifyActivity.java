@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.application.MainApplication;
-import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.util.ResponseTools;
@@ -19,7 +17,6 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -30,9 +27,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ModifyActivity extends Activity {
+public class ModifyActivity extends BaseActivity {
 
-	private User currentUser;
 	private LoadingDialog dialog;
 	private TitleBar titleBar;
 
@@ -49,12 +45,8 @@ public class ModifyActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.modify_password);
 
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
-
 		preferences = getSharedPreferences(getPackageName(),
 				Context.MODE_PRIVATE);
-
 		dialog = new LoadingDialog(this);
 		initView();
 	}

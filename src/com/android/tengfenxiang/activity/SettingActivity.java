@@ -6,8 +6,6 @@ import java.util.Map;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.android.tengfenxiang.application.MainApplication;
-import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.ImageLoadTools;
 import com.android.tengfenxiang.util.RequestManager;
@@ -22,7 +20,6 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,25 +30,20 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class SettingActivity extends Activity {
+public class SettingActivity extends BaseActivity {
 
 	private TitleBar titleBar;
 	private LoadingDialog dialog;
-	private User currentUser;
 
 	private Button logoutButton;
 	private ListView modifyListView;
 	private ListView cacheListView;
-	private MainApplication application;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.setting);
-
-		application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 
 		dialog = new LoadingDialog(this);
 		initView();

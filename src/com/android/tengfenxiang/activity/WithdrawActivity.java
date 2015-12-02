@@ -9,9 +9,7 @@ import java.util.Locale;
 import com.alibaba.fastjson.JSON;
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.WithdrawListAdapter;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.ResponseResult;
-import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.bean.Withdraw;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
@@ -25,17 +23,15 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-public class WithdrawActivity extends Activity implements IXListViewListener {
+public class WithdrawActivity extends BaseActivity implements
+		IXListViewListener {
 
 	private TitleBar titleBar;
 	private XListView recordsList;
 	private LoadingDialog dialog;
-
-	private User currentUser;
 
 	/**
 	 * 每页显示10条数据
@@ -53,9 +49,6 @@ public class WithdrawActivity extends Activity implements IXListViewListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.withdraw_records);
-
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 
 		withdraws = new ArrayList<Withdraw>();
 		dialog = new LoadingDialog(this);

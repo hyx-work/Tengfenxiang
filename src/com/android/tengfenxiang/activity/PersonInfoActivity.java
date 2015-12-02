@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.PersonInfoListAdapter;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.CityInfo;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.CityUtil;
@@ -26,7 +25,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,15 +42,10 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class PersonInfoActivity extends Activity {
+public class PersonInfoActivity extends BaseActivity {
 
 	private ListView userInfos;
-
-	private User currentUser;
-
 	private PersonInfoListAdapter adapter;
-	private MainApplication application;
-
 	private ImageView headImageView;
 	private RelativeLayout headLayout;
 	private TitleBar titleBar;
@@ -71,9 +64,6 @@ public class PersonInfoActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.person_info);
-
-		application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 
 		dialog = new LoadingDialog(this);
 	}
@@ -379,9 +369,8 @@ public class PersonInfoActivity extends Activity {
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
-					MainApplication application = ((MainApplication) getApplication());
-					currentUser = result;
-					application.setCurrentUser(currentUser);
+					// currentUser = result;
+					application.setCurrentUser(result);
 					loadHead();
 				}
 			}

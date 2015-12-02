@@ -1,39 +1,43 @@
 package com.android.tengfenxiang.activity;
 
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.adapter.NewPagerAdapter;
+import com.android.tengfenxiang.view.tab.CategoryTabStrip;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 
-public class ArticleActivity extends BaseActivity {
+public class ArticleActivity extends FragmentActivity {
+	private CategoryTabStrip tabs;
+	private ViewPager pager;
+	private NewPagerAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		setContentView(initResource());
+		initComponent();
 	}
 
-	@Override
+	/**
+	 * 初始化布局资源文件
+	 */
 	public int initResource() {
-		// TODO Auto-generated method stub
 		return R.layout.article;
 	}
 
-	@Override
+	/**
+	 * 初始化组件
+	 */
 	public void initComponent() {
-		// TODO Auto-generated method stub
+		tabs = (CategoryTabStrip) findViewById(R.id.category_strip);
+		pager = (ViewPager) findViewById(R.id.view_pager);
+		adapter = new NewPagerAdapter(getSupportFragmentManager());
 
-	}
-
-	@Override
-	public void initData() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addListener() {
-		// TODO Auto-generated method stub
-
+		pager.setAdapter(adapter);
+		tabs.setViewPager(pager);
 	}
 
 }

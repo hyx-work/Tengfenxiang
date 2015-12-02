@@ -6,10 +6,8 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.MessageListAdapter;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.Message;
 import com.android.tengfenxiang.bean.ResponseResult;
-import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
@@ -20,7 +18,6 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,7 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MessageActivity extends Activity {
+public class MessageActivity extends BaseActivity {
 
 	private ListView messageListView;
 	private List<Message> messages;
@@ -36,16 +33,12 @@ public class MessageActivity extends Activity {
 
 	private TitleBar titleBar;
 	private LoadingDialog dialog;
-	private User currentUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.message);
-
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();

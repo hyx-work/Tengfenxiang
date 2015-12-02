@@ -19,7 +19,6 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -36,7 +35,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends BaseActivity {
 
 	private ListView linkListView;
 	private ListView simpleListView;
@@ -96,7 +95,15 @@ public class AboutActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				if (0 == arg2) {
-					showDialog();
+					if (qqGroup.size() > 1) {
+						showDialog();
+					} else {
+						ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+						cmb.setPrimaryClip(ClipData.newPlainText(null,
+								getQQGroupInfo()));
+						Toast.makeText(getApplication(), R.string.copy_success,
+								Toast.LENGTH_SHORT).show();
+					}
 				} else {
 					Uri uri = Uri.parse("tel:" + phone);
 					Intent intent = new Intent(Intent.ACTION_DIAL, uri);
@@ -175,7 +182,7 @@ public class AboutActivity extends Activity {
 	private String getQQGroupInfo() {
 		StringBuffer buffer = new StringBuffer();
 		for (int i = 0; i < qqGroup.size(); i++) {
-			buffer.append(qqGroup.get(i)).append("  ");
+			buffer.append(qqGroup.get(i)).append(" ");
 		}
 		buffer.deleteCharAt(buffer.length() - 1);
 		return buffer.toString();

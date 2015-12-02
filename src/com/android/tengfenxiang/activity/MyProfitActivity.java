@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.MyProfitListAdapter;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.Summary;
-import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.util.ResponseTools;
@@ -16,7 +14,6 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -25,11 +22,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MyProfitActivity extends Activity {
+public class MyProfitActivity extends BaseActivity {
 
 	private ListView summaryListView;
 
-	private User currentUser;
 	private Summary summary;
 	private ArrayList<String> titles = new ArrayList<String>();
 
@@ -40,9 +36,6 @@ public class MyProfitActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.my_profit);
-
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();

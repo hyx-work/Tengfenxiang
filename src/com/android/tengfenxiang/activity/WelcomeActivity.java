@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
@@ -20,13 +19,12 @@ import com.android.volley.toolbox.StringRequest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends BaseActivity {
 
 	private final int SPLASH_DISPLAY_LENGHT = 2000;
 	private SharedPreferences preferences;
@@ -82,10 +80,9 @@ public class WelcomeActivity extends Activity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				MainApplication application = ((MainApplication) getApplication());
-				User user = (User) ResponseTools.handleResponse(
+				currentUser = (User) ResponseTools.handleResponse(
 						getApplication(), response, User.class);
-				application.setCurrentUser(user);
+				application.setCurrentUser(currentUser);
 
 				Intent intent = new Intent(WelcomeActivity.this,
 						MainActivity.class);

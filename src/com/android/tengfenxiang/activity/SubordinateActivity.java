@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.Subordinate;
-import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.util.ResponseTools;
@@ -18,15 +16,13 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class SubordinateActivity extends Activity {
+public class SubordinateActivity extends BaseActivity {
 
 	private Subordinate subordinate;
-	private User currentUser;
 
 	private ListView subordinateListView;
 	private TitleBar titleBar;
@@ -37,9 +33,6 @@ public class SubordinateActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.subordinate);
-
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();

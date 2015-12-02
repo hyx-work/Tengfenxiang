@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
@@ -21,7 +20,6 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,9 +27,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class GenderActivity extends Activity {
+public class GenderActivity extends BaseActivity {
 
-	private User currentUser;
 	private ListView genderListView;
 	private LoadingDialog dialog;
 	private TitleBar titleBar;
@@ -42,10 +39,7 @@ public class GenderActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.select_infos_layout);
 
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 		dialog = new LoadingDialog(this);
-
 		initView();
 	}
 
@@ -98,9 +92,7 @@ public class GenderActivity extends Activity {
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
-					MainApplication application = ((MainApplication) getApplication());
-					currentUser = result;
-					application.setCurrentUser(currentUser);
+					application.setCurrentUser(result);
 					finish();
 				}
 			}

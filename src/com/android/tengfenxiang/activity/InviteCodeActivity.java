@@ -1,14 +1,11 @@
 package com.android.tengfenxiang.activity;
 
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.application.MainApplication;
-import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.QRCodeUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,13 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class InviteCodeActivity extends Activity {
+public class InviteCodeActivity extends BaseActivity {
 
 	private TitleBar titleBar;
 	private ImageView codeImageView;
 	private TextView codeTextView;
 
-	private User currentUser;
 	private Bitmap codeBitmap;
 	private LoadingDialog dialog;
 
@@ -45,9 +41,6 @@ public class InviteCodeActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.invite_code);
-
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();

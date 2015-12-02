@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.application.MainApplication;
-import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.util.ResponseTools;
@@ -19,7 +17,6 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -30,9 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ApplyWithdrawActivity extends Activity {
-
-	private User currentUser;
+public class ApplyWithdrawActivity extends BaseActivity {
 
 	private TitleBar titleBar;
 	private TextView withdrawableTextView;
@@ -42,7 +37,6 @@ public class ApplyWithdrawActivity extends Activity {
 	private RelativeLayout alipayLayout;
 
 	private LoadingDialog dialog;
-	private MainApplication application;
 	private float withdrawPoints;
 
 	@Override
@@ -51,10 +45,8 @@ public class ApplyWithdrawActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.withdraw_apply);
 
-		application = ((MainApplication) getApplication());
 		Intent intent = getIntent();
 		withdrawPoints = intent.getFloatExtra("withdrawPoints", 1);
-
 		dialog = new LoadingDialog(this);
 	}
 
@@ -138,7 +130,8 @@ public class ApplyWithdrawActivity extends Activity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Object result = ResponseTools.handleResponse(getApplication(), response, null);
+				Object result = ResponseTools.handleResponse(getApplication(),
+						response, null);
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.submit_success,
 							Toast.LENGTH_SHORT).show();

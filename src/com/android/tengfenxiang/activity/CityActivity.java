@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.CityInfo;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.CityUtil;
@@ -24,7 +23,6 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,7 +31,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class CityActivity extends Activity {
+public class CityActivity extends BaseActivity {
 	private TitleBar titleBar;
 	private ListView cityListView;
 	private ArrayList<String> code = new ArrayList<String>();
@@ -41,7 +39,6 @@ public class CityActivity extends Activity {
 	private String provinceCode;
 	private LoadingDialog dialog;
 	private Intent intent;
-	private User currentUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +46,6 @@ public class CityActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.select_infos_layout);
 
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 		dialog = new LoadingDialog(this);
 		intent = getIntent();
 		provinceCode = intent.getStringExtra("provinceCode");
@@ -110,9 +105,7 @@ public class CityActivity extends Activity {
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
-					MainApplication application = ((MainApplication) getApplication());
-					currentUser = result;
-					application.setCurrentUser(currentUser);
+					application.setCurrentUser(result);
 					setResult(-1, intent);
 					finish();
 				}

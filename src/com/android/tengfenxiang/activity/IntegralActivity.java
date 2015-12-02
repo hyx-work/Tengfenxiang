@@ -1,9 +1,7 @@
 package com.android.tengfenxiang.activity;
 
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.Integral;
-import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.util.ResponseTools;
@@ -15,12 +13,11 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-public class IntegralActivity extends Activity {
+public class IntegralActivity extends BaseActivity {
 
 	private TitleBar titleBar;
 	private String title;
@@ -35,7 +32,6 @@ public class IntegralActivity extends Activity {
 	 */
 	private int isTotal;
 
-	private User currentUser;
 	private LoadingDialog dialog;
 	private Integral integral;
 
@@ -49,9 +45,6 @@ public class IntegralActivity extends Activity {
 		title = intent.getStringExtra("title");
 		profitData = intent.getStringExtra("profitData");
 		isTotal = intent.getIntExtra("isTotal", 1);
-
-		MainApplication application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();

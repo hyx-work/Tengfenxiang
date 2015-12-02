@@ -5,14 +5,13 @@ import com.android.tengfenxiang.view.dialog.SharePopupWindow;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class WebActivity extends Activity {
+public class WebActivity extends BaseActivity {
 	private TitleBar titleBar;
 	private String title;
 	private String url;

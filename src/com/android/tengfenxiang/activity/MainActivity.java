@@ -1,17 +1,12 @@
 package com.android.tengfenxiang.activity;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.application.MainApplication;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 public class MainActivity extends AbstractActivityGroup {
 
@@ -72,35 +67,4 @@ public class MainActivity extends AbstractActivityGroup {
 		}
 	}
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		// TODO Auto-generated method stub
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			exitBy2Click();
-			return true;
-		}
-		return false;
-	}
-
-	private static Boolean isExit = false;
-
-	private void exitBy2Click() {
-		Timer tExit = null;
-		if (isExit == false) {
-			isExit = true;
-			Toast.makeText(this, R.string.double_click_exit, Toast.LENGTH_SHORT)
-					.show();
-			tExit = new Timer();
-			tExit.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					isExit = false;
-				}
-			}, 2000);
-
-		} else {
-			finish();
-			System.exit(0);
-		}
-	}
 }

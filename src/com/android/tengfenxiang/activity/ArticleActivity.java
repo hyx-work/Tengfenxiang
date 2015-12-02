@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
 public class ArticleActivity extends FragmentActivity {
+
 	private CategoryTabStrip tabs;
 	private ViewPager pager;
 	private NewPagerAdapter adapter;
@@ -40,4 +41,8 @@ public class ArticleActivity extends FragmentActivity {
 		tabs.setViewPager(pager);
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+
+	}
 }

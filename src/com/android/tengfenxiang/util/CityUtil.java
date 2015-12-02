@@ -30,10 +30,14 @@ public class CityUtil {
 
 	public static CityUtil instance;
 
+	private final static String FILE_NAME = "city.json";
+	private final static String PROVINCE_NODE = "province";
+	private final static String CITY_NODE = "city";
+
 	private CityUtil(Context context) {
-		String area_str = FileUtil.readAssets(context, "city.json");
-		province_list = getJSONParserResult(area_str, "province");
-		city_map = getJSONParserResultArray(area_str, "city");
+		String area_str = FileUtil.readAssets(context, FILE_NAME);
+		province_list = getJSONParserResult(area_str, PROVINCE_NODE);
+		city_map = getJSONParserResultArray(area_str, CITY_NODE);
 	}
 
 	/**

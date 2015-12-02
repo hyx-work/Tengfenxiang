@@ -4,7 +4,7 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.Integral;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
-import com.android.tengfenxiang.util.ResponseTools;
+import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -80,7 +80,7 @@ public class IntegralActivity extends BaseActivity {
 			@Override
 			public void onResponse(String response) {
 				System.err.println(response);
-				integral = (Integral) ResponseTools.handleResponse(
+				integral = (Integral) ResponseUtil.handleResponse(
 						getApplication(), response, Integral.class);
 				initView();
 				if (dialog.isShowing()) {

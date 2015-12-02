@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.android.tengfenxiang.util.ImageLoadTools;
+import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.os.Bundle;
@@ -62,6 +62,6 @@ public class NewsFragment extends Fragment {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		ImageLoadTools.clearMemoryCache();
+		ImageLoadUtil.clearMemoryCache();
 	}
 }

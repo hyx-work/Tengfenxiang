@@ -7,9 +7,9 @@ import java.util.Map;
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.ImageLoadTools;
+import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.RequestManager;
-import com.android.tengfenxiang.util.ResponseTools;
+import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -22,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -38,6 +39,7 @@ public class SettingActivity extends BaseActivity {
 	private Button logoutButton;
 	private ListView modifyListView;
 	private ListView cacheListView;
+	private LocalBroadcastManager localBroadcastManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class SettingActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.setting);
 
+		localBroadcastManager = LocalBroadcastManager.getInstance(this);
 		dialog = new LoadingDialog(this);
 		initView();
 	}
@@ -80,7 +83,7 @@ public class SettingActivity extends BaseActivity {
 		ArrayList<String> cacheInfo = new ArrayList<String>();
 		final ArrayList<String> cacheValue = new ArrayList<String>();
 		cacheInfo.add(getString(R.string.clear_cache));
-		cacheValue.add(ImageLoadTools.getCacheSize(getApplication()));
+		cacheValue.add(ImageLoadUtil.getCacheSize(getApplication()));
 		final SimpleListAdapter cacheAdapter = new SimpleListAdapter(
 				SettingActivity.this, cacheInfo, cacheValue);
 		cacheListView = (ListView) findViewById(R.id.clear_cache);
@@ -90,10 +93,10 @@ public class SettingActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				ImageLoadTools.clearMemoryCache();
-				ImageLoadTools.clearDiskCache(getApplication());
+				ImageLoadUtil.clearMemoryCache();
+				ImageLoadUtil.clearDiskCache(getApplication());
 				cacheValue.remove(0);
-				cacheValue.add(ImageLoadTools.getCacheSize(getApplication()));
+				cacheValue.add(ImageLoadUtil.getCacheSize(getApplication()));
 				cacheAdapter.notifyDataSetChanged();
 			}
 		});
@@ -123,14 +126,17 @@ public class SettingActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Object result = ResponseTools.handleResponse(getApplication(),
+				Object result = ResponseUtil.handleResponse(getApplication(),
 						response, null);
 				if (null != result) {
 					Intent intent = new Intent(SettingActivity.this,
 							LoginActivity.class);
 					startActivity(intent);
 					finish();
-					application.logout();
+
+					// 发送广播，告诉主界面现在是登出操作
+					Intent broadcast = new Intent(getPackageName());
+					localBroadcastManager.sendBroadcast(broadcast);
 				}
 			}
 		};

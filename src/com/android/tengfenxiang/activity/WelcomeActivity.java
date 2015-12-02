@@ -7,7 +7,7 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
-import com.android.tengfenxiang.util.ResponseTools;
+import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.volley.AuthFailureError;
 import com.android.volley.VolleyError;
@@ -80,7 +80,7 @@ public class WelcomeActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				currentUser = (User) ResponseTools.handleResponse(
+				currentUser = (User) ResponseUtil.handleResponse(
 						getApplication(), response, User.class);
 				application.setCurrentUser(currentUser);
 
@@ -97,6 +97,15 @@ public class WelcomeActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
+
+				// 登录失败设置空的User对象
+				currentUser = new User();
+				application.setCurrentUser(currentUser);
+
+				Intent intent = new Intent(WelcomeActivity.this,
+						MainActivity.class);
+				startActivity(intent);
+				finish();
 				Toast.makeText(getApplication(), R.string.unknow_error,
 						Toast.LENGTH_SHORT).show();
 			}

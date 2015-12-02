@@ -6,7 +6,7 @@ import java.util.Map;
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
-import com.android.tengfenxiang.util.ResponseTools;
+import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -130,7 +130,7 @@ public class ApplyWithdrawActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Object result = ResponseTools.handleResponse(getApplication(),
+				Object result = ResponseUtil.handleResponse(getApplication(),
 						response, null);
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.submit_success,

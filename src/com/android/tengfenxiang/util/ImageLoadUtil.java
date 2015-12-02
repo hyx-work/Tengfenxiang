@@ -20,7 +20,7 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
  * @author ccz
  *
  */
-public class ImageLoadTools {
+public class ImageLoadUtil {
 	/**
 	 * 初始化ImageLoader对象
 	 * @param context
@@ -72,6 +72,6 @@ public class ImageLoadTools {
 	 */
 	public static String getCacheSize(Context context) {
 		File cacheDir = StorageUtils.getOwnCacheDirectory(context, "tengfenxiang/Cache");
-		return FileSizeTools.getFileSize(cacheDir.getPath());
+		return FileSizeUtil.getFileSize(cacheDir.getPath());
 	}
 }

@@ -62,4 +62,9 @@ public abstract class AbstractActivityGroup extends ActivityGroup implements
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 	}
 
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+	}
 }

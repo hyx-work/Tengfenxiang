@@ -9,4 +9,8 @@ public class TaskActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+
+	}
 }

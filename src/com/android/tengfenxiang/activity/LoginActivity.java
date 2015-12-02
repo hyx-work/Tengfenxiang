@@ -8,7 +8,7 @@ import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
-import com.android.tengfenxiang.util.ResponseTools;
+import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.volley.AuthFailureError;
 import com.android.volley.VolleyError;
@@ -54,7 +54,7 @@ public class LoginActivity extends Activity {
 					dialog.cancelDialog();
 				}
 				MainApplication application = ((MainApplication) getApplication());
-				User user = (User) ResponseTools.handleResponse(
+				User user = (User) ResponseUtil.handleResponse(
 						getApplication(), response, User.class);
 				application.setCurrentUser(user);
 

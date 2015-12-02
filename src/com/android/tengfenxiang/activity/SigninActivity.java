@@ -8,7 +8,7 @@ import com.android.tengfenxiang.adapter.SigninListAdapter;
 import com.android.tengfenxiang.bean.SigninStatus;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
-import com.android.tengfenxiang.util.ResponseTools;
+import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -112,7 +112,7 @@ public class SigninActivity extends BaseActivity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				signinStatus = (SigninStatus) ResponseTools.handleResponse(
+				signinStatus = (SigninStatus) ResponseUtil.handleResponse(
 						getApplication(), response, SigninStatus.class);
 				initView();
 				if (dialog.isShowing()) {
@@ -152,7 +152,7 @@ public class SigninActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Object result = ResponseTools.handleResponse(getApplication(), response, null);
+				Object result = ResponseUtil.handleResponse(getApplication(), response, null);
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.signin_success,
 							Toast.LENGTH_SHORT).show();

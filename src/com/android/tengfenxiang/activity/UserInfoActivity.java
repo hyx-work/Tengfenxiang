@@ -38,6 +38,11 @@ public class UserInfoActivity extends BaseActivity {
 		initView();
 	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+
+	}
+
 	private void initView() {
 		headImageView = (ImageView) findViewById(R.id.head);
 		loadHead();

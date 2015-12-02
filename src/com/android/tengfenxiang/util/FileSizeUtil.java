@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
  * @author ccz
  *
  */
-public class FileSizeTools {
+public class FileSizeUtil {
 	/**
 	 * 获取文件大小单位为B的double值
 	 */

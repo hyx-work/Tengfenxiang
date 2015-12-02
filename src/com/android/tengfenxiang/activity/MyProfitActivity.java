@@ -7,7 +7,7 @@ import com.android.tengfenxiang.adapter.MyProfitListAdapter;
 import com.android.tengfenxiang.bean.Summary;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
-import com.android.tengfenxiang.util.ResponseTools;
+import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
@@ -38,8 +38,19 @@ public class MyProfitActivity extends BaseActivity {
 		setContentView(R.layout.my_profit);
 
 		dialog = new LoadingDialog(this);
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 		dialog.showDialog();
 		getSummary(currentUser.getId());
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+
 	}
 
 	private void initView() {
@@ -114,7 +125,7 @@ public class MyProfitActivity extends BaseActivity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				summary = (Summary) ResponseTools.handleResponse(
+				summary = (Summary) ResponseUtil.handleResponse(
 						getApplication(), response, Summary.class);
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
@@ -129,6 +140,8 @@ public class MyProfitActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
+				summary = new Summary();
+				initView();
 				Toast.makeText(getApplication(), R.string.unknow_error,
 						Toast.LENGTH_SHORT).show();
 			}

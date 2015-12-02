@@ -252,6 +252,7 @@ containing a value of this type.
         public static final int my_subordinate=0x7f070002;
         public static final int my_subordinate_count=0x7f070003;
         public static final int my_subordinate_points=0x7f070004;
+        public static final int network_error=0x7f070063;
         public static final int new_password=0x7f070047;
         public static final int new_password_hint=0x7f070048;
         public static final int nickname=0x7f070030;

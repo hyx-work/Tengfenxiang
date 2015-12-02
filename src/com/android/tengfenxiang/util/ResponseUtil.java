@@ -12,7 +12,7 @@ import com.android.tengfenxiang.bean.ResponseResult;
  * @author ccz
  * 
  */
-public class ResponseTools {
+public class ResponseUtil {
 
 	/**
 	 * 处理服务器返回的响应信息

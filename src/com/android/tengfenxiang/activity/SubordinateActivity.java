@@ -7,7 +7,7 @@ import com.android.tengfenxiang.adapter.SimpleListAdapter;
 import com.android.tengfenxiang.bean.Subordinate;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
-import com.android.tengfenxiang.util.ResponseTools;
+import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -77,7 +77,7 @@ public class SubordinateActivity extends BaseActivity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				subordinate = (Subordinate) ResponseTools.handleResponse(
+				subordinate = (Subordinate) ResponseUtil.handleResponse(
 						getApplicationContext(), response, Subordinate.class);
 				initView();
 				if (dialog.isShowing()) {

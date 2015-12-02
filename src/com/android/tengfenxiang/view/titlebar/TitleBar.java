@@ -75,7 +75,8 @@ public class TitleBar extends RelativeLayout {
 		titleParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 		titleParams.addRule(Gravity.CENTER_VERTICAL, TRUE);
-		titleParams.setMargins(80, 0, 0, 0);
+		titleParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
+		titleParams.setMargins(0, 10, 0, 10);
 		addView(titleTextView, titleParams);
 
 		leftImageView.setOnClickListener(new OnClickListener() {

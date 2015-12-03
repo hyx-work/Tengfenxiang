@@ -2,8 +2,9 @@ package com.android.tengfenxiang.bean;
 
 /**
  * 任务实体类
+ * 
  * @author ccz
- *
+ * 
  */
 public class Task {
 
@@ -48,8 +49,7 @@ public class Task {
 	private String endTime;
 
 	/**
-	 * 任务的状态
-	 * status：0进行中、1已抢完、2已下线
+	 * 任务的状态 status：0下线、1进行中、2已抢完
 	 */
 	private int status;
 

@@ -93,7 +93,15 @@
     <string name="modify_success">修改成功</string>
 
     <string name="task_list">任务大厅</string>
+    <string name="empty_task_hint">当前没有任务</string>
+    <string name="task_price">浏览奖励:</string>
+    <string name="limit_count">投放次数:</string>
+    <string name="rest_count">剩余次数:</string>
+    <string name="begin_time">开始时间:</string>
+    <string name="end_time">结束时间:</string>
     <string name="article_list">文章中心</string>
+    <string name="view_count">阅读量:</string>
+    <string name="like_count">点赞:</string>
     <string name="share_title">分享获取收益</string>
     <string name="wechat_friend">微信朋友</string>
     <string name="wechat_moment">朋友圈</string>
@@ -112,6 +120,7 @@
     <string name="unit_point">分</string>
     <string name="empty_input">输入内容不能为空</string>
     <string name="cancel">取消</string>
+    <string name="share">分享</string>
     <string name="double_click_exit">再按一次退出程序</string>
     <string name="network_error">网络不可用，请检查你的网络设置</string>
 

@@ -99,6 +99,6 @@ public class SubordinateActivity extends BaseActivity {
 		};
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
-		RequestManager.getRequestQueue().add(request);
+		RequestManager.getRequestQueue(getApplication()).add(request);
 	}
 }

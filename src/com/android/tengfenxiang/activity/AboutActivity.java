@@ -226,6 +226,6 @@ public class AboutActivity extends BaseActivity {
 		};
 		JsonObjectRequest stringRequest = new JsonObjectRequest(url, null,
 				listener, errorListener);
-		RequestManager.getRequestQueue().add(stringRequest);
+		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
 	}
 }

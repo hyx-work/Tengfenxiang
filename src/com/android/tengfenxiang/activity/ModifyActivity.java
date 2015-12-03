@@ -156,7 +156,7 @@ public class ModifyActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue().add(stringRequest);
+		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
 	}
 
 	private void updatePassword(String newPassword) {

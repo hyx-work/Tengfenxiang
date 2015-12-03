@@ -39,7 +39,7 @@ public class LoginActivity extends Activity {
 		preferences = getSharedPreferences(getPackageName(),
 				Context.MODE_PRIVATE);
 		dialog = new LoadingDialog(this);
-		
+
 		dialog.showDialog();
 		login("13826473672", "cczccz");
 	}
@@ -97,6 +97,6 @@ public class LoginActivity extends Activity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue().add(stringRequest);
+		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
 	}
 }

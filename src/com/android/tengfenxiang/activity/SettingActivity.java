@@ -160,6 +160,6 @@ public class SettingActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue().add(stringRequest);
+		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
 	}
 }

@@ -133,7 +133,7 @@ public class CityActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue().add(stringRequest);
+		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
 	}
 
 	private void getProvinces() {

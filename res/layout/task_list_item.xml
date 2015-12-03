@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:contentDescription="@string/app_name" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/image"
+        android:paddingRight="10dp"
+        android:singleLine="true"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/image"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/right_arrow_dark" />
+
+    <TextView
+        android:id="@+id/price_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/image"
+        android:layout_toRightOf="@+id/image"
+        android:text="@string/task_price" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/price_hint"
+        android:layout_alignBottom="@+id/price_hint"
+        android:layout_toRightOf="@+id/price_hint"
+        android:textColor="@color/red" />
+
+    <TextView
+        android:id="@+id/limit_count_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/image"
+        android:layout_below="@+id/price"
+        android:text="@string/limit_count" />
+
+    <TextView
+        android:id="@+id/limit_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/limit_count_hint"
+        android:layout_alignBottom="@+id/limit_count_hint"
+        android:layout_toRightOf="@+id/limit_count_hint"
+        android:textColor="@color/red" />
+
+    <TextView
+        android:id="@+id/rest_count_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/limit_count_hint"
+        android:layout_alignBottom="@+id/limit_count_hint"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/limit_count"
+        android:text="@string/rest_count" />
+
+    <TextView
+        android:id="@+id/rest_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/rest_count_hint"
+        android:layout_alignBottom="@+id/rest_count_hint"
+        android:layout_toRightOf="@+id/rest_count_hint"
+        android:textColor="@color/red" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/rest_count"
+        android:layout_marginTop="5dp"
+        android:background="@color/line_color" />
+
+    <TextView
+        android:id="@+id/begin_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/line"
+        android:layout_margin="5dp"
+        android:text="@string/begin_time" />
+
+    <TextView
+        android:id="@+id/end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/begin_time"
+        android:layout_alignBottom="@+id/begin_time"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:text="@string/end_time" />
+
+    <ImageView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/line"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/content"
+        android:layout_marginRight="10dp"
+        android:contentDescription="@string/app_name" />
+
+</RelativeLayout>

@@ -393,7 +393,7 @@ public class PersonInfoActivity extends BaseActivity {
 		// 文本参数
 		multi.addStringPart("userId", userId + "");
 		multi.addBinaryPart("avatar", bitmap2Bytes(bitmap));
-		RequestManager.getRequestQueue().add(request);
+		RequestManager.getRequestQueue(getApplication()).add(request);
 	}
 
 	private byte[] bitmap2Bytes(Bitmap bm) {

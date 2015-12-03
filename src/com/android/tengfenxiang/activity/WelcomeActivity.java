@@ -37,7 +37,6 @@ public class WelcomeActivity extends BaseActivity {
 		setContentView(R.layout.welcome);
 
 		dialog = new LoadingDialog(this);
-		RequestManager.init(getApplication());
 		preferences = getSharedPreferences(getPackageName(),
 				Context.MODE_PRIVATE);
 		new Handler().postDelayed(new Runnable() {
@@ -127,6 +126,6 @@ public class WelcomeActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue().add(stringRequest);
+		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
 	}
 }

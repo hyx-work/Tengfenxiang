@@ -5,14 +5,21 @@ import com.android.tengfenxiang.view.dialog.SharePopupWindow;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 public class WebActivity extends BaseActivity {
+
 	private TitleBar titleBar;
+	private WebView webView;
 	private String title;
 	private String url;
 
@@ -27,6 +34,8 @@ public class WebActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		this.getWindow().requestFeature(Window.FEATURE_PROGRESS);
+
 		setContentView(R.layout.web_activity);
 
 		Intent intent = getIntent();
@@ -38,6 +47,9 @@ public class WebActivity extends BaseActivity {
 	}
 
 	private void initView() {
+		webView = (WebView) findViewById(R.id.web_view);
+		initWebView();
+
 		titleBar = (TitleBar) findViewById(R.id.title_bar);
 		if (!isShare) {
 			titleBar.getRightImageView().setVisibility(View.GONE);
@@ -58,6 +70,29 @@ public class WebActivity extends BaseActivity {
 				finish();
 			}
 		});
+	}
+
+	@SuppressLint("SetJavaScriptEnabled")
+	private void initWebView() {
+		// TODO Auto-generated method stub
+		if (null != url && !url.equals("")) {
+			webView.getSettings().setJavaScriptEnabled(true);
+			webView.getSettings().setSupportZoom(false);
+			webView.setWebViewClient(new WebViewClient() {
+
+				public void onReceivedError(WebView view, int errorCode,
+						String description, String failingUrl) {
+					Toast.makeText(getApplication(), R.string.unknow_error,
+							Toast.LENGTH_SHORT).show();
+				}
+
+				public boolean shouldOverrideUrlLoading(WebView view, String url) {
+					view.loadUrl(url);
+					return true;
+				}
+			});
+			webView.loadUrl(url);
+		}
 	}
 
 	/**

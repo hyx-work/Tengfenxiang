@@ -1,7 +1,8 @@
 package com.android.tengfenxiang.activity;
 
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.adapter.NewPagerAdapter;
+import com.android.tengfenxiang.adapter.ArticlePagerAdapter;
+import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.view.tab.CategoryTabStrip;
 
 import android.os.Bundle;
@@ -12,7 +13,7 @@ public class ArticleActivity extends FragmentActivity {
 
 	private CategoryTabStrip tabs;
 	private ViewPager pager;
-	private NewPagerAdapter adapter;
+	private ArticlePagerAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +36,19 @@ public class ArticleActivity extends FragmentActivity {
 	public void initComponent() {
 		tabs = (CategoryTabStrip) findViewById(R.id.category_strip);
 		pager = (ViewPager) findViewById(R.id.view_pager);
-		adapter = new NewPagerAdapter(getSupportFragmentManager());
+		pager.setOffscreenPageLimit(1);
+		adapter = new ArticlePagerAdapter(getSupportFragmentManager(),
+				getApplication());
 
 		pager.setAdapter(adapter);
 		tabs.setViewPager(pager);
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		ImageLoadUtil.clearMemoryCache();
 	}
 
 	@Override

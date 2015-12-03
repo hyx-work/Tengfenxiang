@@ -11,7 +11,6 @@ import android.net.ConnectivityManager;
 import android.widget.Toast;
 
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.bean.ItemInfo;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.receiver.ConnectionChangeReceiver;
 import com.android.tengfenxiang.receiver.ConnectionChangeReceiver.OnNetworkChangedListener;
@@ -37,7 +36,7 @@ public class MainApplication extends Application {
 	private static User currentUser;
 	private ConnectionChangeReceiver myReceiver;
 	private SharedPreferences preferences;
-	
+
 	public void onCreate() {
 		super.onCreate();
 		// 初始化ImageLoader对象
@@ -99,7 +98,7 @@ public class MainApplication extends Application {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue().add(stringRequest);
+		RequestManager.getRequestQueue(this).add(stringRequest);
 	}
 
 	/**

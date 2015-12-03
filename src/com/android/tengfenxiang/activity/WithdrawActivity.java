@@ -111,7 +111,7 @@ public class WithdrawActivity extends BaseActivity implements
 		};
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
-		RequestManager.getRequestQueue().add(request);
+		RequestManager.getRequestQueue(getApplication()).add(request);
 	}
 
 	@Override

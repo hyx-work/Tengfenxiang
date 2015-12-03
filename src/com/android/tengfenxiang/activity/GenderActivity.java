@@ -118,6 +118,6 @@ public class GenderActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue().add(stringRequest);
+		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
 	}
 }

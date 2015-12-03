@@ -134,7 +134,7 @@ public class SigninActivity extends BaseActivity {
 		};
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
-		RequestManager.getRequestQueue().add(request);
+		RequestManager.getRequestQueue(getApplication()).add(request);
 	}
 
 	/**
@@ -152,7 +152,8 @@ public class SigninActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Object result = ResponseUtil.handleResponse(getApplication(), response, null);
+				Object result = ResponseUtil.handleResponse(getApplication(),
+						response, null);
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.signin_success,
 							Toast.LENGTH_SHORT).show();
@@ -182,6 +183,6 @@ public class SigninActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue().add(stringRequest);
+		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
 	}
 }

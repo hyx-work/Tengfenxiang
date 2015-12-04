@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
+import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -36,6 +37,13 @@ public class UserInfoActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		initView();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		ImageLoadUtil.clearMemoryCache();
 	}
 
 	@Override

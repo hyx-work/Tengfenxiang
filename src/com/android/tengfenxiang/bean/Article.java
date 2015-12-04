@@ -2,8 +2,9 @@ package com.android.tengfenxiang.bean;
 
 /**
  * 文章实体类
+ * 
  * @author ccz
- *
+ * 
  */
 public class Article {
 
@@ -41,6 +42,22 @@ public class Article {
 	 * 浏览数
 	 */
 	private int viewCount;
+
+	public Article() {
+
+	}
+
+	public Article(int id, String title, String content, String thumbnails,
+			String shareUrl, int likeCount, int viewCount) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.thumbnails = thumbnails;
+		this.shareUrl = shareUrl;
+		this.likeCount = likeCount;
+		this.viewCount = viewCount;
+	}
 
 	public int getId() {
 		return id;

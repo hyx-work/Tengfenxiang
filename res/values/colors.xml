@@ -11,5 +11,11 @@
     <color name="category_tab_highlight_bg">#ffd43d3d</color>
     <color name="category_tab_highlight_text">#fffafafa</color>
     <color name="category_tab_text">#ff707070</color>
+    <!-- 收益情况表的坐标轴文字颜色 -->
+    <color name="chart_font_color">#000000</color>
+    <!-- 收益情况表的网格线颜色 -->
+    <color name="chart_grid_color">#808080</color>
+    <!-- 收益情况表的曲线颜色 -->
+    <color name="chart_line_color">#FF0000</color>
 
 </resources>

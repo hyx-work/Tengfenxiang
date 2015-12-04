@@ -87,13 +87,19 @@ public class MessageActivity extends BaseActivity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				ResponseResult result = JSON.parseObject(response,
-						ResponseResult.class);
-				messages = JSON.parseArray(result.getData().toString(),
-						Message.class);
-				initView();
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
+				}
+				ResponseResult result = JSON.parseObject(response,
+						ResponseResult.class);
+				if (result.getCode() == 200) {
+					messages = JSON.parseArray(result.getData().toString(),
+							Message.class);
+					initView();
+				} else {
+					Toast.makeText(getApplication(),
+							result.getData().toString(), Toast.LENGTH_SHORT)
+							.show();
 				}
 			}
 		};

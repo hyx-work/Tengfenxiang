@@ -63,6 +63,27 @@ public class Task {
 	 */
 	private int limitRetweetCount;
 
+	public Task() {
+
+	}
+
+	public Task(int id, String title, String content, float price,
+			String thumbnails, String shareUrl, String beginTime,
+			String endTime, int status, int retweetCount, int limitRetweetCount) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.price = price;
+		this.thumbnails = thumbnails;
+		this.shareUrl = shareUrl;
+		this.beginTime = beginTime;
+		this.endTime = endTime;
+		this.status = status;
+		this.retweetCount = retweetCount;
+		this.limitRetweetCount = limitRetweetCount;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -11,6 +11,7 @@ import com.android.tengfenxiang.bean.CityInfo;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.CityUtil;
 import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.MultipartEntity;
 import com.android.tengfenxiang.util.MultipartRequest;
 import com.android.tengfenxiang.util.RequestManager;
@@ -269,6 +270,13 @@ public class PersonInfoActivity extends BaseActivity {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		ImageLoadUtil.clearMemoryCache();
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode,

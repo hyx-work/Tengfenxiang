@@ -93,7 +93,6 @@ public class SettingActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				ImageLoadUtil.clearMemoryCache();
 				ImageLoadUtil.clearDiskCache(getApplication());
 				cacheValue.remove(0);
 				cacheValue.add(ImageLoadUtil.getCacheSize(getApplication()));

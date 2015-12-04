@@ -30,6 +30,8 @@
     <string name="total_points">历史总积分</string>
     <string name="withdraw_points">已提现收益</string>
     <string name="withdrawable_points">可提现收益</string>
+    <string name="profit_table_hint">收入统计表</string>
+    <string name="empty_profit_date">暂无收益</string>
 
     <string name="about_app">关于腾分享</string>
     <string name="function_introduction">功能介绍</string>
@@ -100,6 +102,7 @@
     <string name="begin_time">开始时间:</string>
     <string name="end_time">结束时间:</string>
     <string name="article_list">文章中心</string>
+    <string name="empty_article_hint">当前没有文章</string>
     <string name="view_count">阅读量:</string>
     <string name="like_count">点赞:</string>
     <string name="share_title">分享获取收益</string>

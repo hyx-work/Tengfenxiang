@@ -21,16 +21,7 @@ public class IntegralActivity extends BaseActivity {
 
 	private TitleBar titleBar;
 	private String title;
-
-	/**
-	 * 要查询的收益的日期
-	 */
-	private String profitData;
-
-	/**
-	 * 是否是查询历史积分，是为1不是为0
-	 */
-	private int isTotal;
+	private int detailType;
 
 	private LoadingDialog dialog;
 	private Integral integral;
@@ -43,12 +34,11 @@ public class IntegralActivity extends BaseActivity {
 
 		Intent intent = getIntent();
 		title = intent.getStringExtra("title");
-		profitData = intent.getStringExtra("profitData");
-		isTotal = intent.getIntExtra("isTotal", 1);
+		detailType = intent.getIntExtra("detailType", 0);
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();
-		getDetails(currentUser.getId(), profitData, isTotal);
+		getDetails(currentUser.getId(), detailType);
 	}
 
 	private void initView() {
@@ -68,12 +58,9 @@ public class IntegralActivity extends BaseActivity {
 		});
 	}
 
-	private void getDetails(int userId, String profitData, int isTotal) {
+	private void getDetails(int userId, int detailType) {
 		String url = Constant.PROFIT_DETAIL_URL + "?userId=" + userId
-				+ "&isTotal=" + isTotal;
-		if (null != profitData && !profitData.equals("")) {
-			url = url + "&profitData=" + profitData;
-		}
+				+ "&detailType=" + detailType;
 
 		// 请求成功的回调函数
 		Listener<String> listener = new Listener<String>() {

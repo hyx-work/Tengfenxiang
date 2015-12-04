@@ -1,7 +1,6 @@
 package com.android.tengfenxiang.fragment;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -14,6 +13,7 @@ import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.Article;
 import com.android.tengfenxiang.bean.ResponseResult;
 import com.android.tengfenxiang.bean.User;
+import com.android.tengfenxiang.db.ArticleDao;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.RequestManager;
@@ -27,27 +27,30 @@ import com.android.volley.toolbox.StringRequest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.FrameLayout.LayoutParams;
 
 public class ArticleFragment extends BaseFragment {
 
 	private static final String ARG_POSITION = "position";
-
 	private int position;
 	private FrameLayout layout;
-
 	private LoadingDialog dialog;
+
 	private int limit = 10;
 	private int offset;
 
 	private ArticleListAdapter adapter;
+	private ArticleDao dao;
 
 	/**
 	 * 是否已被加载过一次，第二次就不再去请求数据了
@@ -58,22 +61,26 @@ public class ArticleFragment extends BaseFragment {
 	private User currentUser;
 	private List<Article> articles;
 	private XListView articleListView;
+	private TextView hintTextView;
 
 	public static ArticleFragment newInstance(int position) {
-		ArticleFragment f = new ArticleFragment();
-		Bundle b = new Bundle();
-		b.putInt(ARG_POSITION, position);
-		f.setArguments(b);
-		return f;
+		ArticleFragment fragment = new ArticleFragment();
+		Bundle bundle = new Bundle();
+		bundle.putInt(ARG_POSITION, position);
+		fragment.setArguments(bundle);
+		return fragment;
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		position = getArguments().getInt(ARG_POSITION);
+
+		dialog = new LoadingDialog(getActivity());
 		application = (MainApplication) getActivity().getApplication();
 		currentUser = application.getCurrentUser();
-		articles = new ArrayList<Article>();
+		dao = ArticleDao.getInstance(getActivity());
+		initView();
 	}
 
 	@Override
@@ -83,10 +90,15 @@ public class ArticleFragment extends BaseFragment {
 				LayoutParams.MATCH_PARENT);
 		layout = new FrameLayout(getActivity());
 		layout.setLayoutParams(params);
+		// 将ListView添加到布局中
+		layout.addView(articleListView);
+		// 将TextView添加到布局中
+		layout.addView(hintTextView);
 		return layout;
 	}
 
-	private void getArticleList(int userId, int limit, int offset, int type) {
+	private void getArticleList(int userId, int limit, final int offset,
+			int type) {
 		String url = Constant.ARTICLE_LIST_URL + "?userId=" + userId
 				+ "&limit=" + limit + "&offset=" + offset + "&type=" + type;
 
@@ -94,17 +106,22 @@ public class ArticleFragment extends BaseFragment {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				System.err.println(response);
 				ResponseResult result = JSON.parseObject(response,
 						ResponseResult.class);
-				List<Article> tmp = JSON.parseArray(
-						result.getData().toString(), Article.class);
-				articles.addAll(tmp);
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-					initView();
-					// 标志为已经加载过
-					mHasLoadedOnce = true;
+				if (result.getCode() == 200) {
+					List<Article> tmp = JSON.parseArray(result.getData()
+							.toString(), Article.class);
+					// 如果是刷新操作则要更新数据库中的缓存数据
+					if (offset == 0) {
+						articles.clear();
+						dao.deleteAll(position);
+						dao.insert(tmp, position);
+					}
+					articles.addAll(tmp);
+					adapter.notifyDataSetChanged();
+				} else {
+					Toast.makeText(getActivity(), result.getData().toString(),
+							Toast.LENGTH_SHORT).show();
 				}
 				loadComplete();
 			}
@@ -113,9 +130,7 @@ public class ArticleFragment extends BaseFragment {
 		ErrorListener errorListener = new ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
+				loadComplete();
 				Toast.makeText(getActivity(), R.string.unknow_error,
 						Toast.LENGTH_SHORT).show();
 			}
@@ -125,25 +140,48 @@ public class ArticleFragment extends BaseFragment {
 		RequestManager.getRequestQueue(getActivity()).add(request);
 	}
 
-	// private void addEmptyHint() {
-	// LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
-	// LayoutParams.WRAP_CONTENT);
-	// // params.
-	// }
-
 	private void initView() {
 		// TODO Auto-generated method stub
+		initListView();
+		initTextView();
+	}
+
+	/**
+	 * 初始化提示文字的TextView
+	 */
+	private void initTextView() {
+		LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
+		params.gravity = Gravity.CENTER;
+		hintTextView = new TextView(getActivity());
+		hintTextView.setLayoutParams(params);
+		hintTextView.setText(R.string.empty_article_hint);
+		hintTextView.setVisibility(View.GONE);
+		hintTextView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				dialog.showDialog();
+				getArticleList(currentUser.getId(), limit, offset, position);
+			}
+		});
+	}
+
+	/**
+	 * 初始化文章列表的ListView
+	 */
+	private void initListView() {
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT);
 		// 添加ListView，设置监听事件
 		articleListView = new XListView(getActivity());
+		articleListView.setVisibility(View.GONE);
 		articleListView.setXListViewListener(new IXListViewListener() {
 
 			@Override
 			public void onRefresh() {
-				// TODO Auto-generated method stub
 				offset = 0;
-				articles.clear();
 				getArticleList(currentUser.getId(), limit, offset, position);
 			}
 
@@ -154,16 +192,6 @@ public class ArticleFragment extends BaseFragment {
 				getArticleList(currentUser.getId(), limit, offset, position);
 			}
 		});
-
-		List<String> infos = new ArrayList<String>();
-		if (articles != null) {
-			for (int i = 0; i < articles.size(); i++) {
-				infos.add(articles.get(i).getTitle());
-			}
-		}
-
-		adapter = new ArticleListAdapter(getActivity(), articles);
-		articleListView.setAdapter(adapter);
 		articleListView.setLayoutParams(params);
 		articleListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -180,8 +208,6 @@ public class ArticleFragment extends BaseFragment {
 				}
 			}
 		});
-
-		layout.addView(articleListView);
 	}
 
 	@Override
@@ -201,16 +227,41 @@ public class ArticleFragment extends BaseFragment {
 				Locale.CHINA);
 		Date curDate = new Date(System.currentTimeMillis());
 		articleListView.setRefreshTime(formatter.format(curDate));
+
+		// 设置空间的可见性
+		if (null == articles || articles.size() == 0) {
+			articleListView.setVisibility(View.GONE);
+			hintTextView.setVisibility(View.VISIBLE);
+		} else {
+			articleListView.setVisibility(View.VISIBLE);
+			hintTextView.setVisibility(View.GONE);
+		}
+
+		// 隐藏等待对话框
+		if (dialog.isShowing()) {
+			dialog.cancelDialog();
+		}
 	}
 
 	@Override
 	protected void lazyLoad() {
 		// TODO Auto-generated method stub
-		// 当前为可见且还没加载过数据，则需要去服务器请求数据
+		// 当前为可见且还没加载过数据，则需要读取缓存数据
+		// 如果缓存数据为空，则请求服务器数据
 		if (isVisible && !mHasLoadedOnce) {
-			dialog = new LoadingDialog(getActivity());
-			dialog.showDialog();
-			getArticleList(currentUser.getId(), limit, offset, position);
+			articles = dao.findAll(position);
+			adapter = new ArticleListAdapter(getActivity(), articles);
+			articleListView.setAdapter(adapter);
+			mHasLoadedOnce = true;
+			// 没有缓存数据，请求服务器数据
+			if (null == articles || articles.size() == 0) {
+				getArticleList(currentUser.getId(), limit, offset, position);
+				articleListView.setVisibility(View.GONE);
+				hintTextView.setVisibility(View.VISIBLE);
+			} else {
+				articleListView.setVisibility(View.VISIBLE);
+				hintTextView.setVisibility(View.GONE);
+			}
 		}
 	}
 

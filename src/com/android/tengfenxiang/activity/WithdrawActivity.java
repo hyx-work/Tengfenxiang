@@ -51,6 +51,8 @@ public class WithdrawActivity extends BaseActivity implements
 		setContentView(R.layout.withdraw_records);
 
 		withdraws = new ArrayList<Withdraw>();
+		initView();
+		
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();
 		getWithdrawRecords(currentUser.getId(), limit, offset);
@@ -77,7 +79,7 @@ public class WithdrawActivity extends BaseActivity implements
 		});
 	}
 
-	private void getWithdrawRecords(int userId, int limit, int offset) {
+	private void getWithdrawRecords(int userId, int limit, final int offset) {
 		String url = Constant.WITHDRAW_LIST_URL + "?userId=" + userId
 				+ "&limit=" + limit + "&offset=" + offset;
 
@@ -89,11 +91,11 @@ public class WithdrawActivity extends BaseActivity implements
 						ResponseResult.class);
 				List<Withdraw> tmp = JSON.parseArray(result.getData()
 						.toString(), Withdraw.class);
-				withdraws.addAll(tmp);
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-					initView();
+				if (offset == 0) {
+					withdraws.clear();
 				}
+				withdraws.addAll(tmp);
+				adapter.notifyDataSetChanged();
 				loadComplete();
 			}
 		};
@@ -118,7 +120,6 @@ public class WithdrawActivity extends BaseActivity implements
 	public void onRefresh() {
 		// TODO Auto-generated method stub
 		offset = 0;
-		withdraws.clear();
 		getWithdrawRecords(currentUser.getId(), limit, offset);
 	}
 
@@ -139,6 +140,10 @@ public class WithdrawActivity extends BaseActivity implements
 				Locale.CHINA);
 		Date curDate = new Date(System.currentTimeMillis());
 		recordsList.setRefreshTime(formatter.format(curDate));
+		
+		if (dialog.isShowing()) {
+			dialog.cancelDialog();
+		}
 	}
 
 }

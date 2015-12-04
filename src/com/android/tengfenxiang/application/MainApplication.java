@@ -15,6 +15,7 @@ import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.receiver.ConnectionChangeReceiver;
 import com.android.tengfenxiang.receiver.ConnectionChangeReceiver.OnNetworkChangedListener;
 import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.DeviceInfoUtil;
 import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.util.ResponseUtil;
@@ -86,15 +87,17 @@ public class MainApplication extends Application {
 			@Override
 			protected Map<String, String> getParams() throws AuthFailureError {
 				Map<String, String> map = new HashMap<String, String>();
+				DeviceInfoUtil util = DeviceInfoUtil
+						.getInstance(MainApplication.this);
 				map.put("phone", phone);
 				map.put("password", password);
-				map.put("deviceId", "1");
-				map.put("deviceInfo", "1");
-				map.put("pushToken", "22");
-				map.put("appVersion", "1.0.0");
-				map.put("os", "android");
-				map.put("osVersion", "4.4.4");
-				map.put("model", "model");
+				map.put("deviceId", util.getDeviceId());
+				map.put("deviceInfo", util.getDeviceInfo());
+				map.put("pushToken", util.getPushToken());
+				map.put("appVersion", util.getAppVersion());
+				map.put("os", util.getOs());
+				map.put("osVersion", util.getOsVersion());
+				map.put("model", util.getModel());
 				return map;
 			}
 		};

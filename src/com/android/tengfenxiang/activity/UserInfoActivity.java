@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
+import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -22,7 +23,7 @@ import android.widget.TextView;
 public class UserInfoActivity extends BaseActivity {
 
 	private ListView userInfoListView;
-	private TextView phoneTextView;
+	private TextView nicknameTextView;
 	private ImageView headImageView;
 
 	@Override
@@ -30,12 +31,6 @@ public class UserInfoActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
-	}
-
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
 		initView();
 	}
 
@@ -55,16 +50,17 @@ public class UserInfoActivity extends BaseActivity {
 		headImageView = (ImageView) findViewById(R.id.head);
 		loadHead();
 
-		phoneTextView = (TextView) findViewById(R.id.phone);
-		phoneTextView.setText(currentUser.getPhone());
+		nicknameTextView = (TextView) findViewById(R.id.nickname);
+		nicknameTextView.setText(currentUser.getNickName());
 
 		userInfoListView = (ListView) findViewById(R.id.user_info_list);
 		ArrayList<String> infos = new ArrayList<String>();
 		infos.add(getString(R.string.person_info));
 		infos.add(getString(R.string.today_signin));
 		infos.add(getString(R.string.my_subordinate));
-		infos.add(getString(R.string.system_setting));
 		infos.add(getString(R.string.system_message));
+		infos.add(getString(R.string.invite_others));
+		infos.add(getString(R.string.system_setting));
 		infos.add(getString(R.string.about_app));
 		SimpleListAdapter adapter = new SimpleListAdapter(
 				UserInfoActivity.this, infos);
@@ -93,11 +89,17 @@ public class UserInfoActivity extends BaseActivity {
 					break;
 				case 3:
 					intent.setClass(UserInfoActivity.this,
-							SettingActivity.class);
+							MessageActivity.class);
 					break;
 				case 4:
+					intent.setClass(UserInfoActivity.this, WebActivity.class);
+					intent.putExtra("title", getString(R.string.invite_others));
+					intent.putExtra("url", Constant.REGISTER_URL
+							+ "?inviteCode=" + currentUser.getInviteCode());
+					break;
+				case 5:
 					intent.setClass(UserInfoActivity.this,
-							MessageActivity.class);
+							SettingActivity.class);
 					break;
 				default:
 					intent.setClass(UserInfoActivity.this, AboutActivity.class);

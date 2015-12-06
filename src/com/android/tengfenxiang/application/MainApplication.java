@@ -69,8 +69,13 @@ public class MainApplication extends Application {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				currentUser = (User) ResponseUtil.handleResponse(
+				Object object = ResponseUtil.handleResponse(
 						MainApplication.this, response, User.class);
+				if (null != object) {
+					currentUser = (User) object;
+				} else {
+					currentUser = new User();
+				}
 			}
 		};
 		// 请求失败的回调函数
@@ -93,7 +98,10 @@ public class MainApplication extends Application {
 				map.put("password", password);
 				map.put("deviceId", util.getDeviceId());
 				map.put("deviceInfo", util.getDeviceInfo());
-				map.put("pushToken", util.getPushToken());
+				if (util.getPushToken() != null
+						&& !util.getPushToken().equals("")) {
+					map.put("pushToken", util.getPushToken());
+				}
 				map.put("appVersion", util.getAppVersion());
 				map.put("os", util.getOs());
 				map.put("osVersion", util.getOsVersion());

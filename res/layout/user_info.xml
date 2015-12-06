@@ -19,12 +19,12 @@
         android:layout_height="80dp"
         android:layout_below="@+id/title_bar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/ic_launcher" />
 
     <TextView
-        android:id="@+id/phone"
+        android:id="@+id/nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/head"
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/phone" >
+        android:layout_below="@+id/nickname" >
     </ListView>
 
 </RelativeLayout>

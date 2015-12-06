@@ -2,8 +2,9 @@ package com.android.tengfenxiang.bean;
 
 /**
  * 用户实体类
+ * 
  * @author ccz
- *
+ * 
  */
 public class User {
 

@@ -80,14 +80,17 @@ public class WelcomeActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				currentUser = (User) ResponseUtil.handleResponse(
-						getApplication(), response, User.class);
-				application.setCurrentUser(currentUser);
+				Object object = ResponseUtil.handleResponse(getApplication(),
+						response, User.class);
+				if (null != object) {
+					currentUser = (User) object;
+					application.setCurrentUser(currentUser);
 
-				Intent intent = new Intent(WelcomeActivity.this,
-						MainActivity.class);
-				startActivity(intent);
-				finish();
+					Intent intent = new Intent(WelcomeActivity.this,
+							MainActivity.class);
+					startActivity(intent);
+					finish();
+				}
 			}
 		};
 		// 请求失败的回调函数
@@ -121,7 +124,10 @@ public class WelcomeActivity extends BaseActivity {
 				map.put("password", password);
 				map.put("deviceId", util.getDeviceId());
 				map.put("deviceInfo", util.getDeviceInfo());
-				map.put("pushToken", util.getPushToken());
+				if (util.getPushToken() != null
+						&& !util.getPushToken().equals("")) {
+					map.put("pushToken", util.getPushToken());
+				}
 				map.put("appVersion", util.getAppVersion());
 				map.put("os", util.getOs());
 				map.put("osVersion", util.getOsVersion());

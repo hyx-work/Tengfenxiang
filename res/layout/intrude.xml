@@ -61,7 +61,10 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/ll"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/button_bg"
         android:text="@string/try_now"
+        android:textColor="@color/white"
+        android:padding="10dp"
         android:visibility="gone" />
 
 </RelativeLayout>

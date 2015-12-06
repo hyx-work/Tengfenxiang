@@ -33,7 +33,7 @@ public class Constant {
 	 * 注册的URL
 	 */
 	public final static String REGISTER_URL = SERVER_ADDRESS
-			+ "/user/register/";
+			+ "/static/html/register.html";
 
 	/**
 	 * 获取文章列表的URL
@@ -116,4 +116,19 @@ public class Constant {
 	 */
 	public final static String SETTING_URL = SERVER_ADDRESS
 			+ "/static/config.json";
+
+	/**
+	 * 功能介绍的URL
+	 */
+	public final static String INTRODUCTION_URL = SERVER_ADDRESS
+			+ "/static/html/aboutApp.html";
+
+	/**
+	 * 帮助中心的URL
+	 */
+	public final static String HELP_CENTER_URL = SERVER_ADDRESS
+			+ "/static/html/FAQ.html";
+
+	public final static String FEEDBACK_URL = SERVER_ADDRESS
+			+ "/static/html/feedback.html";
 }

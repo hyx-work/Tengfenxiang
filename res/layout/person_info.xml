@@ -17,6 +17,7 @@
     <RelativeLayout
         android:id="@+id/user_head"
         android:clickable="true"
+        android:background="@drawable/item_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_bar" >

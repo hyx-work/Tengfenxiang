@@ -4,6 +4,13 @@
     <string name="app_name">腾分享</string>
 
     <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="phone">手机号码</string>
+    <string name="password">密码</string>
+    <string name="save_password">保存密码</string>
+    <string name="empty_phone">请输入手机号码</string>
+    <string name="empty_password">请输入密码</string>
+    <string name="register_app_acount">注册腾分享账号</string>
 
     <string name="my_subordinate">我的下级</string>
     <string name="my_subordinate_count">我的下级人数</string>
@@ -64,7 +71,6 @@
     <string name="gender">性&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;别</string>
     <string name="place">地&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;区</string>
     <string name="alipay">支&#160;&#8201;付&#160;&#8201;宝</string>
-    <string name="invite_code">邀&#160;&#8201;请&#160;&#8201;码</string>
     <string name="invite_others">我要邀请</string>
     <string name="edit_wechat_title">微信号</string>
     <string name="edit_nickname_title">昵称</string>
@@ -72,7 +78,6 @@
     <string name="select_gender_title">性别</string>
     <string name="male">男</string>
     <string name="female">女</string>
-    <string name="invite_code_hint">邀请码:</string>
     <string name="generate_code_fail">生成二维码失败</string>
     <string name="change_head">更换头像</string>
     <string name="select_from_gallery">从手机相册中获取</string>
@@ -89,7 +94,7 @@
     <string name="new_password_hint">请设置新密码</string>
     <string name="confirm_password">确认密码</string>
     <string name="confirm_password_hint">请确认新密码</string>
-    <string name="confirm_modify">确&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;认</string>
+    <string name="confirm_modify">确认</string>
     <string name="empty_old_password">密码不能为空</string>
     <string name="different_password">两次输入的密码不一致</string>
     <string name="modify_success">修改成功</string>

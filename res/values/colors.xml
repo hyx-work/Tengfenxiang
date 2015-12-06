@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- APP主色调 -->
+    <color name="base_color">#DB0B09</color>
+    <!-- 白色 -->
     <color name="white">#FFFFFF</color>
+    <!-- 黑色 -->
     <color name="black">#000000</color>
+    <!-- 灰色 -->
     <color name="gray">#808080</color>
+    <!-- 红色 -->
     <color name="red">#FF0000</color>
-
-    <color name="title_bar_color">#000000</color>
+    <!-- 标题栏颜色，与主色调保持一致 -->
+    <color name="title_bar_color">@color/base_color</color>
+    <!-- 线条颜色 -->
     <color name="line_color">#D8D8D8</color>
-    <color name="category_tab_highlight_bg">#ffd43d3d</color>
-    <color name="category_tab_highlight_text">#fffafafa</color>
-    <color name="category_tab_text">#ff707070</color>
+    <!-- 文章类型tab页选中时的背景色，与主色调保持一致 -->
+    <color name="category_tab_highlight_bg">@color/base_color</color>
+    <!-- 文章类型tab页选中时的文字颜色 -->
+    <color name="category_tab_highlight_text">@color/white</color>
+    <!-- 文章类型tab页的文字颜色 -->
+    <color name="category_tab_text">@color/black</color>
     <!-- 收益情况表的坐标轴文字颜色 -->
-    <color name="chart_font_color">#000000</color>
+    <color name="chart_font_color">@color/black</color>
     <!-- 收益情况表的网格线颜色 -->
     <color name="chart_grid_color">#808080</color>
     <!-- 收益情况表的曲线颜色 -->
     <color name="chart_line_color">#FF0000</color>
+    <!-- item正常状态下的颜色 -->
+    <color name="item_normal">#ECECEC</color>
+    <!-- item被按下的颜色 -->
+    <color name="item_selected">#DEDEDE</color>
 
 </resources>

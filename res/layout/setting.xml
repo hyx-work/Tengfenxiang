@@ -23,12 +23,19 @@
         android:layout_below="@+id/title_bar" >
     </ListView>
 
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/modify_password"
+        android:background="@color/line_color" />
+
     <ListView
         android:id="@+id/clear_cache"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/modify_password" >
+        android:layout_below="@+id/line" >
     </ListView>
 
     <Button
@@ -37,7 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/clear_cache"
         android:layout_margin="10dp"
+        android:background="@drawable/button_bg"
         android:text="@string/logout"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 
 </RelativeLayout>

@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:titlebar="http://schemas.android.com/apk/res/com.android.tengfenxiang"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/item_normal" >
 
     <com.android.tengfenxiang.view.titlebar.TitleBar
         android:id="@+id/title_bar"
@@ -66,6 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/line"
         android:layout_toLeftOf="@+id/unit_yuan"
+        android:background="@null"
         android:ems="5"
         android:gravity="center"
         android:inputType="numberDecimal"
@@ -86,6 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/line2"
+        android:background="@drawable/item_bg"
         android:clickable="true" >
 
         <TextView
@@ -126,11 +129,12 @@
 
     <Button
         android:id="@+id/apply_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/alipay_account_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:text="@string/apply_withdraw" />
+        android:layout_margin="20dp"
+        android:background="@drawable/button_bg"
+        android:text="@string/apply_withdraw"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

@@ -85,7 +85,6 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 							.show();
 				}
 				loadComplete();
-
 			}
 		};
 		// 请求失败的回调函数
@@ -126,7 +125,8 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 					Intent intent = new Intent(TaskActivity.this,
 							WebActivity.class);
 					intent.putExtra("title", getString(R.string.share));
-					intent.putExtra("url", tasks.get(arg2 - 1).getShareUrl());
+					intent.putExtra("url", tasks.get(arg2 - 1).getShareUrl()
+							+ "?token=" + currentUser.getId());
 					intent.putExtra("isShare", true);
 					startActivity(intent);
 				}

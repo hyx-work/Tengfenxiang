@@ -23,13 +23,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 
 	private LoadingDialog dialog;
 	private SharedPreferences preferences;
+	private EditText phoneEditText;
+	private EditText passwordEditText;
+	private CheckBox saveCheckBox;
+	private Button loginButton;
+	private TextView registerTextView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +58,58 @@ public class LoginActivity extends Activity {
 		preferences = getSharedPreferences(getPackageName(),
 				Context.MODE_PRIVATE);
 		dialog = new LoadingDialog(this);
+		initView();
+	}
 
-		dialog.showDialog();
-		login("13826473672", "cczccz");
+	private void initView() {
+		phoneEditText = (EditText) findViewById(R.id.phone);
+		phoneEditText.setText(preferences.getString("phone", ""));
+		passwordEditText = (EditText) findViewById(R.id.password);
+		passwordEditText.setText(preferences.getString("password", ""));
+		loginButton = (Button) findViewById(R.id.login_btn);
+		saveCheckBox = (CheckBox) findViewById(R.id.save_password);
+
+		loginButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				String phone = phoneEditText.getText().toString();
+				String password = passwordEditText.getText().toString();
+				boolean result = validateParams(phone, password);
+				if (result) {
+					dialog.showDialog();
+					login(phone, password);
+				}
+			}
+		});
+		registerTextView = (TextView) findViewById(R.id.register);
+		registerTextView.setText(getRegisterUrl());
+		registerTextView.setMovementMethod(LinkMovementMethod.getInstance());
+	}
+
+	private void savePassword(String phone, String password) {
+		Editor editor = preferences.edit();
+		editor.putString("phone", phone);
+		if (saveCheckBox.isChecked()) {
+			editor.putString("password", password);
+		}
+		editor.commit();
+	}
+
+	private boolean validateParams(String phone, String password) {
+		// TODO Auto-generated method stub
+		if (null == phone || phone.equals("")) {
+			Toast.makeText(getApplication(), R.string.empty_phone,
+					Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (null == password || password.equals("")) {
+			Toast.makeText(getApplication(), R.string.empty_password,
+					Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
 	}
 
 	private void login(final String phone, final String password) {
@@ -51,23 +118,23 @@ public class LoginActivity extends Activity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
+				System.err.println(response);
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
 				MainApplication application = ((MainApplication) getApplication());
-				User user = (User) ResponseUtil.handleResponse(
-						getApplication(), response, User.class);
-				application.setCurrentUser(user);
+				Object object = ResponseUtil.handleResponse(getApplication(),
+						response, User.class);
+				if (null != object) {
+					User user = (User) object;
+					application.setCurrentUser(user);
+					savePassword(phone, password);
 
-				Editor editor = preferences.edit();
-				editor.putString("phone", phone);
-				editor.putString("password", password);
-				editor.commit();
-
-				Intent intent = new Intent(LoginActivity.this,
-						MainActivity.class);
-				startActivity(intent);
-				finish();
+					Intent intent = new Intent(LoginActivity.this,
+							MainActivity.class);
+					startActivity(intent);
+					finish();
+				}
 			}
 		};
 		// 请求失败的回调函数
@@ -92,7 +159,10 @@ public class LoginActivity extends Activity {
 				map.put("password", password);
 				map.put("deviceId", util.getDeviceId());
 				map.put("deviceInfo", util.getDeviceInfo());
-				map.put("pushToken", util.getPushToken());
+				if (util.getPushToken() != null
+						&& !util.getPushToken().equals("")) {
+					map.put("pushToken", util.getPushToken());
+				}
 				map.put("appVersion", util.getAppVersion());
 				map.put("os", util.getOs());
 				map.put("osVersion", util.getOsVersion());
@@ -101,5 +171,27 @@ public class LoginActivity extends Activity {
 			}
 		};
 		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
+	}
+
+	private SpannableString getRegisterUrl() {
+		SpannableString spanStr = new SpannableString(
+				getString(R.string.register_app_acount));
+		spanStr.setSpan(new UnderlineSpan(), 0, 7,
+				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spanStr.setSpan(new ClickableSpan() {
+
+			@Override
+			public void onClick(View widget) {
+
+				Intent intent = new Intent(LoginActivity.this,
+						WebActivity.class);
+				intent.putExtra("url", Constant.REGISTER_URL);
+				intent.putExtra("title", getString(R.string.register));
+				startActivity(intent);
+			}
+		}, 0, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spanStr.setSpan(new ForegroundColorSpan(Color.BLUE), 0, 7,
+				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		return spanStr;
 	}
 }

@@ -8,39 +8,43 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:background="@color/title_bar_color"
+        android:gravity="center_vertical"
         titlebar:title="@string/signin"
         titlebar:titleLeftImg="@drawable/left_arrow"
-        titlebar:titleTextColor="@color/white"/>
+        titlebar:titleTextColor="@color/white" />
 
     <Button
         android:id="@+id/signin_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/title_bar"
-        android:layout_alignParentRight="true" />
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:background="@drawable/button_bg"
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/today_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="18sp"
         android:layout_alignBaseline="@+id/signin_button"
         android:layout_alignBottom="@+id/signin_button"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:padding="10dp"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/rencent_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textSize="18sp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/signin_button"
         android:layout_marginTop="50dp"
-        android:text="@string/recent_signin_info" />
+        android:padding="10dp"
+        android:text="@string/recent_signin_info"
+        android:textSize="18sp" />
 
     <ListView
         android:id="@+id/recent_list"

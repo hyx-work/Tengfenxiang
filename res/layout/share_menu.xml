@@ -4,11 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
+    <View
+        android:id="@+id/dialog_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/line_color" />
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/dialog_line"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:text="@string/share_title"
@@ -81,6 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/line"
         android:background="@null"
-        android:text="@string/cancel" />
+        android:text="@string/cancel"
+        android:textColor="@color/base_color" />
 
 </RelativeLayout>

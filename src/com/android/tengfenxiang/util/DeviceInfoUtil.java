@@ -52,6 +52,7 @@ public class DeviceInfoUtil {
 		}
 
 		deviceId = tm.getDeviceId();
+		deviceInfo = android.os.Build.MODEL;
 		if (null != pi) {
 			appVersion = pi.versionName;
 		}

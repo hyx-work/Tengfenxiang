@@ -147,12 +147,6 @@ public class PersonInfoActivity extends BaseActivity {
 					intent.putExtra("attributeValue", currentUser.getAlipay());
 					intent.putExtra("title", getString(R.string.alipay_account));
 					break;
-				case 6:
-					break;
-				case 7:
-					intent = new Intent(PersonInfoActivity.this,
-							InviteCodeActivity.class);
-					break;
 				default:
 					break;
 				}
@@ -171,8 +165,6 @@ public class PersonInfoActivity extends BaseActivity {
 		infos.add(getString(R.string.gender));
 		infos.add(getString(R.string.place));
 		infos.add(getString(R.string.alipay));
-		infos.add(getString(R.string.invite_code));
-		infos.add(getString(R.string.invite_others));
 
 		ArrayList<String> values = new ArrayList<String>();
 		values.add(currentUser.getPhone());

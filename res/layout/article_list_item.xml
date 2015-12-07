@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/listview_bg" >
+    android:layout_height="match_parent" >
 
     <ImageView
         android:id="@+id/image"
@@ -20,69 +19,29 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/image"
-        android:paddingRight="10dp"
-        android:singleLine="true"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/image"
         android:ellipsize="end"
         android:lines="2"
-        android:textSize="18sp" />
-
-    <ImageView
-        android:id="@+id/arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/right_arrow_dark" />
-
-    <TextView
-        android:id="@+id/view_count_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/image"
-        android:layout_below="@+id/image"
-        android:layout_marginBottom="5dp"
-        android:text="@string/view_count" />
+        android:paddingRight="10dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/view_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/view_count_hint"
-        android:layout_alignBottom="@+id/view_count_hint"
-        android:layout_marginBottom="5dp"
-        android:layout_toRightOf="@+id/view_count_hint"
-        android:textColor="@color/red" />
-
-    <TextView
-        android:id="@+id/like_count_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/view_count_hint"
-        android:layout_alignBottom="@+id/view_count_hint"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="50dp"
-        android:layout_toRightOf="@+id/view_count_hint"
-        android:text="@string/like_count" />
+        android:layout_below="@+id/title"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/image"
+        android:textColor="@color/gray" />
 
     <TextView
         android:id="@+id/like_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/like_count_hint"
-        android:layout_alignBottom="@+id/like_count_hint"
-        android:layout_marginBottom="5dp"
-        android:layout_toRightOf="@+id/like_count_hint"
-        android:textColor="@color/red" />
+        android:layout_below="@+id/title"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/view_count"
+        android:textColor="@color/gray" />
 
 </RelativeLayout>

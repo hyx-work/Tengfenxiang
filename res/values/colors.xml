@@ -23,10 +23,8 @@
     <color name="category_tab_text">@color/black</color>
     <!-- 收益情况表的坐标轴文字颜色 -->
     <color name="chart_font_color">@color/black</color>
-    <!-- 收益情况表的网格线颜色 -->
-    <color name="chart_grid_color">#808080</color>
     <!-- 收益情况表的曲线颜色 -->
-    <color name="chart_line_color">#FF0000</color>
+    <color name="chart_line_color">@color/base_color</color>
     <!-- item正常状态下的颜色 -->
     <color name="item_normal">#ECECEC</color>
     <!-- item被按下的颜色 -->

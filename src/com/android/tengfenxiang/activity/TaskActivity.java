@@ -126,7 +126,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 							WebActivity.class);
 					intent.putExtra("title", getString(R.string.share));
 					intent.putExtra("url", tasks.get(arg2 - 1).getShareUrl()
-							+ "?token=" + currentUser.getId());
+							+ "&token=" + currentUser.getToken());
 					intent.putExtra("isShare", true);
 					startActivity(intent);
 				}

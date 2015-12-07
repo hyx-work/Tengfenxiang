@@ -119,12 +119,27 @@ public class PersonInfoActivity extends BaseActivity {
 				case 1:
 					intent = new Intent(PersonInfoActivity.this,
 							EditActivity.class);
+					intent.putExtra("attributeName", "email");
+					intent.putExtra("attributeValue", currentUser.getEmail());
+					intent.putExtra("title",
+							getString(R.string.edit_email_title));
+					break;
+				case 2:
+					intent = new Intent(PersonInfoActivity.this,
+							EditActivity.class);
+					intent.putExtra("attributeName", "qq");
+					intent.putExtra("attributeValue", currentUser.getQq());
+					intent.putExtra("title", getString(R.string.edit_qq_title));
+					break;
+				case 3:
+					intent = new Intent(PersonInfoActivity.this,
+							EditActivity.class);
 					intent.putExtra("attributeName", "wechat");
 					intent.putExtra("attributeValue", currentUser.getWechat());
 					intent.putExtra("title",
 							getString(R.string.edit_wechat_title));
 					break;
-				case 2:
+				case 4:
 					intent = new Intent(PersonInfoActivity.this,
 							EditActivity.class);
 					intent.putExtra("attributeName", "nickName");
@@ -132,15 +147,15 @@ public class PersonInfoActivity extends BaseActivity {
 					intent.putExtra("title",
 							getString(R.string.edit_nickname_title));
 					break;
-				case 3:
+				case 5:
 					intent = new Intent(PersonInfoActivity.this,
 							GenderActivity.class);
 					break;
-				case 4:
+				case 6:
 					intent = new Intent(PersonInfoActivity.this,
 							ProvinceActivity.class);
 					break;
-				case 5:
+				case 7:
 					intent = new Intent(PersonInfoActivity.this,
 							EditActivity.class);
 					intent.putExtra("attributeName", "alipay");
@@ -160,6 +175,8 @@ public class PersonInfoActivity extends BaseActivity {
 	private void fillList() {
 		ArrayList<String> infos = new ArrayList<String>();
 		infos.add(getString(R.string.phone_number));
+		infos.add(getString(R.string.email_account));
+		infos.add(getString(R.string.qq_account));
 		infos.add(getString(R.string.wechat_account));
 		infos.add(getString(R.string.nickname));
 		infos.add(getString(R.string.gender));
@@ -168,6 +185,8 @@ public class PersonInfoActivity extends BaseActivity {
 
 		ArrayList<String> values = new ArrayList<String>();
 		values.add(currentUser.getPhone());
+		values.add(currentUser.getEmail());
+		values.add(currentUser.getQq());
 		values.add(currentUser.getWechat());
 		values.add(currentUser.getNickName());
 		if (currentUser.getGender() == 0) {

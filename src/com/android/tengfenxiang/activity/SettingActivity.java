@@ -20,6 +20,8 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -58,8 +60,7 @@ public class SettingActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				dialog.showDialog();
-				logout(currentUser.getId());
+				showDialog();
 			}
 		});
 
@@ -113,6 +114,30 @@ public class SettingActivity extends BaseActivity {
 				finish();
 			}
 		});
+	}
+
+	private void showDialog() {
+		Builder builder = new Builder(SettingActivity.this);
+		builder.setMessage(R.string.confirm_to_logout);
+		builder.setTitle(R.string.dialog_title);
+		builder.setPositiveButton(R.string.confirm,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialogInterface,
+							int which) {
+						dialogInterface.dismiss();
+						dialog.showDialog();
+						logout(currentUser.getId());
+					}
+				});
+		builder.setNegativeButton(R.string.cancel,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		builder.create().show();
 	}
 
 	private void logout(final int userId) {

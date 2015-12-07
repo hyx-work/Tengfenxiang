@@ -18,17 +18,16 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.LinearLayout;
 
-@SuppressLint("DrawAllocation")
-@SuppressWarnings("deprecation")
 abstract public class GraphView extends LinearLayout {
 	static final public class GraphViewConfig {
 		// 标题 下边框 间距 单位dp
-		static final float BORDER = 34;
+		static final float BORDER = 20;
+
+		// 坐标轴刻度的长度
+		static final float RULING_LENGTH = 5;
 
 		// 数值标记 高度偏移 单位dp
 		static final int MARKER_HEIGHT_OFFSET = 36;
@@ -41,14 +40,12 @@ abstract public class GraphView extends LinearLayout {
 	}
 
 	private class GraphViewContentView extends View {
-		private float lastTouchEventX;
 		private float graphwidth;
-		private boolean scrollingStarted;
 
 		public GraphViewContentView(Context context) {
 			super(context);
-			setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-					LayoutParams.FILL_PARENT));
+			setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+					LayoutParams.MATCH_PARENT));
 		}
 
 		@Override
@@ -56,10 +53,8 @@ abstract public class GraphView extends LinearLayout {
 
 			paint.setAntiAlias(true);
 
-			// normal
 			paint.setStrokeWidth(DensityUtil.dip2px(context, 1));
 
-			// 取得x,y轴数值以及最大,最小,差值
 			float border = DensityUtil.dip2px(context, GraphViewConfig.BORDER);
 			float horstart = 0;
 			float height = getHeight();
@@ -95,18 +90,15 @@ abstract public class GraphView extends LinearLayout {
 				verlabels = generateVerlabels(graphheight);
 			}
 
-			// 画线
 			if (graphViewStyle.getGridStyle() != GridStyle.HORIZONTAL) {
 				paint.setTextAlign(Align.LEFT);
 				int vers = verlabels.length - 1;
-				for (int i = 0; i < verlabels.length; i++) {
-					paint.setColor(graphViewStyle.getGridColor());
-					float y = ((graphheight / vers) * i) + border;
-					canvas.drawLine(horstart, y, getWidth(), y, paint);
-				}
+				paint.setColor(graphViewStyle.getGridColor());
+				float y = ((graphheight / vers) * (verlabels.length - 1))
+						+ border;
+				canvas.drawLine(horstart, y, getWidth(), y, paint);
 			}
 
-			// x轴标签
 			drawHorizontalLabels(
 					canvas,
 					border,
@@ -117,14 +109,10 @@ abstract public class GraphView extends LinearLayout {
 
 			paint.setColor(graphViewStyle.getHorizontalLabelsColor());
 			paint.setTextAlign(Align.CENTER);
-			// TODO 适应高度 border - 4
 			canvas.drawText(title, (graphwidth / 2) + horstart, border, paint);
 
 			if (maxY == minY) {
-				// if min/max is the same, fake it so that we can render a line
 				if (maxY == 0) {
-					// if both are zero, change the values to prevent division
-					// by zero
 					maxY = 1.0d;
 					minY = 0.0d;
 				} else {
@@ -137,7 +125,6 @@ abstract public class GraphView extends LinearLayout {
 			paint.setStrokeCap(Paint.Cap.ROUND);
 
 			for (int i = 0; i < graphSeries.size(); i++) {
-				// 填充数值
 				drawSeries(
 						canvas,
 						_values(i),
@@ -158,75 +145,6 @@ abstract public class GraphView extends LinearLayout {
 				drawLegend(canvas, height, width);
 		}
 
-		private void onMoveGesture(float f) {
-			// view port update
-			if (viewportSize != 0) {
-				viewportStart -= f * viewportSize / graphwidth;
-
-				// minimal and maximal view limit
-				double minX = getMinX(true);
-				double maxX = getMaxX(true);
-				if (viewportStart < minX) {
-					viewportStart = minX;
-				} else if (viewportStart + viewportSize > maxX) {
-					viewportStart = maxX - viewportSize;
-				}
-
-				// labels have to be regenerated
-				if (!staticHorizontalLabels)
-					horlabels = null;
-				if (!staticVerticalLabels)
-					verlabels = null;
-				viewVerLabels.invalidate();
-			}
-			invalidate();
-		}
-
-		@SuppressLint("ClickableViewAccessibility")
-		@Override
-		public boolean onTouchEvent(MotionEvent event) {
-			if (!isScrollable() || isDisableTouch()) {
-				return super.onTouchEvent(event);
-			}
-
-			boolean handled = false;
-			// first scale
-			if (scalable && scaleDetector != null) {
-				scaleDetector.onTouchEvent(event);
-				handled = scaleDetector.isInProgress();
-			}
-			if (!handled) {
-				// Log.d("GraphView",
-				// "on touch event scale not handled+"+lastTouchEventX);
-				// if not scaled, scroll
-				if ((event.getAction() & MotionEvent.ACTION_DOWN) == MotionEvent.ACTION_DOWN
-						&& (event.getAction() & MotionEvent.ACTION_MOVE) == 0) {
-					scrollingStarted = true;
-					handled = true;
-				}
-				if ((event.getAction() & MotionEvent.ACTION_UP) == MotionEvent.ACTION_UP) {
-					scrollingStarted = false;
-					lastTouchEventX = 0;
-					handled = true;
-				}
-				if ((event.getAction() & MotionEvent.ACTION_MOVE) == MotionEvent.ACTION_MOVE) {
-					if (scrollingStarted) {
-						if (lastTouchEventX != 0) {
-							onMoveGesture(event.getX() - lastTouchEventX);
-						}
-						lastTouchEventX = event.getX();
-						handled = true;
-					}
-				}
-				if (handled)
-					invalidate();
-			} else {
-				// currently scaling
-				scrollingStarted = false;
-				lastTouchEventX = 0;
-			}
-			return handled;
-		}
 	}
 
 	static public class GraphViewData implements GraphViewDataInterface {
@@ -260,15 +178,14 @@ abstract public class GraphView extends LinearLayout {
 			super(context);
 			setLayoutParams(new LayoutParams(getGraphViewStyle()
 					.getVerticalLabelsWidth() == 0 ? 100 : getGraphViewStyle()
-					.getVerticalLabelsWidth(), LayoutParams.FILL_PARENT));
+					.getVerticalLabelsWidth(), LayoutParams.MATCH_PARENT));
 		}
 
+		@SuppressLint("DrawAllocation")
 		@Override
 		protected void onDraw(Canvas canvas) {
-			// normal
 			paint.setStrokeWidth(0);
 
-			// measure bottom text
 			if (labelTextHeight == null || verLabelTextWidth == null) {
 				paint.setTextSize(getGraphViewStyle().getTextSize());
 				double testY = ((getMaxY() - getMinY()) * 0.783) + getMinY();
@@ -285,11 +202,11 @@ abstract public class GraphView extends LinearLayout {
 				setLayoutParams(new LayoutParams(verLabelTextWidth
 						+ DensityUtil.dip2px(context,
 								GraphViewConfig.BORDER / 2),
-						LayoutParams.FILL_PARENT));
+						LayoutParams.MATCH_PARENT));
 			} else if (getGraphViewStyle().getVerticalLabelsWidth() != 0
 					&& getGraphViewStyle().getVerticalLabelsWidth() != getLayoutParams().width) {
 				setLayoutParams(new LayoutParams(getGraphViewStyle()
-						.getVerticalLabelsWidth(), LayoutParams.FILL_PARENT));
+						.getVerticalLabelsWidth(), LayoutParams.MATCH_PARENT));
 			}
 
 			float border = DensityUtil.dip2px(context, GraphViewConfig.BORDER);
@@ -301,7 +218,6 @@ abstract public class GraphView extends LinearLayout {
 				verlabels = generateVerlabels(graphheight);
 			}
 
-			// vertical labels
 			paint.setTextAlign(getGraphViewStyle().getVerticalLabelsAlign());
 			int labelsWidth = getWidth();
 			int labelsOffset = 0;
@@ -314,7 +230,6 @@ abstract public class GraphView extends LinearLayout {
 			for (int i = 0; i < verlabels.length; i++) {
 				float y = ((graphheight / vers) * i) + border;
 				paint.setColor(graphViewStyle.getVerticalLabelsColor());
-				// TODO y轴标签对齐
 				canvas.drawText(verlabels[i], labelsOffset,
 						y + DensityUtil.dip2px(context, 5), paint);
 			}
@@ -334,8 +249,6 @@ abstract public class GraphView extends LinearLayout {
 	private double viewportStart;
 	private double viewportSize;
 	private final View viewVerLabels;
-	private ScaleGestureDetector scaleDetector;
-	private boolean scalable;
 	private final NumberFormat[] numberformatter = new NumberFormat[2];
 	private final List<GraphViewSeries> graphSeries;
 	private boolean showLegend = false;
@@ -369,8 +282,8 @@ abstract public class GraphView extends LinearLayout {
 
 	public GraphView(Context context, String title) {
 		super(context);
-		setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
-				LayoutParams.FILL_PARENT));
+		setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT));
 
 		if (title == null)
 			this.title = "";
@@ -388,7 +301,7 @@ abstract public class GraphView extends LinearLayout {
 		addView(viewVerLabels);
 		graphViewContentView = new GraphViewContentView(context);
 		addView(graphViewContentView, new LayoutParams(
-				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, 1));
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1));
 	}
 
 	private GraphViewDataInterface[] _values(int idxSeries) {
@@ -431,18 +344,23 @@ abstract public class GraphView extends LinearLayout {
 
 	protected void drawHorizontalLabels(Canvas canvas, float border,
 			float horstart, float height, String[] horlabels, float graphwidth) {
-		// horizontal labels + lines
 		int hors = horlabels.length - 1;
 		for (int i = 0; i < horlabels.length; i++) {
 			paint.setColor(graphViewStyle.getGridColor());
 			float x = ((graphwidth / hors) * i) + horstart;
 			if (graphViewStyle.getGridStyle() != GridStyle.VERTICAL) {
-				canvas.drawLine(x, height - border, x, border, paint);
+				if (0 == i) {
+					canvas.drawLine(x, height - border, x, border, paint);
+				} else {
+					float rulingLength = DensityUtil.dip2px(context,
+							GraphViewConfig.RULING_LENGTH);
+					canvas.drawLine(x, height - border, x, height - border
+							- rulingLength, paint);
+				}
 			}
 			if (showHorizontalLabels) {
 				paint.setTextAlign(Align.CENTER);
 				paint.setColor(graphViewStyle.getHorizontalLabelsColor());
-				// TODO height - 4
 				canvas.drawText(horlabels[i], x,
 						height - DensityUtil.dip2px(context, 5), paint);
 			}
@@ -562,10 +480,7 @@ abstract public class GraphView extends LinearLayout {
 		double min = getMinY();
 		double max = getMaxY();
 		if (max == min) {
-			// if min/max is the same, fake it so that we can render a line
 			if (max == 0) {
-				// if both are zero, change the values to prevent division by
-				// zero
 				max = 1.0d;
 				min = 0.0d;
 			} else {
@@ -599,13 +514,9 @@ abstract public class GraphView extends LinearLayout {
 	}
 
 	protected double getMaxX(boolean ignoreViewport) {
-		// if viewport is set, use this
 		if (!ignoreViewport && viewportSize != 0) {
 			return viewportStart + viewportSize;
 		} else {
-			// otherwise use the max x value
-			// values must be sorted by x, so the last value has the largest X
-			// value
 			double highest = 0;
 			if (graphSeries.size() > 0) {
 				GraphViewDataInterface[] values = graphSeries.get(0).values;
@@ -643,13 +554,9 @@ abstract public class GraphView extends LinearLayout {
 	}
 
 	protected double getMinX(boolean ignoreViewport) {
-		// if viewport is set, use this
 		if (!ignoreViewport && viewportSize != 0) {
 			return viewportStart;
 		} else {
-			// otherwise use the min x value
-			// values must be sorted by x, so the first value has the smallest X
-			// value
 			double lowest = 0;
 			if (graphSeries.size() > 0) {
 				GraphViewDataInterface[] values = graphSeries.get(0).values;
@@ -747,8 +654,6 @@ abstract public class GraphView extends LinearLayout {
 		double max = getMaxX(true);
 		viewportStart = max - viewportSize;
 
-		// don't clear labels width/height cache
-		// so that the display is not flickering
 		if (!staticVerticalLabels)
 			verlabels = null;
 		if (!staticHorizontalLabels)
@@ -813,52 +718,6 @@ abstract public class GraphView extends LinearLayout {
 	public void setManualYMinBound(double min) {
 		manualMinYValue = min;
 		manualMinY = true;
-	}
-
-	synchronized public void setScalable(boolean scalable) {
-		this.scalable = scalable;
-		if (scalable == true && scaleDetector == null) {
-			scrollable = true; // automatically forces this
-			scaleDetector = new ScaleGestureDetector(getContext(),
-					new ScaleGestureDetector.SimpleOnScaleGestureListener() {
-						@Override
-						public boolean onScale(ScaleGestureDetector detector) {
-							double center = viewportStart + viewportSize / 2;
-							viewportSize /= detector.getScaleFactor();
-							viewportStart = center - viewportSize / 2;
-
-							// viewportStart must not be < minX
-							double minX = getMinX(true);
-							if (viewportStart < minX) {
-								viewportStart = minX;
-							}
-
-							// viewportStart + viewportSize must not be > maxX
-							double maxX = getMaxX(true);
-							if (viewportSize == 0) {
-								viewportSize = maxX;
-							}
-							double overlap = viewportStart + viewportSize
-									- maxX;
-							if (overlap > 0) {
-								// scroll left
-								if (viewportStart - overlap > minX) {
-									viewportStart -= overlap;
-								} else {
-									// maximal scale
-									viewportStart = minX;
-									viewportSize = maxX - viewportStart;
-								}
-							}
-							redrawAll();
-							return true;
-						}
-					});
-		}
-	}
-
-	public void setScrollable(boolean scrollable) {
-		this.scrollable = scrollable;
 	}
 
 	public void setShowLegend(boolean showLegend) {

@@ -1,6 +1,7 @@
 package com.android.tengfenxiang.view.titlebar;
 
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.util.DensityUtil;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -65,20 +66,23 @@ public class TitleBar extends RelativeLayout {
 		leftParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 		leftParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, TRUE);
-		leftParams.setMargins(8, 0, 8, 0);
+		leftParams.setMargins(DensityUtil.dip2px(context, 5), 0,
+				DensityUtil.dip2px(context, 5), 0);
 		leftParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
 		addView(leftImageView, leftParams);
 		rightParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 		rightParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, TRUE);
-		rightParams.setMargins(8, 0, 8, 0);
+		rightParams.setMargins(DensityUtil.dip2px(context, 5), 0,
+				DensityUtil.dip2px(context, 5), 0);
 		rightParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
 		addView(rightImageView, rightParams);
 		titleParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 		titleParams.addRule(Gravity.CENTER_VERTICAL, TRUE);
 		titleParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
-		titleParams.setMargins(0, 15, 0, 15);
+		titleParams.setMargins(0, DensityUtil.dip2px(context, 10), 0,
+				DensityUtil.dip2px(context, 10));
 		addView(titleTextView, titleParams);
 
 		leftImageView.setOnClickListener(new OnClickListener() {

@@ -1,13 +1,16 @@
 package com.android.tengfenxiang.activity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.MyProfitListAdapter;
 import com.android.tengfenxiang.bean.Summary;
+import com.android.tengfenxiang.bean.Summary.ProfitPoint;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.util.ResponseUtil;
@@ -91,7 +94,7 @@ public class MyProfitActivity extends BaseActivity {
 					intent.setClass(MyProfitActivity.this,
 							IntegralActivity.class);
 					intent.putExtra("title", titles.get(arg2));
-					intent.putExtra("detailType", arg2);
+					intent.putExtra("detailType", arg2 + 1);
 					break;
 				case 3:
 					intent.setClass(MyProfitActivity.this,
@@ -144,6 +147,7 @@ public class MyProfitActivity extends BaseActivity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
+				System.err.println(response);
 				summary = (Summary) ResponseUtil.handleResponse(
 						getApplication(), response, Summary.class);
 				if (dialog.isShowing()) {
@@ -174,31 +178,19 @@ public class MyProfitActivity extends BaseActivity {
 	 * 初始化收益曲线表格
 	 */
 	private void initChartView() {
-		long now = new Date().getTime();
-		long t = 86400000;
 
 		// 曲线的颜色
 		int lineColor = getResources().getColor(R.color.chart_line_color);
 		// 显示文字的颜色
 		int fontColor = getResources().getColor(R.color.chart_font_color);
-		// 网格线的颜色
-		int gridColor = getResources().getColor(R.color.chart_grid_color);
 
 		GraphViewSeriesStyle style = new GraphViewSeriesStyle(lineColor, 2);
-		GraphViewSeries points = new GraphViewSeries("", style,
-				new GraphViewData[] { new GraphViewData(now - 6 * t, 2.2d),
-						new GraphViewData(now - 5 * t, 2.0d),
-						new GraphViewData(now - 4 * t, 1.5d),
-						new GraphViewData(now - 3 * t, 3.0d),
-						new GraphViewData(now - 2 * t, 2.5d),
-						new GraphViewData(now - 1 * t, 1.0d),
-						new GraphViewData(now, 3.0d) });
+		GraphViewSeries points = new GraphViewSeries("", style, getDatas());
 
 		GraphView graphView;
 		graphView = new LineGraphView(this, "");
 
 		((LineGraphView) graphView).setDataPointsRadius(0);
-		graphView.getGraphViewStyle().setGridColor(gridColor);
 		graphView.getGraphViewStyle().setHorizontalLabelsColor(fontColor);
 		graphView.getGraphViewStyle().setVerticalLabelsColor(fontColor);
 		graphView.getGraphViewStyle().setNumHorizontalLabels(7);
@@ -225,6 +217,22 @@ public class MyProfitActivity extends BaseActivity {
 	}
 
 	/**
+	 * 获取收益表上要显示的数据
+	 * 
+	 * @return
+	 */
+	private GraphViewData[] getDatas() {
+		List<ProfitPoint> points = summary.getRecent();
+		GraphViewData[] datas = new GraphViewData[points.size()];
+		for (int i = 0; i < points.size(); i++) {
+			long time = convert2long(points.get(i).getProfitDate(),
+					"yyyy-MM-dd");
+			datas[i] = new GraphViewData(time, points.get(i).getPoints());
+		}
+		return datas;
+	}
+
+	/**
 	 * 初始化提示文字
 	 */
 	private void initEmptyHint() {
@@ -239,4 +247,26 @@ public class MyProfitActivity extends BaseActivity {
 		LinearLayout layout = (LinearLayout) findViewById(R.id.profit_chart);
 		layout.addView(textView);
 	}
+
+	/**
+	 * 将日期字符串转化为long型
+	 * 
+	 * @param date
+	 *            要转化的日期字符串
+	 * @param format
+	 *            日期的格式
+	 * @return
+	 */
+	private long convert2long(String date, String format) {
+		try {
+			if (null != date && !date.equals("")) {
+				SimpleDateFormat sf = new SimpleDateFormat(format, Locale.CHINA);
+				return sf.parse(date).getTime();
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return 0l;
+	}
+
 }

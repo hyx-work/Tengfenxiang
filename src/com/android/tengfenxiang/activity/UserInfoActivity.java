@@ -54,6 +54,14 @@ public class UserInfoActivity extends BaseActivity {
 		nicknameTextView.setText(currentUser.getNickName());
 
 		userInfoListView = (ListView) findViewById(R.id.user_info_list);
+		ArrayList<Integer> icons = new ArrayList<Integer>();
+		icons.add(R.drawable.ic_data);
+		icons.add(R.drawable.ic_signin);
+		icons.add(R.drawable.ic_subordinate);
+		icons.add(R.drawable.ic_message);
+		icons.add(R.drawable.ic_message);
+		icons.add(R.drawable.ic_set);
+		icons.add(R.drawable.ic_info);
 		ArrayList<String> infos = new ArrayList<String>();
 		infos.add(getString(R.string.person_info));
 		infos.add(getString(R.string.today_signin));
@@ -62,8 +70,8 @@ public class UserInfoActivity extends BaseActivity {
 		infos.add(getString(R.string.invite_others));
 		infos.add(getString(R.string.system_setting));
 		infos.add(getString(R.string.about_app));
-		SimpleListAdapter adapter = new SimpleListAdapter(
-				UserInfoActivity.this, infos);
+		SimpleListAdapter adapter = new SimpleListAdapter(icons, infos,
+				UserInfoActivity.this);
 		userInfoListView.setAdapter(adapter);
 		addClickListener();
 	}

@@ -1,5 +1,7 @@
 package com.android.tengfenxiang.activity;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.ActivityGroup;
 import android.app.LocalActivityManager;
@@ -14,6 +16,8 @@ import android.widget.RadioButton;
 @SuppressWarnings("deprecation")
 public abstract class AbstractActivityGroup extends ActivityGroup implements
 		CompoundButton.OnCheckedChangeListener {
+
+	protected ArrayList<RadioButton> radioButtons = new ArrayList<RadioButton>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,7 @@ public abstract class AbstractActivityGroup extends ActivityGroup implements
 	protected void initTabBarButton(int id) {
 		RadioButton btn = (RadioButton) findViewById(id);
 		btn.setOnCheckedChangeListener(this);
+		radioButtons.add(btn);
 	}
 
 	abstract protected void initTabBarButtons();

@@ -174,13 +174,9 @@ public class ArticleFragment extends BaseFragment {
 	private void initListView() {
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT);
-		params.rightMargin = 5;
-		params.leftMargin = 5;
 		// 添加ListView，设置监听事件
 		articleListView = new XListView(getActivity());
 		articleListView.setVisibility(View.GONE);
-		articleListView.setDivider(null);
-		articleListView.setDividerHeight(5);
 		articleListView.setXListViewListener(new IXListViewListener() {
 
 			@Override
@@ -207,7 +203,7 @@ public class ArticleFragment extends BaseFragment {
 					Intent intent = new Intent(getActivity(), WebActivity.class);
 					intent.putExtra("title", getString(R.string.share));
 					intent.putExtra("url", articles.get(arg2 - 1).getShareUrl()
-							+ "?token=" + currentUser.getId());
+							+ "&token=" + currentUser.getToken());
 					intent.putExtra("isShare", true);
 					startActivity(intent);
 				}

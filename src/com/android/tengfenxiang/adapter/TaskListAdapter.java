@@ -26,12 +26,18 @@ public class TaskListAdapter extends BaseAdapter {
 	private List<Task> tasks;
 	private DisplayImageOptions options;
 	private ImageLoader imageLoader;
-	
+
 	/**
-	 * 任务状态对应显示的图片
+	 * 任务状态对应显示的文字
 	 */
-	private static int statusImageId[] = { R.drawable.ic_empty,
-			R.drawable.ic_empty, R.drawable.ic_empty };
+	private static int taskStatus[] = { R.string.status_offline,
+			R.string.status_online, R.string.status_finish };
+
+	/**
+	 * 任务状态对应显示的背景色
+	 */
+	private static int statusBg[] = { R.drawable.status_offline_bg,
+			R.drawable.status_online_bg, R.drawable.status_finish_bg };
 
 	public TaskListAdapter(Activity context, List<Task> tasks) {
 		this.context = context;
@@ -69,18 +75,14 @@ public class TaskListAdapter extends BaseAdapter {
 			viewHolder = new ViewHolder();
 			viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
 			viewHolder.title = (TextView) convertView.findViewById(R.id.title);
-			viewHolder.content = (TextView) convertView
-					.findViewById(R.id.content);
 			viewHolder.price = (TextView) convertView.findViewById(R.id.price);
 			viewHolder.limitCount = (TextView) convertView
 					.findViewById(R.id.limit_count);
 			viewHolder.restCount = (TextView) convertView
 					.findViewById(R.id.rest_count);
-			viewHolder.beginTime = (TextView) convertView
-					.findViewById(R.id.begin_time);
 			viewHolder.endTime = (TextView) convertView
 					.findViewById(R.id.end_time);
-			viewHolder.status = (ImageView) convertView
+			viewHolder.status = (TextView) convertView
 					.findViewById(R.id.status);
 			convertView.setTag(viewHolder);
 		} else {
@@ -90,33 +92,31 @@ public class TaskListAdapter extends BaseAdapter {
 		imageLoader.displayImage(tasks.get(position).getThumbnails(),
 				viewHolder.image, options);
 		viewHolder.title.setText(tasks.get(position).getTitle());
-		viewHolder.content.setText(tasks.get(position).getContent());
-		viewHolder.price.setText(tasks.get(position).getPrice()
-				+ context.getString(R.string.unit_yuan));
+		// viewHolder.content.setText(tasks.get(position).getContent());
+		viewHolder.price.setText(context.getString(R.string.unit_yuan_en)
+				+ tasks.get(position).getPrice());
 		int limit = tasks.get(position).getLimitRetweetCount();
-		viewHolder.limitCount.setText(limit + "");
+		String limitCount = context.getString(R.string.limit_count) + limit;
+		viewHolder.limitCount.setText(limitCount);
 		int rest = limit - tasks.get(position).getRetweetCount();
-		viewHolder.restCount.setText(rest + "");
-		String beginTimeHint = context.getString(R.string.begin_time);
-		String beginTime = tasks.get(position).getBeginTime().split(" ")[0];
-		viewHolder.beginTime.setText(beginTimeHint + beginTime);
+		String restCount = context.getString(R.string.rest_count) + rest;
+		viewHolder.restCount.setText(restCount);
 		String endTimeHint = context.getString(R.string.end_time);
 		String endTime = tasks.get(position).getEndTime().split(" ")[0];
 		viewHolder.endTime.setText(endTimeHint + endTime);
 		int status = tasks.get(position).getStatus();
-		viewHolder.status.setImageResource(statusImageId[status]);
+		viewHolder.status.setText(taskStatus[status]);
+		viewHolder.status.setBackgroundResource(statusBg[status]);
 		return convertView;
 	}
 
 	public class ViewHolder {
 		public ImageView image;
 		public TextView title;
-		public TextView content;
 		public TextView price;
 		public TextView limitCount;
 		public TextView restCount;
-		public TextView beginTime;
 		public TextView endTime;
-		public ImageView status;
+		public TextView status;
 	}
 }

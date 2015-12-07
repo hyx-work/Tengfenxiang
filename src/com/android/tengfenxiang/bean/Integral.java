@@ -2,8 +2,9 @@ package com.android.tengfenxiang.bean;
 
 /**
  * 积分详情实体类
+ * 
  * @author ccz
- *
+ * 
  */
 public class Integral {
 
@@ -18,6 +19,10 @@ public class Integral {
 	private float invitePoints;
 
 	private float subordinatePoints;
+
+	private float readArticleInAppPoints;
+
+	private float likeArticleInAppPoints;
 
 	public float getTaskPoints() {
 		return taskPoints;
@@ -65,6 +70,22 @@ public class Integral {
 
 	public void setSubordinatePoints(float subordinatePoints) {
 		this.subordinatePoints = subordinatePoints;
+	}
+
+	public float getReadArticleInAppPoints() {
+		return readArticleInAppPoints;
+	}
+
+	public void setReadArticleInAppPoints(float readArticleInAppPoints) {
+		this.readArticleInAppPoints = readArticleInAppPoints;
+	}
+
+	public float getLikeArticleInAppPoints() {
+		return likeArticleInAppPoints;
+	}
+
+	public void setLikeArticleInAppPoints(float likeArticleInAppPoints) {
+		this.likeArticleInAppPoints = likeArticleInAppPoints;
 	}
 
 }

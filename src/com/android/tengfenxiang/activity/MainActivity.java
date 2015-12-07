@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.SparseIntArray;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
@@ -26,10 +27,23 @@ public class MainActivity extends AbstractActivityGroup {
 	private LocalBroadcastManager localBroadcastManager;
 	private SharedPreferences preferences;
 
+	private SparseIntArray normalIcons = new SparseIntArray();
+	private SparseIntArray selectedIcons = new SparseIntArray();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_main);
 		super.onCreate(savedInstanceState);
+
+		normalIcons.put(R.id.radio_button0, R.drawable.tab_icon_1);
+		normalIcons.put(R.id.radio_button1, R.drawable.tab_icon_2);
+		normalIcons.put(R.id.radio_button2, R.drawable.tab_icon_3);
+		normalIcons.put(R.id.radio_button3, R.drawable.tab_icon_4);
+
+		selectedIcons.put(R.id.radio_button0, R.drawable.tab_icon_1_highlight);
+		selectedIcons.put(R.id.radio_button1, R.drawable.tab_icon_2_highlight);
+		selectedIcons.put(R.id.radio_button2, R.drawable.tab_icon_3_highlight);
+		selectedIcons.put(R.id.radio_button3, R.drawable.tab_icon_4_highlight);
 
 		// 接收注销操作的广播，如果接收到则销毁
 		intentFilter = new IntentFilter(getPackageName());
@@ -71,23 +85,46 @@ public class MainActivity extends AbstractActivityGroup {
 			switch (buttonView.getId()) {
 
 			case R.id.radio_button0:
+				changeTabStyle(buttonView.getId());
 				setContainerView(CONTENT_0, TaskActivity.class);
 				break;
 
 			case R.id.radio_button1:
+				changeTabStyle(buttonView.getId());
 				setContainerView(CONTENT_1, ArticleActivity.class);
 				break;
 
 			case R.id.radio_button2:
+				changeTabStyle(buttonView.getId());
 				setContainerView(CONTENT_2, MyProfitActivity.class);
 				break;
 
 			case R.id.radio_button3:
+				changeTabStyle(buttonView.getId());
 				setContainerView(CONTENT_3, UserInfoActivity.class);
 				break;
 
 			default:
 				break;
+			}
+		}
+	}
+
+	/**
+	 * 改变tab显示的图片和文字颜色
+	 * 
+	 * @param id
+	 */
+	private void changeTabStyle(int id) {
+		for (RadioButton button : radioButtons) {
+			if (button.getId() == id) {
+				button.setTextColor(getResources().getColor(R.color.base_color));
+				button.setCompoundDrawablesWithIntrinsicBounds(0,
+						selectedIcons.get(button.getId()), 0, 0);
+			} else {
+				button.setTextColor(getResources().getColor(R.color.gray));
+				button.setCompoundDrawablesWithIntrinsicBounds(0,
+						normalIcons.get(button.getId()), 0, 0);
 			}
 		}
 	}

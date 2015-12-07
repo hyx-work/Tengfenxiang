@@ -67,11 +67,15 @@
     <string name="user_head">用户头像</string>
     <string name="phone_number">手机号码</string>
     <string name="wechat_account">微&#160;&#8201;信&#160;&#8201;号</string>
+    <string name="email_account">邮&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;箱</string>
+    <string name="qq_account">Q&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;&#160;&#160;Q</string>
     <string name="nickname">昵&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;称</string>
     <string name="gender">性&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;别</string>
     <string name="place">地&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;区</string>
     <string name="alipay">支&#160;&#8201;付&#160;&#8201;宝</string>
     <string name="invite_others">我要邀请</string>
+    <string name="edit_email_title">邮箱</string>
+    <string name="edit_qq_title">QQ</string>
     <string name="edit_wechat_title">微信号</string>
     <string name="edit_nickname_title">昵称</string>
     <string name="select_address_title">所在地区</string>
@@ -94,22 +98,24 @@
     <string name="new_password_hint">请设置新密码</string>
     <string name="confirm_password">确认密码</string>
     <string name="confirm_password_hint">请确认新密码</string>
-    <string name="confirm_modify">确认</string>
     <string name="empty_old_password">密码不能为空</string>
     <string name="different_password">两次输入的密码不一致</string>
     <string name="modify_success">修改成功</string>
 
-    <string name="task_list">任务大厅</string>
+    <string name="task_list">任务中心</string>
     <string name="empty_task_hint">当前没有任务</string>
-    <string name="task_price">浏览奖励:</string>
-    <string name="limit_count">投放次数:</string>
-    <string name="rest_count">剩余次数:</string>
-    <string name="begin_time">开始时间:</string>
-    <string name="end_time">结束时间:</string>
+    <string name="task_price">单价&#160;&#8201;</string>
+    <string name="status_offline">已结束</string>
+    <string name="status_online">进行中</string>
+    <string name="status_finish">已抢完</string>
+    <string name="limit_count">投放次数&#160;&#8201;</string>
+    <string name="rest_count">剩余次数&#160;&#8201;</string>
+    <string name="begin_time">开始时间&#160;&#8201;</string>
+    <string name="end_time">结束时间&#160;&#8201;</string>
     <string name="article_list">文章中心</string>
     <string name="empty_article_hint">当前没有文章</string>
-    <string name="view_count">阅读量:</string>
-    <string name="like_count">点赞:</string>
+    <string name="view_count">阅读量&#160;&#8201;</string>
+    <string name="like_count">点赞&#160;&#8201;</string>
     <string name="share_title">分享获取收益</string>
     <string name="wechat_friend">微信朋友</string>
     <string name="wechat_moment">朋友圈</string>
@@ -124,12 +130,16 @@
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
     <string name="unknow_error">未知错误</string>
     <string name="unit_people">人</string>
+    <string name="unit_yuan_en">¥</string>
     <string name="unit_yuan">元</string>
     <string name="unit_point">分</string>
     <string name="empty_input">输入内容不能为空</string>
+    <string name="confirm">确认</string>
     <string name="cancel">取消</string>
     <string name="share">分享</string>
     <string name="double_click_exit">再按一次退出程序</string>
     <string name="network_error">网络不可用，请检查你的网络设置</string>
+    <string name="dialog_title">提示</string>
+    <string name="confirm_to_logout">确认退出该账号吗?</string>
 
 </resources>

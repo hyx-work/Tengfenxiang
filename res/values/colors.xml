@@ -24,7 +24,7 @@
     <!-- 收益情况表的坐标轴文字颜色 -->
     <color name="chart_font_color">@color/black</color>
     <!-- 收益情况表的曲线颜色 -->
-    <color name="chart_line_color">@color/base_color</color>
+    <color name="chart_line_color">#FA6241</color>
     <!-- item正常状态下的颜色 -->
     <color name="item_normal">#ECECEC</color>
     <!-- item被按下的颜色 -->

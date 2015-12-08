@@ -12,6 +12,7 @@ import com.android.tengfenxiang.adapter.MyProfitListAdapter;
 import com.android.tengfenxiang.bean.Summary;
 import com.android.tengfenxiang.bean.Summary.ProfitPoint;
 import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.DensityUtil;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
@@ -147,7 +148,6 @@ public class MyProfitActivity extends BaseActivity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				System.err.println(response);
 				summary = (Summary) ResponseUtil.handleResponse(
 						getApplication(), response, Summary.class);
 				if (dialog.isShowing()) {
@@ -178,7 +178,6 @@ public class MyProfitActivity extends BaseActivity {
 	 * 初始化收益曲线表格
 	 */
 	private void initChartView() {
-
 		// 曲线的颜色
 		int lineColor = getResources().getColor(R.color.chart_line_color);
 		// 显示文字的颜色
@@ -190,12 +189,12 @@ public class MyProfitActivity extends BaseActivity {
 		GraphView graphView;
 		graphView = new LineGraphView(this, "");
 
-		((LineGraphView) graphView).setDataPointsRadius(0);
+		((LineGraphView) graphView).setDataPointsRadius(3);
 		graphView.getGraphViewStyle().setHorizontalLabelsColor(fontColor);
 		graphView.getGraphViewStyle().setVerticalLabelsColor(fontColor);
 		graphView.getGraphViewStyle().setNumHorizontalLabels(7);
-		graphView.getGraphViewStyle().setNumVerticalLabels(4);
-		graphView.getGraphViewStyle().setTextSize(12);
+		graphView.getGraphViewStyle().setNumVerticalLabels(5);
+		graphView.getGraphViewStyle().setTextSize(DensityUtil.dip2px(this, 8));
 		graphView.addSeries(points);
 
 		// 设置日期显示
@@ -225,6 +224,7 @@ public class MyProfitActivity extends BaseActivity {
 		List<ProfitPoint> points = summary.getRecent();
 		GraphViewData[] datas = new GraphViewData[points.size()];
 		for (int i = 0; i < points.size(); i++) {
+			System.err.println(points.get(i).getProfitDate());
 			long time = convert2long(points.get(i).getProfitDate(),
 					"yyyy-MM-dd");
 			datas[i] = new GraphViewData(time, points.get(i).getPoints());

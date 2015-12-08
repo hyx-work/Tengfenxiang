@@ -4,8 +4,9 @@ import java.util.List;
 
 /**
  * 收益概况实体类
+ * 
  * @author ccz
- *
+ * 
  */
 public class Summary {
 
@@ -71,8 +72,9 @@ public class Summary {
 
 	/**
 	 * 内部类表示曲线上的某个点
+	 * 
 	 * @author ccz
-	 *
+	 * 
 	 */
 	public static class ProfitPoint {
 
@@ -85,6 +87,11 @@ public class Summary {
 		 * 纵坐标，收益值
 		 */
 		private float points;
+
+		/**
+		 * 收益原因
+		 */
+		private String profitReason;
 
 		public String getProfitDate() {
 			return profitDate;
@@ -100,6 +107,14 @@ public class Summary {
 
 		public void setPoints(float points) {
 			this.points = points;
+		}
+
+		public String getProfitReason() {
+			return profitReason;
+		}
+
+		public void setProfitReason(String profitReason) {
+			this.profitReason = profitReason;
 		}
 
 	}

@@ -14,189 +14,188 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 
 public class LineGraphView extends GraphView {
-  private Paint paintBackground;
-  private boolean drawBackground;
-  private boolean drawDataPoints;
-  private float dataPointsRadius = 10f;
-  private float markerX;
-  private float markerY;
-  private String content;
+	private Paint paintBackground;
+	private boolean drawBackground;
+	private boolean drawDataPoints;
+	private float dataPointsRadius = 10f;
+	private float markerX;
+	private float markerY;
+	private String content;
 
-  public LineGraphView(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    init();
-  }
+	public LineGraphView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		init();
+	}
 
-  public LineGraphView(Context context, String title) {
-    super(context, title);
-    init();
-  }
+	public LineGraphView(Context context, String title) {
+		super(context, title);
+		init();
+	}
 
-  private void init() {
-    paintBackground = new Paint();
-    paintBackground.setColor(Color.rgb(20, 40, 60));
-    paintBackground.setStrokeWidth(4);
-    paintBackground.setAlpha(128);
-  }
+	private void init() {
+		paintBackground = new Paint();
+		paintBackground.setColor(Color.rgb(20, 40, 60));
+		paintBackground.setStrokeWidth(4);
+		paintBackground.setAlpha(128);
+	}
 
-  @Override
-  public void drawSeries(Canvas canvas, GraphViewDataInterface[] values, float graphwidth,
-      float graphheight, float border, double minX, double minY, double diffX, double diffY,
-      float horstart, GraphViewSeriesStyle style) {
-    // draw background
-    double lastEndY = 0;
-    double lastEndX = 0;
+	@Override
+	public void drawSeries(Canvas canvas, GraphViewDataInterface[] values,
+			float graphwidth, float graphheight, float border, double minX,
+			double minY, double diffX, double diffY, float horstart,
+			GraphViewSeriesStyle style) {
+		double lastEndY = 0;
+		double lastEndX = 0;
 
-    // draw data
-    paint.setStrokeWidth(style.thickness);
-    paint.setColor(style.color);
+		paint.setStrokeWidth(style.thickness);
+		paint.setColor(style.color);
 
-    // 折线阴影部分
-    Path bgPath = null;
-    if (drawBackground) {
-      bgPath = new Path();
-    }
+		Path bgPath = null;
+		if (drawBackground) {
+			bgPath = new Path();
+		}
 
-    lastEndY = 0;
-    lastEndX = 0;
-    float firstX = 0;
-    for (int i = 0; i < values.length; i++) {
-      double valY = values[i].getY() - minY;
-      double ratY = valY / diffY;
-      double y = graphheight * ratY;
+		lastEndY = 0;
+		lastEndX = 0;
+		float firstX = 0;
+		for (int i = 0; i < values.length; i++) {
+			double valY = values[i].getY() - minY;
+			double ratY = valY / diffY;
+			double y = graphheight * ratY;
 
-      double valX = values[i].getX() - minX;
-      double ratX = valX / diffX;
-      double x = graphwidth * ratX;
+			// 根据点的个数来分配X轴刻度的长度，而不进行平均分配
+			double ratX = i * 1.0 / ((values.length - 1) * 1.0);
+			double x = graphwidth * ratX;
 
-      if (i > 0) {
-        float startX = (float) lastEndX + (horstart + 1);
-        float startY = (float) (border - lastEndY) + graphheight;
-        float endX = (float) x + (horstart + 1);
-        float endY = (float) (border - y) + graphheight;
+			if (i > 0) {
+				float startX = (float) lastEndX + (horstart + 1);
+				float startY = (float) (border - lastEndY) + graphheight;
+				float endX = (float) x + (horstart + 1);
+				float endY = (float) (border - y) + graphheight;
 
-        // draw data point
-        if (drawDataPoints) {
-          // fix: last value was not drawn. Draw here now the end values
-          canvas.drawCircle(endX, endY, dataPointsRadius, paint);
-        }
+				if (drawDataPoints) {
+					canvas.drawCircle(endX, endY, dataPointsRadius, paint);
+				}
 
-        canvas.drawLine(startX, startY, endX, endY, paint);
-        if (bgPath != null) {
-          if (i == 1) {
-            firstX = startX;
-            bgPath.moveTo(startX, startY + style.thickness);
-          }
-          bgPath.lineTo(endX, endY + style.thickness);
-        }
+				canvas.drawLine(startX, startY, endX, endY, paint);
+				if (bgPath != null) {
+					if (i == 1) {
+						firstX = startX;
+						bgPath.moveTo(startX, startY + style.thickness);
+					}
+					bgPath.lineTo(endX, endY + style.thickness);
+				}
 
-        // 保存下最后一个标点
-        if (i == values.length - 1) {
-          markerX = endX;
-          markerY = endY;
-          content = String.valueOf(values[i].getY());
-        }
-      } else if (drawDataPoints) {
-        // fix: last value not drawn as datapoint. Draw first point here, and then on every step the
-        // end values (above)
-        float first_X = (float) x + (horstart + 1);
-        float first_Y = (float) (border - y) + graphheight;
-        canvas.drawCircle(first_X, first_Y, dataPointsRadius, paint);
-      }
-      lastEndY = y;
-      lastEndX = x;
+				if (i == values.length - 1) {
+					markerX = endX;
+					markerY = endY;
+					content = String.valueOf(values[i].getY());
+				}
+			} else if (drawDataPoints) {
+				float first_X = (float) x + (horstart + 1);
+				float first_Y = (float) (border - y) + graphheight;
+				canvas.drawCircle(first_X, first_Y, dataPointsRadius, paint);
+			}
+			lastEndY = y;
+			lastEndX = x;
 
-    }
+		}
 
-    if (bgPath != null) {
-      // end / close path
-      bgPath.lineTo((float) lastEndX + DensityUtil.dip2px(context, GraphViewConfig.BORDER / 2),
-          graphheight + border);
-      bgPath.lineTo(firstX, graphheight + border);
-      bgPath.close();
-      canvas.drawPath(bgPath, paintBackground);
-    }
+		if (bgPath != null) {
+			bgPath.lineTo(
+					(float) lastEndX
+							+ DensityUtil.dip2px(context,
+									GraphViewConfig.BORDER / 2), graphheight
+							+ border);
+			bgPath.lineTo(firstX, graphheight + border);
+			bgPath.close();
+			canvas.drawPath(bgPath, paintBackground);
+		}
 
-    // TODO 填充色 可配置
-    paint.setColor(Color.rgb(250, 98, 65));
+		paint.setColor(Color.rgb(250, 98, 65));
 
-    // 先绘制橙色圆
-    // TODO endY + style.thickness - 3
-    canvas.drawCircle(markerX, markerY, DensityUtil.dip2px(context, GraphViewConfig.MARKER_MARGIN),
-        paint);
+		canvas.drawCircle(markerX, markerY,
+				DensityUtil.dip2px(context, GraphViewConfig.MARKER_MARGIN),
+				paint);
 
-    // 再绘制略小白色圆 盖住橙色圆上方
-    paint.setColor(Color.WHITE);
-    // TODO endY + style.thickness - 3
-    canvas.drawCircle(markerX, markerY, DensityUtil.dip2px(context, GraphViewConfig.RECT_RADIUS),
-        paint);
+		paint.setColor(Color.WHITE);
+		canvas.drawCircle(markerX, markerY,
+				DensityUtil.dip2px(context, GraphViewConfig.RECT_RADIUS), paint);
 
-    // 绘制标记
-    drawMarker(canvas, content, markerX, markerY + style.thickness);
-  }
+		drawMarker(canvas, content, markerX, markerY + style.thickness);
+	}
 
-  private void drawMarker(Canvas canvas, String content, float x, float y) {
-    Rect popupTextRect = new Rect();
-    paint.getTextBounds(content, 0, content.length(), popupTextRect);
-    paint.setAntiAlias(true);
-    paint.setColor(Color.rgb(250, 98, 65));
+	private void drawMarker(Canvas canvas, String content, float x, float y) {
+		Rect popupTextRect = new Rect();
+		paint.getTextBounds(content, 0, content.length(), popupTextRect);
+		paint.setAntiAlias(true);
+		paint.setColor(Color.rgb(250, 98, 65));
 
-    // 创建marker
-    RectF r =
-        new RectF(x - popupTextRect.width() * 5 / 6 - GraphViewConfig.MARKER_MARGIN, y
-            - DensityUtil.dip2px(context, GraphViewConfig.MARKER_HEIGHT_OFFSET), x
-            + popupTextRect.width() * 1 / 6
-            + DensityUtil.dip2px(context, GraphViewConfig.MARKER_MARGIN), y
-            - DensityUtil.dip2px(context, GraphViewConfig.MARKER_HEIGHT_OFFSET / 2));
-    canvas.drawRoundRect(r, DensityUtil.dip2px(context, GraphViewConfig.RECT_RADIUS),
-        DensityUtil.dip2px(context, GraphViewConfig.RECT_RADIUS), paint);
+		RectF r = new RectF(x - popupTextRect.width() * 5 / 6
+				- GraphViewConfig.MARKER_MARGIN, y
+				- DensityUtil.dip2px(context,
+						GraphViewConfig.MARKER_HEIGHT_OFFSET), x
+				+ popupTextRect.width() * 1 / 6
+				+ DensityUtil.dip2px(context, GraphViewConfig.MARKER_MARGIN), y
+				- DensityUtil.dip2px(context,
+						GraphViewConfig.MARKER_HEIGHT_OFFSET / 2));
+		canvas.drawRoundRect(r,
+				DensityUtil.dip2px(context, GraphViewConfig.RECT_RADIUS),
+				DensityUtil.dip2px(context, GraphViewConfig.RECT_RADIUS), paint);
 
-    Path path = new Path();
-    path.moveTo(x, y - DensityUtil.dip2px(context, GraphViewConfig.MARKER_HEIGHT_OFFSET / 2));
-    path.lineTo(x, y - DensityUtil.dip2px(context, 10));
-    path.lineTo(x - DensityUtil.dip2px(context, 5),
-        y - DensityUtil.dip2px(context, GraphViewConfig.MARKER_HEIGHT_OFFSET / 2));
-    path.close();
-    canvas.drawPath(path, paint);
-    paint.setColor(Color.WHITE);
-    FontMetricsInt fontMetrics = paint.getFontMetricsInt();
-    int baseline =
-        (int) (r.top + (r.bottom - r.top - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top);
-    paint.setTextAlign(Paint.Align.CENTER);
-    canvas.drawText(content, r.centerX(), baseline, paint);
-  }
+		Path path = new Path();
+		path.moveTo(
+				x,
+				y
+						- DensityUtil.dip2px(context,
+								GraphViewConfig.MARKER_HEIGHT_OFFSET / 2));
+		path.lineTo(x, y - DensityUtil.dip2px(context, 10));
+		path.lineTo(
+				x - DensityUtil.dip2px(context, 5),
+				y
+						- DensityUtil.dip2px(context,
+								GraphViewConfig.MARKER_HEIGHT_OFFSET / 2));
+		path.close();
+		canvas.drawPath(path, paint);
+		paint.setColor(Color.WHITE);
+		FontMetricsInt fontMetrics = paint.getFontMetricsInt();
+		int baseline = (int) (r.top
+				+ (r.bottom - r.top - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top);
+		paint.setTextAlign(Paint.Align.CENTER);
+		canvas.drawText(content, r.centerX(), baseline, paint);
+	}
 
-  public int getBackgroundColor() {
-    return paintBackground.getColor();
-  }
+	public int getBackgroundColor() {
+		return paintBackground.getColor();
+	}
 
-  public float getDataPointsRadius() {
-    return dataPointsRadius;
-  }
+	public float getDataPointsRadius() {
+		return dataPointsRadius;
+	}
 
-  public boolean getDrawBackground() {
-    return drawBackground;
-  }
+	public boolean getDrawBackground() {
+		return drawBackground;
+	}
 
-  public boolean getDrawDataPoints() {
-    return drawDataPoints;
-  }
+	public boolean getDrawDataPoints() {
+		return drawDataPoints;
+	}
 
-  @Override
-  public void setBackgroundColor(int color) {
-    paintBackground.setColor(color);
-  }
+	@Override
+	public void setBackgroundColor(int color) {
+		paintBackground.setColor(color);
+	}
 
-  public void setDataPointsRadius(float dataPointsRadius) {
-    this.dataPointsRadius = dataPointsRadius;
-  }
+	public void setDataPointsRadius(float dataPointsRadius) {
+		this.dataPointsRadius = dataPointsRadius;
+	}
 
-  public void setDrawBackground(boolean drawBackground) {
-    this.drawBackground = drawBackground;
-  }
+	public void setDrawBackground(boolean drawBackground) {
+		this.drawBackground = drawBackground;
+	}
 
-  public void setDrawDataPoints(boolean drawDataPoints) {
-    this.drawDataPoints = drawDataPoints;
-  }
+	public void setDrawDataPoints(boolean drawDataPoints) {
+		this.drawDataPoints = drawDataPoints;
+	}
 
 }

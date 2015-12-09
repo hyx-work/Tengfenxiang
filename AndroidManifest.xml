@@ -116,6 +116,11 @@
             android:name="com.android.tengfenxiang.activity.SettingActivity"
             android:label="@string/system_setting" >
         </activity>
+        <activity
+            android:name="com.android.tengfenxiang.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

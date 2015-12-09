@@ -14,6 +14,11 @@ public class Constant {
 	public final static String SERVER_ADDRESS = "http://112.124.29.147:8080/TengShare_AppInterface";
 
 	/**
+	 * 微信的APP_ID
+	 */
+	public final static String WX_APP_ID = "wxe3da6f4746e58d27";
+
+	/**
 	 * 登陆的URL
 	 */
 	public final static String LOGIN_URL = SERVER_ADDRESS + "/user/login/";
@@ -129,6 +134,14 @@ public class Constant {
 	public final static String HELP_CENTER_URL = SERVER_ADDRESS
 			+ "/static/html/FAQ.html";
 
+	/**
+	 * 意见反馈的URL
+	 */
 	public final static String FEEDBACK_URL = SERVER_ADDRESS
 			+ "/static/html/feedback.html";
+
+	/**
+	 * 注销登录发送的广播文字
+	 */
+	public final static String LOGOUT_BROADCAST = "logout_current_account";
 }

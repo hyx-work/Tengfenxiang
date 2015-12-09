@@ -67,6 +67,5 @@ public class SharePopupWindow extends PopupWindow {
 				return true;
 			}
 		});
-
 	}
 }

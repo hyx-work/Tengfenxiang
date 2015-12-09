@@ -127,6 +127,7 @@
     <string name="share_title">分享获取收益</string>
     <string name="wechat_friend">微信朋友</string>
     <string name="wechat_moment">朋友圈</string>
+    <string name="share_success">分享成功</string>
  
     <string name="try_now">立即体验</string>
     <string name="clear_cache_success">缓存已清除</string>

@@ -159,7 +159,7 @@ public class SettingActivity extends BaseActivity {
 					finish();
 
 					// 发送广播，告诉主界面现在是登出操作
-					Intent broadcast = new Intent(getPackageName());
+					Intent broadcast = new Intent(Constant.LOGOUT_BROADCAST);
 					localBroadcastManager.sendBroadcast(broadcast);
 				}
 			}

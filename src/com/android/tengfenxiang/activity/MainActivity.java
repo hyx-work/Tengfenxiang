@@ -3,6 +3,7 @@ package com.android.tengfenxiang.activity;
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.receiver.LogoutReceiver;
 import com.android.tengfenxiang.receiver.LogoutReceiver.OnLogoutListener;
+import com.android.tengfenxiang.util.Constant;
 
 import android.content.Context;
 import android.content.IntentFilter;
@@ -46,7 +47,7 @@ public class MainActivity extends AbstractActivityGroup {
 		selectedIcons.put(R.id.radio_button3, R.drawable.tab_icon_4_highlight);
 
 		// 接收注销操作的广播，如果接收到则销毁
-		intentFilter = new IntentFilter(getPackageName());
+		intentFilter = new IntentFilter(Constant.LOGOUT_BROADCAST);
 		logoutReceiver = new LogoutReceiver();
 		logoutReceiver.setOnLogoutListener(new OnLogoutListener() {
 

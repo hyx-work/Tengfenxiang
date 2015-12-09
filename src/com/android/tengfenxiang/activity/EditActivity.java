@@ -20,6 +20,9 @@ import com.android.volley.toolbox.StringRequest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,6 +34,7 @@ public class EditActivity extends BaseActivity {
 
 	private EditText information;
 	private TitleBar titleBar;
+	private Button saveButton;
 
 	private LoadingDialog dialog;
 
@@ -60,6 +64,20 @@ public class EditActivity extends BaseActivity {
 
 			@Override
 			public void OnClickRight() {
+
+			}
+
+			@Override
+			public void OnClickLeft() {
+				finish();
+			}
+		});
+		saveButton = (Button) findViewById(R.id.save_button);
+		saveButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
 				String info = information.getText().toString();
 				if (info != null && !info.equals("")) {
 					dialog.showDialog();
@@ -68,11 +86,6 @@ public class EditActivity extends BaseActivity {
 					Toast.makeText(getApplication(), R.string.empty_input,
 							Toast.LENGTH_SHORT).show();
 				}
-			}
-
-			@Override
-			public void OnClickLeft() {
-				finish();
 			}
 		});
 	}

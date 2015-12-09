@@ -16,7 +16,8 @@ public class PersonInfoListAdapter extends BaseAdapter {
 	private List<String> values;
 	private Activity context;
 
-	public PersonInfoListAdapter(Activity context, List<String> infos, List<String> values) {
+	public PersonInfoListAdapter(Activity context, List<String> infos,
+			List<String> values) {
 		this.context = context;
 		this.infos = infos;
 		this.values = values;

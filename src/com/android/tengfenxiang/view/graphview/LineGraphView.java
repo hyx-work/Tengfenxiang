@@ -21,14 +21,17 @@ public class LineGraphView extends GraphView {
 	private float markerX;
 	private float markerY;
 	private String content;
+	private Context context;
 
 	public LineGraphView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		this.context = context;
 		init();
 	}
 
 	public LineGraphView(Context context, String title) {
 		super(context, title);
+		this.context = context;
 		init();
 	}
 
@@ -47,7 +50,7 @@ public class LineGraphView extends GraphView {
 		double lastEndY = 0;
 		double lastEndX = 0;
 
-		paint.setStrokeWidth(style.thickness);
+		paint.setStrokeWidth(DensityUtil.dip2px(context, style.thickness * 1.0f));
 		paint.setColor(style.color);
 
 		Path bgPath = null;

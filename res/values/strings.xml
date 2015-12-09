@@ -25,6 +25,7 @@
     <string name="profit_info">积分</string>
     <string name="have_signin">已签到</string>
     <string name="not_signin">未签到</string>
+    <string name="empty_signin_info">无最近签到信息</string>
 
     <string name="system_setting">系统设置</string>
     <string name="logout">注销登录</string>
@@ -32,13 +33,20 @@
     <string name="system_message">系统消息</string>
 
     <string name="my_profit">我的收益</string>
-    <string name="realtime_points">今日积分</string>
-    <string name="yesterday_points">昨日积分</string>
-    <string name="total_points">历史总积分</string>
+    <string name="realtime_points">今日积分(未审核)</string>
+    <string name="yesterday_points">昨日积分(已审核)</string>
+    <string name="total_points">历史总积分(已审核)</string>
     <string name="withdraw_points">已提现收益</string>
     <string name="withdrawable_points">可提现收益</string>
     <string name="profit_table_hint">收入统计表</string>
     <string name="empty_profit_date">暂无收益</string>
+    <string name="task_profit_hint">转发任务</string>
+    <string name="article_profit_hint">转发文章</string>
+    <string name="other">其他</string>
+    <string name="task_points">转发任务收益</string>
+    <string name="article_points">转发文章收益</string>
+    <string name="read_article_in_app_points">应用内阅读文章</string>
+    <string name="like_article_in_app_points">应用内点赞文章</string>
 
     <string name="about_app">关于腾分享</string>
     <string name="function_introduction">功能介绍</string>

@@ -22,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ public class SigninActivity extends BaseActivity {
 	private TextView statusTextView;
 	private Button signinButton;
 	private ListView signinListView;
+	private TextView hintTextView;
 
 	private SigninStatus signinStatus;
 	private SigninListAdapter adapter;
@@ -54,6 +56,7 @@ public class SigninActivity extends BaseActivity {
 		signinButton = (Button) findViewById(R.id.signin_button);
 		statusTextView = (TextView) findViewById(R.id.today_info);
 		signinListView = (ListView) findViewById(R.id.recent_list);
+		hintTextView = (TextView) findViewById(R.id.empty_hint);
 
 		titleBar = (TitleBar) findViewById(R.id.title_bar);
 		titleBar.setOnClickListener(new OnTitleClickListener() {
@@ -92,11 +95,15 @@ public class SigninActivity extends BaseActivity {
 
 		if (null != signinStatus && null != signinStatus.getRecent()
 				&& 0 != signinStatus.getRecent().size()) {
+			ViewStub viewStub = new ViewStub(this);
+			signinListView.addHeaderView(viewStub);
+			signinListView.addFooterView(viewStub);
 			adapter = new SigninListAdapter(SigninActivity.this,
 					signinStatus.getRecent());
 			signinListView.setAdapter(adapter);
 		} else {
-
+			signinListView.setVisibility(View.GONE);
+			hintTextView.setVisibility(View.VISIBLE);
 		}
 	}
 

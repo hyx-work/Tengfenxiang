@@ -1,6 +1,9 @@
 package com.android.tengfenxiang.activity;
 
+import java.util.ArrayList;
+
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.adapter.SimpleListAdapter;
 import com.android.tengfenxiang.bean.Integral;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
@@ -15,6 +18,8 @@ import com.android.volley.toolbox.StringRequest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ViewStub;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class IntegralActivity extends BaseActivity {
@@ -25,6 +30,10 @@ public class IntegralActivity extends BaseActivity {
 
 	private LoadingDialog dialog;
 	private Integral integral;
+
+	private ListView taskListView;
+	private ListView articleListView;
+	private ListView otherListView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +65,64 @@ public class IntegralActivity extends BaseActivity {
 				finish();
 			}
 		});
+
+		initTaskList();
+		initArticleList();
+		initOtherList();
+	}
+
+	private void initTaskList() {
+		taskListView = (ListView) findViewById(R.id.task_list);
+		// 添加上下部分的分割线
+		ViewStub viewStub = new ViewStub(this);
+		taskListView.addFooterView(viewStub);
+
+		// 添加数据
+		ArrayList<String> infos = new ArrayList<String>();
+		infos.add(getString(R.string.task_points));
+		ArrayList<String> values = new ArrayList<String>();
+		values.add(integral.getTaskPoints() + getString(R.string.unit_point));
+		SimpleListAdapter adapter = new SimpleListAdapter(this, infos, values);
+		taskListView.setAdapter(adapter);
+	}
+
+	private void initArticleList() {
+		articleListView = (ListView) findViewById(R.id.article_list);
+		// 添加上下部分的分割线
+		ViewStub viewStub = new ViewStub(this);
+		articleListView.addFooterView(viewStub);
+
+		// 添加数据
+		ArrayList<String> infos = new ArrayList<String>();
+		infos.add(getString(R.string.article_points));
+		ArrayList<String> values = new ArrayList<String>();
+		values.add(integral.getArticlePoints() + getString(R.string.unit_point));
+		SimpleListAdapter adapter = new SimpleListAdapter(this, infos, values);
+		articleListView.setAdapter(adapter);
+	}
+
+	private void initOtherList() {
+		otherListView = (ListView) findViewById(R.id.other_list);
+		// 添加上下部分的分割线
+		ViewStub viewStub = new ViewStub(this);
+		otherListView.addFooterView(viewStub);
+
+		// 添加数据
+		ArrayList<String> infos = new ArrayList<String>();
+		infos.add(getString(R.string.register));
+		infos.add(getString(R.string.signin));
+		infos.add(getString(R.string.read_article_in_app_points));
+		infos.add(getString(R.string.like_article_in_app_points));
+		ArrayList<String> values = new ArrayList<String>();
+		values.add(integral.getRegisterPoints()
+				+ getString(R.string.unit_point));
+		values.add(integral.getSigninPoints() + getString(R.string.unit_point));
+		values.add(integral.getReadArticleInAppPoints()
+				+ getString(R.string.unit_point));
+		values.add(integral.getLikeArticleInAppPoints()
+				+ getString(R.string.unit_point));
+		SimpleListAdapter adapter = new SimpleListAdapter(this, infos, values);
+		otherListView.setAdapter(adapter);
 	}
 
 	private void getDetails(int userId, int detailType) {
@@ -66,7 +133,6 @@ public class IntegralActivity extends BaseActivity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				System.err.println(response);
 				integral = (Integral) ResponseUtil.handleResponse(
 						getApplication(), response, Integral.class);
 				initView();

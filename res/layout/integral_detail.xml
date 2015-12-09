@@ -13,4 +13,58 @@
         titlebar:titleLeftImg="@drawable/left_arrow"
         titlebar:titleTextColor="@color/white" />
 
+    <TextView
+        android:id="@+id/task_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title_bar"
+        android:layout_margin="10dp"
+        android:text="@string/task_profit_hint"
+        android:textColor="@color/gray" />
+
+    <ListView
+        android:id="@+id/task_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/task_hint" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/article_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/task_list"
+        android:layout_margin="10dp"
+        android:text="@string/article_profit_hint"
+        android:textColor="@color/gray" />
+
+    <ListView
+        android:id="@+id/article_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/article_hint" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/other_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/article_list"
+        android:layout_margin="10dp"
+        android:text="@string/other"
+        android:textColor="@color/gray" />
+
+    <ListView
+        android:id="@+id/other_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/other_hint" >
+    </ListView>
+
 </RelativeLayout>

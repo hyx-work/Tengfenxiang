@@ -21,8 +21,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/title_bar"
         android:layout_margin="10dp"
-        android:padding="5dp"
         android:background="@drawable/button_bg"
+        android:padding="5dp"
         android:textColor="@color/white" />
 
     <TextView
@@ -44,6 +44,7 @@
         android:layout_marginTop="50dp"
         android:padding="10dp"
         android:text="@string/recent_signin_info"
+        android:textColor="@color/gray"
         android:textSize="18sp" />
 
     <ListView
@@ -53,5 +54,14 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/rencent_info" >
     </ListView>
+
+    <TextView
+        android:id="@+id/empty_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/empty_signin_info"
+        android:textColor="@color/base_color"
+        android:visibility="gone" />
 
 </RelativeLayout>

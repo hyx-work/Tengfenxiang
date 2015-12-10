@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.util.BitmapCompressUtil;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.util.ResponseUtil;
@@ -17,6 +18,9 @@ import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -27,7 +31,6 @@ import com.tencent.mm.sdk.platformtools.Util;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -67,6 +70,10 @@ public class WebActivity extends BaseActivity {
 	 * 分享到微信时候显示的内容
 	 */
 	private String webContent;
+	/**
+	 * 缩略图，用于显示在分享对话框
+	 */
+	private Bitmap imageBitmap;
 
 	private IWXAPI wxApi;
 
@@ -91,6 +98,11 @@ public class WebActivity extends BaseActivity {
 		articleId = intent.getIntExtra("article_id", -1);
 		webTitle = intent.getStringExtra("web_title");
 		webContent = intent.getStringExtra("web_content");
+
+		if (taskId != -1 || articleId != -1) {
+			dialog.showDialog();
+			loadThumbnails(intent.getStringExtra("image"));
+		}
 		initView();
 	}
 
@@ -192,9 +204,7 @@ public class WebActivity extends BaseActivity {
 		// 分享对话框显示的文字内容
 		msg.description = webContent;
 		// 分享对话框显示的图片
-		Bitmap thumb = BitmapFactory.decodeResource(getResources(),
-				R.drawable.ic_launcher);
-		msg.thumbData = Util.bmpToByteArray(thumb, true);
+		msg.thumbData = Util.bmpToByteArray(imageBitmap, false);
 
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
 		req.transaction = String.valueOf(System.currentTimeMillis());
@@ -310,6 +320,37 @@ public class WebActivity extends BaseActivity {
 			}
 		};
 		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
+	}
+
+	/**
+	 * 加载缩略图
+	 * 
+	 * @param imageUrl
+	 *            缩略图URL
+	 */
+	private void loadThumbnails(String imageUrl) {
+		// 显示图片的配置
+		DisplayImageOptions options = new DisplayImageOptions.Builder()
+				.cacheInMemory(true).cacheOnDisk(true)
+				.showImageOnLoading(R.drawable.ic_launcher)
+				.showImageForEmptyUri(R.drawable.ic_launcher)
+				.showImageOnFail(R.drawable.ic_launcher).build();
+
+		ImageLoader.getInstance().loadImage(imageUrl, null, options,
+				new SimpleImageLoadingListener() {
+
+					@Override
+					public void onLoadingComplete(String imageUri, View view,
+							Bitmap loadedImage) {
+						super.onLoadingComplete(imageUri, view, loadedImage);
+						// 必须将位图压缩到32k以下，否则微信分享出错
+						imageBitmap = BitmapCompressUtil.compressImage(
+								loadedImage, 32);
+						if (dialog.isShowing()) {
+							dialog.cancelDialog();
+						}
+					}
+				});
 	}
 
 }

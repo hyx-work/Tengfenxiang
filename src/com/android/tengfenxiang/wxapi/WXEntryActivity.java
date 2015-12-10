@@ -37,7 +37,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 			break;
 		case BaseResp.ErrCode.ERR_AUTH_DENIED:
 			// 分享拒绝
-			System.err.println(resp.errStr);
 			break;
 		}
 	}

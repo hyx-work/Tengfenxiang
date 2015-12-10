@@ -22,6 +22,7 @@ import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXWebpageObject;
+import com.tencent.mm.sdk.platformtools.Util;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -90,7 +91,6 @@ public class WebActivity extends BaseActivity {
 		articleId = intent.getIntExtra("article_id", -1);
 		webTitle = intent.getStringExtra("web_title");
 		webContent = intent.getStringExtra("web_content");
-
 		initView();
 	}
 
@@ -194,7 +194,7 @@ public class WebActivity extends BaseActivity {
 		// 分享对话框显示的图片
 		Bitmap thumb = BitmapFactory.decodeResource(getResources(),
 				R.drawable.ic_launcher);
-		msg.setThumbImage(thumb);
+		msg.thumbData = Util.bmpToByteArray(thumb, true);
 
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
 		req.transaction = String.valueOf(System.currentTimeMillis());
@@ -311,4 +311,5 @@ public class WebActivity extends BaseActivity {
 		};
 		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
 	}
+
 }

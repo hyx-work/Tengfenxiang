@@ -92,7 +92,6 @@ public class TaskListAdapter extends BaseAdapter {
 		imageLoader.displayImage(tasks.get(position).getThumbnails(),
 				viewHolder.image, options);
 		viewHolder.title.setText(tasks.get(position).getTitle());
-		// viewHolder.content.setText(tasks.get(position).getContent());
 		viewHolder.price.setText(context.getString(R.string.unit_yuan_en)
 				+ tasks.get(position).getPrice());
 		int limit = tasks.get(position).getLimitRetweetCount();

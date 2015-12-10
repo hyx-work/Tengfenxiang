@@ -124,7 +124,9 @@ public class UserInfoActivity extends BaseActivity {
 		// 显示图片的配置
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
 				.cacheInMemory(true).cacheOnDisk(true)
-				.bitmapConfig(Bitmap.Config.RGB_565).build();
+				.showImageOnLoading(R.drawable.default_head)
+				.showImageForEmptyUri(R.drawable.default_head)
+				.showImageOnFail(R.drawable.default_head).build();
 
 		ImageLoader.getInstance().loadImage(imageUrl, null, options,
 				new SimpleImageLoadingListener() {

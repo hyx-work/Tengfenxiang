@@ -202,14 +202,20 @@ public class ArticleFragment extends BaseFragment {
 				if (arg2 >= 1 && arg2 <= articles.size()) {
 					Intent intent = new Intent(getActivity(), WebActivity.class);
 					intent.putExtra("title", getString(R.string.share));
-					intent.putExtra("url", articles.get(arg2 - 1).getShareUrl()
-							+ "&token=" + currentUser.getToken());
+					String url = articles.get(arg2 - 1).getShareUrl();
+					if (null != currentUser.getToken()
+							&& !currentUser.getToken().equals("")) {
+						url = url + "&token=" + currentUser.getToken();
+					}
+					intent.putExtra("url", url);
 					intent.putExtra("article_id", articles.get(arg2 - 1)
 							.getId());
 					intent.putExtra("web_title", articles.get(arg2 - 1)
 							.getTitle());
 					intent.putExtra("web_content", articles.get(arg2 - 1)
 							.getContent());
+					intent.putExtra("image", articles.get(arg2 - 1)
+							.getThumbnails());
 					startActivity(intent);
 				}
 			}

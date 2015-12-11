@@ -176,7 +176,7 @@ public class LoginActivity extends Activity {
 	private SpannableString getRegisterUrl() {
 		SpannableString spanStr = new SpannableString(
 				getString(R.string.register_app_acount));
-		spanStr.setSpan(new UnderlineSpan(), 0, 7,
+		spanStr.setSpan(new UnderlineSpan(), 0, spanStr.length(),
 				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		spanStr.setSpan(new ClickableSpan() {
 
@@ -189,9 +189,9 @@ public class LoginActivity extends Activity {
 				intent.putExtra("title", getString(R.string.register));
 				startActivity(intent);
 			}
-		}, 0, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-		spanStr.setSpan(new ForegroundColorSpan(Color.BLUE), 0, 7,
-				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		}, 0, spanStr.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spanStr.setSpan(new ForegroundColorSpan(Color.BLUE), 0,
+				spanStr.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spanStr;
 	}
 }

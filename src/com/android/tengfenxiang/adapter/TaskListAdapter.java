@@ -97,7 +97,7 @@ public class TaskListAdapter extends BaseAdapter {
 		int limit = tasks.get(position).getLimitRetweetCount();
 		String limitCount = context.getString(R.string.limit_count) + limit;
 		viewHolder.limitCount.setText(limitCount);
-		int rest = limit - tasks.get(position).getRetweetCount();
+		int rest = tasks.get(position).getRetweetCount();
 		String restCount = context.getString(R.string.rest_count) + rest;
 		viewHolder.restCount.setText(restCount);
 		String endTimeHint = context.getString(R.string.end_time);

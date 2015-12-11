@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">腾分享</string>
-
+    <string name="app_name">玩赚9527</string>
+    <string name="version_text">Version&#160;&#8201;</string>
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="phone">手机号码</string>
@@ -10,12 +10,10 @@
     <string name="save_password">保存密码</string>
     <string name="empty_phone">请输入手机号码</string>
     <string name="empty_password">请输入密码</string>
-    <string name="register_app_acount">注册腾分享账号</string>
-
+    <string name="register_app_acount">注册玩赚9527账号</string>
     <string name="my_subordinate">我的下级</string>
     <string name="my_subordinate_count">我的下级人数</string>
     <string name="my_subordinate_points">我的下级总收益</string>
-
     <string name="signin">签到</string>
     <string name="signin_today">今日已签到</string>
     <string name="not_signin_today">今日未签到</string>
@@ -26,13 +24,11 @@
     <string name="have_signin">已签到</string>
     <string name="not_signin">未签到</string>
     <string name="empty_signin_info">无最近签到信息</string>
-
     <string name="system_setting">系统设置</string>
     <string name="logout">注销登录</string>
     <string name="clear_cache">清除缓存</string>
     <string name="system_message">系统消息</string>
     <string name="empty_message_hint">暂无系统消息</string>
-
     <string name="my_profit">我的收益</string>
     <string name="realtime_points">今日积分(未审核)</string>
     <string name="yesterday_points">昨日积分(已审核)</string>
@@ -48,8 +44,7 @@
     <string name="article_points">转发文章收益</string>
     <string name="read_article_in_app_points">应用内阅读文章</string>
     <string name="like_article_in_app_points">应用内点赞文章</string>
-
-    <string name="about_app">关于腾分享</string>
+    <string name="about_app">关于玩赚9527</string>
     <string name="function_introduction">功能介绍</string>
     <string name="help_center">帮助中心</string>
     <string name="feedback">问题反馈</string>
@@ -59,11 +54,9 @@
     <string name="select_qq_number">请选择要复制的号码</string>
     <string name="copy_success">已复制到剪贴板</string>
     <string name="no_app_market">没有找到应用市场</string>
-
     <string name="withdraw_records">已提现</string>
     <string name="withdraw_data">提现日期</string>
     <string name="withdraw_count">提现金额</string>
-
     <string name="withdraw_apply">申请提现</string>
     <string name="apply_withdraw_points">申请提现金额</string>
     <string name="alipay_account">支付宝账号</string>
@@ -71,7 +64,6 @@
     <string name="submit_success">提交成功</string>
     <string name="zero_warn">提现金额不能为0</string>
     <string name="overflow_warn">提现金额不能超过最大可提现金额</string>
-
     <string name="person_info">个人资料</string>
     <string name="user_head">用户头像</string>
     <string name="phone_number">手机号码</string>
@@ -96,10 +88,8 @@
     <string name="select_from_gallery">从手机相册中获取</string>
     <string name="select_by_take_photo">相机</string>
     <string name="no_exist_sdcard">请插入内存卡</string>
-
     <string name="user_info">用户信息</string>
     <string name="today_signin">今日签到</string>
-
     <string name="modify_password">修改密码</string>
     <string name="old_password">原始密码</string>
     <string name="old_password_hint">请输入原始密码</string>
@@ -110,7 +100,6 @@
     <string name="empty_old_password">密码不能为空</string>
     <string name="different_password">两次输入的密码不一致</string>
     <string name="modify_success">修改成功</string>
-
     <string name="task_list">任务中心</string>
     <string name="empty_task_hint">当前没有任务</string>
     <string name="task_price">单价&#160;&#8201;</string>
@@ -129,10 +118,9 @@
     <string name="wechat_friend">微信朋友</string>
     <string name="wechat_moment">朋友圈</string>
     <string name="share_success">分享成功</string>
- 
     <string name="try_now">立即体验</string>
     <string name="clear_cache_success">缓存已清除</string>
-	<string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
     <string name="xlistview_header_hint_ready">松开刷新数据</string>
     <string name="xlistview_header_hint_loading">正在加载&#8230;</string>
     <string name="xlistview_header_last_time">上次更新时间：</string>

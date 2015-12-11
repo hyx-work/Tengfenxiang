@@ -19,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
 import android.content.Intent;
@@ -31,11 +32,13 @@ public class WelcomeActivity extends BaseActivity {
 	private SharedPreferences preferences;
 	private Editor editor;
 	private LoadingDialog dialog;
+	private TextView versionTextView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome);
+		initView();
 
 		dialog = new LoadingDialog(this);
 		preferences = getSharedPreferences(getPackageName(),
@@ -69,6 +72,13 @@ public class WelcomeActivity extends BaseActivity {
 				}
 			}
 		}, SPLASH_DISPLAY_LENGHT);
+	}
+
+	private void initView() {
+		versionTextView = (TextView) findViewById(R.id.version);
+		DeviceInfoUtil util = DeviceInfoUtil.getInstance(getApplication());
+		versionTextView.setText(getString(R.string.version_text)
+				+ util.getAppVersion());
 	}
 
 	private void login(final String phone, final String password) {

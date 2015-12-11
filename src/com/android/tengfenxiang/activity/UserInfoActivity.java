@@ -59,7 +59,7 @@ public class UserInfoActivity extends BaseActivity {
 		icons.add(R.drawable.ic_signin);
 		icons.add(R.drawable.ic_subordinate);
 		icons.add(R.drawable.ic_message);
-		icons.add(R.drawable.ic_message);
+		icons.add(R.drawable.ic_invitation);
 		icons.add(R.drawable.ic_set);
 		icons.add(R.drawable.ic_info);
 		ArrayList<String> infos = new ArrayList<String>();

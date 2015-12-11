@@ -16,11 +16,11 @@
 
     <RelativeLayout
         android:id="@+id/user_head"
-        android:clickable="true"
-        android:background="@drawable/item_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title_bar" >
+        android:layout_below="@id/title_bar"
+        android:background="@drawable/item_bg"
+        android:clickable="true" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -31,15 +31,15 @@
             android:text="@string/user_head"
             android:textSize="18sp" />
 
-        <ImageView
+        <com.android.tengfenxiang.view.circleimage.CircleImageView
             android:id="@+id/head"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
             android:contentDescription="@string/user_head"
-            android:paddingRight="15dp"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/default_head" />
 
         <View
             android:id="@+id/line"

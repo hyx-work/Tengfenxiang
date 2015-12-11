@@ -144,4 +144,9 @@ public class Constant {
 	 * 注销登录发送的广播文字
 	 */
 	public final static String LOGOUT_BROADCAST = "logout_current_account";
+
+	/**
+	 * 保存分享记录发送的广播文字
+	 */
+	public final static String SAVE_RETWEET_RECORD = "save_reweet_record";
 }

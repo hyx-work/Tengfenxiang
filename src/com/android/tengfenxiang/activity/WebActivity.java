@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.receiver.SaveShareRecordReceiver;
+import com.android.tengfenxiang.receiver.SaveShareRecordReceiver.OnSaveRecordsListener;
 import com.android.tengfenxiang.util.BitmapCompressUtil;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
@@ -30,8 +32,10 @@ import com.tencent.mm.sdk.platformtools.Util;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,34 +54,66 @@ public class WebActivity extends BaseActivity {
 	 * activity显示的标题
 	 */
 	private String title;
+
 	/**
 	 * 要打开的网页
 	 */
 	private String url;
+
 	/**
 	 * 如果是某个文章链接，则将文章id保存起来
 	 */
 	private int articleId;
+
 	/**
 	 * 如果是某个任务链接，则将任务id保存起来
 	 */
 	private int taskId;
+
 	/**
 	 * 分享到微信时候显示的标题
 	 */
 	private String webTitle;
+
 	/**
 	 * 分享到微信时候显示的内容
 	 */
 	private String webContent;
+
 	/**
 	 * 缩略图，用于显示在分享对话框
 	 */
 	private Bitmap imageBitmap;
 
+	/**
+	 * 微信API的实例对象
+	 */
 	private IWXAPI wxApi;
 
+	/**
+	 * 弹出菜单
+	 */
 	private SharePopupWindow window;
+
+	/**
+	 * 记录分享的类型，朋友圈或微信好友
+	 */
+	private String destination;
+
+	/**
+	 * 广播管理对象
+	 */
+	private LocalBroadcastManager localBroadcastManager;
+
+	/**
+	 * 广播过滤
+	 */
+	private IntentFilter intentFilter;
+
+	/**
+	 * 保存分享信息的广播接收器
+	 */
+	private SaveShareRecordReceiver receiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +140,7 @@ public class WebActivity extends BaseActivity {
 			loadThumbnails(intent.getStringExtra("image"));
 		}
 		initView();
+		initReceiver();
 	}
 
 	private void initView() {
@@ -130,6 +167,22 @@ public class WebActivity extends BaseActivity {
 				finish();
 			}
 		});
+	}
+
+	private void initReceiver() {
+		intentFilter = new IntentFilter(Constant.SAVE_RETWEET_RECORD);
+		receiver = new SaveShareRecordReceiver();
+		receiver.setOnSaveRecordsListener(new OnSaveRecordsListener() {
+
+			@Override
+			public void onSaveShareRecords() {
+				// TODO Auto-generated method stub
+				saveRetweetRecord(destination);
+			}
+		});
+
+		localBroadcastManager = LocalBroadcastManager.getInstance(this);
+		localBroadcastManager.registerReceiver(receiver, intentFilter);
 	}
 
 	@SuppressLint("SetJavaScriptEnabled")
@@ -165,9 +218,11 @@ public class WebActivity extends BaseActivity {
 			switch (v.getId()) {
 			case R.id.wechat_btn:
 				wechatShare(0);
+				destination = "wechat_friend";
 				break;
 			case R.id.moment_btn:
 				wechatShare(1);
+				destination = "wechat_moment";
 				break;
 			default:
 				break;
@@ -175,6 +230,11 @@ public class WebActivity extends BaseActivity {
 		}
 	};
 
+	/**
+	 * 保存分享记录到后台
+	 * 
+	 * @param destination
+	 */
 	private void saveRetweetRecord(String destination) {
 		if (taskId == -1 && articleId == -1) {
 			return;
@@ -194,6 +254,7 @@ public class WebActivity extends BaseActivity {
 	 *            0:分享到微信好友，1：分享到微信朋友圈
 	 */
 	private void wechatShare(int flag) {
+		// 网页对象
 		WXWebpageObject webpage = new WXWebpageObject();
 		// 分享的网页链接
 		webpage.webpageUrl = url;
@@ -353,4 +414,10 @@ public class WebActivity extends BaseActivity {
 				});
 	}
 
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		localBroadcastManager.unregisterReceiver(receiver);
+	}
 }

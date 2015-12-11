@@ -23,12 +23,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MessageActivity extends BaseActivity {
 
 	private ListView messageListView;
 	private List<Message> messages;
+	private TextView hintTextView;
 	private List<Boolean> isOpen;
 
 	private TitleBar titleBar;
@@ -47,6 +49,11 @@ public class MessageActivity extends BaseActivity {
 
 	private void initView() {
 		messageListView = (ListView) findViewById(R.id.messages);
+		hintTextView = (TextView) findViewById(R.id.empty_message_hint);
+		if (null == messages || messages.size() == 0) {
+			hintTextView.setVisibility(View.VISIBLE);
+		}
+		
 		isOpen = new ArrayList<Boolean>();
 		for (int i = 0; i < messages.size(); i++) {
 			isOpen.add(false);

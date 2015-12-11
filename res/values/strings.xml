@@ -31,6 +31,7 @@
     <string name="logout">注销登录</string>
     <string name="clear_cache">清除缓存</string>
     <string name="system_message">系统消息</string>
+    <string name="empty_message_hint">暂无系统消息</string>
 
     <string name="my_profit">我的收益</string>
     <string name="realtime_points">今日积分(未审核)</string>

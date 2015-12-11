@@ -42,20 +42,25 @@
             android:src="@drawable/default_head" />
 
         <View
-            android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/head"
             android:background="@color/line_color" />
     </RelativeLayout>
 
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/user_head"
+        android:layout_marginTop="20dp"
+        android:background="@color/line_color" />
+
     <ListView
         android:id="@+id/person_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/user_head"
-        android:layout_marginTop="20dp" >
-    </ListView>
+        android:layout_below="@id/line" />
 
 </RelativeLayout>

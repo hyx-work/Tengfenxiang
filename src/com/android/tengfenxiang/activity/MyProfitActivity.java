@@ -224,7 +224,6 @@ public class MyProfitActivity extends BaseActivity {
 		List<ProfitPoint> points = summary.getRecent();
 		GraphViewData[] datas = new GraphViewData[points.size()];
 		for (int i = 0; i < points.size(); i++) {
-			System.err.println(points.get(i).getProfitDate());
 			long time = convert2long(points.get(i).getProfitDate(),
 					"yyyy-MM-dd");
 			datas[i] = new GraphViewData(time, points.get(i).getPoints());

@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -88,13 +89,16 @@ public class AboutActivity extends BaseActivity {
 		SimpleListAdapter adapter = new SimpleListAdapter(AboutActivity.this,
 				infos, values);
 		simpleListView.setAdapter(adapter);
+		ViewStub viewStub = new ViewStub(this);
+		simpleListView.addHeaderView(viewStub);
+		simpleListView.addFooterView(viewStub);
 
 		simpleListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				if (0 == arg2) {
+				if (0 == (arg2 - 1)) {
 					if (qqGroup.size() > 1) {
 						showDialog();
 					} else {
@@ -141,6 +145,9 @@ public class AboutActivity extends BaseActivity {
 		SimpleListAdapter adapter = new SimpleListAdapter(AboutActivity.this,
 				infos);
 		linkListView.setAdapter(adapter);
+		ViewStub viewStub = new ViewStub(this);
+		linkListView.addHeaderView(viewStub);
+		linkListView.addFooterView(viewStub);
 
 		linkListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -148,7 +155,7 @@ public class AboutActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Intent intent;
-				switch (arg2) {
+				switch (arg2 - 1) {
 				case 0:
 					intent = new Intent(AboutActivity.this, WebActivity.class);
 					intent.putExtra("title",

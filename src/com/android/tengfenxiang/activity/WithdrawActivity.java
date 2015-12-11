@@ -24,6 +24,8 @@ import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class WithdrawActivity extends BaseActivity implements
@@ -43,6 +45,7 @@ public class WithdrawActivity extends BaseActivity implements
 	private int offset = 0;
 	private List<Withdraw> withdraws;
 	private WithdrawListAdapter adapter;
+	private TextView hintTextView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,7 @@ public class WithdrawActivity extends BaseActivity implements
 
 		withdraws = new ArrayList<Withdraw>();
 		initView();
-		
+
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();
 		getWithdrawRecords(currentUser.getId(), limit, offset);
@@ -63,6 +66,7 @@ public class WithdrawActivity extends BaseActivity implements
 		recordsList.setXListViewListener(this);
 		adapter = new WithdrawListAdapter(WithdrawActivity.this, withdraws);
 		recordsList.setAdapter(adapter);
+		hintTextView = (TextView) findViewById(R.id.empty_withdraw_hint);
 
 		titleBar = (TitleBar) findViewById(R.id.title_bar);
 		titleBar.setOnClickListener(new OnTitleClickListener() {
@@ -94,8 +98,13 @@ public class WithdrawActivity extends BaseActivity implements
 				if (offset == 0) {
 					withdraws.clear();
 				}
-				withdraws.addAll(tmp);
-				adapter.notifyDataSetChanged();
+				if (null == tmp || tmp.size() == 0) {
+					hintTextView.setVisibility(View.VISIBLE);
+					recordsList.setVisibility(View.GONE);
+				} else {
+					withdraws.addAll(tmp);
+					adapter.notifyDataSetChanged();
+				}
 				loadComplete();
 			}
 		};
@@ -140,7 +149,7 @@ public class WithdrawActivity extends BaseActivity implements
 				Locale.CHINA);
 		Date curDate = new Date(System.currentTimeMillis());
 		recordsList.setRefreshTime(formatter.format(curDate));
-		
+
 		if (dialog.isShowing()) {
 			dialog.cancelDialog();
 		}

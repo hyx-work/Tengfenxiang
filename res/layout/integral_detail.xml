@@ -28,7 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/task_hint" >
+        android:layout_below="@+id/task_hint"
+        android:scrollbars="none" >
     </ListView>
 
     <TextView
@@ -46,7 +47,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/article_hint" >
+        android:layout_below="@+id/article_hint"
+        android:scrollbars="none" >
     </ListView>
 
     <TextView
@@ -64,7 +66,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/other_hint" >
+        android:layout_below="@+id/other_hint"
+        android:scrollbars="none" >
     </ListView>
 
 </RelativeLayout>

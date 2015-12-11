@@ -14,7 +14,11 @@ import android.os.Bundle;
  */
 public abstract class BaseActivity extends Activity {
 
-	protected User currentUser;
+	/**
+	 * 当前登录用户对象，设置为static确保统一性
+	 */
+	protected static User currentUser;
+
 	protected MainApplication application;
 
 	@Override

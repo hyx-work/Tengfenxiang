@@ -2,7 +2,6 @@ package com.android.tengfenxiang.activity;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.app.ActivityGroup;
 import android.app.LocalActivityManager;
 import android.content.Intent;
@@ -54,13 +53,8 @@ public abstract class AbstractActivityGroup extends ActivityGroup implements
 		}
 
 		container.removeAllViews();
-
-		Activity contentActivity = localActivityManager
-				.getActivity(activityName);
-		if (null == contentActivity) {
-			localActivityManager.startActivity(activityName,
-					initIntent(activityClassTye));
-		}
+		localActivityManager.startActivity(activityName,
+				initIntent(activityClassTye));
 
 		container.addView(localActivityManager.getActivity(activityName)
 				.getWindow().getDecorView(), new LinearLayout.LayoutParams(

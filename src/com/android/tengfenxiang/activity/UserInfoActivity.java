@@ -31,6 +31,12 @@ public class UserInfoActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 		initView();
 	}
 
@@ -113,11 +119,14 @@ public class UserInfoActivity extends BaseActivity {
 					intent.setClass(UserInfoActivity.this, AboutActivity.class);
 					break;
 				}
-				startActivity(intent);
+				startActivityForResult(intent, 0);
 			}
 		});
 	}
 
+	/**
+	 * 加载用户头像
+	 */
 	private void loadHead() {
 		String imageUrl = currentUser.getAvatar();
 

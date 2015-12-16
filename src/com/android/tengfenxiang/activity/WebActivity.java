@@ -37,6 +37,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -424,4 +425,17 @@ public class WebActivity extends BaseActivity {
 		super.onDestroy();
 		localBroadcastManager.unregisterReceiver(receiver);
 	}
+
+	/**
+	 * 监听返回键，控制网页返回
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+			webView.goBack();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
 }

@@ -118,7 +118,6 @@ public class LoginActivity extends Activity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				System.err.println(response);
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}

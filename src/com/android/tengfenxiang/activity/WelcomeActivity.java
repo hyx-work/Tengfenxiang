@@ -3,7 +3,9 @@ package com.android.tengfenxiang.activity;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.bean.ResponseResult;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.DeviceInfoUtil;
@@ -90,17 +92,24 @@ public class WelcomeActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Object object = ResponseUtil.handleResponse(getApplication(),
-						response, User.class);
-				if (null != object) {
-					currentUser = (User) object;
-					application.setCurrentUser(currentUser);
+				Intent intent = new Intent();
+				ResponseResult result = JSON.parseObject(response,
+						ResponseResult.class);
 
-					Intent intent = new Intent(WelcomeActivity.this,
-							MainActivity.class);
-					startActivity(intent);
-					finish();
+				// 如果返回code=200说明登录成功，跳转主页面
+				if (null != result && result.getCode() == 200) {
+					currentUser = (User) ResponseUtil.handleResponse(
+							getApplication(), response, User.class);
+					application.setCurrentUser(currentUser);
+					intent.setClass(WelcomeActivity.this, MainActivity.class);
+				} else {
+					// 登录失败，给出提示并跳转到登录界面
+					Toast.makeText(application, R.string.login_fail,
+							Toast.LENGTH_SHORT).show();
+					intent.setClass(WelcomeActivity.this, LoginActivity.class);
 				}
+				startActivity(intent);
+				finish();
 			}
 		};
 		// 请求失败的回调函数

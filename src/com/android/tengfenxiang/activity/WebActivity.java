@@ -40,6 +40,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -191,6 +192,8 @@ public class WebActivity extends BaseActivity {
 		if (null != url && !url.equals("")) {
 			webView.getSettings().setJavaScriptEnabled(true);
 			webView.getSettings().setSupportZoom(false);
+			webView.getSettings()
+					.setJavaScriptCanOpenWindowsAutomatically(true);
 			webView.setWebViewClient(new WebViewClient() {
 
 				public void onReceivedError(WebView view, int errorCode,
@@ -204,6 +207,7 @@ public class WebActivity extends BaseActivity {
 					return true;
 				}
 			});
+			webView.setWebChromeClient(new WebChromeClient());
 			webView.loadUrl(url);
 		}
 	}

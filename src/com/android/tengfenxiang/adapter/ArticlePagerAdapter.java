@@ -3,32 +3,27 @@ package com.android.tengfenxiang.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.tengfenxiang.bean.ItemInfo;
+import com.android.tengfenxiang.bean.ChannelItem;
 import com.android.tengfenxiang.fragment.ArticleFragment;
-import com.android.tengfenxiang.util.ArticleTypeUtil;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.SparseArray;
 
 public class ArticlePagerAdapter extends FragmentStatePagerAdapter {
 
-	private final List<String> catalogs = new ArrayList<String>();
+	private List<ChannelItem> catalogs = new ArrayList<ChannelItem>();
 
-	public ArticlePagerAdapter(FragmentManager fm, Context context) {
+	public ArticlePagerAdapter(FragmentManager fm, Context context,
+			List<ChannelItem> catalogs) {
 		super(fm);
-		SparseArray<ItemInfo> infos = ArticleTypeUtil.getInstance(context)
-				.getTypeInfos();
-		for (int i = 0; i < infos.size(); i++) {
-			catalogs.add(infos.get(i).getName());
-		}
+		this.catalogs = catalogs;
 	}
 
 	@Override
 	public CharSequence getPageTitle(int position) {
-		return catalogs.get(position);
+		return catalogs.get(position).getName();
 	}
 
 	@Override
@@ -38,7 +33,7 @@ public class ArticlePagerAdapter extends FragmentStatePagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
-		return ArticleFragment.newInstance(position);
+		return ArticleFragment.newInstance(catalogs.get(position).getId());
 	}
 
 }

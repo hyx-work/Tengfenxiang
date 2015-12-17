@@ -97,7 +97,7 @@ public class ArticleFragment extends BaseFragment {
 		return layout;
 	}
 
-	private void getArticleList(int userId, int limit, final int offset,
+	private void getArticleList(int userId, final int limit, final int offset,
 			int type) {
 		String url = Constant.ARTICLE_LIST_URL + "?userId=" + userId
 				+ "&limit=" + limit + "&offset=" + offset + "&type=" + type;
@@ -119,6 +119,16 @@ public class ArticleFragment extends BaseFragment {
 					}
 					articles.addAll(tmp);
 					adapter.notifyDataSetChanged();
+					// 服务器没有更多数据时隐藏查看更多
+					if (tmp.size() < limit && tmp.size() > 0) {
+						articleListView.removeFooterView();
+						Toast.makeText(getActivity(),
+								R.string.xlistview_load_all, Toast.LENGTH_SHORT)
+								.show();
+					} else {
+						articleListView.removeFooterView();
+						articleListView.addFooterView();
+					}
 				} else {
 					Toast.makeText(getActivity(), result.getData().toString(),
 							Toast.LENGTH_SHORT).show();
@@ -131,8 +141,6 @@ public class ArticleFragment extends BaseFragment {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				loadComplete();
-				Toast.makeText(getActivity(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
 			}
 		};
 

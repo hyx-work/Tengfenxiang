@@ -13,17 +13,19 @@ public class GraphViewSeries {
 		public GraphViewSeriesStyle() {
 			super();
 		}
+
 		public GraphViewSeriesStyle(int color, int thickness) {
 			super();
 			this.color = color;
 			this.thickness = thickness;
 		}
-		
+
 		public ValueDependentColor getValueDependentColor() {
 			return valueDependentColor;
 		}
 
-		public void setValueDependentColor(ValueDependentColor valueDependentColor) {
+		public void setValueDependentColor(
+				ValueDependentColor valueDependentColor) {
 			this.valueDependentColor = valueDependentColor;
 		}
 	}
@@ -37,10 +39,11 @@ public class GraphViewSeries {
 		description = null;
 		style = new GraphViewSeriesStyle();
 		this.values = values;
-        checkValueOrder();
+		checkValueOrder();
 	}
 
-	public GraphViewSeries(String description, GraphViewSeriesStyle style, GraphViewDataInterface[] values) {
+	public GraphViewSeries(String description, GraphViewSeriesStyle style,
+			GraphViewDataInterface[] values) {
 		super();
 		this.description = description;
 		if (style == null) {
@@ -48,8 +51,8 @@ public class GraphViewSeries {
 		}
 		this.style = style;
 		this.values = values;
-        checkValueOrder();
-    }
+		checkValueOrder();
+	}
 
 	public void addGraphView(GraphView graphView) {
 		this.graphViews.add(graphView);
@@ -57,9 +60,10 @@ public class GraphViewSeries {
 
 	@Deprecated
 	public void appendData(GraphViewDataInterface value, boolean scrollToEnd) {
-        if (value.getX() < values[values.length-1].getX()) {
-            throw new IllegalArgumentException("new x-value must be greater then the last value. x-values has to be ordered in ASC.");
-        }
+		if (value.getX() < values[values.length - 1].getX()) {
+			throw new IllegalArgumentException(
+					"new x-value must be greater then the last value. x-values has to be ordered in ASC.");
+		}
 		GraphViewDataInterface[] newValues = new GraphViewDataInterface[values.length + 1];
 		int offset = values.length;
 		System.arraycopy(values, 0, newValues, 0, offset);
@@ -73,30 +77,27 @@ public class GraphViewSeries {
 		}
 	}
 
-	public void appendData(GraphViewDataInterface value, boolean scrollToEnd, int maxDataCount) {
-        if (value.getX() < values[values.length-1].getX()) {
-            throw new IllegalArgumentException("new x-value must be greater then the last value. x-values has to be ordered in ASC.");
-        }
+	public void appendData(GraphViewDataInterface value, boolean scrollToEnd,
+			int maxDataCount) {
+		if (value.getX() < values[values.length - 1].getX()) {
+			throw new IllegalArgumentException(
+					"new x-value must be greater then the last value. x-values has to be ordered in ASC.");
+		}
 		synchronized (values) {
 			int curDataCount = values.length;
 			GraphViewDataInterface[] newValues;
 			if (curDataCount < maxDataCount) {
-				// enough space
 				newValues = new GraphViewDataInterface[curDataCount + 1];
 				System.arraycopy(values, 0, newValues, 0, curDataCount);
-				// append new data
 				newValues[curDataCount] = value;
 			} else {
-				// we have to trim one data
 				newValues = new GraphViewDataInterface[maxDataCount];
-				System.arraycopy(values, 1, newValues, 0, curDataCount-1);
-				// append new data
-				newValues[maxDataCount-1] = value;
+				System.arraycopy(values, 1, newValues, 0, curDataCount - 1);
+				newValues[maxDataCount - 1] = value;
 			}
 			values = newValues;
 		}
 
-		// update linked graph views
 		for (GraphView g : graphViews) {
 			if (scrollToEnd) {
 				g.scrollToEnd();
@@ -114,21 +115,22 @@ public class GraphViewSeries {
 
 	public void resetData(GraphViewDataInterface[] values) {
 		this.values = values;
-        checkValueOrder();
-        for (GraphView g : graphViews) {
+		checkValueOrder();
+		for (GraphView g : graphViews) {
 			g.redrawAll();
 		}
 	}
 
-    private void checkValueOrder() {
-        if (values.length>0) {
-            double lx = values[0].getX();
-            for (int i=1;i<values.length;i++) {
-                if (lx > values[i].getX()) {
-                    throw new IllegalArgumentException("The order of the values is not correct. X-Values have to be ordered ASC. First the lowest x value and at least the highest x value.");
-                }
-                lx = values[i].getX();
-            }
-        }
-    }
+	private void checkValueOrder() {
+		if (values.length > 0) {
+			double lx = values[0].getX();
+			for (int i = 1; i < values.length; i++) {
+				if (lx > values[i].getX()) {
+					throw new IllegalArgumentException(
+							"The order of the values is not correct. X-Values have to be ordered ASC. First the lowest x value and at least the highest x value.");
+				}
+				lx = values[i].getX();
+			}
+		}
+	}
 }

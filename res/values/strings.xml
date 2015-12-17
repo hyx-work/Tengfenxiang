@@ -126,8 +126,9 @@
     <string name="xlistview_header_hint_ready">松开刷新数据</string>
     <string name="xlistview_header_hint_loading">正在加载&#8230;</string>
     <string name="xlistview_header_last_time">上次更新时间：</string>
-    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_normal">点击查看更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
+    <string name="xlistview_load_all">已加载全部数据</string>
     <string name="unknow_error">未知错误</string>
     <string name="unit_people">人</string>
     <string name="unit_yuan_en">¥</string>
@@ -141,5 +142,10 @@
     <string name="network_error">网络不可用，请检查你的网络设置</string>
     <string name="dialog_title">提示</string>
     <string name="confirm_to_logout">确认退出该账号吗?</string>
+    <string name="edit_channel">编辑频道</string>
+    <string name="subscribe_my_category">我的频道</string>
+    <string name="subscribe_more_category">更多频道</string>
+    <string name="subscribe_manager_category_info">单击增删频道</string>
+    <string name="subscribe_manager_category_info_2">单击增删频道，长按拖拽排序</string>
 
 </resources>

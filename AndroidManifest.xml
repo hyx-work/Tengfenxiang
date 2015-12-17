@@ -117,6 +117,10 @@
             android:label="@string/system_setting" >
         </activity>
         <activity
+            android:name="com.android.tengfenxiang.activity.ChannelActivity"
+            android:label="@string/edit_channel" >
+        </activity>
+        <activity
             android:name="com.android.tengfenxiang.wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait"

@@ -7,10 +7,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.FontMetricsInt;
 import android.graphics.Path;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 
 public class LineGraphView extends GraphView {
@@ -18,9 +15,6 @@ public class LineGraphView extends GraphView {
 	private boolean drawBackground;
 	private boolean drawDataPoints;
 	private float dataPointsRadius = 10f;
-	private float markerX;
-	private float markerY;
-	private String content;
 	private Context context;
 
 	public LineGraphView(Context context, AttributeSet attrs) {
@@ -50,7 +44,8 @@ public class LineGraphView extends GraphView {
 		double lastEndY = 0;
 		double lastEndX = 0;
 
-		paint.setStrokeWidth(DensityUtil.dip2px(context, style.thickness * 1.0f));
+		paint.setStrokeWidth(DensityUtil
+				.dip2px(context, style.thickness * 1.0f));
 		paint.setColor(style.color);
 
 		Path bgPath = null;
@@ -80,6 +75,8 @@ public class LineGraphView extends GraphView {
 					canvas.drawCircle(endX, endY, dataPointsRadius, paint);
 				}
 
+				// 画两点间的直线
+				paint.setColor(Color.rgb(250, 98, 65));
 				canvas.drawLine(startX, startY, endX, endY, paint);
 				if (bgPath != null) {
 					if (i == 1) {
@@ -89,10 +86,22 @@ public class LineGraphView extends GraphView {
 					bgPath.lineTo(endX, endY + style.thickness);
 				}
 
+				// 在直线的起点画一个圆圈
+				paint.setColor(Color.rgb(250, 98, 65));
+				canvas.drawCircle(startX, startY, DensityUtil.dip2px(context,
+						GraphViewConfig.MARKER_MARGIN), paint);
+				paint.setColor(Color.WHITE);
+				canvas.drawCircle(startX, startY, DensityUtil.dip2px(context,
+						GraphViewConfig.RECT_RADIUS), paint);
+
+				// 画最后一个圆圈
 				if (i == values.length - 1) {
-					markerX = endX;
-					markerY = endY;
-					content = String.valueOf(values[i].getY());
+					paint.setColor(Color.rgb(250, 98, 65));
+					canvas.drawCircle(endX, endY, DensityUtil.dip2px(context,
+							GraphViewConfig.MARKER_MARGIN), paint);
+					paint.setColor(Color.WHITE);
+					canvas.drawCircle(endX, endY, DensityUtil.dip2px(context,
+							GraphViewConfig.RECT_RADIUS), paint);
 				}
 			} else if (drawDataPoints) {
 				float first_X = (float) x + (horstart + 1);
@@ -101,7 +110,6 @@ public class LineGraphView extends GraphView {
 			}
 			lastEndY = y;
 			lastEndX = x;
-
 		}
 
 		if (bgPath != null) {
@@ -114,58 +122,6 @@ public class LineGraphView extends GraphView {
 			bgPath.close();
 			canvas.drawPath(bgPath, paintBackground);
 		}
-
-		paint.setColor(Color.rgb(250, 98, 65));
-
-		canvas.drawCircle(markerX, markerY,
-				DensityUtil.dip2px(context, GraphViewConfig.MARKER_MARGIN),
-				paint);
-
-		paint.setColor(Color.WHITE);
-		canvas.drawCircle(markerX, markerY,
-				DensityUtil.dip2px(context, GraphViewConfig.RECT_RADIUS), paint);
-
-		drawMarker(canvas, content, markerX, markerY + style.thickness);
-	}
-
-	private void drawMarker(Canvas canvas, String content, float x, float y) {
-		Rect popupTextRect = new Rect();
-		paint.getTextBounds(content, 0, content.length(), popupTextRect);
-		paint.setAntiAlias(true);
-		paint.setColor(Color.rgb(250, 98, 65));
-
-		RectF r = new RectF(x - popupTextRect.width() * 5 / 6
-				- GraphViewConfig.MARKER_MARGIN, y
-				- DensityUtil.dip2px(context,
-						GraphViewConfig.MARKER_HEIGHT_OFFSET), x
-				+ popupTextRect.width() * 1 / 6
-				+ DensityUtil.dip2px(context, GraphViewConfig.MARKER_MARGIN), y
-				- DensityUtil.dip2px(context,
-						GraphViewConfig.MARKER_HEIGHT_OFFSET / 2));
-		canvas.drawRoundRect(r,
-				DensityUtil.dip2px(context, GraphViewConfig.RECT_RADIUS),
-				DensityUtil.dip2px(context, GraphViewConfig.RECT_RADIUS), paint);
-
-		Path path = new Path();
-		path.moveTo(
-				x,
-				y
-						- DensityUtil.dip2px(context,
-								GraphViewConfig.MARKER_HEIGHT_OFFSET / 2));
-		path.lineTo(x, y - DensityUtil.dip2px(context, 10));
-		path.lineTo(
-				x - DensityUtil.dip2px(context, 5),
-				y
-						- DensityUtil.dip2px(context,
-								GraphViewConfig.MARKER_HEIGHT_OFFSET / 2));
-		path.close();
-		canvas.drawPath(path, paint);
-		paint.setColor(Color.WHITE);
-		FontMetricsInt fontMetrics = paint.getFontMetricsInt();
-		int baseline = (int) (r.top
-				+ (r.bottom - r.top - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top);
-		paint.setTextAlign(Paint.Align.CENTER);
-		canvas.drawText(content, r.centerX(), baseline, paint);
 	}
 
 	public int getBackgroundColor() {

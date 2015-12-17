@@ -234,7 +234,6 @@ abstract public class GraphView extends LinearLayout {
 						y + DensityUtil.dip2px(context, 5), paint);
 			}
 
-			// reset
 			paint.setTextAlign(Align.LEFT);
 		}
 	}

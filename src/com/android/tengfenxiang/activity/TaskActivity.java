@@ -58,7 +58,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 		initView();
 	}
 
-	private void getTaskList(int userId, int limit, final int offset) {
+	private void getTaskList(int userId, final int limit, final int offset) {
 		String url = Constant.TASK_LIST_URL + "?userId=" + userId + "&limit="
 				+ limit + "&offset=" + offset;
 
@@ -79,6 +79,16 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 					}
 					tasks.addAll(tmp);
 					adapter.notifyDataSetChanged();
+					// 服务器没有更多数据时隐藏查看更多
+					if (tmp.size() < limit && tmp.size() > 0) {
+						taskListView.removeFooterView();
+						Toast.makeText(getApplication(),
+								R.string.xlistview_load_all, Toast.LENGTH_SHORT)
+								.show();
+					} else {
+						taskListView.removeFooterView();
+						taskListView.addFooterView();
+					}
 				} else {
 					Toast.makeText(getApplication(),
 							result.getData().toString(), Toast.LENGTH_SHORT)

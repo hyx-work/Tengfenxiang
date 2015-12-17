@@ -93,6 +93,10 @@ public class Summary {
 		 */
 		private String profitReason;
 
+		private int viewCount;
+
+		private int itemCount;
+
 		public String getProfitDate() {
 			return profitDate;
 		}
@@ -115,6 +119,22 @@ public class Summary {
 
 		public void setProfitReason(String profitReason) {
 			this.profitReason = profitReason;
+		}
+
+		public int getViewCount() {
+			return viewCount;
+		}
+
+		public void setViewCount(int viewCount) {
+			this.viewCount = viewCount;
+		}
+
+		public int getItemCount() {
+			return itemCount;
+		}
+
+		public void setItemCount(int itemCount) {
+			this.itemCount = itemCount;
 		}
 
 	}

@@ -222,12 +222,28 @@ public class MyProfitActivity extends BaseActivity {
 	 */
 	private GraphViewData[] getDatas() {
 		List<ProfitPoint> points = summary.getRecent();
-		GraphViewData[] datas = new GraphViewData[points.size()];
-		for (int i = 0; i < points.size(); i++) {
+		GraphViewData[] datas = new GraphViewData[7];
+		// 一天的时间值
+		long date = 86400000;
+		// 记录最小的时间值
+		long min = 0;
+
+		// 填充返回的数据值
+		for (int i = 7 - points.size(); i < 7; i++) {
 			long time = convert2long(points.get(i).getProfitDate(),
 					"yyyy-MM-dd");
+			if (min == 0 || time < min) {
+				min = time;
+			}
 			datas[i] = new GraphViewData(time, points.get(i).getPoints());
 		}
+
+		// 图表默认七个点，如果返回数据没有七个点则填充默认数据
+		for (int i = 6 - points.size(); i >= 0; i--) {
+			datas[i] = new GraphViewData(min - (7 - points.size() - i) * date,
+					0);
+		}
+
 		return datas;
 	}
 

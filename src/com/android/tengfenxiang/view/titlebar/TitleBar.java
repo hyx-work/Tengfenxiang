@@ -89,7 +89,9 @@ public class TitleBar extends RelativeLayout {
 
 			@Override
 			public void onClick(View arg0) {
-				listener.OnClickLeft();
+				if (null != listener) {
+					listener.OnClickLeft();
+				}
 			}
 		});
 
@@ -97,7 +99,9 @@ public class TitleBar extends RelativeLayout {
 
 			@Override
 			public void onClick(View arg0) {
-				listener.OnClickRight();
+				if (null != listener) {
+					listener.OnClickRight();
+				}
 			}
 		});
 	}

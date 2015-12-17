@@ -12,7 +12,6 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
@@ -37,7 +36,7 @@ public class XListView extends ListView implements OnScrollListener,
 	private XListViewFooter mFooterView;
 	private boolean mEnablePullLoad;
 	private boolean mPullLoading;
-	private boolean mIsFooterReady = false;
+	// private boolean mIsFooterReady = false;
 
 	private int mTotalItemCount;
 
@@ -89,14 +88,14 @@ public class XListView extends ListView implements OnScrollListener,
 				});
 	}
 
-	@Override
-	public void setAdapter(ListAdapter adapter) {
-		if (mIsFooterReady == false) {
-			mIsFooterReady = true;
-			addFooterView(mFooterView);
-		}
-		super.setAdapter(adapter);
-	}
+	// @Override
+	// public void setAdapter(ListAdapter adapter) {
+	// if (mIsFooterReady == false) {
+	// mIsFooterReady = true;
+	// addFooterView(mFooterView);
+	// }
+	// super.setAdapter(adapter);
+	// }
 
 	public void setPullRefreshEnable(boolean enable) {
 		mEnablePullRefresh = enable;
@@ -305,6 +304,20 @@ public class XListView extends ListView implements OnScrollListener,
 		public void onRefresh();
 
 		public void onLoadMore();
+	}
+
+	/**
+	 * 添加查看更多的接口
+	 */
+	public void addFooterView() {
+		addFooterView(mFooterView);
+	}
+
+	/**
+	 * 移除查看更多的接口
+	 */
+	public void removeFooterView() {
+		removeFooterView(mFooterView);
 	}
 
 	@Override

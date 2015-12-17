@@ -79,16 +79,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 					}
 					tasks.addAll(tmp);
 					adapter.notifyDataSetChanged();
-					// 服务器没有更多数据时隐藏查看更多
-					if (tmp.size() < limit && tmp.size() > 0) {
-						taskListView.removeFooterView();
-						Toast.makeText(getApplication(),
-								R.string.xlistview_load_all, Toast.LENGTH_SHORT)
-								.show();
-					} else {
-						taskListView.removeFooterView();
-						taskListView.addFooterView();
-					}
+					taskListView.setLoadAll(tmp.size() < limit);
 				} else {
 					Toast.makeText(getApplication(),
 							result.getData().toString(), Toast.LENGTH_SHORT)

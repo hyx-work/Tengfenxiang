@@ -13,6 +13,10 @@ public class XListViewFooter extends LinearLayout {
 	public final static int STATE_NORMAL = 0;
 	public final static int STATE_READY = 1;
 	public final static int STATE_LOADING = 2;
+	/**
+	 * 已经全部加载
+	 */
+	public final static int STATE_LOAD_ALL = 3;
 
 	private Context mContext;
 
@@ -36,14 +40,24 @@ public class XListViewFooter extends LinearLayout {
 		mHintView.setVisibility(View.INVISIBLE);
 		mProgressBar.setVisibility(View.INVISIBLE);
 		mHintView.setVisibility(View.INVISIBLE);
-		if (state == STATE_READY) {
-			mHintView.setVisibility(View.VISIBLE);
-			mHintView.setText(R.string.xlistview_footer_hint_ready);
-		} else if (state == STATE_LOADING) {
-			mProgressBar.setVisibility(View.VISIBLE);
-		} else {
+		switch (state) {
+		case STATE_NORMAL:
 			mHintView.setVisibility(View.VISIBLE);
 			mHintView.setText(R.string.xlistview_footer_hint_normal);
+			break;
+		case STATE_READY:
+			mHintView.setVisibility(View.VISIBLE);
+			mHintView.setText(R.string.xlistview_footer_hint_ready);
+			break;
+		case STATE_LOADING:
+			mProgressBar.setVisibility(View.VISIBLE);
+			break;
+		case STATE_LOAD_ALL:
+			mHintView.setVisibility(View.VISIBLE);
+			mHintView.setText(R.string.xlistview_load_all);
+			break;
+		default:
+			break;
 		}
 	}
 

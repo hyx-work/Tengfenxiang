@@ -12,6 +12,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
@@ -36,7 +37,7 @@ public class XListView extends ListView implements OnScrollListener,
 	private XListViewFooter mFooterView;
 	private boolean mEnablePullLoad;
 	private boolean mPullLoading;
-	// private boolean mIsFooterReady = false;
+	private boolean mIsFooterReady = false;
 
 	private int mTotalItemCount;
 
@@ -47,6 +48,11 @@ public class XListView extends ListView implements OnScrollListener,
 	private final static int SCROLL_DURATION = 400;
 	private final static int PULL_LOAD_MORE_DELTA = 50;
 	private final static float OFFSET_RADIO = 1.8f;
+
+	/**
+	 * 用于标示是不是已经加载完全部数据
+	 */
+	private boolean isLoadAll = false;
 
 	public XListView(Context context) {
 		super(context);
@@ -88,14 +94,14 @@ public class XListView extends ListView implements OnScrollListener,
 				});
 	}
 
-	// @Override
-	// public void setAdapter(ListAdapter adapter) {
-	// if (mIsFooterReady == false) {
-	// mIsFooterReady = true;
-	// addFooterView(mFooterView);
-	// }
-	// super.setAdapter(adapter);
-	// }
+	@Override
+	public void setAdapter(ListAdapter adapter) {
+		if (mIsFooterReady == false) {
+			mIsFooterReady = true;
+			addFooterView(mFooterView);
+		}
+		super.setAdapter(adapter);
+	}
 
 	public void setPullRefreshEnable(boolean enable) {
 		mEnablePullRefresh = enable;
@@ -114,7 +120,14 @@ public class XListView extends ListView implements OnScrollListener,
 		} else {
 			mPullLoading = false;
 			mFooterView.show();
-			mFooterView.setState(XListViewFooter.STATE_NORMAL);
+
+			// 根据是否已经加载完成所有数据，来动态修改底部提示文字
+			if (isLoadAll) {
+				mFooterView.setState(XListViewFooter.STATE_LOAD_ALL);
+			} else {
+				mFooterView.setState(XListViewFooter.STATE_NORMAL);
+			}
+
 			mFooterView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -129,12 +142,24 @@ public class XListView extends ListView implements OnScrollListener,
 			mPullRefreshing = false;
 			resetHeaderHeight();
 		}
+
+		// 根据是否已经加载完成所有数据，来动态修改底部提示文字
+		if (isLoadAll) {
+			mFooterView.setState(XListViewFooter.STATE_LOAD_ALL);
+		} else {
+			mFooterView.setState(XListViewFooter.STATE_NORMAL);
+		}
 	}
 
 	public void stopLoadMore() {
 		if (mPullLoading == true) {
 			mPullLoading = false;
-			mFooterView.setState(XListViewFooter.STATE_NORMAL);
+			// 根据是否已经加载完成所有数据，来动态修改底部提示文字
+			if (isLoadAll) {
+				mFooterView.setState(XListViewFooter.STATE_LOAD_ALL);
+			} else {
+				mFooterView.setState(XListViewFooter.STATE_NORMAL);
+			}
 		}
 	}
 
@@ -306,18 +331,12 @@ public class XListView extends ListView implements OnScrollListener,
 		public void onLoadMore();
 	}
 
-	/**
-	 * 添加查看更多的接口
-	 */
-	public void addFooterView() {
-		addFooterView(mFooterView);
+	public boolean isLoadAll() {
+		return isLoadAll;
 	}
 
-	/**
-	 * 移除查看更多的接口
-	 */
-	public void removeFooterView() {
-		removeFooterView(mFooterView);
+	public void setLoadAll(boolean isLoadAll) {
+		this.isLoadAll = isLoadAll;
 	}
 
 	@Override

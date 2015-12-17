@@ -119,16 +119,7 @@ public class ArticleFragment extends BaseFragment {
 					}
 					articles.addAll(tmp);
 					adapter.notifyDataSetChanged();
-					// 服务器没有更多数据时隐藏查看更多
-					if (tmp.size() < limit && tmp.size() > 0) {
-						articleListView.removeFooterView();
-						Toast.makeText(getActivity(),
-								R.string.xlistview_load_all, Toast.LENGTH_SHORT)
-								.show();
-					} else {
-						articleListView.removeFooterView();
-						articleListView.addFooterView();
-					}
+					articleListView.setLoadAll(tmp.size() < limit);
 				} else {
 					Toast.makeText(getActivity(), result.getData().toString(),
 							Toast.LENGTH_SHORT).show();

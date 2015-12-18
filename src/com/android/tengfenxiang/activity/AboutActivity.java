@@ -213,7 +213,6 @@ public class AboutActivity extends BaseActivity {
 				if (null == setting) {
 					Toast.makeText(getApplication(), R.string.unknow_error,
 							Toast.LENGTH_SHORT).show();
-					finish();
 				} else {
 					initView();
 				}

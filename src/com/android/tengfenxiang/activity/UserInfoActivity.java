@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -106,10 +105,8 @@ public class UserInfoActivity extends BaseActivity {
 							MessageActivity.class);
 					break;
 				case 4:
-					intent.setClass(UserInfoActivity.this, WebActivity.class);
-					intent.putExtra("title", getString(R.string.invite_others));
-					intent.putExtra("url", Constant.REGISTER_URL
-							+ "?inviteCode=" + currentUser.getInviteCode());
+					intent.setClass(UserInfoActivity.this,
+							InviteCodeActivity.class);
 					break;
 				case 5:
 					intent.setClass(UserInfoActivity.this,

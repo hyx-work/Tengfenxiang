@@ -53,7 +53,7 @@
     <string name="qq_group">QQ群</string>
     <string name="contact_phone">客服电话</string>
     <string name="select_qq_number">请选择要复制的号码</string>
-    <string name="copy_success">已复制到剪贴板</string>
+    <string name="copy_success">已复制到剪切板</string>
     <string name="no_app_market">没有找到应用市场</string>
     <string name="withdraw_records">已提现</string>
     <string name="withdraw_data">提现日期</string>
@@ -77,6 +77,9 @@
     <string name="place">地&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;区</string>
     <string name="alipay">支&#160;&#8201;付&#160;&#8201;宝</string>
     <string name="invite_others">我要邀请</string>
+    <string name="invite_user">邀请用户</string>
+    <string name="invite_code_hint">邀请码:</string>
+    <string name="click_to_copy">点击这里复制到剪切板</string>
     <string name="edit_email_title">邮箱</string>
     <string name="edit_qq_title">QQ</string>
     <string name="edit_wechat_title">微信号</string>

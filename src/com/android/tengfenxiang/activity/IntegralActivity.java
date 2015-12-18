@@ -6,7 +6,7 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
 import com.android.tengfenxiang.bean.Integral;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
@@ -135,6 +135,10 @@ public class IntegralActivity extends BaseActivity {
 			public void onResponse(String response) {
 				integral = (Integral) ResponseUtil.handleResponse(
 						getApplication(), response, Integral.class);
+				// 返回为空则新建一个默认对象
+				if (null == integral) {
+					integral = new Integral();
+				}
 				initView();
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
@@ -155,6 +159,6 @@ public class IntegralActivity extends BaseActivity {
 		};
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
-		RequestManager.getRequestQueue(getApplication()).add(request);
+		RequestUtil.getRequestQueue(getApplication()).add(request);
 	}
 }

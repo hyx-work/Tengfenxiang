@@ -20,16 +20,21 @@ public class ChannelManage {
 	/**
 	 * 默认的用户选择频道列表
 	 * */
-	public static List<ChannelItem> defaultUserChannels;
+	private List<ChannelItem> defaultUserChannels;
 
 	/**
 	 * 默认的其他频道列表
 	 * */
-	public static List<ChannelItem> defaultOtherChannels;
+	private List<ChannelItem> defaultOtherChannels;
 
 	private ChannelDao channelDao;
 
 	private boolean userExist = false;
+
+	/**
+	 * 默认版块的code值
+	 */
+	private int[] defaultUserCodes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11 };
 
 	private ChannelManage(DBHelper paramDBHelper) throws SQLException {
 		if (channelDao == null)
@@ -42,15 +47,32 @@ public class ChannelManage {
 	private void initData(Context context) {
 		defaultUserChannels = new ArrayList<ChannelItem>();
 		defaultOtherChannels = new ArrayList<ChannelItem>();
-		if (getUserChannel().size() == 0) {
+
+		// 用户频道和其他频道都为0时，说明第一次使用，需要生成默认数据
+		if (getUserChannel().size() == 0 && getOtherChannel().size() == 0) {
 			SparseArray<ItemInfo> infos = ArticleTypeUtil.getInstance(context)
 					.getTypeInfos();
 			for (int i = 0; i < infos.size(); i++) {
 				ChannelItem item = new ChannelItem(infos.get(i).getCode(),
 						infos.get(i).getName(), i, 1);
-				defaultUserChannels.add(item);
+				if (isUserChannel(infos.get(i).getCode())) {
+					defaultUserChannels.add(item);
+				} else {
+					defaultOtherChannels.add(item);
+				}
 			}
 		}
+	}
+
+	private boolean isUserChannel(int code) {
+		boolean result = false;
+		for (int i = 0; i < defaultUserCodes.length; i++) {
+			if (code == defaultUserCodes[i]) {
+				result = true;
+				break;
+			}
+		}
+		return result;
 	}
 
 	/**

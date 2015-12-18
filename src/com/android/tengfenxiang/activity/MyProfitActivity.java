@@ -13,7 +13,7 @@ import com.android.tengfenxiang.bean.Summary;
 import com.android.tengfenxiang.bean.Summary.ProfitPoint;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.DensityUtil;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.graphview.CustomLabelFormatter;
@@ -153,6 +153,10 @@ public class MyProfitActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
+				// 返回为空则新建一个默认对象
+				if (summary == null) {
+					summary = new Summary();
+				}
 				initView();
 			}
 		};
@@ -171,7 +175,7 @@ public class MyProfitActivity extends BaseActivity {
 		};
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
-		RequestManager.getRequestQueue(getApplication()).add(request);
+		RequestUtil.getRequestQueue(getApplication()).add(request);
 	}
 
 	/**

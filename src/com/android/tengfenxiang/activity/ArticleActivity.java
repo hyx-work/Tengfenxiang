@@ -49,7 +49,7 @@ public class ArticleActivity extends FragmentActivity {
 	/**
 	 * 初始化组件
 	 */
-	public void initComponent() {
+	private void initComponent() {
 		tabs = (CategoryTabStrip) findViewById(R.id.category_strip);
 		pager = (ViewPager) findViewById(R.id.view_pager);
 		channelImageView = (ImageView) findViewById(R.id.icon_category);

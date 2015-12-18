@@ -17,7 +17,7 @@ import com.android.tengfenxiang.receiver.ConnectionChangeReceiver.OnNetworkChang
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.DeviceInfoUtil;
 import com.android.tengfenxiang.util.ImageLoadUtil;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.volley.AuthFailureError;
 import com.android.volley.VolleyError;
@@ -109,7 +109,7 @@ public class MainApplication extends Application {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue(this).add(stringRequest);
+		RequestUtil.getRequestQueue(this).add(stringRequest);
 	}
 
 	/**

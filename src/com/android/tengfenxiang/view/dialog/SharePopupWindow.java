@@ -14,11 +14,13 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 public class SharePopupWindow extends PopupWindow {
 
 	private ImageView btn_wechat, btn_moment;
 	private Button btn_cancel;
+	private TextView titleTextView;
 	private View mMenuView;
 
 	public SharePopupWindow(Activity context, OnClickListener itemsOnClick) {
@@ -26,6 +28,7 @@ public class SharePopupWindow extends PopupWindow {
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mMenuView = inflater.inflate(R.layout.share_menu, null);
+		titleTextView = (TextView) mMenuView.findViewById(R.id.title);
 		btn_wechat = (ImageView) mMenuView.findViewById(R.id.wechat_btn);
 		btn_moment = (ImageView) mMenuView.findViewById(R.id.moment_btn);
 		btn_cancel = (Button) mMenuView.findViewById(R.id.cancel_btn);
@@ -67,5 +70,9 @@ public class SharePopupWindow extends PopupWindow {
 				return true;
 			}
 		});
+	}
+
+	public void setTitle(String title) {
+		titleTextView.setText(title);
 	}
 }

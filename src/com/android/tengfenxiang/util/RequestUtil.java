@@ -14,11 +14,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
  * @author ccz
  * 
  */
-public class RequestManager {
+public class RequestUtil {
 	private static RequestQueue mRequestQueue;
 	private static AbstractHttpClient mHttpClient;
 
-	private RequestManager() {
+	private RequestUtil() {
 
 	}
 

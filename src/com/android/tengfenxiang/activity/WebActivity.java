@@ -8,7 +8,7 @@ import com.android.tengfenxiang.receiver.SaveShareRecordReceiver;
 import com.android.tengfenxiang.receiver.SaveShareRecordReceiver.OnSaveRecordsListener;
 import com.android.tengfenxiang.util.BitmapCompressUtil;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.dialog.SharePopupWindow;
@@ -331,7 +331,7 @@ public class WebActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
+		RequestUtil.getRequestQueue(getApplication()).add(stringRequest);
 	}
 
 	/**
@@ -385,7 +385,7 @@ public class WebActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
+		RequestUtil.getRequestQueue(getApplication()).add(stringRequest);
 	}
 
 	/**

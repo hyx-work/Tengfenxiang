@@ -8,8 +8,7 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.ImageLoadUtil;
-import com.android.tengfenxiang.util.RequestManager;
-import com.android.tengfenxiang.util.ResponseUtil;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -150,18 +149,13 @@ public class SettingActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Object result = ResponseUtil.handleResponse(getApplication(),
-						response, null);
-				if (null != result) {
-					Intent intent = new Intent(SettingActivity.this,
-							LoginActivity.class);
-					startActivity(intent);
-					finish();
-
-					// 发送广播，告诉主界面现在是登出操作
-					Intent broadcast = new Intent(Constant.LOGOUT_BROADCAST);
-					localBroadcastManager.sendBroadcast(broadcast);
-				}
+				Intent intent = new Intent(SettingActivity.this,
+						LoginActivity.class);
+				startActivity(intent);
+				finish();
+				// 发送广播，告诉主界面现在是登出操作
+				Intent broadcast = new Intent(Constant.LOGOUT_BROADCAST);
+				localBroadcastManager.sendBroadcast(broadcast);
 			}
 		};
 		// 请求失败的回调函数
@@ -184,6 +178,6 @@ public class SettingActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
+		RequestUtil.getRequestQueue(getApplication()).add(stringRequest);
 	}
 }

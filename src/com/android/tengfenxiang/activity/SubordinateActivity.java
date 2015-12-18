@@ -6,7 +6,7 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
 import com.android.tengfenxiang.bean.Subordinate;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
@@ -79,6 +79,10 @@ public class SubordinateActivity extends BaseActivity {
 			public void onResponse(String response) {
 				subordinate = (Subordinate) ResponseUtil.handleResponse(
 						getApplicationContext(), response, Subordinate.class);
+				// 返回为空则新建一个默认对象
+				if (subordinate == null) {
+					subordinate = new Subordinate();
+				}
 				initView();
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
@@ -99,6 +103,6 @@ public class SubordinateActivity extends BaseActivity {
 		};
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
-		RequestManager.getRequestQueue(getApplication()).add(request);
+		RequestUtil.getRequestQueue(getApplication()).add(request);
 	}
 }

@@ -16,7 +16,7 @@ import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.db.ArticleDao;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.ImageLoadUtil;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.xlistview.XListView;
 import com.android.tengfenxiang.view.xlistview.XListView.IXListViewListener;
@@ -136,7 +136,7 @@ public class ArticleFragment extends BaseFragment {
 		};
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
-		RequestManager.getRequestQueue(getActivity()).add(request);
+		RequestUtil.getRequestQueue(getActivity()).add(request);
 	}
 
 	private void initView() {

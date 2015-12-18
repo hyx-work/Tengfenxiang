@@ -11,7 +11,7 @@ import com.android.tengfenxiang.bean.CityInfo;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.CityUtil;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
@@ -133,7 +133,7 @@ public class CityActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
+		RequestUtil.getRequestQueue(getApplication()).add(stringRequest);
 	}
 
 	private void getProvinces() {

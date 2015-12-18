@@ -7,7 +7,7 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SigninListAdapter;
 import com.android.tengfenxiang.bean.SigninStatus;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
@@ -141,7 +141,7 @@ public class SigninActivity extends BaseActivity {
 		};
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
-		RequestManager.getRequestQueue(getApplication()).add(request);
+		RequestUtil.getRequestQueue(getApplication()).add(request);
 	}
 
 	/**
@@ -190,6 +190,6 @@ public class SigninActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
+		RequestUtil.getRequestQueue(getApplication()).add(stringRequest);
 	}
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
@@ -132,6 +132,6 @@ public class EditActivity extends BaseActivity {
 				return map;
 			}
 		};
-		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
+		RequestUtil.getRequestQueue(getApplication()).add(stringRequest);
 	}
 }

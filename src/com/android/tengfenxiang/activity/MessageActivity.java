@@ -9,7 +9,7 @@ import com.android.tengfenxiang.adapter.MessageListAdapter;
 import com.android.tengfenxiang.bean.Message;
 import com.android.tengfenxiang.bean.ResponseResult;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -124,6 +124,6 @@ public class MessageActivity extends BaseActivity {
 		};
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
-		RequestManager.getRequestQueue(getApplication()).add(request);
+		RequestUtil.getRequestQueue(getApplication()).add(request);
 	}
 }

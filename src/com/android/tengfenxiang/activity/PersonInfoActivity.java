@@ -14,7 +14,7 @@ import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.MultipartEntity;
 import com.android.tengfenxiang.util.MultipartRequest;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
@@ -388,7 +388,6 @@ public class PersonInfoActivity extends BaseActivity {
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
-					// currentUser = result;
 					application.setCurrentUser(result);
 					loadHead();
 				}
@@ -412,7 +411,7 @@ public class PersonInfoActivity extends BaseActivity {
 		// 文本参数
 		multi.addStringPart("userId", userId + "");
 		multi.addBinaryPart("avatar", bitmap2Bytes(bitmap));
-		RequestManager.getRequestQueue(getApplication()).add(request);
+		RequestUtil.getRequestQueue(getApplication()).add(request);
 	}
 
 	private byte[] bitmap2Bytes(Bitmap bm) {

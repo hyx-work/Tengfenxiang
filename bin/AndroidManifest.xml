@@ -121,6 +121,10 @@
             android:label="@string/edit_channel" >
         </activity>
         <activity
+            android:name="com.android.tengfenxiang.activity.InviteCodeActivity"
+            android:label="@string/invite_user" >
+        </activity>
+        <activity
             android:name="com.android.tengfenxiang.wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait"

@@ -13,7 +13,7 @@ import com.android.tengfenxiang.bean.Task;
 import com.android.tengfenxiang.db.TaskDao;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.ImageLoadUtil;
-import com.android.tengfenxiang.util.RequestManager;
+import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.xlistview.XListView;
 import com.android.tengfenxiang.view.xlistview.XListView.IXListViewListener;
@@ -99,7 +99,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 		};
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
-		RequestManager.getRequestQueue(getApplication()).add(request);
+		RequestUtil.getRequestQueue(getApplication()).add(request);
 	}
 
 	private void initView() {

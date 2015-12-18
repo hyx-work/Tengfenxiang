@@ -14,6 +14,11 @@ public class Constant {
 	public final static String SERVER_ADDRESS = "http://112.124.29.147:8080/TengShare_AppInterface";
 
 	/**
+	 * 图片缓存的相对路径，现在设置为：sdcard/9527/Cache
+	 */
+	public final static String IMAGE_CACHE_PATH = "9527/Cache";
+
+	/**
 	 * 微信的APP_ID
 	 */
 	public final static String WX_APP_ID = "wxe3da6f4746e58d27";

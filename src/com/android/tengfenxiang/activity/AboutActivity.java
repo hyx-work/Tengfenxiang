@@ -3,12 +3,10 @@ package com.android.tengfenxiang.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import com.alibaba.fastjson.JSON;
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
+import com.android.tengfenxiang.bean.Setting;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestManager;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
@@ -17,7 +15,7 @@ import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 import com.android.volley.VolleyError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
@@ -43,7 +41,7 @@ public class AboutActivity extends BaseActivity {
 	private TitleBar titleBar;
 
 	private List<String> qqGroup = new ArrayList<String>();
-	private String phone = "";
+	private Setting setting;
 
 	private LoadingDialog dialog;
 
@@ -85,7 +83,7 @@ public class AboutActivity extends BaseActivity {
 		infos.add(getString(R.string.qq_group));
 		infos.add(getString(R.string.contact_phone));
 		values.add(getQQGroupInfo());
-		values.add(phone);
+		values.add(setting.getAboutViewSettings().getPhone());
 		SimpleListAdapter adapter = new SimpleListAdapter(AboutActivity.this,
 				infos, values);
 		simpleListView.setAdapter(adapter);
@@ -109,7 +107,8 @@ public class AboutActivity extends BaseActivity {
 								Toast.LENGTH_SHORT).show();
 					}
 				} else {
-					Uri uri = Uri.parse("tel:" + phone);
+					Uri uri = Uri.parse("tel:"
+							+ setting.getAboutViewSettings().getPhone());
 					Intent intent = new Intent(Intent.ACTION_DIAL, uri);
 					startActivity(intent);
 				}
@@ -192,8 +191,9 @@ public class AboutActivity extends BaseActivity {
 
 	private String getQQGroupInfo() {
 		StringBuffer buffer = new StringBuffer();
+		qqGroup = setting.getAboutViewSettings().getQQGroups();
 		for (int i = 0; i < qqGroup.size(); i++) {
-			buffer.append(qqGroup.get(i)).append(" ");
+			buffer.append(qqGroup.get(i)).append("，");
 		}
 		buffer.deleteCharAt(buffer.length() - 1);
 		return buffer.toString();
@@ -203,25 +203,20 @@ public class AboutActivity extends BaseActivity {
 		String url = Constant.SETTING_URL;
 
 		// 请求成功的回调函数
-		Listener<JSONObject> listener = new Listener<JSONObject>() {
+		Listener<String> listener = new Listener<String>() {
 			@Override
-			public void onResponse(JSONObject response) {
+			public void onResponse(String response) {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				try {
-					JSONObject tmp = response
-							.getJSONObject("aboutViewSettings");
-					phone = tmp.getString("phone");
-					JSONArray array = tmp.getJSONArray("QQGroups");
-					for (int i = 0; i < array.length(); i++) {
-						qqGroup.add(array.getString(i));
-					}
-				} catch (JSONException e) {
+				setting = JSON.parseObject(response, Setting.class);
+				if (null == setting) {
 					Toast.makeText(getApplication(), R.string.unknow_error,
 							Toast.LENGTH_SHORT).show();
+					finish();
+				} else {
+					initView();
 				}
-				initView();
 			}
 		};
 		// 请求失败的回调函数
@@ -235,8 +230,8 @@ public class AboutActivity extends BaseActivity {
 						Toast.LENGTH_SHORT).show();
 			}
 		};
-		JsonObjectRequest stringRequest = new JsonObjectRequest(url, null,
-				listener, errorListener);
+		StringRequest stringRequest = new StringRequest(url, listener,
+				errorListener);
 		RequestManager.getRequestQueue(getApplication()).add(stringRequest);
 	}
 }

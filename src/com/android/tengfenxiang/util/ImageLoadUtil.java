@@ -3,6 +3,7 @@ package com.android.tengfenxiang.util;
 import java.io.File;
 
 import android.content.Context;
+import android.os.Environment;
 import android.widget.Toast;
 
 import com.android.tengfenxiang.R;
@@ -79,8 +80,23 @@ public class ImageLoadUtil {
 	 * @return
 	 */
 	public static String getCacheSize(Context context) {
-		File cacheDir = StorageUtils.getOwnCacheDirectory(context,
-				Constant.IMAGE_CACHE_PATH);
-		return FileSizeUtil.getFileSize(cacheDir.getPath());
+		if (hasSdcard()) {
+			File cacheDir = StorageUtils.getOwnCacheDirectory(context,
+					Constant.IMAGE_CACHE_PATH);
+			return FileSizeUtil.getFileSize(cacheDir.getPath());
+		}
+		return "0B";
+	}
+
+	/**
+	 * 检查设备是否存在SDCard
+	 */
+	public static boolean hasSdcard() {
+		String state = Environment.getExternalStorageState();
+		if (state.equals(Environment.MEDIA_MOUNTED)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

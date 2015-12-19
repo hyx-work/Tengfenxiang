@@ -1,7 +1,6 @@
 package com.android.tengfenxiang.activity;
 
 import com.android.tengfenxiang.application.MainApplication;
-import com.android.tengfenxiang.bean.User;
 
 import android.app.Activity;
 import android.os.Bundle;

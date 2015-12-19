@@ -12,12 +12,12 @@ import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.db.UserDao;
 import com.android.tengfenxiang.util.CityUtil;
 import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.MultipartEntity;
 import com.android.tengfenxiang.util.MultipartRequest;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.util.VolleyErrorUtil;
-import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 import com.android.volley.VolleyError;
@@ -51,11 +51,13 @@ public class PersonInfoActivity extends BaseActivity {
 	private ImageView headImageView;
 	private RelativeLayout headLayout;
 	private TitleBar titleBar;
-	private LoadingDialog dialog;
 	private UserDao userDao;
 
-	private static int output_X = 480;
-	private static int output_Y = 480;
+	/**
+	 * 长和宽设置为320，设置为480时某些机型会出错
+	 */
+	private static int output_X = 320;
+	private static int output_Y = 320;
 
 	private static final int CODE_GALLERY_REQUEST = 0xa0;
 	private static final int CODE_CAMERA_REQUEST = 0xa1;
@@ -67,8 +69,6 @@ public class PersonInfoActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.person_info);
-
-		dialog = new LoadingDialog(this);
 		userDao = UserDao.getInstance(getApplication());
 	}
 
@@ -232,9 +232,6 @@ public class PersonInfoActivity extends BaseActivity {
 							Bitmap loadedImage) {
 						super.onLoadingComplete(imageUri, view, loadedImage);
 						headImageView.setImageBitmap(loadedImage);
-						if (dialog.isShowing()) {
-							dialog.cancelDialog();
-						}
 					}
 				});
 	}
@@ -284,7 +281,7 @@ public class PersonInfoActivity extends BaseActivity {
 	private void choseHeadImageFromCameraCapture() {
 		Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-		if (hasSdcard()) {
+		if (ImageLoadUtil.hasSdcard()) {
 			intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
 					.fromFile(new File(Environment
 							.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
@@ -293,20 +290,8 @@ public class PersonInfoActivity extends BaseActivity {
 		startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
 	}
 
-	/**
-	 * 检查设备是否存在SDCard
-	 */
-	public static boolean hasSdcard() {
-		String state = Environment.getExternalStorageState();
-		if (state.equals(Environment.MEDIA_MOUNTED)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	protected void onActivityResult(int requestCode, int resultCode,
-			Intent intent) {
+			final Intent intent) {
 
 		if (resultCode == RESULT_CANCELED) {
 			return;
@@ -318,7 +303,7 @@ public class PersonInfoActivity extends BaseActivity {
 			break;
 
 		case CODE_CAMERA_REQUEST:
-			if (hasSdcard()) {
+			if (ImageLoadUtil.hasSdcard()) {
 				File tempFile = new File(
 						Environment.getExternalStorageDirectory(),
 						IMAGE_FILE_NAME);
@@ -331,12 +316,20 @@ public class PersonInfoActivity extends BaseActivity {
 
 		case CODE_RESULT_REQUEST:
 			if (intent != null) {
-				Bundle extras = intent.getExtras();
-				if (extras != null) {
-					Bitmap photo = extras.getParcelable("data");
-					dialog.showDialog();
-					uploadImage(application.getCurrentUser().getId(), photo);
-				}
+				// 修改为在线程中读取返回的bitmap数据，否则界面会出现闪屏
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						Bundle extras = intent.getExtras();
+						if (extras != null) {
+							Bitmap photo = extras.getParcelable("data");
+							uploadImage(application.getCurrentUser().getId(),
+									photo);
+						}
+					}
+				}).start();
 			}
 			break;
 		}
@@ -347,7 +340,7 @@ public class PersonInfoActivity extends BaseActivity {
 	/**
 	 * 裁剪原始的图片
 	 */
-	public void cropRawPhoto(Uri uri) {
+	private void cropRawPhoto(Uri uri) {
 
 		Intent intent = new Intent("com.android.camera.action.CROP");
 		intent.setDataAndType(uri, "image/*");
@@ -424,9 +417,6 @@ public class PersonInfoActivity extends BaseActivity {
 		ErrorListener errorListener = new ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
 				VolleyErrorUtil.handleVolleyError(getApplication(), error);
 			}
 		};

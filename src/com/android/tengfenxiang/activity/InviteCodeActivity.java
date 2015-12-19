@@ -2,6 +2,7 @@ package com.android.tengfenxiang.activity;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.DensityUtil;
 import com.android.tengfenxiang.util.QRCodeUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.dialog.SharePopupWindow;
@@ -71,8 +72,9 @@ public class InviteCodeActivity extends BaseActivity {
 			public void run() {
 				codeBitmap = QRCodeUtil.createImage(Constant.REGISTER_URL
 						+ "?inviteCode="
-						+ application.getCurrentUser().getInviteCode(), 400,
-						400);
+						+ application.getCurrentUser().getInviteCode(),
+						DensityUtil.dip2px(getApplication(), 200),
+						DensityUtil.dip2px(getApplication(), 200));
 				handler.sendEmptyMessage(1);
 			}
 		}).start();

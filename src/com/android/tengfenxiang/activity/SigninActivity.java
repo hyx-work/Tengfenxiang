@@ -9,6 +9,7 @@ import com.android.tengfenxiang.bean.SigninStatus;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -81,7 +82,7 @@ public class SigninActivity extends BaseActivity {
 		});
 
 		// 当日已签到
-		if (1 == signinStatus.getStatus()) {
+		if (null != signinStatus && 1 == signinStatus.getStatus()) {
 			statusTextView.setText(R.string.signin_today);
 			String info = getString(R.string.get_profit_info);
 			info = info.replace("?", signinStatus.getPoints() + "");
@@ -96,7 +97,6 @@ public class SigninActivity extends BaseActivity {
 		if (null != signinStatus && null != signinStatus.getRecent()
 				&& 0 != signinStatus.getRecent().size()) {
 			ViewStub viewStub = new ViewStub(this);
-			signinListView.addHeaderView(viewStub);
 			signinListView.addFooterView(viewStub);
 			adapter = new SigninListAdapter(SigninActivity.this,
 					signinStatus.getRecent());
@@ -134,9 +134,8 @@ public class SigninActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
-				finish();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
+				initView();
 			}
 		};
 
@@ -177,8 +176,7 @@ public class SigninActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
 			}
 		};
 		StringRequest stringRequest = new StringRequest(Method.POST, url,

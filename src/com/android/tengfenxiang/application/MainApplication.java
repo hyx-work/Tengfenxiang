@@ -1,8 +1,5 @@
 package com.android.tengfenxiang.application;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -14,17 +11,10 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.receiver.ConnectionChangeReceiver;
 import com.android.tengfenxiang.receiver.ConnectionChangeReceiver.OnNetworkChangedListener;
-import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.DeviceInfoUtil;
 import com.android.tengfenxiang.util.ImageLoadUtil;
-import com.android.tengfenxiang.util.RequestUtil;
-import com.android.tengfenxiang.util.ResponseUtil;
-import com.android.volley.AuthFailureError;
+import com.android.tengfenxiang.util.LoginUtil;
+import com.android.tengfenxiang.util.LoginUtil.OnLoginListener;
 import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.StringRequest;
 
 /**
  * 复写application，初始化参数
@@ -36,17 +26,19 @@ public class MainApplication extends Application {
 
 	private static User currentUser;
 	private ConnectionChangeReceiver myReceiver;
+	private static LoginUtil loginUtil;
 	private SharedPreferences preferences;
 
 	public void onCreate() {
 		super.onCreate();
 		// 初始化ImageLoader对象
 		ImageLoadUtil.initImageLoader(getApplicationContext());
-
-		preferences = getSharedPreferences(getPackageName(),
-				Context.MODE_PRIVATE);
+		// 初始化账户登录工具类
+		loginUtil = LoginUtil.getInstance(this);
 		// 注册广播
 		registerReceiver();
+		preferences = getSharedPreferences(getPackageName(),
+				Context.MODE_PRIVATE);
 	}
 
 	@Override
@@ -63,55 +55,6 @@ public class MainApplication extends Application {
 		unregisterReceiver();
 	}
 
-	private void login(final String phone, final String password) {
-		String url = Constant.LOGIN_URL;
-		// 请求成功的回调函数
-		Listener<String> listener = new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				Object object = ResponseUtil.handleResponse(
-						MainApplication.this, response, User.class);
-				if (null != object) {
-					currentUser = (User) object;
-				} else {
-					currentUser = new User();
-				}
-			}
-		};
-		// 请求失败的回调函数
-		ErrorListener errorListener = new ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				currentUser = new User();
-				Toast.makeText(MainApplication.this, R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
-			}
-		};
-		StringRequest stringRequest = new StringRequest(Method.POST, url,
-				listener, errorListener) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				Map<String, String> map = new HashMap<String, String>();
-				DeviceInfoUtil util = DeviceInfoUtil
-						.getInstance(MainApplication.this);
-				map.put("phone", phone);
-				map.put("password", password);
-				map.put("deviceId", util.getDeviceId());
-				map.put("deviceInfo", util.getDeviceInfo());
-				if (util.getPushToken() != null
-						&& !util.getPushToken().equals("")) {
-					map.put("pushToken", util.getPushToken());
-				}
-				map.put("appVersion", util.getAppVersion());
-				map.put("os", util.getOs());
-				map.put("osVersion", util.getOsVersion());
-				map.put("model", util.getModel());
-				return map;
-			}
-		};
-		RequestUtil.getRequestQueue(this).add(stringRequest);
-	}
-
 	/**
 	 * 注册广播监听器
 	 */
@@ -126,8 +69,13 @@ public class MainApplication extends Application {
 				String phone = preferences.getString("phone", "");
 				String password = preferences.getString("password", "");
 				// 当网络从断开到连接上时，且本机上已经登录过，需要进行登录操作
-				if (!phone.equals("") && !password.equals("")) {
-					login(phone, password);
+				if (!phone.equals("") && !password.equals("")
+						&& null != getCurrentUser()
+						&& null == getCurrentUser().getToken()) {
+					Toast.makeText(MainApplication.this, R.string.try_to_login,
+							Toast.LENGTH_SHORT).show();
+					loginUtil.setOnLoginListener(onLoginListener);
+					loginUtil.login(phone, password);
 				}
 			}
 
@@ -141,6 +89,28 @@ public class MainApplication extends Application {
 		registerReceiver(myReceiver, filter);
 	}
 
+	private OnLoginListener onLoginListener = new OnLoginListener() {
+
+		@Override
+		public void onLoginSuccess() {
+			// TODO Auto-generated method stub
+			Toast.makeText(MainApplication.this, R.string.login_success,
+					Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		public void onLoginFail() {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onLoginError(VolleyError error) {
+			// TODO Auto-generated method stub
+
+		}
+	};
+
 	/**
 	 * 注销广播监听器
 	 */
@@ -152,9 +122,16 @@ public class MainApplication extends Application {
 		return currentUser;
 	}
 
-	@SuppressWarnings("static-access")
 	public void setCurrentUser(User currentUser) {
-		this.currentUser = currentUser;
+		MainApplication.currentUser = currentUser;
+	}
+
+	public LoginUtil getLoginUtil() {
+		return loginUtil;
+	}
+
+	public void setLoginUtil(LoginUtil loginUtil) {
+		MainApplication.loginUtil = loginUtil;
 	}
 
 }

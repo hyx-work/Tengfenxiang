@@ -24,9 +24,11 @@ public class DBHelper extends SQLiteOpenHelper {
 		String creatTaskTable = "create table if not exists task(id integer, title text, content text, price float, thumbnails text, shareUrl text, beginTime text, endTime text, status integer, retweetCount integer, limitRetweetCount integer)";
 		String createArticleTable = "create table if not exists article(id integer, title text, content text, thumbnails text, shareUrl text, likeCount integer, viewCount integer, type integer)";
 		String createChannelTable = "create table if not exists channel(_id integer primary key autoincrement,  id integer , name text , orderId integer , selected selected)";
+		String createUserTable = "create table if not exists user(id integer primary key, nickName text, phone text, alipay text, avatar text, gender integer, province integer, city integer, wechat text, qq text, email text, inviteCode text)";
 		db.execSQL(createArticleTable);
 		db.execSQL(creatTaskTable);
 		db.execSQL(createChannelTable);
+		db.execSQL(createUserTable);
 	}
 
 	@Override
@@ -35,6 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS task");
 		db.execSQL("DROP TABLE IF EXISTS article");
 		db.execSQL("DROP TABLE IF EXISTS channel");
+		db.execSQL("DROP TABLE IF EXISTS user");
 		onCreate(db);
 	}
 

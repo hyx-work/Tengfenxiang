@@ -11,6 +11,7 @@
     <string name="empty_phone">请输入手机号码</string>
     <string name="empty_password">请输入密码</string>
     <string name="register_app_acount">注册玩赚9527账号</string>
+    <string name="login_success">登录成功</string>
     <string name="login_fail">登录失败，请重新登录</string>
     <string name="my_subordinate">我的下级</string>
     <string name="my_subordinate_count">我的下级人数</string>
@@ -132,6 +133,8 @@
     <string name="xlistview_footer_hint_normal">点击查看更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
     <string name="xlistview_load_all">已加载全部数据</string>
+    <string name="server_error">服务器错误</string>
+    <string name="timeout_error">请求超时</string>
     <string name="unknow_error">未知错误</string>
     <string name="unit_people">人</string>
     <string name="unit_yuan_en">¥</string>
@@ -145,6 +148,7 @@
     <string name="network_error">网络不可用，请检查你的网络设置</string>
     <string name="dialog_title">提示</string>
     <string name="confirm_to_logout">确认退出该账号吗?</string>
+    <string name="try_to_login">正在登录&#8230;</string>
     <string name="edit_channel">编辑频道</string>
     <string name="subscribe_my_category">我的频道</string>
     <string name="subscribe_more_category">更多频道</string>

@@ -9,6 +9,7 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
 import com.android.tengfenxiang.bean.CityInfo;
 import com.android.tengfenxiang.bean.User;
+import com.android.tengfenxiang.db.UserDao;
 import com.android.tengfenxiang.util.CityUtil;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
@@ -39,6 +40,7 @@ public class CityActivity extends BaseActivity {
 	private String provinceCode;
 	private LoadingDialog dialog;
 	private Intent intent;
+	private UserDao userDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class CityActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.select_infos_layout);
 
+		userDao = UserDao.getInstance(getApplication());
 		dialog = new LoadingDialog(this);
 		intent = getIntent();
 		provinceCode = intent.getStringExtra("provinceCode");
@@ -105,7 +108,12 @@ public class CityActivity extends BaseActivity {
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
+					// 用于服务器返回的user对象token字段为null，所以在这里手动设置token
+					// 如果后续服务器能够返回不为null的token字段，删除这行代码即可
+					result.setToken(currentUser.getToken());
 					application.setCurrentUser(result);
+					// 更新数据库中缓存的用户对象
+					userDao.update(result);
 					setResult(-1, intent);
 					finish();
 				}

@@ -15,6 +15,7 @@ import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.DensityUtil;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.graphview.CustomLabelFormatter;
 import com.android.tengfenxiang.view.graphview.GraphView;
@@ -37,7 +38,6 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MyProfitActivity extends BaseActivity {
 
@@ -169,8 +169,7 @@ public class MyProfitActivity extends BaseActivity {
 				}
 				summary = new Summary();
 				initView();
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
 			}
 		};
 

@@ -9,6 +9,7 @@ import com.android.tengfenxiang.adapter.SimpleListAdapter;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -30,7 +31,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class SettingActivity extends BaseActivity {
 
@@ -165,8 +165,7 @@ public class SettingActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
 			}
 		};
 		StringRequest stringRequest = new StringRequest(Method.POST, url,

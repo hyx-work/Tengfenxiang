@@ -9,6 +9,7 @@ import com.android.tengfenxiang.adapter.SimpleListAdapter;
 import com.android.tengfenxiang.bean.Setting;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -82,8 +83,10 @@ public class AboutActivity extends BaseActivity {
 		ArrayList<String> values = new ArrayList<String>();
 		infos.add(getString(R.string.qq_group));
 		infos.add(getString(R.string.contact_phone));
-		values.add(getQQGroupInfo());
-		values.add(setting.getAboutViewSettings().getPhone());
+		if (null != setting) {
+			values.add(getQQGroupInfo());
+			values.add(setting.getAboutViewSettings().getPhone());
+		}
 		SimpleListAdapter adapter = new SimpleListAdapter(AboutActivity.this,
 				infos, values);
 		simpleListView.setAdapter(adapter);
@@ -219,9 +222,8 @@ public class AboutActivity extends BaseActivity {
 				if (null == setting) {
 					Toast.makeText(getApplication(), R.string.unknow_error,
 							Toast.LENGTH_SHORT).show();
-				} else {
-					initView();
 				}
+				initView();
 			}
 		};
 		// 请求失败的回调函数
@@ -231,8 +233,8 @@ public class AboutActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
+				initView();
 			}
 		};
 		StringRequest stringRequest = new StringRequest(url, listener,

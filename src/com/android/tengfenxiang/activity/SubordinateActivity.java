@@ -8,6 +8,7 @@ import com.android.tengfenxiang.bean.Subordinate;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -18,7 +19,6 @@ import com.android.volley.toolbox.StringRequest;
 
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class SubordinateActivity extends BaseActivity {
 
@@ -46,10 +46,12 @@ public class SubordinateActivity extends BaseActivity {
 		infos.add(getString(R.string.my_subordinate_points));
 
 		ArrayList<String> values = new ArrayList<String>();
-		values.add(subordinate.getSubordinateCount()
-				+ getString(R.string.unit_people));
-		values.add(subordinate.getSubordinatePoints()
-				+ getString(R.string.unit_yuan));
+		if (null != subordinate) {
+			values.add(subordinate.getSubordinateCount()
+					+ getString(R.string.unit_people));
+			values.add(subordinate.getSubordinatePoints()
+					+ getString(R.string.unit_yuan));
+		}
 
 		SimpleListAdapter adapter = new SimpleListAdapter(
 				SubordinateActivity.this, infos, values);
@@ -79,10 +81,6 @@ public class SubordinateActivity extends BaseActivity {
 			public void onResponse(String response) {
 				subordinate = (Subordinate) ResponseUtil.handleResponse(
 						getApplicationContext(), response, Subordinate.class);
-				// 返回为空则新建一个默认对象
-				if (subordinate == null) {
-					subordinate = new Subordinate();
-				}
 				initView();
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
@@ -96,9 +94,8 @@ public class SubordinateActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
-				finish();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
+				initView();
 			}
 		};
 

@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/empty_task_hint"
+        android:text="@string/empty_message_hint"
         android:textColor="@color/base_color"
         android:textSize="18sp"
         android:visibility="gone" />

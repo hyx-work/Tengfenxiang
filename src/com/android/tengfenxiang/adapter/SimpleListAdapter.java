@@ -80,6 +80,9 @@ public class SimpleListAdapter extends BaseAdapter {
 			viewHolder.value.setText(values.get(position));
 			viewHolder.arrow.setVisibility(View.GONE);
 		}
+		if (null != values && values.size() == 0) {
+			viewHolder.arrow.setVisibility(View.GONE);
+		}
 		return convertView;
 	}
 

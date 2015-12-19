@@ -10,6 +10,7 @@ import com.android.tengfenxiang.util.BitmapCompressUtil;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.dialog.SharePopupWindow;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
@@ -316,8 +317,7 @@ public class WebActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
 			}
 		};
 		StringRequest stringRequest = new StringRequest(Method.POST, postUrl,
@@ -370,8 +370,7 @@ public class WebActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
 			}
 		};
 		StringRequest stringRequest = new StringRequest(Method.POST, postUrl,

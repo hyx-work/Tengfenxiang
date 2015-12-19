@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.User;
+import com.android.tengfenxiang.db.UserDao;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
@@ -37,6 +38,7 @@ public class EditActivity extends BaseActivity {
 	private Button saveButton;
 
 	private LoadingDialog dialog;
+	private UserDao userDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class EditActivity extends BaseActivity {
 		attributeValue = intent.getStringExtra("attributeValue");
 		title = intent.getStringExtra("title");
 
+		userDao = UserDao.getInstance(getApplication());
 		dialog = new LoadingDialog(this);
 		initView();
 	}
@@ -98,16 +101,21 @@ public class EditActivity extends BaseActivity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
 				User result = (User) ResponseUtil.handleResponse(
 						getApplication(), response, User.class);
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
+					// 用于服务器返回的user对象token字段为null，所以在这里手动设置token
+					// 如果后续服务器能够返回不为null的token字段，删除这行代码即可
+					result.setToken(currentUser.getToken());
 					application.setCurrentUser(result);
+					// 更新数据库中缓存的用户对象
+					userDao.update(result);
 					finish();
+				}
+				if (dialog.isShowing()) {
+					dialog.cancelDialog();
 				}
 			}
 		};

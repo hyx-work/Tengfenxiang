@@ -16,6 +16,7 @@ import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.db.ArticleDao;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.xlistview.XListView;
 import com.android.tengfenxiang.view.xlistview.XListView.IXListViewListener;
@@ -57,7 +58,6 @@ public class ArticleFragment extends BaseFragment {
 	private boolean mHasLoadedOnce;
 
 	private MainApplication application;
-	private User currentUser;
 	private List<Article> articles;
 	private XListView articleListView;
 	private TextView hintTextView;
@@ -77,7 +77,6 @@ public class ArticleFragment extends BaseFragment {
 
 		dialog = new LoadingDialog(getActivity());
 		application = (MainApplication) getActivity().getApplication();
-		currentUser = application.getCurrentUser();
 		dao = ArticleDao.getInstance(getActivity());
 		initView();
 	}
@@ -130,6 +129,7 @@ public class ArticleFragment extends BaseFragment {
 		ErrorListener errorListener = new ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
+				VolleyErrorUtil.handleVolleyError(getActivity(), error);
 				loadComplete();
 			}
 		};
@@ -161,7 +161,8 @@ public class ArticleFragment extends BaseFragment {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				dialog.showDialog();
-				getArticleList(currentUser.getId(), limit, offset, position);
+				getArticleList(application.getCurrentUser().getId(), limit,
+						offset, position);
 			}
 		});
 	}
@@ -180,14 +181,16 @@ public class ArticleFragment extends BaseFragment {
 			@Override
 			public void onRefresh() {
 				offset = 0;
-				getArticleList(currentUser.getId(), limit, offset, position);
+				getArticleList(application.getCurrentUser().getId(), limit,
+						offset, position);
 			}
 
 			@Override
 			public void onLoadMore() {
 				// TODO Auto-generated method stub
 				offset = offset + limit;
-				getArticleList(currentUser.getId(), limit, offset, position);
+				getArticleList(application.getCurrentUser().getId(), limit,
+						offset, position);
 			}
 		});
 		articleListView.setLayoutParams(params);
@@ -198,12 +201,12 @@ public class ArticleFragment extends BaseFragment {
 					long arg3) {
 				// TODO Auto-generated method stub
 				if (arg2 >= 1 && arg2 <= articles.size()) {
+					User user = application.getCurrentUser();
 					Intent intent = new Intent(getActivity(), WebActivity.class);
 					intent.putExtra("title", getString(R.string.share));
 					String url = articles.get(arg2 - 1).getShareUrl();
-					if (null != currentUser.getToken()
-							&& !currentUser.getToken().equals("")) {
-						url = url + "&token=" + currentUser.getToken();
+					if (null != user.getToken() && !user.getToken().equals("")) {
+						url = url + "&token=" + user.getToken();
 					}
 					intent.putExtra("url", url);
 					intent.putExtra("article_id", articles.get(arg2 - 1)
@@ -258,7 +261,8 @@ public class ArticleFragment extends BaseFragment {
 			mHasLoadedOnce = true;
 			// 没有缓存数据，请求服务器数据
 			if (null == articles || articles.size() == 0) {
-				getArticleList(currentUser.getId(), limit, offset, position);
+				getArticleList(application.getCurrentUser().getId(), limit,
+						offset, position);
 				articleListView.setVisibility(View.GONE);
 				hintTextView.setVisibility(View.VISIBLE);
 			} else {

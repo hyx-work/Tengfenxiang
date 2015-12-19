@@ -8,6 +8,7 @@ import com.android.tengfenxiang.bean.Integral;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -20,7 +21,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.ViewStub;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class IntegralActivity extends BaseActivity {
 
@@ -81,7 +81,10 @@ public class IntegralActivity extends BaseActivity {
 		ArrayList<String> infos = new ArrayList<String>();
 		infos.add(getString(R.string.task_points));
 		ArrayList<String> values = new ArrayList<String>();
-		values.add(integral.getTaskPoints() + getString(R.string.unit_point));
+		if (null != integral) {
+			values.add(integral.getTaskPoints()
+					+ getString(R.string.unit_point));
+		}
 		SimpleListAdapter adapter = new SimpleListAdapter(this, infos, values);
 		taskListView.setAdapter(adapter);
 	}
@@ -96,7 +99,10 @@ public class IntegralActivity extends BaseActivity {
 		ArrayList<String> infos = new ArrayList<String>();
 		infos.add(getString(R.string.article_points));
 		ArrayList<String> values = new ArrayList<String>();
-		values.add(integral.getArticlePoints() + getString(R.string.unit_point));
+		if (null != integral) {
+			values.add(integral.getArticlePoints()
+					+ getString(R.string.unit_point));
+		}
 		SimpleListAdapter adapter = new SimpleListAdapter(this, infos, values);
 		articleListView.setAdapter(adapter);
 	}
@@ -114,13 +120,16 @@ public class IntegralActivity extends BaseActivity {
 		infos.add(getString(R.string.read_article_in_app_points));
 		infos.add(getString(R.string.like_article_in_app_points));
 		ArrayList<String> values = new ArrayList<String>();
-		values.add(integral.getRegisterPoints()
-				+ getString(R.string.unit_point));
-		values.add(integral.getSigninPoints() + getString(R.string.unit_point));
-		values.add(integral.getReadArticleInAppPoints()
-				+ getString(R.string.unit_point));
-		values.add(integral.getLikeArticleInAppPoints()
-				+ getString(R.string.unit_point));
+		if (null != integral) {
+			values.add(integral.getRegisterPoints()
+					+ getString(R.string.unit_point));
+			values.add(integral.getSigninPoints()
+					+ getString(R.string.unit_point));
+			values.add(integral.getReadArticleInAppPoints()
+					+ getString(R.string.unit_point));
+			values.add(integral.getLikeArticleInAppPoints()
+					+ getString(R.string.unit_point));
+		}
 		SimpleListAdapter adapter = new SimpleListAdapter(this, infos, values);
 		otherListView.setAdapter(adapter);
 	}
@@ -135,10 +144,6 @@ public class IntegralActivity extends BaseActivity {
 			public void onResponse(String response) {
 				integral = (Integral) ResponseUtil.handleResponse(
 						getApplication(), response, Integral.class);
-				// 返回为空则新建一个默认对象
-				if (null == integral) {
-					integral = new Integral();
-				}
 				initView();
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
@@ -152,9 +157,8 @@ public class IntegralActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
-				finish();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
+				initView();
 			}
 		};
 

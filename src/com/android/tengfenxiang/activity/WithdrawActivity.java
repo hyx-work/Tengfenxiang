@@ -13,6 +13,7 @@ import com.android.tengfenxiang.bean.ResponseResult;
 import com.android.tengfenxiang.bean.Withdraw;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -26,7 +27,6 @@ import com.android.volley.toolbox.StringRequest;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class WithdrawActivity extends BaseActivity implements
 		IXListViewListener {
@@ -103,6 +103,8 @@ public class WithdrawActivity extends BaseActivity implements
 					hintTextView.setVisibility(View.VISIBLE);
 					recordsList.setVisibility(View.GONE);
 				} else {
+					hintTextView.setVisibility(View.GONE);
+					recordsList.setVisibility(View.VISIBLE);
 					withdraws.addAll(tmp);
 					adapter.notifyDataSetChanged();
 					recordsList.setLoadAll(tmp.size() < limit);
@@ -117,9 +119,7 @@ public class WithdrawActivity extends BaseActivity implements
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
-				finish();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
 			}
 		};
 

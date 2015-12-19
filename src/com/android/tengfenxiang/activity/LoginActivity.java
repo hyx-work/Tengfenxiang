@@ -1,24 +1,14 @@
 package com.android.tengfenxiang.activity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.User;
+import com.android.tengfenxiang.db.UserDao;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.DeviceInfoUtil;
-import com.android.tengfenxiang.util.RequestUtil;
-import com.android.tengfenxiang.util.ResponseUtil;
+import com.android.tengfenxiang.util.LoginUtil;
+import com.android.tengfenxiang.util.LoginUtil.OnLoginListener;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
-import com.android.volley.AuthFailureError;
 import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.StringRequest;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,7 +29,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
 
 	private LoadingDialog dialog;
 	private SharedPreferences preferences;
@@ -48,6 +38,8 @@ public class LoginActivity extends Activity {
 	private CheckBox saveCheckBox;
 	private Button loginButton;
 	private TextView registerTextView;
+	private LoginUtil loginUtil;
+	private UserDao userDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +47,8 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 
+		loginUtil = application.getLoginUtil();
+		userDao = UserDao.getInstance(getApplication());
 		preferences = getSharedPreferences(getPackageName(),
 				Context.MODE_PRIVATE);
 		dialog = new LoadingDialog(this);
@@ -79,7 +73,8 @@ public class LoginActivity extends Activity {
 				boolean result = validateParams(phone, password);
 				if (result) {
 					dialog.showDialog();
-					login(phone, password);
+					loginUtil.setOnLoginListener(onLoginListener);
+					loginUtil.login(phone, password);
 				}
 			}
 		});
@@ -95,6 +90,14 @@ public class LoginActivity extends Activity {
 			editor.putString("password", password);
 		}
 		editor.commit();
+
+		// 将登录的用户信息缓存到本地数据库
+		User user = userDao.findUser(phone);
+		if (null == user) {
+			userDao.insert(application.getCurrentUser());
+		} else {
+			userDao.update(application.getCurrentUser());
+		}
 	}
 
 	private boolean validateParams(String phone, String password) {
@@ -112,66 +115,44 @@ public class LoginActivity extends Activity {
 		return true;
 	}
 
-	private void login(final String phone, final String password) {
-		String url = Constant.LOGIN_URL;
-		// 请求成功的回调函数
-		Listener<String> listener = new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
-				MainApplication application = ((MainApplication) getApplication());
-				Object object = ResponseUtil.handleResponse(getApplication(),
-						response, User.class);
-				if (null != object) {
-					User user = (User) object;
-					application.setCurrentUser(user);
-					savePassword(phone, password);
+	private OnLoginListener onLoginListener = new OnLoginListener() {
 
-					Intent intent = new Intent(LoginActivity.this,
-							MainActivity.class);
-					startActivity(intent);
-					finish();
-				}
+		@Override
+		public void onLoginSuccess() {
+			// TODO Auto-generated method stub
+			String phone = phoneEditText.getText().toString();
+			String password = passwordEditText.getText().toString();
+			savePassword(phone, password);
+			if (dialog.isShowing()) {
+				dialog.cancelDialog();
 			}
-		};
-		// 请求失败的回调函数
-		ErrorListener errorListener = new ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
-			}
-		};
-		StringRequest stringRequest = new StringRequest(Method.POST, url,
-				listener, errorListener) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				Map<String, String> map = new HashMap<String, String>();
-				DeviceInfoUtil util = DeviceInfoUtil
-						.getInstance(getApplication());
-				map.put("phone", phone);
-				map.put("password", password);
-				map.put("deviceId", util.getDeviceId());
-				map.put("deviceInfo", util.getDeviceInfo());
-				if (util.getPushToken() != null
-						&& !util.getPushToken().equals("")) {
-					map.put("pushToken", util.getPushToken());
-				}
-				map.put("appVersion", util.getAppVersion());
-				map.put("os", util.getOs());
-				map.put("osVersion", util.getOsVersion());
-				map.put("model", util.getModel());
-				return map;
-			}
-		};
-		RequestUtil.getRequestQueue(getApplication()).add(stringRequest);
-	}
+			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+			startActivity(intent);
+			finish();
+		}
 
+		@Override
+		public void onLoginFail() {
+			// TODO Auto-generated method stub
+			if (dialog.isShowing()) {
+				dialog.cancelDialog();
+			}
+		}
+
+		@Override
+		public void onLoginError(VolleyError error) {
+			// TODO Auto-generated method stub
+			if (dialog.isShowing()) {
+				dialog.cancelDialog();
+			}
+		}
+	};
+
+	/**
+	 * 将注册提示文字修改为超链接的格式
+	 * 
+	 * @return
+	 */
 	private SpannableString getRegisterUrl() {
 		SpannableString spanStr = new SpannableString(
 				getString(R.string.register_app_acount));

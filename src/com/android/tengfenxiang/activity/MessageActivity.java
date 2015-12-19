@@ -10,6 +10,7 @@ import com.android.tengfenxiang.bean.Message;
 import com.android.tengfenxiang.bean.ResponseResult;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -29,7 +30,7 @@ import android.widget.Toast;
 public class MessageActivity extends BaseActivity {
 
 	private ListView messageListView;
-	private List<Message> messages;
+	private List<Message> messages = new ArrayList<Message>();
 	private TextView hintTextView;
 	private List<Boolean> isOpen;
 
@@ -53,7 +54,7 @@ public class MessageActivity extends BaseActivity {
 		if (null == messages || messages.size() == 0) {
 			hintTextView.setVisibility(View.VISIBLE);
 		}
-		
+
 		isOpen = new ArrayList<Boolean>();
 		for (int i = 0; i < messages.size(); i++) {
 			isOpen.add(false);
@@ -102,12 +103,12 @@ public class MessageActivity extends BaseActivity {
 				if (result.getCode() == 200) {
 					messages = JSON.parseArray(result.getData().toString(),
 							Message.class);
-					initView();
 				} else {
 					Toast.makeText(getApplication(),
 							result.getData().toString(), Toast.LENGTH_SHORT)
 							.show();
 				}
+				initView();
 			}
 		};
 		// 请求失败的回调函数
@@ -117,9 +118,8 @@ public class MessageActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
-				finish();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
+				initView();
 			}
 		};
 

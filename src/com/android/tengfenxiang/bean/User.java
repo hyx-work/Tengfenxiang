@@ -70,6 +70,28 @@ public class User {
 
 	private String token;
 
+	public User() {
+
+	}
+
+	public User(int id, String nickName, String phone,
+			String alipay, String avatar, int gender, int province, int city,
+			String wechat, String qq, String email, String inviteCode) {
+		super();
+		this.id = id;
+		this.nickName = nickName;
+		this.phone = phone;
+		this.alipay = alipay;
+		this.avatar = avatar;
+		this.gender = gender;
+		this.province = province;
+		this.city = city;
+		this.wechat = wechat;
+		this.qq = qq;
+		this.email = email;
+		this.inviteCode = inviteCode;
+	}
+
 	public int getId() {
 		return id;
 	}

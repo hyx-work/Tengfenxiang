@@ -13,6 +13,7 @@ import com.android.tengfenxiang.bean.Task;
 import com.android.tengfenxiang.db.TaskDao;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.xlistview.XListView;
 import com.android.tengfenxiang.view.xlistview.XListView.IXListViewListener;
@@ -92,8 +93,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				loadComplete();
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
 			}
 		};
 
@@ -121,6 +121,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
+				currentUser = application.getCurrentUser();
 				if (arg2 >= 1 && arg2 <= tasks.size()) {
 					Intent intent = new Intent(TaskActivity.this,
 							WebActivity.class);

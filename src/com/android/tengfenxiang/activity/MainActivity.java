@@ -6,7 +6,10 @@ import com.android.tengfenxiang.receiver.LogoutReceiver.OnLogoutListener;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.ImageLoadUtil;
 
+import android.content.Context;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.SparseIntArray;
@@ -24,6 +27,7 @@ public class MainActivity extends AbstractActivityGroup {
 	private IntentFilter intentFilter;
 	private LogoutReceiver logoutReceiver;
 	private LocalBroadcastManager localBroadcastManager;
+	private SharedPreferences preferences;
 
 	private SparseIntArray normalIcons = new SparseIntArray();
 	private SparseIntArray selectedIcons = new SparseIntArray();
@@ -51,11 +55,17 @@ public class MainActivity extends AbstractActivityGroup {
 			@Override
 			public void onLogout() {
 				// TODO Auto-generated method stub
+				Editor editor = preferences.edit();
+				editor.putString("password", "");
+				editor.commit();
 				finish();
 			}
 		});
 		localBroadcastManager = LocalBroadcastManager.getInstance(this);
 		localBroadcastManager.registerReceiver(logoutReceiver, intentFilter);
+
+		preferences = getSharedPreferences(getPackageName(),
+				Context.MODE_PRIVATE);
 
 		((RadioButton) findViewById(R.id.radio_button0)).setChecked(true);
 		setContainerView(CONTENT_0, TaskActivity.class);

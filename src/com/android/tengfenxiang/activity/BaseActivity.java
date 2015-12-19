@@ -19,7 +19,7 @@ public abstract class BaseActivity extends Activity {
 	 */
 	protected static User currentUser;
 
-	protected MainApplication application;
+	protected static MainApplication application;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

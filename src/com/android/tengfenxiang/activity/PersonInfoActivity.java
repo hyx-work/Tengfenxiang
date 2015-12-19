@@ -9,9 +9,9 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.PersonInfoListAdapter;
 import com.android.tengfenxiang.bean.CityInfo;
 import com.android.tengfenxiang.bean.User;
+import com.android.tengfenxiang.db.UserDao;
 import com.android.tengfenxiang.util.CityUtil;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.MultipartEntity;
 import com.android.tengfenxiang.util.MultipartRequest;
 import com.android.tengfenxiang.util.RequestUtil;
@@ -52,6 +52,7 @@ public class PersonInfoActivity extends BaseActivity {
 	private RelativeLayout headLayout;
 	private TitleBar titleBar;
 	private LoadingDialog dialog;
+	private UserDao userDao;
 
 	private static int output_X = 480;
 	private static int output_Y = 480;
@@ -68,13 +69,13 @@ public class PersonInfoActivity extends BaseActivity {
 		setContentView(R.layout.person_info);
 
 		dialog = new LoadingDialog(this);
+		userDao = UserDao.getInstance(getApplication());
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		currentUser = application.getCurrentUser();
 		initView();
 	}
 
@@ -121,7 +122,8 @@ public class PersonInfoActivity extends BaseActivity {
 					intent = new Intent(PersonInfoActivity.this,
 							EditActivity.class);
 					intent.putExtra("attributeName", "email");
-					intent.putExtra("attributeValue", currentUser.getEmail());
+					intent.putExtra("attributeValue", application
+							.getCurrentUser().getEmail());
 					intent.putExtra("title",
 							getString(R.string.edit_email_title));
 					break;
@@ -129,14 +131,16 @@ public class PersonInfoActivity extends BaseActivity {
 					intent = new Intent(PersonInfoActivity.this,
 							EditActivity.class);
 					intent.putExtra("attributeName", "qq");
-					intent.putExtra("attributeValue", currentUser.getQq());
+					intent.putExtra("attributeValue", application
+							.getCurrentUser().getQq());
 					intent.putExtra("title", getString(R.string.edit_qq_title));
 					break;
 				case 3:
 					intent = new Intent(PersonInfoActivity.this,
 							EditActivity.class);
 					intent.putExtra("attributeName", "wechat");
-					intent.putExtra("attributeValue", currentUser.getWechat());
+					intent.putExtra("attributeValue", application
+							.getCurrentUser().getWechat());
 					intent.putExtra("title",
 							getString(R.string.edit_wechat_title));
 					break;
@@ -144,7 +148,8 @@ public class PersonInfoActivity extends BaseActivity {
 					intent = new Intent(PersonInfoActivity.this,
 							EditActivity.class);
 					intent.putExtra("attributeName", "nickName");
-					intent.putExtra("attributeValue", currentUser.getNickName());
+					intent.putExtra("attributeValue", application
+							.getCurrentUser().getNickName());
 					intent.putExtra("title",
 							getString(R.string.edit_nickname_title));
 					break;
@@ -160,7 +165,8 @@ public class PersonInfoActivity extends BaseActivity {
 					intent = new Intent(PersonInfoActivity.this,
 							EditActivity.class);
 					intent.putExtra("attributeName", "alipay");
-					intent.putExtra("attributeValue", currentUser.getAlipay());
+					intent.putExtra("attributeValue", application
+							.getCurrentUser().getAlipay());
 					intent.putExtra("title", getString(R.string.alipay_account));
 					break;
 				default:
@@ -174,6 +180,7 @@ public class PersonInfoActivity extends BaseActivity {
 	}
 
 	private void fillList() {
+		User currentUser = application.getCurrentUser();
 		ArrayList<String> infos = new ArrayList<String>();
 		infos.add(getString(R.string.phone_number));
 		infos.add(getString(R.string.email_account));
@@ -185,7 +192,7 @@ public class PersonInfoActivity extends BaseActivity {
 		infos.add(getString(R.string.alipay));
 
 		ArrayList<String> values = new ArrayList<String>();
-		values.add(currentUser.getPhone());
+		values.add(application.getCurrentUser().getPhone());
 		values.add(currentUser.getEmail());
 		values.add(currentUser.getQq());
 		values.add(currentUser.getWechat());
@@ -207,9 +214,10 @@ public class PersonInfoActivity extends BaseActivity {
 	 * 加载头像
 	 */
 	private void loadHead() {
-		String imageUrl = currentUser.getAvatar();
+		String imageUrl = application.getCurrentUser().getAvatar();
 
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
+				// 由于修改头像后url不改变，所以不设置本地缓存
 				.cacheOnDisk(true).cacheInMemory(true)
 				.showImageOnLoading(R.drawable.default_head)
 				.showImageForEmptyUri(R.drawable.default_head)
@@ -327,7 +335,7 @@ public class PersonInfoActivity extends BaseActivity {
 				if (extras != null) {
 					Bitmap photo = extras.getParcelable("data");
 					dialog.showDialog();
-					uploadImage(currentUser.getId(), photo);
+					uploadImage(application.getCurrentUser().getId(), photo);
 				}
 			}
 			break;
@@ -401,10 +409,13 @@ public class PersonInfoActivity extends BaseActivity {
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
+					if (null == result.getToken()) {
+						result.setToken(application.getCurrentUser().getToken());
+					}
+					// 更新内存中的用户对象
 					application.setCurrentUser(result);
-					// 上传完成后清除内存中的图片缓存
-					// 这样不会导致界面上显示的图片不正确
-					ImageLoadUtil.clearMemoryCache();
+					// 更新数据库中缓存的用户对象
+					userDao.update(result);
 					loadHead();
 				}
 			}

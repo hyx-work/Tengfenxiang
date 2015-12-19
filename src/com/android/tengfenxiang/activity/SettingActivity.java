@@ -126,7 +126,7 @@ public class SettingActivity extends BaseActivity {
 							int which) {
 						dialogInterface.dismiss();
 						dialog.showDialog();
-						logout(currentUser.getId());
+						logout(application.getCurrentUser().getId());
 					}
 				});
 		builder.setNegativeButton(R.string.cancel,

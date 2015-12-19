@@ -9,6 +9,7 @@ import com.android.tengfenxiang.db.UserDao;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -84,7 +85,8 @@ public class EditActivity extends BaseActivity {
 				String info = information.getText().toString();
 				if (info != null && !info.equals("")) {
 					dialog.showDialog();
-					saveInformation(currentUser.getId(), attributeName, info);
+					saveInformation(application.getCurrentUser().getId(),
+							attributeName, info);
 				} else {
 					Toast.makeText(getApplication(), R.string.empty_input,
 							Toast.LENGTH_SHORT).show();
@@ -106,13 +108,17 @@ public class EditActivity extends BaseActivity {
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
-					// 用于服务器返回的user对象token字段为null，所以在这里手动设置token
-					// 如果后续服务器能够返回不为null的token字段，删除这行代码即可
-					result.setToken(currentUser.getToken());
+					if (null == result.getToken()) {
+						result.setToken(application.getCurrentUser().getToken());
+					}
+					// 更新内存中的用户对象
 					application.setCurrentUser(result);
 					// 更新数据库中缓存的用户对象
 					userDao.update(result);
 					finish();
+				} else {
+					Toast.makeText(getApplication(), R.string.modify_fail,
+							Toast.LENGTH_SHORT).show();
 				}
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
@@ -126,8 +132,7 @@ public class EditActivity extends BaseActivity {
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Toast.makeText(getApplication(), R.string.unknow_error,
-						Toast.LENGTH_SHORT).show();
+				VolleyErrorUtil.handleVolleyError(getApplication(), error);
 			}
 		};
 		StringRequest stringRequest = new StringRequest(Method.POST, url,

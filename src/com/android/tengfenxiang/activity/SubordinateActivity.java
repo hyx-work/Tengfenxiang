@@ -36,7 +36,7 @@ public class SubordinateActivity extends BaseActivity {
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();
-		getSubordinate(currentUser.getId());
+		getSubordinate(application.getCurrentUser().getId());
 	}
 
 	private void initView() {

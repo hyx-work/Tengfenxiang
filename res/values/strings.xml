@@ -110,6 +110,7 @@
     <string name="empty_old_password">密码不能为空</string>
     <string name="different_password">两次输入的密码不一致</string>
     <string name="modify_success">修改成功</string>
+    <string name="modify_fail">修改失败</string>
     <string name="task_list">任务中心</string>
     <string name="empty_task_hint">当前没有任务</string>
     <string name="task_price">单价&#160;&#160;</string>

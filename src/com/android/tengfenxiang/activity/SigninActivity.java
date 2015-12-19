@@ -50,7 +50,7 @@ public class SigninActivity extends BaseActivity {
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();
-		getSigninStatus(currentUser.getId());
+		getSigninStatus(application.getCurrentUser().getId());
 	}
 
 	private void initView() {
@@ -77,7 +77,7 @@ public class SigninActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				dialog.showDialog();
-				signin(currentUser.getId());
+				signin(application.getCurrentUser().getId());
 			}
 		});
 

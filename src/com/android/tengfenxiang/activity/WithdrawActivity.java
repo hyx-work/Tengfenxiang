@@ -58,7 +58,7 @@ public class WithdrawActivity extends BaseActivity implements
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();
-		getWithdrawRecords(currentUser.getId(), limit, offset);
+		getWithdrawRecords(application.getCurrentUser().getId(), limit, offset);
 	}
 
 	private void initView() {
@@ -131,14 +131,14 @@ public class WithdrawActivity extends BaseActivity implements
 	public void onRefresh() {
 		// TODO Auto-generated method stub
 		offset = 0;
-		getWithdrawRecords(currentUser.getId(), limit, offset);
+		getWithdrawRecords(application.getCurrentUser().getId(), limit, offset);
 	}
 
 	@Override
 	public void onLoadMore() {
 		// TODO Auto-generated method stub
 		offset = offset + limit;
-		getWithdrawRecords(currentUser.getId(), limit, offset);
+		getWithdrawRecords(application.getCurrentUser().getId(), limit, offset);
 	}
 
 	/**

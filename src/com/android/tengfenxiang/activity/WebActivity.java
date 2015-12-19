@@ -247,9 +247,11 @@ public class WebActivity extends BaseActivity {
 		}
 		dialog.showDialog();
 		if (taskId == -1) {
-			saveArticleRetweet(currentUser.getId(), articleId, destination);
+			saveArticleRetweet(application.getCurrentUser().getId(), articleId,
+					destination);
 		} else {
-			saveTaskRetweet(currentUser.getId(), taskId, destination);
+			saveTaskRetweet(application.getCurrentUser().getId(), taskId,
+					destination);
 		}
 	}
 

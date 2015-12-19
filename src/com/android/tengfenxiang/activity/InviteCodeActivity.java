@@ -70,7 +70,8 @@ public class InviteCodeActivity extends BaseActivity {
 			@Override
 			public void run() {
 				codeBitmap = QRCodeUtil.createImage(Constant.REGISTER_URL
-						+ "?inviteCode=" + currentUser.getInviteCode(), 400,
+						+ "?inviteCode="
+						+ application.getCurrentUser().getInviteCode(), 400,
 						400);
 				handler.sendEmptyMessage(1);
 			}
@@ -81,8 +82,8 @@ public class InviteCodeActivity extends BaseActivity {
 		codeTextView = (TextView) findViewById(R.id.invite_code_text);
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(getString(R.string.invite_code_hint))
-				.append(currentUser.getInviteCode()).append("\n")
-				.append(getString(R.string.click_to_copy));
+				.append(application.getCurrentUser().getInviteCode())
+				.append("\n").append(getString(R.string.click_to_copy));
 		codeTextView.setText(buffer);
 		codeTextView.setOnClickListener(new OnClickListener() {
 
@@ -90,8 +91,8 @@ public class InviteCodeActivity extends BaseActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-				cmb.setPrimaryClip(ClipData.newPlainText(null,
-						currentUser.getInviteCode()));
+				cmb.setPrimaryClip(ClipData.newPlainText(null, application
+						.getCurrentUser().getInviteCode()));
 				Toast.makeText(getApplication(), R.string.copy_success,
 						Toast.LENGTH_SHORT).show();
 			}

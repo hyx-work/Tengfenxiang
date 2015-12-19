@@ -51,7 +51,7 @@ public class UserInfoActivity extends BaseActivity {
 
 		// 初始化昵称的显示
 		nicknameTextView = (TextView) findViewById(R.id.nickname);
-		nicknameTextView.setText(currentUser.getNickName());
+		nicknameTextView.setText(application.getCurrentUser().getNickName());
 
 		// 初始化用户信息列表
 		userInfoListView = (ListView) findViewById(R.id.user_info_list);
@@ -125,7 +125,7 @@ public class UserInfoActivity extends BaseActivity {
 	 * 加载用户头像
 	 */
 	private void loadHead() {
-		String imageUrl = currentUser.getAvatar();
+		String imageUrl = application.getCurrentUser().getAvatar();
 
 		// 显示图片的配置
 		DisplayImageOptions options = new DisplayImageOptions.Builder()

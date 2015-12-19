@@ -14,18 +14,12 @@ import android.os.Bundle;
  */
 public abstract class BaseActivity extends Activity {
 
-	/**
-	 * 当前登录用户对象，设置为static确保统一性
-	 */
-	protected static User currentUser;
-
-	protected static MainApplication application;
+protected static MainApplication application;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		application = ((MainApplication) getApplication());
-		currentUser = application.getCurrentUser();
 	}
 
 }

@@ -45,7 +45,7 @@ public class MessageActivity extends BaseActivity {
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();
-		getSystemMessages(currentUser.getId());
+		getSystemMessages(application.getCurrentUser().getId());
 	}
 
 	private void initView() {

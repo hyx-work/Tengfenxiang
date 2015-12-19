@@ -10,6 +10,7 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.TaskListAdapter;
 import com.android.tengfenxiang.bean.ResponseResult;
 import com.android.tengfenxiang.bean.Task;
+import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.db.TaskDao;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
@@ -108,7 +109,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				getTaskList(currentUser.getId(), limit, offset);
+				getTaskList(application.getCurrentUser().getId(), limit, offset);
 			}
 		});
 
@@ -121,7 +122,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				currentUser = application.getCurrentUser();
+				User currentUser = application.getCurrentUser();
 				if (arg2 >= 1 && arg2 <= tasks.size()) {
 					Intent intent = new Intent(TaskActivity.this,
 							WebActivity.class);
@@ -151,7 +152,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 		} else {
 			taskListView.setVisibility(View.GONE);
 			hintTextView.setVisibility(View.VISIBLE);
-			getTaskList(currentUser.getId(), limit, offset);
+			getTaskList(application.getCurrentUser().getId(), limit, offset);
 		}
 	}
 
@@ -164,14 +165,14 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 	public void onRefresh() {
 		// TODO Auto-generated method stub
 		offset = 0;
-		getTaskList(currentUser.getId(), limit, offset);
+		getTaskList(application.getCurrentUser().getId(), limit, offset);
 	}
 
 	@Override
 	public void onLoadMore() {
 		// TODO Auto-generated method stub
 		offset = offset + limit;
-		getTaskList(currentUser.getId(), limit, offset);
+		getTaskList(application.getCurrentUser().getId(), limit, offset);
 	}
 
 	private void loadComplete() {

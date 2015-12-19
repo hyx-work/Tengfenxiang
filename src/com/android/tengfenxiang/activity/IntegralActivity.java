@@ -47,7 +47,7 @@ public class IntegralActivity extends BaseActivity {
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();
-		getDetails(currentUser.getId(), detailType);
+		getDetails(application.getCurrentUser().getId(), detailType);
 	}
 
 	private void initView() {

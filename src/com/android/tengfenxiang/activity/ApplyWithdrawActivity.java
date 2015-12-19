@@ -55,13 +55,12 @@ public class ApplyWithdrawActivity extends BaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		currentUser = application.getCurrentUser();
 		initView();
 	}
 
 	private void initView() {
 		alipayTextView = (TextView) findViewById(R.id.alipay_account);
-		alipayTextView.setText(currentUser.getAlipay());
+		alipayTextView.setText(application.getCurrentUser().getAlipay());
 
 		withdrawEditText = (EditText) findViewById(R.id.withdraw_points);
 		withdrawEditText.setText(withdrawPoints + "");
@@ -79,7 +78,8 @@ public class ApplyWithdrawActivity extends BaseActivity {
 				Intent intent = new Intent(ApplyWithdrawActivity.this,
 						EditActivity.class);
 				intent.putExtra("attributeName", "alipay");
-				intent.putExtra("attributeValue", currentUser.getAlipay());
+				intent.putExtra("attributeValue", application.getCurrentUser()
+						.getAlipay());
 				intent.putExtra("title", getString(R.string.alipay_account));
 				startActivity(intent);
 			}
@@ -101,7 +101,7 @@ public class ApplyWithdrawActivity extends BaseActivity {
 							Toast.LENGTH_SHORT).show();
 				} else {
 					dialog.showDialog();
-					applyWithdraw(currentUser.getId(), tmp);
+					applyWithdraw(application.getCurrentUser().getId(), tmp);
 				}
 			}
 		});

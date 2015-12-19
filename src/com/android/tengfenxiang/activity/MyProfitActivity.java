@@ -62,7 +62,7 @@ public class MyProfitActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		dialog.showDialog();
-		getSummary(currentUser.getId());
+		getSummary(application.getCurrentUser().getId());
 	}
 
 	@Override

@@ -82,7 +82,8 @@ public class ModifyActivity extends BaseActivity {
 				boolean tmp = validatePassword(oldTmp, newTmp, confirmTmp);
 				if (tmp) {
 					dialog.showDialog();
-					modifyPassword(currentUser.getId(), oldTmp, newTmp);
+					modifyPassword(application.getCurrentUser().getId(),
+							oldTmp, newTmp);
 				}
 			}
 		});

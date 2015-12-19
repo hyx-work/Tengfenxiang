@@ -171,7 +171,7 @@ public class AboutActivity extends BaseActivity {
 					intent = new Intent(AboutActivity.this, WebActivity.class);
 					intent.putExtra("title", getString(R.string.feedback));
 					intent.putExtra("url", Constant.FEEDBACK_URL + "?user="
-							+ currentUser.getId());
+							+ application.getCurrentUser().getId());
 					break;
 				default:
 					Uri uri = Uri.parse("market://details?id="

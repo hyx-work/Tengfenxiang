@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,7 +23,6 @@ public class UserInfoActivity extends BaseActivity {
 	private ListView userInfoListView;
 	private TextView nicknameTextView;
 	private ImageView headImageView;
-	private LinearLayout headLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +44,6 @@ public class UserInfoActivity extends BaseActivity {
 	}
 
 	private void initView() {
-		headLayout = (LinearLayout) findViewById(R.id.head_layout);
-		headLayout.setBackground(getResources().getDrawable(
-				R.drawable.user_head_bg));
 
 		// 初始化头像的显示
 		headImageView = (ImageView) findViewById(R.id.head);

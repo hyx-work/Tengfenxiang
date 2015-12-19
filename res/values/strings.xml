@@ -59,6 +59,10 @@
     <string name="withdraw_records">已提现</string>
     <string name="withdraw_data">提现日期</string>
     <string name="withdraw_count">提现金额</string>
+    <string name="is_not_permitted">未审核</string>
+    <string name="is_fail_permitted">审核未通过</string>
+    <string name="is_withdraw">已提现</string>
+    <string name="is_not_withdraw">未提现</string>
     <string name="empty_withdraw_hint">暂无提现记录</string>
     <string name="withdraw_apply">申请提现</string>
     <string name="apply_withdraw_points">申请提现金额</string>

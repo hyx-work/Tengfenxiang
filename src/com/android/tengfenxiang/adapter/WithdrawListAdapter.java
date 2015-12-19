@@ -15,6 +15,11 @@ public class WithdrawListAdapter extends BaseAdapter {
 	private Activity context;
 	private List<Withdraw> withdraws;
 
+	private int[] permittedState = { R.string.is_fail_permitted,
+			R.string.is_not_permitted };
+	private int[] withdrawState = { R.string.is_not_withdraw,
+			R.string.is_withdraw };
+
 	public WithdrawListAdapter(Activity context, List<Withdraw> withdraws) {
 		this.context = context;
 		this.withdraws = withdraws;
@@ -49,13 +54,30 @@ public class WithdrawListAdapter extends BaseAdapter {
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
-
 		}
 		String date[] = withdraws.get(position).getRequestTime().split(" ");
 		viewHolder.data.setText(date[0]);
-		viewHolder.points.setText(withdraws.get(position).getRequestPoints()
-				+ context.getString(R.string.unit_yuan));
+		viewHolder.points.setText(getPoints(withdraws.get(position)));
 		return convertView;
+	}
+
+	private String getPoints(Withdraw withdraw) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(withdraw.getRequestPoints())
+				.append(context.getString(R.string.unit_yuan)).append("(");
+		int isPermitted = withdraw.getIsPermitted();
+		int isWithdraw = withdraw.getIsWithdraw();
+		switch (isPermitted) {
+		case -1:
+		case 0:
+			buffer.append(context.getString(permittedState[isPermitted + 1]));
+			break;
+		default:
+			buffer.append(context.getString(withdrawState[isWithdraw]));
+			break;
+		}
+		buffer.append(")");
+		return buffer.toString();
 	}
 
 	public class ViewHolder {

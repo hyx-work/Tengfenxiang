@@ -7,7 +7,6 @@ import com.android.tengfenxiang.adapter.ArticlePagerAdapter;
 import com.android.tengfenxiang.bean.ChannelItem;
 import com.android.tengfenxiang.db.DBHelper;
 import com.android.tengfenxiang.util.ChannelManage;
-import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.view.tab.CategoryTabStrip;
 
 import android.content.Intent;
@@ -68,13 +67,6 @@ public class ArticleActivity extends FragmentActivity {
 				getApplication(), userChannelList);
 		pager.setAdapter(adapter);
 		tabs.setViewPager(pager);
-	}
-
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		ImageLoadUtil.clearMemoryCache();
 	}
 
 	@Override

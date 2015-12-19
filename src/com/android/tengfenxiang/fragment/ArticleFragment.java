@@ -15,7 +15,6 @@ import com.android.tengfenxiang.bean.ResponseResult;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.db.ArticleDao;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.xlistview.XListView;
@@ -219,13 +218,6 @@ public class ArticleFragment extends BaseFragment {
 				}
 			}
 		});
-	}
-
-	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		ImageLoadUtil.clearMemoryCache();
 	}
 
 	/**

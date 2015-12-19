@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -16,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +24,7 @@ public class UserInfoActivity extends BaseActivity {
 	private ListView userInfoListView;
 	private TextView nicknameTextView;
 	private ImageView headImageView;
+	private LinearLayout headLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,24 +41,24 @@ public class UserInfoActivity extends BaseActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		ImageLoadUtil.clearMemoryCache();
-	}
-
-	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 
 	}
 
 	private void initView() {
+		headLayout = (LinearLayout) findViewById(R.id.head_layout);
+		headLayout.setBackground(getResources().getDrawable(
+				R.drawable.user_head_bg));
+
+		// 初始化头像的显示
 		headImageView = (ImageView) findViewById(R.id.head);
 		loadHead();
 
+		// 初始化昵称的显示
 		nicknameTextView = (TextView) findViewById(R.id.nickname);
 		nicknameTextView.setText(currentUser.getNickName());
 
+		// 初始化用户信息列表
 		userInfoListView = (ListView) findViewById(R.id.user_info_list);
 		ArrayList<Integer> icons = new ArrayList<Integer>();
 		icons.add(R.drawable.ic_data);
@@ -78,9 +79,13 @@ public class UserInfoActivity extends BaseActivity {
 		SimpleListAdapter adapter = new SimpleListAdapter(icons, infos,
 				UserInfoActivity.this);
 		userInfoListView.setAdapter(adapter);
+		// 设置用户信息列表的点击监听
 		addClickListener();
 	}
 
+	/**
+	 * 设置用户信息列表的点击监听
+	 */
 	private void addClickListener() {
 		userInfoListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -129,7 +134,10 @@ public class UserInfoActivity extends BaseActivity {
 
 		// 显示图片的配置
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				.cacheInMemory(true).cacheOnDisk(true)
+				// 由于服务器修改头像后返回的url不变，所以这里不设置本地缓存
+				// 如果后续修改为url可变，这将这行代码反注销即可
+				// .cacheOnDisk(true)
+				.cacheInMemory(true)
 				.showImageOnLoading(R.drawable.default_head)
 				.showImageForEmptyUri(R.drawable.default_head)
 				.showImageOnFail(R.drawable.default_head).build();

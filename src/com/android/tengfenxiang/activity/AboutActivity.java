@@ -88,7 +88,6 @@ public class AboutActivity extends BaseActivity {
 				infos, values);
 		simpleListView.setAdapter(adapter);
 		ViewStub viewStub = new ViewStub(this);
-		simpleListView.addHeaderView(viewStub);
 		simpleListView.addFooterView(viewStub);
 
 		simpleListView.setOnItemClickListener(new OnItemClickListener() {
@@ -96,7 +95,7 @@ public class AboutActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				if (0 == (arg2 - 1)) {
+				if (0 == arg2) {
 					if (qqGroup.size() > 1) {
 						showDialog();
 					} else {
@@ -145,7 +144,6 @@ public class AboutActivity extends BaseActivity {
 				infos);
 		linkListView.setAdapter(adapter);
 		ViewStub viewStub = new ViewStub(this);
-		linkListView.addHeaderView(viewStub);
 		linkListView.addFooterView(viewStub);
 
 		linkListView.setOnItemClickListener(new OnItemClickListener() {
@@ -154,7 +152,7 @@ public class AboutActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Intent intent;
-				switch (arg2 - 1) {
+				switch (arg2) {
 				case 0:
 					intent = new Intent(AboutActivity.this, WebActivity.class);
 					intent.putExtra("title",
@@ -189,6 +187,11 @@ public class AboutActivity extends BaseActivity {
 		});
 	}
 
+	/**
+	 * 将返回的多个QQ号码拼接成一个字符串
+	 * 
+	 * @return
+	 */
 	private String getQQGroupInfo() {
 		StringBuffer buffer = new StringBuffer();
 		qqGroup = setting.getAboutViewSettings().getQQGroups();
@@ -199,6 +202,9 @@ public class AboutActivity extends BaseActivity {
 		return buffer.toString();
 	}
 
+	/**
+	 * 获取联系方式的信息
+	 */
 	private void getInfo() {
 		String url = Constant.SETTING_URL;
 

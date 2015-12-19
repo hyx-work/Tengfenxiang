@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">玩赚9527</string>
-    <string name="version_text">Version&#160;&#8201;</string>
+    <string name="version_text">Version&#160;&#160;</string>
     <string name="login">登录</string>
     <string name="register">注册</string>
     <string name="phone">手机号码</string>
@@ -49,7 +49,7 @@
     <string name="function_introduction">功能介绍</string>
     <string name="help_center">帮助中心</string>
     <string name="feedback">问题反馈</string>
-    <string name="score">评&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;分</string>
+    <string name="score">评&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;分</string>
     <string name="qq_group">QQ群</string>
     <string name="contact_phone">客服电话</string>
     <string name="select_qq_number">请选择要复制的号码</string>
@@ -69,13 +69,13 @@
     <string name="person_info">个人资料</string>
     <string name="user_head">用户头像</string>
     <string name="phone_number">手机号码</string>
-    <string name="wechat_account">微&#160;&#8201;信&#160;&#8201;号</string>
-    <string name="email_account">邮&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;箱</string>
-    <string name="qq_account">Q&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;&#160;&#160;Q</string>
-    <string name="nickname">昵&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;称</string>
-    <string name="gender">性&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;别</string>
-    <string name="place">地&#160;&#160;&#8201;&#8201;&#160;&#160;&#8201;&#8201;区</string>
-    <string name="alipay">支&#160;&#8201;付&#160;&#8201;宝</string>
+    <string name="wechat_account">微&#160;&#160;信&#160;&#160;号</string>
+    <string name="email_account">邮&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;箱</string>
+    <string name="qq_account">Q&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Q</string>
+    <string name="nickname">昵&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;称</string>
+    <string name="gender">性&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;别</string>
+    <string name="place">地&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;区</string>
+    <string name="alipay">支&#160;&#160;付&#160;&#160;宝</string>
     <string name="invite_others">我要邀请</string>
     <string name="invite_user">邀请用户</string>
     <string name="invite_code_hint">邀请码:</string>
@@ -98,7 +98,7 @@
     <string name="modify_password">修改密码</string>
     <string name="old_password">原始密码</string>
     <string name="old_password_hint">请输入原始密码</string>
-    <string name="new_password">新&#160;&#8201;密&#160;&#8201;码</string>
+    <string name="new_password">新&#160;&#160;密&#160;&#160;码</string>
     <string name="new_password_hint">请设置新密码</string>
     <string name="confirm_password">确认密码</string>
     <string name="confirm_password_hint">请确认新密码</string>
@@ -107,18 +107,18 @@
     <string name="modify_success">修改成功</string>
     <string name="task_list">任务中心</string>
     <string name="empty_task_hint">当前没有任务</string>
-    <string name="task_price">单价&#160;&#8201;</string>
+    <string name="task_price">单价&#160;&#160;</string>
     <string name="status_offline">已结束</string>
     <string name="status_online">进行中</string>
     <string name="status_finish">已抢完</string>
-    <string name="limit_count">投放次数&#160;&#8201;</string>
-    <string name="rest_count">剩余次数&#160;&#8201;</string>
-    <string name="begin_time">开始时间&#160;&#8201;</string>
-    <string name="end_time">结束时间&#160;&#8201;</string>
+    <string name="limit_count">投放次数&#160;&#160;</string>
+    <string name="rest_count">剩余次数&#160;&#160;</string>
+    <string name="begin_time">开始时间&#160;&#160;</string>
+    <string name="end_time">结束时间&#160;&#160;</string>
     <string name="article_list">文章中心</string>
     <string name="empty_article_hint">当前没有文章</string>
-    <string name="view_count">阅读量&#160;&#8201;</string>
-    <string name="like_count">点赞&#160;&#8201;</string>
+    <string name="view_count">阅读量&#160;&#160;</string>
+    <string name="like_count">点赞&#160;&#160;</string>
     <string name="share_title">分享获取收益</string>
     <string name="wechat_friend">微信朋友</string>
     <string name="wechat_moment">朋友圈</string>

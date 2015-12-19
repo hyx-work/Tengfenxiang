@@ -202,11 +202,20 @@ public class PersonInfoActivity extends BaseActivity {
 		userInfos.setAdapter(adapter);
 	}
 
+	/**
+	 * 加载头像
+	 */
 	private void loadHead() {
 		String imageUrl = currentUser.getAvatar();
 
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				.cacheInMemory(true).cacheOnDisk(true)
+				// 由于服务器修改头像后返回的url不变，所以这里不设置本地缓存
+				// 如果后续修改为url可变，这将这行代码反注销即可
+				// .cacheOnDisk(true)
+				.cacheInMemory(true)
+				.showImageOnLoading(R.drawable.default_head)
+				.showImageForEmptyUri(R.drawable.default_head)
+				.showImageOnFail(R.drawable.default_head)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 
 		ImageLoader.getInstance().loadImage(imageUrl, null, options,
@@ -224,6 +233,13 @@ public class PersonInfoActivity extends BaseActivity {
 				});
 	}
 
+	/**
+	 * 根据省份和城市代码获取地区信息
+	 * 
+	 * @param province
+	 * @param city
+	 * @return
+	 */
 	private String getArea(int province, int city) {
 		CityUtil cityUtil = CityUtil.getInstance(getApplication());
 		List<CityInfo> provinces = cityUtil.getProvince_list();
@@ -281,13 +297,6 @@ public class PersonInfoActivity extends BaseActivity {
 		} else {
 			return false;
 		}
-	}
-
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		ImageLoadUtil.clearMemoryCache();
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode,
@@ -376,6 +385,12 @@ public class PersonInfoActivity extends BaseActivity {
 		builder.show();
 	}
 
+	/**
+	 * 上传头像文件
+	 * 
+	 * @param userId
+	 * @param bitmap
+	 */
 	private void uploadImage(final int userId, Bitmap bitmap) {
 		String url = Constant.MODIFY_INFO_URL;
 
@@ -389,6 +404,9 @@ public class PersonInfoActivity extends BaseActivity {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
 					application.setCurrentUser(result);
+					// 上传完成后清除内存中的图片缓存
+					// 这样不会导致界面上显示的图片不正确
+					ImageLoadUtil.clearMemoryCache();
 					loadHead();
 				}
 			}
@@ -414,9 +432,15 @@ public class PersonInfoActivity extends BaseActivity {
 		RequestUtil.getRequestQueue(getApplication()).add(request);
 	}
 
-	private byte[] bitmap2Bytes(Bitmap bm) {
+	/**
+	 * 将位图转化为二进制数据
+	 * 
+	 * @param bitmap
+	 * @return
+	 */
+	private byte[] bitmap2Bytes(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
 		return baos.toByteArray();
 	}
 }

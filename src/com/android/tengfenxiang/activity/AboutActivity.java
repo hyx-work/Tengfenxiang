@@ -93,29 +93,32 @@ public class AboutActivity extends BaseActivity {
 		ViewStub viewStub = new ViewStub(this);
 		simpleListView.addFooterView(viewStub);
 
-		simpleListView.setOnItemClickListener(new OnItemClickListener() {
+		if (null != setting) {
+			simpleListView.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				if (0 == arg2) {
-					if (qqGroup.size() > 1) {
-						showDialog();
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					if (0 == arg2) {
+						if (qqGroup.size() > 1) {
+							showDialog();
+						} else {
+							ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+							cmb.setPrimaryClip(ClipData.newPlainText(null,
+									getQQGroupInfo()));
+							Toast.makeText(getApplication(),
+									R.string.copy_success, Toast.LENGTH_SHORT)
+									.show();
+						}
 					} else {
-						ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-						cmb.setPrimaryClip(ClipData.newPlainText(null,
-								getQQGroupInfo()));
-						Toast.makeText(getApplication(), R.string.copy_success,
-								Toast.LENGTH_SHORT).show();
+						Uri uri = Uri.parse("tel:"
+								+ setting.getAboutViewSettings().getPhone());
+						Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+						startActivity(intent);
 					}
-				} else {
-					Uri uri = Uri.parse("tel:"
-							+ setting.getAboutViewSettings().getPhone());
-					Intent intent = new Intent(Intent.ACTION_DIAL, uri);
-					startActivity(intent);
 				}
-			}
-		});
+			});
+		}
 	}
 
 	private void showDialog() {

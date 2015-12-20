@@ -79,7 +79,7 @@ public class TitleBar extends RelativeLayout {
 		addView(rightImageView, rightParams);
 		titleParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
-		titleParams.addRule(Gravity.CENTER_VERTICAL, TRUE);
+		titleParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
 		titleParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
 		titleParams.setMargins(0, DensityUtil.dip2px(context, 10), 0,
 				DensityUtil.dip2px(context, 10));

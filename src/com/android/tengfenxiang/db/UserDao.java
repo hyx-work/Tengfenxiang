@@ -37,10 +37,10 @@ public class UserDao {
 		values.put("alipay", user.getAlipay());
 		values.put("avatar", user.getAvatar());
 		values.put("gender", user.getGender());
-		values.put("province", user.getGender());
-		values.put("city", user.getGender());
-		values.put("wechat", user.getGender());
-		values.put("qq", user.getGender());
+		values.put("province", user.getProvince());
+		values.put("city", user.getCity());
+		values.put("wechat", user.getWechat());
+		values.put("qq", user.getQq());
 		values.put("email", user.getEmail());
 		values.put("inviteCode", user.getInviteCode());
 		db.beginTransaction();
@@ -120,10 +120,10 @@ public class UserDao {
 		values.put("alipay", user.getAlipay());
 		values.put("avatar", user.getAvatar());
 		values.put("gender", user.getGender());
-		values.put("province", user.getGender());
-		values.put("city", user.getGender());
-		values.put("wechat", user.getGender());
-		values.put("qq", user.getGender());
+		values.put("province", user.getProvince());
+		values.put("city", user.getCity());
+		values.put("wechat", user.getWechat());
+		values.put("qq", user.getQq());
 		values.put("email", user.getEmail());
 		values.put("inviteCode", user.getInviteCode());
 		db.update("user", values, "id=?",

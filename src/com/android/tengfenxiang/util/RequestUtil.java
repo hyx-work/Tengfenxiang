@@ -68,11 +68,17 @@ public class RequestUtil {
 			}
 		}
 		if (null != cookie) {
+			System.err.println(cookie.toString());
 			CookieSyncManager.createInstance(context);
 			CookieManager cookieManager = CookieManager.getInstance();
-			cookieManager.removeSessionCookie();
-			cookieManager.setCookie(url,
-					cookie.getName() + "=" + cookie.getValue());
+			StringBuffer buffer = new StringBuffer();
+			buffer.append(cookie.getName()).append("=")
+					.append(cookie.getValue()).append(";domain=")
+					.append(cookie.getDomain()).append(";path=")
+					.append(cookie.getPath()).append(";version=")
+					.append(cookie.getVersion()).append(";expiry=")
+					.append(cookie.getExpiryDate());
+			cookieManager.setCookie(url, buffer.toString());
 			CookieSyncManager.getInstance().sync();
 		}
 	}

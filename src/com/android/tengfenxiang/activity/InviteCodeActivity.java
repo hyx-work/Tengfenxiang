@@ -4,7 +4,6 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.DensityUtil;
 import com.android.tengfenxiang.util.QRCodeUtil;
-import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.dialog.SharePopupWindow;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -35,7 +34,6 @@ public class InviteCodeActivity extends BaseActivity {
 	private TextView codeTextView;
 
 	private Bitmap codeBitmap;
-	private LoadingDialog dialog;
 	private SharePopupWindow window;
 
 	private static final int THUMB_SIZE = 150;
@@ -45,9 +43,6 @@ public class InviteCodeActivity extends BaseActivity {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
 				if (null != codeBitmap) {
 					codeImageView.setImageBitmap(codeBitmap);
 				} else {
@@ -70,8 +65,6 @@ public class InviteCodeActivity extends BaseActivity {
 
 		wxApi = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID);
 		wxApi.registerApp(Constant.WX_APP_ID);
-
-		dialog = new LoadingDialog(this);
 	}
 
 	@Override
@@ -79,7 +72,6 @@ public class InviteCodeActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		initView();
-		dialog.showDialog();
 		new Thread(new Runnable() {
 
 			@Override

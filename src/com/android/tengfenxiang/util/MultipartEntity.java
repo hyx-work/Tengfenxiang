@@ -207,7 +207,6 @@ public class MultipartEntity implements HttpEntity {
         final String endString = "--" + mBoundary + "--\r\n";
         // 写入结束符
         mOutputStream.write(endString.getBytes());
-        //
         outstream.write(mOutputStream.toByteArray());
     }
 

@@ -141,6 +141,8 @@
     <string name="server_error">服务器错误</string>
     <string name="timeout_error">请求超时</string>
     <string name="unknow_error">未知错误</string>
+    <string name="web_loading">页面加载中&#8230;</string>
+    <string name="fail_to_load_webpage">加载失败</string>
     <string name="unit_people">人</string>
     <string name="unit_yuan_en">¥</string>
     <string name="unit_yuan">元</string>

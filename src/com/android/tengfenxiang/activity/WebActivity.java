@@ -45,6 +45,7 @@ import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class WebActivity extends BaseActivity {
@@ -52,6 +53,7 @@ public class WebActivity extends BaseActivity {
 	private TitleBar titleBar;
 	private WebView webView;
 	private LoadingDialog dialog;
+	private RelativeLayout webviewLayout;
 
 	/**
 	 * activity显示的标题
@@ -139,7 +141,6 @@ public class WebActivity extends BaseActivity {
 		webContent = intent.getStringExtra("web_content");
 
 		if (taskId != -1 || articleId != -1) {
-			dialog.showDialog();
 			loadThumbnails(intent.getStringExtra("image"));
 		}
 		initView();
@@ -147,6 +148,7 @@ public class WebActivity extends BaseActivity {
 	}
 
 	private void initView() {
+		webviewLayout = (RelativeLayout) findViewById(R.id.webview_layout);
 		webView = (WebView) findViewById(R.id.web_view);
 		initWebView();
 
@@ -154,7 +156,6 @@ public class WebActivity extends BaseActivity {
 		if (taskId == -1 && articleId == -1) {
 			titleBar.getRightImageView().setVisibility(View.GONE);
 		}
-		titleBar.setTitleText(title);
 		titleBar.setOnClickListener(new OnTitleClickListener() {
 
 			@Override
@@ -198,18 +199,54 @@ public class WebActivity extends BaseActivity {
 					.setJavaScriptCanOpenWindowsAutomatically(true);
 			webView.setWebViewClient(new WebViewClient() {
 
-				public void onReceivedError(WebView view, int errorCode,
-						String description, String failingUrl) {
-					Toast.makeText(getApplication(), R.string.unknow_error,
-							Toast.LENGTH_SHORT).show();
+				@Override
+				public void onPageStarted(WebView view, String url,
+						Bitmap favicon) {
+					super.onPageStarted(view, url, favicon);
+					dialog.showDialog();
 				}
 
+				@Override
+				public void onPageFinished(WebView view, String url) {
+					super.onPageFinished(view, url);
+					if (dialog.isShowing()) {
+						dialog.cancelDialog();
+					}
+				}
+
+				@Override
+				public void onReceivedError(WebView view, int errorCode,
+						String description, String failingUrl) {
+					if (dialog.isShowing()) {
+						dialog.cancelDialog();
+					}
+					Toast.makeText(getApplication(),
+							R.string.fail_to_load_webpage, Toast.LENGTH_SHORT)
+							.show();
+				}
+
+				@Override
 				public boolean shouldOverrideUrlLoading(WebView view, String url) {
 					view.loadUrl(url);
 					return true;
 				}
 			});
-			webView.setWebChromeClient(new WebChromeClient());
+			webView.setWebChromeClient(new WebChromeClient() {
+
+				// 在标题上显示页面加载进度
+				@Override
+				public void onProgressChanged(WebView view, int progress) {
+					titleBar.setTitleText(getString(R.string.web_loading)
+							+ progress + "%");
+					setProgress(progress * 100);
+					if (progress == 100) {
+						titleBar.setTitleText(title);
+					}
+				}
+			});
+			// WebView暂时关闭硬件加速
+			webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+			RequestUtil.synCookies(getApplication(), url);
 			webView.loadUrl(url);
 		}
 	}
@@ -413,9 +450,6 @@ public class WebActivity extends BaseActivity {
 						// 必须将位图压缩到32k以下，否则微信分享出错
 						imageBitmap = BitmapCompressUtil.compressImage(
 								loadedImage, 32);
-						if (dialog.isShowing()) {
-							dialog.cancelDialog();
-						}
 					}
 				});
 	}
@@ -424,7 +458,11 @@ public class WebActivity extends BaseActivity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		// 注销广播
 		localBroadcastManager.unregisterReceiver(receiver);
+		// 在退出前先销毁WebView
+		webviewLayout.removeView(webView);
+		webView.destroy();
 	}
 
 	/**

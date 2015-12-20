@@ -5,6 +5,7 @@ import com.android.tengfenxiang.receiver.LogoutReceiver;
 import com.android.tengfenxiang.receiver.LogoutReceiver.OnLogoutListener;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.ImageLoadUtil;
+import com.android.tengfenxiang.util.RequestUtil;
 
 import android.content.Context;
 import android.content.IntentFilter;
@@ -55,9 +56,12 @@ public class MainActivity extends AbstractActivityGroup {
 			@Override
 			public void onLogout() {
 				// TODO Auto-generated method stub
+				// 清除缓存的密码
 				Editor editor = preferences.edit();
 				editor.putString("password", "");
 				editor.commit();
+				// 清除cookie缓存
+				RequestUtil.removeCookie(getApplication());
 				finish();
 			}
 		});

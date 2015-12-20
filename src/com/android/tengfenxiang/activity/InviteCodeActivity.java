@@ -45,9 +45,16 @@ public class InviteCodeActivity extends BaseActivity {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
-				if (dialog.isShowing())
+				if (dialog.isShowing()) {
 					dialog.cancelDialog();
-				initView();
+				}
+				if (null != codeBitmap) {
+					codeImageView.setImageBitmap(codeBitmap);
+				} else {
+					Toast.makeText(getApplication(),
+							R.string.generate_code_fail, Toast.LENGTH_SHORT)
+							.show();
+				}
 				break;
 			default:
 				break;
@@ -65,6 +72,13 @@ public class InviteCodeActivity extends BaseActivity {
 		wxApi.registerApp(Constant.WX_APP_ID);
 
 		dialog = new LoadingDialog(this);
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		initView();
 		dialog.showDialog();
 		new Thread(new Runnable() {
 
@@ -118,12 +132,6 @@ public class InviteCodeActivity extends BaseActivity {
 			}
 		});
 		codeImageView = (ImageView) findViewById(R.id.invite_code);
-		if (null != codeBitmap) {
-			codeImageView.setImageBitmap(codeBitmap);
-		} else {
-			Toast.makeText(getApplication(), R.string.generate_code_fail,
-					Toast.LENGTH_SHORT).show();
-		}
 	}
 
 	/**

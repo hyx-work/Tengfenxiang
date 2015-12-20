@@ -1,16 +1,6 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
-    </style>
+    <style name="AppBaseTheme" parent="android:Theme.Light"></style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
@@ -30,6 +20,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
     </style>
@@ -39,6 +30,8 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <!-- 必须设置paddingLeft属性，否则显示位置错乱 -->
+        <item name="android:paddingLeft">0.0dp</item>
         <item name="android:button">@null</item>
         <item name="android:singleLine">true</item>
         <item name="android:layout_weight">1.0</item>
@@ -61,15 +54,15 @@
 
     <style name="subscribe_seperate_line">
         <item name="android:background">@color/line_color</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">0.5dip</item>
-        <item name="android:layout_marginTop">14.0dip</item>
-        <item name="android:layout_marginBottom">14.0dip</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_marginTop">14.0dp</item>
+        <item name="android:layout_marginBottom">14.0dp</item>
     </style>
 
     <style name="subscribe_flow_layout">
         <item name="android:visibility">gone</item>
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 

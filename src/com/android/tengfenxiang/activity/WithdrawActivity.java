@@ -98,17 +98,18 @@ public class WithdrawActivity extends BaseActivity implements
 						.toString(), Withdraw.class);
 				if (offset == 0) {
 					withdraws.clear();
+					if (null == tmp || tmp.size() == 0) {
+						hintTextView.setVisibility(View.VISIBLE);
+						recordsList.setVisibility(View.GONE);
+					} else {
+						hintTextView.setVisibility(View.GONE);
+						recordsList.setVisibility(View.VISIBLE);
+					}
 				}
-				if (null == tmp || tmp.size() == 0) {
-					hintTextView.setVisibility(View.VISIBLE);
-					recordsList.setVisibility(View.GONE);
-				} else {
-					hintTextView.setVisibility(View.GONE);
-					recordsList.setVisibility(View.VISIBLE);
-					withdraws.addAll(tmp);
-					adapter.notifyDataSetChanged();
-					recordsList.setLoadAll(tmp.size() < limit);
-				}
+
+				withdraws.addAll(tmp);
+				adapter.notifyDataSetChanged();
+				recordsList.setLoadAll(tmp.size() < limit);
 				loadComplete();
 			}
 		};

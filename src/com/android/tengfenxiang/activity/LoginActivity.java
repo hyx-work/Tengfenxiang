@@ -62,6 +62,7 @@ public class LoginActivity extends BaseActivity {
 		passwordEditText.setText(preferences.getString("password", ""));
 		loginButton = (Button) findViewById(R.id.login_btn);
 		saveCheckBox = (CheckBox) findViewById(R.id.save_password);
+		saveCheckBox.setChecked(preferences.getBoolean("remember", true));
 
 		loginButton.setOnClickListener(new OnClickListener() {
 
@@ -86,6 +87,7 @@ public class LoginActivity extends BaseActivity {
 	private void savePassword(String phone, String password) {
 		Editor editor = preferences.edit();
 		editor.putString("phone", phone);
+		editor.putBoolean("remember", saveCheckBox.isChecked());
 		if (saveCheckBox.isChecked()) {
 			editor.putString("password", password);
 		}

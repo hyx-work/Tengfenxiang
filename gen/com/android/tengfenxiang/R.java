@@ -441,6 +441,8 @@ containing a value of this type.
         public static final int is_not_permitted=0x7f07003a;
         public static final int is_not_withdraw=0x7f07003d;
         public static final int is_withdraw=0x7f07003c;
+        public static final int launch_camera_error=0x7f0700a0;
+        public static final int launch_gallery_error=0x7f0700a1;
         public static final int like_article_in_app_points=0x7f07002c;
         public static final int like_count=0x7f07007b;
         public static final int limit_count=0x7f070074;

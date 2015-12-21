@@ -161,5 +161,7 @@
     <string name="subscribe_more_category">更多频道</string>
     <string name="subscribe_manager_category_info">单击增删频道</string>
     <string name="subscribe_manager_category_info_2">单击增删频道，长按拖拽排序</string>
+    <string name="launch_camera_error">打开相机失败，请确保安装了相机软件</string>
+    <string name="launch_gallery_error">打开图库失败，请确保安装了图库软件</string>
 
 </resources>

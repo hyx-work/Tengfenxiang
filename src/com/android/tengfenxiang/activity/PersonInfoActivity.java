@@ -28,6 +28,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import android.app.AlertDialog.Builder;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -272,7 +273,13 @@ public class PersonInfoActivity extends BaseActivity {
 		Intent intentFromGallery = new Intent();
 		intentFromGallery.setType("image/*");
 		intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
-		startActivityForResult(intentFromGallery, CODE_GALLERY_REQUEST);
+		try {
+			startActivityForResult(intentFromGallery, CODE_GALLERY_REQUEST);
+		} catch (ActivityNotFoundException e) {
+			// TODO: handle exception
+			Toast.makeText(getApplication(), R.string.launch_camera_error,
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	/**
@@ -287,7 +294,13 @@ public class PersonInfoActivity extends BaseActivity {
 							.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
 		}
 
-		startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
+		try {
+			startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
+		} catch (ActivityNotFoundException e) {
+			// TODO: handle exception
+			Toast.makeText(getApplication(), R.string.launch_camera_error,
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode,
@@ -331,6 +344,9 @@ public class PersonInfoActivity extends BaseActivity {
 					}
 				}).start();
 			}
+			break;
+
+		default:
 			break;
 		}
 

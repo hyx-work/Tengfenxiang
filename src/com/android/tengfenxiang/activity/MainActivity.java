@@ -1,5 +1,8 @@
 package com.android.tengfenxiang.activity;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.receiver.LogoutReceiver;
 import com.android.tengfenxiang.receiver.LogoutReceiver.OnLogoutListener;
@@ -14,9 +17,11 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.SparseIntArray;
+import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 public class MainActivity extends AbstractActivityGroup {
 
@@ -143,6 +148,8 @@ public class MainActivity extends AbstractActivityGroup {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		localBroadcastManager.unregisterReceiver(logoutReceiver);
+		// 清除cookie缓存
+		RequestUtil.removeCookie(getApplication());
 		// 清除内存中的图片缓存
 		ImageLoadUtil.clearMemoryCache();
 	}
@@ -150,5 +157,37 @@ public class MainActivity extends AbstractActivityGroup {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			exitBy2Click();
+			return true;
+		} else {
+			return super.onKeyDown(keyCode, event);
+		}
+	}
+
+	private static Boolean isExit = false;
+
+	private void exitBy2Click() {
+		Timer tExit = null;
+		if (isExit == false) {
+			isExit = true;
+			Toast.makeText(this, R.string.double_click_exit, Toast.LENGTH_SHORT)
+					.show();
+			tExit = new Timer();
+			tExit.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					isExit = false;
+				}
+			}, 2000);
+		} else {
+			finish();
+			System.exit(0);
+		}
 	}
 }

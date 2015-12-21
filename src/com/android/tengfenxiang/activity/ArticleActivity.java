@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -87,5 +88,17 @@ public class ArticleActivity extends FragmentActivity {
 			tabs.setViewPager(pager);
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	/**
+	 * 复写返回键，如果是点击了返回键则用父activity处理点击事件
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return getParent().onKeyDown(keyCode, event);
+		} else {
+			return super.onKeyDown(keyCode, event);
+		}
 	}
 }

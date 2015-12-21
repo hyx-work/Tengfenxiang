@@ -11,6 +11,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -144,5 +145,17 @@ public class UserInfoActivity extends BaseActivity {
 						headImageView.setImageBitmap(loadedImage);
 					}
 				});
+	}
+	
+	/**
+	 * 复写返回键，如果是点击了返回键则用父activity处理点击事件
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			return getParent().onKeyDown(keyCode, event);
+		} else {
+			return super.onKeyDown(keyCode, event);
+		}
 	}
 }

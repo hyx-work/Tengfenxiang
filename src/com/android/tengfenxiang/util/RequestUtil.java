@@ -60,15 +60,18 @@ public class RequestUtil {
 	 * @param url
 	 */
 	public static void synCookies(Context context, String url) {
+		// 如果httpclient尚未初始化则直接return，例如注册页面
+		if (null == mHttpClient) {
+			return;
+		}
 		List<Cookie> cookies = mHttpClient.getCookieStore().getCookies();
 		Cookie cookie = null;
-		if (!cookies.isEmpty()) {
+		if (null != cookies && !cookies.isEmpty()) {
 			for (int i = 0; i < cookies.size(); i++) {
 				cookie = cookies.get(i);
 			}
 		}
 		if (null != cookie) {
-			System.err.println(cookie.toString());
 			CookieSyncManager.createInstance(context);
 			CookieManager cookieManager = CookieManager.getInstance();
 			StringBuffer buffer = new StringBuffer();

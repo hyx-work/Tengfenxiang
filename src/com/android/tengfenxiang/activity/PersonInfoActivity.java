@@ -369,8 +369,13 @@ public class PersonInfoActivity extends BaseActivity {
 		intent.putExtra("outputX", output_X);
 		intent.putExtra("outputY", output_Y);
 		intent.putExtra("return-data", true);
-
-		startActivityForResult(intent, CODE_RESULT_REQUEST);
+		try {
+			startActivityForResult(intent, CODE_RESULT_REQUEST);
+		} catch (ActivityNotFoundException e) {
+			// TODO: handle exception
+			Toast.makeText(getApplication(), R.string.launch_camera_error,
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	/**

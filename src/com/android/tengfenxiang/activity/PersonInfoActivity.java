@@ -218,7 +218,6 @@ public class PersonInfoActivity extends BaseActivity {
 		String imageUrl = application.getCurrentUser().getAvatar();
 
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				// 由于修改头像后url不改变，所以不设置本地缓存
 				.cacheOnDisk(true).cacheInMemory(true)
 				.showImageOnLoading(R.drawable.default_head)
 				.showImageForEmptyUri(R.drawable.default_head)

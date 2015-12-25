@@ -11,6 +11,7 @@ import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.RequestUtil;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -67,6 +68,11 @@ public class MainActivity extends AbstractActivityGroup {
 				editor.commit();
 				// 清除cookie缓存
 				RequestUtil.removeCookie(getApplication());
+
+				// 跳转到登录界面
+				Intent intent = new Intent(MainActivity.this,
+						LoginActivity.class);
+				startActivity(intent);
 				finish();
 			}
 		});

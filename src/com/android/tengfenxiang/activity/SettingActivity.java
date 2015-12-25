@@ -146,14 +146,11 @@ public class SettingActivity extends BaseActivity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
+				System.err.println(response);
 				if (dialog.isShowing()) {
 					dialog.cancelDialog();
 				}
-				Intent intent = new Intent(SettingActivity.this,
-						LoginActivity.class);
-				startActivity(intent);
-				finish();
-				// 发送广播，告诉主界面现在是登出操作
+				// 发送注销登录广播
 				Intent broadcast = new Intent(Constant.LOGOUT_BROADCAST);
 				localBroadcastManager.sendBroadcast(broadcast);
 			}

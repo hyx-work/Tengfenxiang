@@ -10,6 +10,7 @@ import com.android.tengfenxiang.bean.Message;
 import com.android.tengfenxiang.bean.ResponseResult;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
@@ -25,7 +26,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MessageActivity extends BaseActivity {
 
@@ -104,9 +104,7 @@ public class MessageActivity extends BaseActivity {
 					messages = JSON.parseArray(result.getData().toString(),
 							Message.class);
 				} else {
-					Toast.makeText(getApplication(),
-							result.getData().toString(), Toast.LENGTH_SHORT)
-							.show();
+					ResponseUtil.handleErrorInfo(getApplication(), result);
 				}
 				initView();
 			}

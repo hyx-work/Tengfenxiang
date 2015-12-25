@@ -14,6 +14,7 @@ import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.db.TaskDao;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.xlistview.XListView;
@@ -31,7 +32,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TaskActivity extends BaseActivity implements IXListViewListener {
 
@@ -83,9 +83,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 					adapter.notifyDataSetChanged();
 					taskListView.setLoadAll(tmp.size() < limit);
 				} else {
-					Toast.makeText(getApplication(),
-							result.getData().toString(), Toast.LENGTH_SHORT)
-							.show();
+					ResponseUtil.handleErrorInfo(getApplication(), result);
 				}
 				loadComplete();
 			}
@@ -198,7 +196,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 			dialog.cancelDialog();
 		}
 	}
-	
+
 	/**
 	 * 复写返回键，如果是点击了返回键则用父activity处理点击事件
 	 */

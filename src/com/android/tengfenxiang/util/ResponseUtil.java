@@ -1,6 +1,8 @@
 package com.android.tengfenxiang.util;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -46,8 +48,32 @@ public class ResponseUtil {
 				return JSON.parseObject(data, bean);
 		}
 
+		handleErrorInfo(context, result);
+		return null;
+	}
+
+	/**
+	 * 处理各种错误代码需要进行的操作
+	 * 
+	 * @param context
+	 * @param result
+	 */
+	public static void handleErrorInfo(Context context, ResponseResult result) {
+		switch (result.getCode()) {
+		case 50001:
+			// 如果返回code=50001，说明登录超时，需要重新登录
+			Intent broadcast = new Intent(Constant.LOGOUT_BROADCAST);
+			LocalBroadcastManager localBroadcastManager = LocalBroadcastManager
+					.getInstance(context);
+			localBroadcastManager.sendBroadcast(broadcast);
+			break;
+
+		default:
+			break;
+		}
+
+		String data = result.getData().toString();
 		// 提示错误信息
 		Toast.makeText(context, data, Toast.LENGTH_SHORT).show();
-		return null;
 	}
 }

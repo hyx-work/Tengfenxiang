@@ -13,6 +13,7 @@ import com.android.tengfenxiang.bean.ResponseResult;
 import com.android.tengfenxiang.bean.Withdraw;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
@@ -94,22 +95,25 @@ public class WithdrawActivity extends BaseActivity implements
 			public void onResponse(String response) {
 				ResponseResult result = JSON.parseObject(response,
 						ResponseResult.class);
-				List<Withdraw> tmp = JSON.parseArray(result.getData()
-						.toString(), Withdraw.class);
-				if (offset == 0) {
-					withdraws.clear();
-					if (null == tmp || tmp.size() == 0) {
-						hintTextView.setVisibility(View.VISIBLE);
-						recordsList.setVisibility(View.GONE);
-					} else {
-						hintTextView.setVisibility(View.GONE);
-						recordsList.setVisibility(View.VISIBLE);
+				if (result.getCode() == 200) {
+					List<Withdraw> tmp = JSON.parseArray(result.getData()
+							.toString(), Withdraw.class);
+					if (offset == 0) {
+						withdraws.clear();
+						if (null == tmp || tmp.size() == 0) {
+							hintTextView.setVisibility(View.VISIBLE);
+							recordsList.setVisibility(View.GONE);
+						} else {
+							hintTextView.setVisibility(View.GONE);
+							recordsList.setVisibility(View.VISIBLE);
+						}
 					}
+					withdraws.addAll(tmp);
+					adapter.notifyDataSetChanged();
+					recordsList.setLoadAll(tmp.size() < limit);
+				} else {
+					ResponseUtil.handleErrorInfo(getApplication(), result);
 				}
-
-				withdraws.addAll(tmp);
-				adapter.notifyDataSetChanged();
-				recordsList.setLoadAll(tmp.size() < limit);
 				loadComplete();
 			}
 		};

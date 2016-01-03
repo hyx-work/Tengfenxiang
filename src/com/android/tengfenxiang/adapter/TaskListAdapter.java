@@ -92,17 +92,24 @@ public class TaskListAdapter extends BaseAdapter {
 		imageLoader.displayImage(tasks.get(position).getThumbnails(),
 				viewHolder.image, options);
 		viewHolder.title.setText(tasks.get(position).getTitle());
-		viewHolder.price.setText(context.getString(R.string.unit_yuan_en)
-				+ tasks.get(position).getPrice());
+		StringBuffer point = new StringBuffer();
+		point.append(context.getString(R.string.unit_yuan_en));
+		point.append(tasks.get(position).getPrice());
+		point.append(context.getString(R.string.unit_point));
+		viewHolder.price.setText(point.toString());
+
 		int limit = tasks.get(position).getLimitRetweetCount();
 		String limitCount = context.getString(R.string.limit_count) + limit;
 		viewHolder.limitCount.setText(limitCount);
+
 		int rest = tasks.get(position).getRetweetCount();
 		String restCount = context.getString(R.string.rest_count) + rest;
 		viewHolder.restCount.setText(restCount);
+
 		String endTimeHint = context.getString(R.string.end_time);
 		String endTime = tasks.get(position).getEndTime().split(" ")[0];
 		viewHolder.endTime.setText(endTimeHint + endTime);
+
 		int status = tasks.get(position).getStatus();
 		viewHolder.status.setText(taskStatus[status]);
 		viewHolder.status.setBackgroundResource(statusBg[status]);

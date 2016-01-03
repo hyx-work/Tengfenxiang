@@ -75,9 +75,11 @@ public class ArticleListAdapter extends BaseAdapter {
 		imageLoader.displayImage(articles.get(position).getThumbnails(),
 				viewHolder.image, options);
 		viewHolder.title.setText(articles.get(position).getTitle());
+
 		String viewCount = context.getString(R.string.view_count)
 				+ articles.get(position).getViewCount();
 		viewHolder.viewCount.setText(viewCount);
+
 		String likeCount = context.getString(R.string.like_count)
 				+ articles.get(position).getLikeCount();
 		viewHolder.likeCount.setText(likeCount);

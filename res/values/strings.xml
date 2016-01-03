@@ -21,8 +21,8 @@
     <string name="not_signin_today">今日未签到</string>
     <string name="signin_success">签到成功</string>
     <string name="recent_signin_info">最近5天签到情况</string>
-    <string name="get_profit_info">获取?积分</string>
-    <string name="profit_info">积分</string>
+    <string name="get_profit_info">获取?银两</string>
+    <string name="profit_info">银两</string>
     <string name="have_signin">已签到</string>
     <string name="not_signin">未签到</string>
     <string name="empty_signin_info">无最近签到信息</string>
@@ -32,9 +32,9 @@
     <string name="system_message">系统消息</string>
     <string name="empty_message_hint">暂无系统消息</string>
     <string name="my_profit">我的收益</string>
-    <string name="realtime_points">今日积分(未审核)</string>
-    <string name="yesterday_points">昨日积分(已审核)</string>
-    <string name="total_points">历史总积分(已审核)</string>
+    <string name="realtime_points">今日银两(未审核)</string>
+    <string name="yesterday_points">昨日银两(已审核)</string>
+    <string name="total_points">历史总银两(已审核)</string>
     <string name="withdraw_points">已提现收益</string>
     <string name="withdrawable_points">可提现收益</string>
     <string name="profit_table_hint">收入统计表</string>
@@ -146,7 +146,7 @@
     <string name="unit_people">人</string>
     <string name="unit_yuan_en">¥</string>
     <string name="unit_yuan">元</string>
-    <string name="unit_point">分</string>
+    <string name="unit_point">两</string>
     <string name="empty_input">输入内容不能为空</string>
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>

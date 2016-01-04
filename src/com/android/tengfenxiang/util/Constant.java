@@ -14,6 +14,11 @@ public class Constant {
 	public final static String SERVER_ADDRESS = "http://api.wanzhuan9527.com/TengShare_AppInterface";
 
 	/**
+	 * 测试服务器的IP地址
+	 */
+	// public final static String SERVER_ADDRESS = "http://112.124.29.147:8080/TengShare_AppInterface";
+
+	/**
 	 * 图片缓存的相对路径，现在设置为：sdcard/9527/Cache
 	 */
 	public final static String IMAGE_CACHE_PATH = "9527/Cache";

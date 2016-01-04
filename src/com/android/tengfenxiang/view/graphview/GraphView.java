@@ -26,6 +26,9 @@ abstract public class GraphView extends LinearLayout {
 		// 标题 下边框 间距 单位dp
 		static final float BORDER = 20;
 
+		// 坐标轴右边间距 单位dp
+		static final float RIGHT_BORDER = 25;
+
 		// 坐标轴刻度的长度
 		static final float RULING_LENGTH = 5;
 
@@ -59,7 +62,7 @@ abstract public class GraphView extends LinearLayout {
 			float horstart = 0;
 			float height = getHeight();
 			float width = getWidth()
-					- DensityUtil.dip2px(context, GraphViewConfig.BORDER);
+					- DensityUtil.dip2px(context, GraphViewConfig.RIGHT_BORDER);
 			double maxY = getMaxY();
 			double minY = getMinY();
 			double maxX = getMaxX(false);

@@ -15,6 +15,8 @@ import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.dialog.SharePopupWindow;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
+import com.android.tengfenxiang.view.webview.VideoEnabledWebChromeClient;
+import com.android.tengfenxiang.view.webview.VideoEnabledWebView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
@@ -34,15 +36,15 @@ import com.tencent.mm.sdk.platformtools.Util;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
@@ -51,7 +53,8 @@ import android.widget.Toast;
 public class WebActivity extends BaseActivity {
 
 	private TitleBar titleBar;
-	private WebView webView;
+	private VideoEnabledWebView webView;
+	private VideoEnabledWebChromeClient webChromeClient;
 	private LoadingDialog dialog;
 	private RelativeLayout webviewLayout;
 
@@ -149,7 +152,7 @@ public class WebActivity extends BaseActivity {
 
 	private void initView() {
 		webviewLayout = (RelativeLayout) findViewById(R.id.webview_layout);
-		webView = (WebView) findViewById(R.id.web_view);
+		webView = (VideoEnabledWebView) findViewById(R.id.web_view);
 		initWebView();
 
 		titleBar = (TitleBar) findViewById(R.id.title_bar);
@@ -231,24 +234,43 @@ public class WebActivity extends BaseActivity {
 					return true;
 				}
 			});
-			webView.setWebChromeClient(new WebChromeClient() {
-
-				// 在标题上显示页面加载进度
-				@Override
-				public void onProgressChanged(WebView view, int progress) {
-					titleBar.setTitleText(getString(R.string.web_loading)
-							+ progress + "%");
-					setProgress(progress * 100);
-					if (progress == 100) {
-						titleBar.setTitleText(title);
-					}
-				}
-			});
-			// WebView暂时关闭硬件加速
-			webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+			initChromeClient();
 			RequestUtil.synCookies(getApplication(), url);
 			webView.loadUrl(url);
 		}
+	}
+
+	/**
+	 * 初始化ChromeClient
+	 */
+	private void initChromeClient() {
+		// TODO Auto-generated method stub
+		View nonVideoLayout = findViewById(R.id.nonVideoLayout);
+		ViewGroup videoLayout = (ViewGroup) findViewById(R.id.videoLayout);
+		webChromeClient = new VideoEnabledWebChromeClient(nonVideoLayout,
+				videoLayout, null, webView) {
+			@Override
+			public void onProgressChanged(WebView view, int progress) {
+				titleBar.setTitleText(getString(R.string.web_loading)
+						+ progress + "%");
+				setProgress(progress * 100);
+				if (progress == 100) {
+					titleBar.setTitleText(title);
+				}
+			}
+		};
+		webChromeClient
+				.setOnToggledFullscreen(new VideoEnabledWebChromeClient.ToggledFullscreenCallback() {
+					@Override
+					public void toggledFullscreen(boolean fullscreen) {
+						if (fullscreen) {
+							setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+						} else {
+							setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+						}
+					}
+				});
+		webView.setWebChromeClient(webChromeClient);
 	}
 
 	/**
@@ -469,12 +491,14 @@ public class WebActivity extends BaseActivity {
 	 * 监听返回键，控制网页返回
 	 */
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-			webView.goBack();
-			return true;
+	public void onBackPressed() {
+		if (!webChromeClient.onBackPressed()) {
+			if (webView.canGoBack()) {
+				webView.goBack();
+			} else {
+				super.onBackPressed();
+			}
 		}
-		return super.onKeyDown(keyCode, event);
 	}
 
 }

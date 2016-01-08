@@ -26,6 +26,15 @@
         android:contentDescription="@string/invite_others" />
 
     <TextView
+        android:id="@+id/hint_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="@string/xlistview_header_hint_loading" />
+
+    <TextView
         android:id="@+id/invite_code_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -32,6 +32,7 @@ public class InviteCodeActivity extends BaseActivity {
 	private TitleBar titleBar;
 	private ImageView codeImageView;
 	private TextView codeTextView;
+	private TextView hintTextView;
 
 	private Bitmap codeBitmap;
 	private SharePopupWindow window;
@@ -45,10 +46,12 @@ public class InviteCodeActivity extends BaseActivity {
 			case 1:
 				if (null != codeBitmap) {
 					codeImageView.setImageBitmap(codeBitmap);
+					hintTextView.setVisibility(View.GONE);
 				} else {
 					Toast.makeText(getApplication(),
 							R.string.generate_code_fail, Toast.LENGTH_SHORT)
 							.show();
+					hintTextView.setText(R.string.generate_code_fail);
 				}
 				break;
 			default:
@@ -105,6 +108,9 @@ public class InviteCodeActivity extends BaseActivity {
 						Toast.LENGTH_SHORT).show();
 			}
 		});
+
+		hintTextView = (TextView) findViewById(R.id.hint_text);
+		hintTextView.setVisibility(View.VISIBLE);
 
 		titleBar = (TitleBar) findViewById(R.id.title_bar);
 		titleBar.setOnClickListener(new OnTitleClickListener() {

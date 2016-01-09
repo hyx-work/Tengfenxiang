@@ -31,8 +31,6 @@ public class MainApplication extends Application {
 
 	public void onCreate() {
 		super.onCreate();
-		// 初始化ImageLoader对象
-		ImageLoadUtil.initImageLoader(getApplicationContext());
 		// 初始化账户登录工具类
 		loginUtil = LoginUtil.getInstance(this);
 		// 注册广播
@@ -45,7 +43,7 @@ public class MainApplication extends Application {
 	public void onLowMemory() {
 		super.onLowMemory();
 		// 内存不足时清除缓存
-		ImageLoadUtil.clearMemoryCache();
+		ImageLoadUtil.clearMemoryCache(this);
 	}
 
 	@Override

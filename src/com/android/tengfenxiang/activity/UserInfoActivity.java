@@ -4,12 +4,9 @@ import java.util.ArrayList;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.bumptech.glide.Glide;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -127,24 +124,8 @@ public class UserInfoActivity extends BaseActivity {
 	 */
 	private void loadHead() {
 		String imageUrl = application.getCurrentUser().getAvatar();
-
-		// 显示图片的配置
-		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				.cacheOnDisk(true).cacheInMemory(true)
-				.showImageOnLoading(R.drawable.default_head)
-				.showImageForEmptyUri(R.drawable.default_head)
-				.showImageOnFail(R.drawable.default_head).build();
-
-		ImageLoader.getInstance().loadImage(imageUrl, null, options,
-				new SimpleImageLoadingListener() {
-
-					@Override
-					public void onLoadingComplete(String imageUri, View view,
-							Bitmap loadedImage) {
-						super.onLoadingComplete(imageUri, view, loadedImage);
-						headImageView.setImageBitmap(loadedImage);
-					}
-				});
+		Glide.with(this).load(imageUrl).centerCrop().crossFade()
+				.into(headImageView);
 	}
 
 	/**

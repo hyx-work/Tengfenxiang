@@ -23,9 +23,9 @@ import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -95,6 +95,11 @@ public class WebActivity extends BaseActivity {
 	private Bitmap imageBitmap;
 
 	/**
+	 * 缩略图路径
+	 */
+	private String thumbnails;
+
+	/**
 	 * 微信API的实例对象
 	 */
 	private IWXAPI wxApi;
@@ -143,10 +148,8 @@ public class WebActivity extends BaseActivity {
 		articleId = intent.getIntExtra("article_id", -1);
 		webTitle = intent.getStringExtra("web_title");
 		webContent = intent.getStringExtra("web_content");
+		thumbnails = intent.getStringExtra("image");
 
-		if (taskId != -1 || articleId != -1) {
-			loadThumbnails(intent.getStringExtra("image"));
-		}
 		initView();
 		initReceiver();
 	}
@@ -168,6 +171,12 @@ public class WebActivity extends BaseActivity {
 				window.showAtLocation(
 						WebActivity.this.findViewById(R.id.web_view),
 						Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+				// 如果当前还没有加载缩略图，则需要加载新闻缩略图
+				if (null == imageBitmap) {
+					dialog.showDialog();
+					loadThumbnails(thumbnails);
+				}
 			}
 
 			@Override
@@ -476,25 +485,21 @@ public class WebActivity extends BaseActivity {
 	 *            缩略图URL
 	 */
 	private void loadThumbnails(String imageUrl) {
-		// 显示图片的配置
-		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				.cacheInMemory(true).cacheOnDisk(true)
-				.showImageOnLoading(R.drawable.ic_launcher)
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher).build();
-
-		ImageLoader.getInstance().loadImage(imageUrl, null, options,
-				new SimpleImageLoadingListener() {
-
-					@Override
-					public void onLoadingComplete(String imageUri, View view,
-							Bitmap loadedImage) {
-						super.onLoadingComplete(imageUri, view, loadedImage);
-						// 必须将位图压缩到32k以下，否则微信分享出错
-						imageBitmap = BitmapCompressUtil.compressImage(
-								loadedImage, 32);
-					}
-				});
+		if (null != imageUrl && !imageUrl.equals("")) {
+			Glide.with(this).load(imageUrl).asBitmap().centerCrop()
+					.into(new SimpleTarget<Bitmap>() {
+						@Override
+						public void onResourceReady(Bitmap arg0,
+								GlideAnimation<? super Bitmap> arg1) {
+							// TODO Auto-generated method stub
+							imageBitmap = BitmapCompressUtil.compressImage(
+									arg0, 32);
+							if (dialog.isShowing()) {
+								dialog.dismiss();
+							}
+						}
+					});
+		}
 	}
 
 	@Override

@@ -157,7 +157,7 @@ public class MainActivity extends AbstractActivityGroup {
 		// 清除cookie缓存
 		RequestUtil.removeCookie(getApplication());
 		// 清除内存中的图片缓存
-		ImageLoadUtil.clearMemoryCache();
+		ImageLoadUtil.clearMemoryCache(getApplication());
 	}
 
 	@Override

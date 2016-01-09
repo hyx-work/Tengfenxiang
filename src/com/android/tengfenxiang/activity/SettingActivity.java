@@ -24,6 +24,7 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class SettingActivity extends BaseActivity {
 
@@ -41,6 +43,18 @@ public class SettingActivity extends BaseActivity {
 	private ListView modifyListView;
 	private ListView cacheListView;
 	private LocalBroadcastManager localBroadcastManager;
+
+	private SimpleListAdapter cacheAdapter;
+	private SimpleListAdapter modifyAdapter;
+
+	private Handler handler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			Toast.makeText(getApplication(),
+					getString(R.string.clear_cache_success), Toast.LENGTH_SHORT)
+					.show();
+			cacheAdapter.notifyDataSetChanged();
+		};
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +79,7 @@ public class SettingActivity extends BaseActivity {
 
 		ArrayList<String> modify = new ArrayList<String>();
 		modify.add(getString(R.string.modify_password));
-		SimpleListAdapter modifyAdapter = new SimpleListAdapter(
-				SettingActivity.this, modify);
+		modifyAdapter = new SimpleListAdapter(SettingActivity.this, modify);
 		modifyListView = (ListView) findViewById(R.id.modify_password);
 		modifyListView.setAdapter(modifyAdapter);
 		modifyListView.setOnItemClickListener(new OnItemClickListener() {
@@ -84,8 +97,8 @@ public class SettingActivity extends BaseActivity {
 		final ArrayList<String> cacheValue = new ArrayList<String>();
 		cacheInfo.add(getString(R.string.clear_cache));
 		cacheValue.add(ImageLoadUtil.getCacheSize(getApplication()));
-		final SimpleListAdapter cacheAdapter = new SimpleListAdapter(
-				SettingActivity.this, cacheInfo, cacheValue);
+		cacheAdapter = new SimpleListAdapter(SettingActivity.this, cacheInfo,
+				cacheValue);
 		cacheListView = (ListView) findViewById(R.id.clear_cache);
 		cacheListView.setAdapter(cacheAdapter);
 		cacheListView.setOnItemClickListener(new OnItemClickListener() {
@@ -93,10 +106,20 @@ public class SettingActivity extends BaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				ImageLoadUtil.clearDiskCache(getApplication());
-				cacheValue.remove(0);
-				cacheValue.add(ImageLoadUtil.getCacheSize(getApplication()));
-				cacheAdapter.notifyDataSetChanged();
+				// 在子线程中执行清理操作
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						ImageLoadUtil.clearDiskCache(getApplication());
+						// 更新界面上的显示数据
+						cacheValue.remove(0);
+						cacheValue.add(ImageLoadUtil
+								.getCacheSize(getApplication()));
+						handler.sendEmptyMessage(0);
+					}
+				}).start();
 			}
 		});
 

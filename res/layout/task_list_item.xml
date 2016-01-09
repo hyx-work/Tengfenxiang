@@ -21,8 +21,9 @@
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/image"
         android:ellipsize="end"
+        android:lineSpacingExtra="3dp"
         android:lines="2"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:textStyle="bold" />
 
     <TextView
@@ -46,8 +47,8 @@
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/image"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/title"
         android:layout_marginRight="20dp"
         android:layout_marginTop="5dp"
         android:paddingBottom="5dp"

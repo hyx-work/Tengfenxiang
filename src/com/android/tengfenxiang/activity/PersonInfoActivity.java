@@ -23,9 +23,7 @@ import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 import com.android.volley.VolleyError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.bumptech.glide.Glide;
 
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
@@ -216,24 +214,8 @@ public class PersonInfoActivity extends BaseActivity {
 	 */
 	private void loadHead() {
 		String imageUrl = application.getCurrentUser().getAvatar();
-
-		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				.cacheOnDisk(true).cacheInMemory(true)
-				.showImageOnLoading(R.drawable.default_head)
-				.showImageForEmptyUri(R.drawable.default_head)
-				.showImageOnFail(R.drawable.default_head)
-				.bitmapConfig(Bitmap.Config.RGB_565).build();
-
-		ImageLoader.getInstance().loadImage(imageUrl, null, options,
-				new SimpleImageLoadingListener() {
-
-					@Override
-					public void onLoadingComplete(String imageUri, View view,
-							Bitmap loadedImage) {
-						super.onLoadingComplete(imageUri, view, loadedImage);
-						headImageView.setImageBitmap(loadedImage);
-					}
-				});
+		Glide.with(this).load(imageUrl).centerCrop().crossFade()
+				.into(headImageView);
 	}
 
 	/**

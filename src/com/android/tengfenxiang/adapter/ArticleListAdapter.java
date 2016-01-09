@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.Article;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
 
 import android.app.Activity;
 import android.view.View;
@@ -24,19 +23,10 @@ public class ArticleListAdapter extends BaseAdapter {
 
 	private Activity context;
 	private List<Article> articles;
-	private DisplayImageOptions options;
-	private ImageLoader imageLoader;
 
 	public ArticleListAdapter(Activity context, List<Article> articles) {
 		this.context = context;
 		this.articles = articles;
-
-		imageLoader = ImageLoader.getInstance();
-		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.ic_empty)
-				.showImageForEmptyUri(R.drawable.ic_empty)
-				.showImageOnFail(R.drawable.ic_error).cacheInMemory(true)
-				.cacheOnDisk(true).build();
 	}
 
 	@Override
@@ -63,6 +53,8 @@ public class ArticleListAdapter extends BaseAdapter {
 			viewHolder = new ViewHolder();
 			viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
 			viewHolder.title = (TextView) convertView.findViewById(R.id.title);
+			viewHolder.content = (TextView) convertView
+					.findViewById(R.id.content);
 			viewHolder.viewCount = (TextView) convertView
 					.findViewById(R.id.view_count);
 			viewHolder.likeCount = (TextView) convertView
@@ -72,9 +64,13 @@ public class ArticleListAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		imageLoader.displayImage(articles.get(position).getThumbnails(),
-				viewHolder.image, options);
+		// 利用缓存框架加载图片
+		Glide.with(context).load(articles.get(position).getThumbnails())
+				.centerCrop().placeholder(R.drawable.ic_empty).crossFade()
+				.into(viewHolder.image);
+
 		viewHolder.title.setText(articles.get(position).getTitle());
+		viewHolder.content.setText(articles.get(position).getContent());
 
 		String viewCount = context.getString(R.string.view_count)
 				+ articles.get(position).getViewCount();
@@ -89,6 +85,7 @@ public class ArticleListAdapter extends BaseAdapter {
 	public class ViewHolder {
 		public ImageView image;
 		public TextView title;
+		public TextView content;
 		public TextView viewCount;
 		public TextView likeCount;
 	}

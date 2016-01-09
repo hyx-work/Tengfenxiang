@@ -124,7 +124,7 @@
     <string name="article_list">文章中心</string>
     <string name="empty_article_hint">当前没有文章</string>
     <string name="view_count">阅读量&#160;&#160;</string>
-    <string name="like_count">点赞&#160;&#160;</string>
+    <string name="like_count">点赞量&#160;&#160;</string>
     <string name="share_title">分享获取收益</string>
     <string name="wechat_friend">微信朋友</string>
     <string name="wechat_moment">朋友圈</string>

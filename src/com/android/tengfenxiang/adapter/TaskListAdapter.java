@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.Task;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
 
 import android.app.Activity;
 import android.view.View;
@@ -24,8 +23,6 @@ public class TaskListAdapter extends BaseAdapter {
 
 	private Activity context;
 	private List<Task> tasks;
-	private DisplayImageOptions options;
-	private ImageLoader imageLoader;
 
 	/**
 	 * 任务状态对应显示的文字
@@ -42,13 +39,6 @@ public class TaskListAdapter extends BaseAdapter {
 	public TaskListAdapter(Activity context, List<Task> tasks) {
 		this.context = context;
 		this.tasks = tasks;
-
-		imageLoader = ImageLoader.getInstance();
-		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.ic_empty)
-				.showImageForEmptyUri(R.drawable.ic_empty)
-				.showImageOnFail(R.drawable.ic_error).cacheInMemory(true)
-				.cacheOnDisk(true).build();
 	}
 
 	@Override
@@ -89,8 +79,11 @@ public class TaskListAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		imageLoader.displayImage(tasks.get(position).getThumbnails(),
-				viewHolder.image, options);
+		// 利用缓存框架加载图片
+		Glide.with(context).load(tasks.get(position).getThumbnails())
+				.centerCrop().placeholder(R.drawable.ic_empty).crossFade()
+				.into(viewHolder.image);
+
 		viewHolder.title.setText(tasks.get(position).getTitle());
 		StringBuffer point = new StringBuffer();
 		point.append(context.getString(R.string.unit_yuan_en));

@@ -38,6 +38,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.Gravity;
@@ -362,7 +363,9 @@ public class WebActivity extends BaseActivity {
 		// 分享对话框显示的文字内容
 		msg.description = webContent;
 		// 分享对话框显示的图片
-		msg.thumbData = Util.bmpToByteArray(imageBitmap, false);
+		if (null != imageBitmap) {
+			msg.thumbData = Util.bmpToByteArray(imageBitmap, false);
+		}
 
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
 		req.transaction = String.valueOf(System.currentTimeMillis());
@@ -494,6 +497,19 @@ public class WebActivity extends BaseActivity {
 							// TODO Auto-generated method stub
 							imageBitmap = BitmapCompressUtil.compressImage(
 									arg0, 32);
+							if (dialog.isShowing()) {
+								dialog.dismiss();
+							}
+						}
+
+						@Override
+						public void onLoadFailed(Exception e,
+								Drawable errorDrawable) {
+							// TODO Auto-generated method stub
+							super.onLoadFailed(e, errorDrawable);
+							Toast.makeText(getApplication(),
+									R.string.fail_to_load_webpage,
+									Toast.LENGTH_SHORT).show();
 							if (dialog.isShowing()) {
 								dialog.dismiss();
 							}

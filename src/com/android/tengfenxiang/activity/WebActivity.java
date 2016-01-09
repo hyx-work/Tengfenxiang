@@ -45,6 +45,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
@@ -264,9 +265,29 @@ public class WebActivity extends BaseActivity {
 					@Override
 					public void toggledFullscreen(boolean fullscreen) {
 						if (fullscreen) {
+							// 设置为横屏
 							setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+							// 隐藏状态栏
+							WindowManager.LayoutParams lp = getWindow()
+									.getAttributes();
+							lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+							lp.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+							getWindow().setAttributes(lp);
+							getWindow()
+									.addFlags(
+											WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 						} else {
+							// 设置竖屏
 							setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+							// 显示状态栏
+							WindowManager.LayoutParams attr = getWindow()
+									.getAttributes();
+							attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+							attr.flags &= (~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+							getWindow().setAttributes(attr);
+							getWindow()
+									.clearFlags(
+											WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 						}
 					}
 				});

@@ -1,52 +1,18 @@
 package com.android.tengfenxiang.activity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.receiver.SaveShareRecordReceiver;
-import com.android.tengfenxiang.receiver.SaveShareRecordReceiver.OnSaveRecordsListener;
-import com.android.tengfenxiang.util.BitmapCompressUtil;
-import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
-import com.android.tengfenxiang.util.ResponseUtil;
-import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
-import com.android.tengfenxiang.view.dialog.SharePopupWindow;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
-import com.android.tengfenxiang.view.webview.VideoEnabledWebChromeClient;
-import com.android.tengfenxiang.view.webview.VideoEnabledWebView;
-import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.StringRequest;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.SendMessageToWX;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tencent.mm.sdk.openapi.WXMediaMessage;
-import com.tencent.mm.sdk.openapi.WXWebpageObject;
-import com.tencent.mm.sdk.platformtools.Util;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
+import android.view.KeyEvent;
 import android.view.Window;
-import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
@@ -55,8 +21,7 @@ import android.widget.Toast;
 public class WebActivity extends BaseActivity {
 
 	private TitleBar titleBar;
-	private VideoEnabledWebView webView;
-	private VideoEnabledWebChromeClient webChromeClient;
+	private WebView webView;
 	private LoadingDialog dialog;
 	private RelativeLayout webviewLayout;
 
@@ -70,66 +35,6 @@ public class WebActivity extends BaseActivity {
 	 */
 	private String url;
 
-	/**
-	 * 如果是某个文章链接，则将文章id保存起来
-	 */
-	private int articleId;
-
-	/**
-	 * 如果是某个任务链接，则将任务id保存起来
-	 */
-	private int taskId;
-
-	/**
-	 * 分享到微信时候显示的标题
-	 */
-	private String webTitle;
-
-	/**
-	 * 分享到微信时候显示的内容
-	 */
-	private String webContent;
-
-	/**
-	 * 缩略图，用于显示在分享对话框
-	 */
-	private Bitmap imageBitmap;
-
-	/**
-	 * 缩略图路径
-	 */
-	private String thumbnails;
-
-	/**
-	 * 微信API的实例对象
-	 */
-	private IWXAPI wxApi;
-
-	/**
-	 * 弹出菜单
-	 */
-	private SharePopupWindow window;
-
-	/**
-	 * 记录分享的类型，朋友圈或微信好友
-	 */
-	private String destination;
-
-	/**
-	 * 广播管理对象
-	 */
-	private LocalBroadcastManager localBroadcastManager;
-
-	/**
-	 * 广播过滤
-	 */
-	private IntentFilter intentFilter;
-
-	/**
-	 * 保存分享信息的广播接收器
-	 */
-	private SaveShareRecordReceiver receiver;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -139,45 +44,24 @@ public class WebActivity extends BaseActivity {
 		setContentView(R.layout.web_activity);
 
 		dialog = new LoadingDialog(this);
-		wxApi = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID);
-		wxApi.registerApp(Constant.WX_APP_ID);
 
 		Intent intent = getIntent();
 		title = intent.getStringExtra("title");
 		url = intent.getStringExtra("url");
-		taskId = intent.getIntExtra("task_id", -1);
-		articleId = intent.getIntExtra("article_id", -1);
-		webTitle = intent.getStringExtra("web_title");
-		webContent = intent.getStringExtra("web_content");
-		thumbnails = intent.getStringExtra("image");
-
 		initView();
-		initReceiver();
 	}
 
 	private void initView() {
 		webviewLayout = (RelativeLayout) findViewById(R.id.webview_layout);
-		webView = (VideoEnabledWebView) findViewById(R.id.web_view);
+		webView = (WebView) findViewById(R.id.web_view);
 		initWebView();
 
 		titleBar = (TitleBar) findViewById(R.id.title_bar);
-		if (taskId == -1 && articleId == -1) {
-			titleBar.getRightImageView().setVisibility(View.GONE);
-		}
 		titleBar.setOnClickListener(new OnTitleClickListener() {
 
 			@Override
 			public void OnClickRight() {
-				window = new SharePopupWindow(WebActivity.this, itemsOnClick);
-				window.showAtLocation(
-						WebActivity.this.findViewById(R.id.web_view),
-						Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 
-				// 如果当前还没有加载缩略图，则需要加载新闻缩略图
-				if (null == imageBitmap) {
-					dialog.showDialog();
-					loadThumbnails(thumbnails);
-				}
 			}
 
 			@Override
@@ -185,22 +69,6 @@ public class WebActivity extends BaseActivity {
 				finish();
 			}
 		});
-	}
-
-	private void initReceiver() {
-		intentFilter = new IntentFilter(Constant.SAVE_RETWEET_RECORD);
-		receiver = new SaveShareRecordReceiver();
-		receiver.setOnSaveRecordsListener(new OnSaveRecordsListener() {
-
-			@Override
-			public void onSaveShareRecords() {
-				// TODO Auto-generated method stub
-				saveRetweetRecord(destination);
-			}
-		});
-
-		localBroadcastManager = LocalBroadcastManager.getInstance(this);
-		localBroadcastManager.registerReceiver(receiver, intentFilter);
 	}
 
 	@SuppressLint("SetJavaScriptEnabled")
@@ -245,276 +113,21 @@ public class WebActivity extends BaseActivity {
 					return true;
 				}
 			});
-			initChromeClient();
+			webView.setWebChromeClient(new WebChromeClient() {
+
+				// 在标题上显示页面加载进度
+				@Override
+				public void onProgressChanged(WebView view, int progress) {
+					titleBar.setTitleText(getString(R.string.web_loading)
+							+ progress + "%");
+					setProgress(progress * 100);
+					if (progress == 100) {
+						titleBar.setTitleText(title);
+					}
+				}
+			});
 			RequestUtil.synCookies(getApplication(), url);
 			webView.loadUrl(url);
-		}
-	}
-
-	/**
-	 * 初始化ChromeClient
-	 */
-	private void initChromeClient() {
-		// TODO Auto-generated method stub
-		View nonVideoLayout = findViewById(R.id.nonVideoLayout);
-		ViewGroup videoLayout = (ViewGroup) findViewById(R.id.videoLayout);
-		webChromeClient = new VideoEnabledWebChromeClient(nonVideoLayout,
-				videoLayout, null, webView) {
-			@Override
-			public void onProgressChanged(WebView view, int progress) {
-				titleBar.setTitleText(getString(R.string.web_loading)
-						+ progress + "%");
-				setProgress(progress * 100);
-				if (progress == 100) {
-					titleBar.setTitleText(title);
-				}
-			}
-		};
-		webChromeClient
-				.setOnToggledFullscreen(new VideoEnabledWebChromeClient.ToggledFullscreenCallback() {
-					@Override
-					public void toggledFullscreen(boolean fullscreen) {
-						if (fullscreen) {
-							// 设置为横屏
-							setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-							// 隐藏状态栏
-							WindowManager.LayoutParams lp = getWindow()
-									.getAttributes();
-							lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-							lp.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-							getWindow().setAttributes(lp);
-							getWindow()
-									.addFlags(
-											WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-						} else {
-							// 设置竖屏
-							setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-							// 显示状态栏
-							WindowManager.LayoutParams attr = getWindow()
-									.getAttributes();
-							attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-							attr.flags &= (~WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-							getWindow().setAttributes(attr);
-							getWindow()
-									.clearFlags(
-											WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-						}
-					}
-				});
-		webView.setWebChromeClient(webChromeClient);
-	}
-
-	/**
-	 * 为弹出窗口实现监听类
-	 */
-	private OnClickListener itemsOnClick = new OnClickListener() {
-
-		public void onClick(View v) {
-			window.dismiss();
-			switch (v.getId()) {
-			case R.id.wechat_btn:
-				wechatShare(0);
-				destination = "wechat_friend";
-				break;
-			case R.id.moment_btn:
-				wechatShare(1);
-				destination = "wechat_moment";
-				break;
-			default:
-				break;
-			}
-		}
-	};
-
-	/**
-	 * 保存分享记录到后台
-	 * 
-	 * @param destination
-	 */
-	private void saveRetweetRecord(String destination) {
-		if (taskId == -1 && articleId == -1) {
-			return;
-		}
-		dialog.showDialog();
-		if (taskId == -1) {
-			saveArticleRetweet(application.getCurrentUser().getId(), articleId,
-					destination);
-		} else {
-			saveTaskRetweet(application.getCurrentUser().getId(), taskId,
-					destination);
-		}
-	}
-
-	/**
-	 * 微信分享
-	 * 
-	 * @param flag
-	 *            0:分享到微信好友，1：分享到微信朋友圈
-	 */
-	private void wechatShare(int flag) {
-		// 网页对象
-		WXWebpageObject webpage = new WXWebpageObject();
-		// 分享的网页链接
-		webpage.webpageUrl = url;
-
-		WXMediaMessage msg = new WXMediaMessage(webpage);
-		// 分享对话框显示的标题
-		msg.title = webTitle;
-		// 分享对话框显示的文字内容
-		msg.description = webContent;
-		// 分享对话框显示的图片
-		if (null != imageBitmap) {
-			msg.thumbData = Util.bmpToByteArray(imageBitmap, false);
-		}
-
-		SendMessageToWX.Req req = new SendMessageToWX.Req();
-		req.transaction = String.valueOf(System.currentTimeMillis());
-		req.message = msg;
-		req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession
-				: SendMessageToWX.Req.WXSceneTimeline;
-		wxApi.sendReq(req);
-	}
-
-	/**
-	 * 文章分享记录
-	 * 
-	 * @param userId
-	 *            用户ID
-	 * @param articleId
-	 *            文章ID
-	 * @param destination
-	 *            分享的类型
-	 */
-	private void saveArticleRetweet(final int userId, final int articleId,
-			final String destination) {
-
-		String postUrl = Constant.ARTICLE_RETWEET_URL;
-		// 请求成功的回调函数
-		Listener<String> listener = new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
-				Object result = ResponseUtil.handleResponse(getApplication(),
-						response, null);
-				if (null != result) {
-					Toast.makeText(getApplication(), R.string.share_success,
-							Toast.LENGTH_SHORT).show();
-				}
-			}
-		};
-		// 请求失败的回调函数
-		ErrorListener errorListener = new ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
-				VolleyErrorUtil.handleVolleyError(getApplication(), error);
-			}
-		};
-		StringRequest stringRequest = new StringRequest(Method.POST, postUrl,
-				listener, errorListener) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				Map<String, String> map = new HashMap<String, String>();
-				map.put("userId", userId + "");
-				map.put("articleId", articleId + "");
-				map.put("destination", destination);
-				return map;
-			}
-		};
-		RequestUtil.getRequestQueue(getApplication()).add(stringRequest);
-	}
-
-	/**
-	 * 保存任务分享记录
-	 * 
-	 * @param userId
-	 *            用户ID
-	 * @param taskId
-	 *            任务ID
-	 * @param destination
-	 *            分享的类型
-	 */
-	private void saveTaskRetweet(final int userId, final int taskId,
-			final String destination) {
-
-		String postUrl = Constant.TASK_RETWEET_URL;
-		// 请求成功的回调函数
-		Listener<String> listener = new Listener<String>() {
-			@Override
-			public void onResponse(String response) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
-				Object result = ResponseUtil.handleResponse(getApplication(),
-						response, null);
-				if (null != result) {
-					Toast.makeText(getApplication(), R.string.share_success,
-							Toast.LENGTH_SHORT).show();
-				}
-			}
-		};
-		// 请求失败的回调函数
-		ErrorListener errorListener = new ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
-				VolleyErrorUtil.handleVolleyError(getApplication(), error);
-			}
-		};
-		StringRequest stringRequest = new StringRequest(Method.POST, postUrl,
-				listener, errorListener) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				Map<String, String> map = new HashMap<String, String>();
-				map.put("userId", userId + "");
-				map.put("taskId", taskId + "");
-				map.put("destination", destination);
-				return map;
-			}
-		};
-		RequestUtil.getRequestQueue(getApplication()).add(stringRequest);
-	}
-
-	/**
-	 * 加载缩略图
-	 * 
-	 * @param imageUrl
-	 *            缩略图URL
-	 */
-	private void loadThumbnails(String imageUrl) {
-		if (null != imageUrl && !imageUrl.equals("")) {
-			Glide.with(this).load(imageUrl).asBitmap().centerCrop()
-					.into(new SimpleTarget<Bitmap>() {
-						@Override
-						public void onResourceReady(Bitmap arg0,
-								GlideAnimation<? super Bitmap> arg1) {
-							// TODO Auto-generated method stub
-							imageBitmap = BitmapCompressUtil.compressImage(
-									arg0, 32);
-							if (dialog.isShowing()) {
-								dialog.dismiss();
-							}
-						}
-
-						@Override
-						public void onLoadFailed(Exception e,
-								Drawable errorDrawable) {
-							// TODO Auto-generated method stub
-							super.onLoadFailed(e, errorDrawable);
-							Toast.makeText(getApplication(),
-									R.string.fail_to_load_webpage,
-									Toast.LENGTH_SHORT).show();
-							if (dialog.isShowing()) {
-								dialog.dismiss();
-							}
-						}
-					});
 		}
 	}
 
@@ -522,25 +135,23 @@ public class WebActivity extends BaseActivity {
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		// 注销广播
-		localBroadcastManager.unregisterReceiver(receiver);
-		// 在退出前先销毁WebView
-		webviewLayout.removeView(webView);
-		webView.destroy();
+		if (null != webView) {
+			webviewLayout.removeView(webView);
+			webView.removeAllViews();
+			webView.destroy();
+		}
 	}
 
 	/**
 	 * 监听返回键，控制网页返回
 	 */
 	@Override
-	public void onBackPressed() {
-		if (!webChromeClient.onBackPressed()) {
-			if (webView.canGoBack()) {
-				webView.goBack();
-			} else {
-				super.onBackPressed();
-			}
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+			webView.goBack();
+			return true;
 		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

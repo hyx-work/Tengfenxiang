@@ -86,17 +86,16 @@ public class TaskListAdapter extends BaseAdapter {
 
 		viewHolder.title.setText(tasks.get(position).getTitle());
 		StringBuffer point = new StringBuffer();
-		point.append(context.getString(R.string.unit_yuan_en));
 		point.append(tasks.get(position).getPrice());
 		point.append(context.getString(R.string.unit_point));
 		viewHolder.price.setText(point.toString());
 
 		int limit = tasks.get(position).getLimitRetweetCount();
-		String limitCount = context.getString(R.string.limit_count) + limit;
+		String limitCount = context.getString(R.string.rest_count) + limit;
 		viewHolder.limitCount.setText(limitCount);
 
 		int rest = tasks.get(position).getRetweetCount();
-		String restCount = context.getString(R.string.rest_count) + rest;
+		String restCount = context.getString(R.string.limit_count) + rest;
 		viewHolder.restCount.setText(restCount);
 
 		String endTimeHint = context.getString(R.string.end_time);

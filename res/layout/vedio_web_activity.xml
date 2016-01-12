@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:titlebar="http://schemas.android.com/apk/res/com.android.tengfenxiang"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.android.tengfenxiang.view.titlebar.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/title_bar_color"
+        android:gravity="center_vertical"
+        titlebar:titleLeftImg="@drawable/left_arrow"
+        titlebar:titleRightImg="@drawable/share_btn"
+        titlebar:titleTextColor="@color/white" />
+
+    <FrameLayout
+        android:id="@+id/frame_web_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/webview_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_bar" >
+
+        <com.android.tengfenxiang.view.webview.X5WebView
+            android:id="@+id/web_filechooser"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent" >
+        </com.android.tengfenxiang.view.webview.X5WebView>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -7,7 +7,7 @@ import java.util.Locale;
 
 import com.alibaba.fastjson.JSON;
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.activity.WebActivity;
+import com.android.tengfenxiang.activity.X5WebActivity;
 import com.android.tengfenxiang.adapter.ArticleListAdapter;
 import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.Article;
@@ -202,7 +202,8 @@ public class ArticleFragment extends BaseFragment {
 				// TODO Auto-generated method stub
 				if (arg2 >= 1 && arg2 <= articles.size()) {
 					User user = application.getCurrentUser();
-					Intent intent = new Intent(getActivity(), WebActivity.class);
+					Intent intent = new Intent(getActivity(),
+							X5WebActivity.class);
 					intent.putExtra("title", getString(R.string.share));
 					String url = articles.get(arg2 - 1).getShareUrl();
 					if (null != user.getToken() && !user.getToken().equals("")) {

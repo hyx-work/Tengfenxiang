@@ -5,40 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <RelativeLayout
-        android:id="@+id/nonVideoLayout"
+    <com.android.tengfenxiang.view.titlebar.TitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content"
+        android:background="@color/title_bar_color"
+        android:gravity="center_vertical"
+        titlebar:titleLeftImg="@drawable/left_arrow"
+        titlebar:titleTextColor="@color/white" />
 
-        <com.android.tengfenxiang.view.titlebar.TitleBar
-            android:id="@+id/title_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/title_bar_color"
-            android:gravity="center_vertical"
-            titlebar:titleLeftImg="@drawable/left_arrow"
-            titlebar:titleRightImg="@drawable/share_btn"
-            titlebar:titleTextColor="@color/white" />
-
-        <com.android.tengfenxiang.view.webview.VideoEnabledWebView
-            android:id="@+id/web_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/title_bar" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/videoLayout"
+    <WebView
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <View
-            android:id="@+id/videoLoading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="invisible" />
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/title_bar" />
 
 </RelativeLayout>

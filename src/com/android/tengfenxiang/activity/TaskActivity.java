@@ -124,7 +124,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 				User currentUser = application.getCurrentUser();
 				if (arg2 >= 1 && arg2 <= tasks.size()) {
 					Intent intent = new Intent(TaskActivity.this,
-							WebActivity.class);
+							X5WebActivity.class);
 					intent.putExtra("title", getString(R.string.share));
 					String url = tasks.get(arg2 - 1).getShareUrl();
 					if (null != currentUser.getToken()

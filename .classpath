@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="libs/gson-2.2.4.jar"/>
 	<classpathentry kind="lib" path="libs/libammsdk.jar"/>
 	<classpathentry kind="lib" path="libs/glide-3.6.1.jar"/>
+	<classpathentry kind="lib" path="libs/tbs_sdk_v1.5.1.1036_25435_20160107_obfs.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

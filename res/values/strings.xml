@@ -117,7 +117,7 @@
     <string name="status_offline">已结束</string>
     <string name="status_online">进行中</string>
     <string name="status_finish">已抢完</string>
-    <string name="limit_count">投放次数&#160;&#160;</string>
+    <string name="limit_count">转发次数&#160;&#160;</string>
     <string name="rest_count">剩余次数&#160;&#160;</string>
     <string name="begin_time">开始时间&#160;&#160;</string>
     <string name="end_time">结束时间&#160;&#160;</string>
@@ -144,7 +144,6 @@
     <string name="web_loading">页面加载中&#8230;</string>
     <string name="fail_to_load_webpage">加载失败</string>
     <string name="unit_people">人</string>
-    <string name="unit_yuan_en">¥</string>
     <string name="unit_yuan">元</string>
     <string name="unit_point">两</string>
     <string name="empty_input">输入内容不能为空</string>

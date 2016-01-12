@@ -38,6 +38,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -131,6 +132,8 @@ public class X5WebActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		// 避免视频时候闪烁
+		this.getWindow().setFormat(PixelFormat.TRANSLUCENT);
 		this.getWindow().requestFeature(Window.FEATURE_PROGRESS);
 
 		setContentView(R.layout.vedio_web_activity);

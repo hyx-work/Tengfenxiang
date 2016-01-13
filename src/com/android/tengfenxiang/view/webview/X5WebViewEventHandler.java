@@ -5,7 +5,6 @@ import java.util.HashMap;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -31,7 +30,6 @@ public class X5WebViewEventHandler extends ProxyWebViewClientExtension
 	public X5WebViewEventHandler(X5WebView webView) {
 		this.webView = webView;
 		this.webView.setWebViewCallbackClient(callbackClient);
-
 	}
 
 	@Override
@@ -106,7 +104,7 @@ public class X5WebViewEventHandler extends ProxyWebViewClientExtension
 	public void onHitTestResultFinished(IX5WebViewExtension arg0,
 			HitTestResult arg1) {
 		// TODO Auto-generated method stub
-		Log.i("yuanhaizhou", "onHitTestResultFinished");
+
 	}
 
 	@Override
@@ -114,7 +112,6 @@ public class X5WebViewEventHandler extends ProxyWebViewClientExtension
 			HitTestResult arg1, Bundle arg2) {
 		// TODO Auto-generated method stub
 		arg1.getData();
-		Log.i("yuanhaizhou", "onHitTestResultForPluginFinished");
 	}
 
 	@Override
@@ -167,8 +164,6 @@ public class X5WebViewEventHandler extends ProxyWebViewClientExtension
 
 	}
 
-	// ///////////////////////////////////////////////////
-
 	/**
 	 * 这里使用内核的事件回调链接到对应webview的事件回调
 	 */
@@ -220,10 +215,8 @@ public class X5WebViewEventHandler extends ProxyWebViewClientExtension
 	/**
 	 * 这里是内核代理的事件处理方法
 	 */
-
 	@Override
 	public Object onMiscCallBack(String method, Bundle bundle) {
-
 		return null;
 	}
 
@@ -232,17 +225,14 @@ public class X5WebViewEventHandler extends ProxyWebViewClientExtension
 		return callbackClient.onTouchEvent(event, view);
 	}
 
-	// 1
 	public boolean onInterceptTouchEvent(MotionEvent ev, View view) {
 		return callbackClient.onInterceptTouchEvent(ev, view);
 	}
 
-	// 3
 	public boolean dispatchTouchEvent(MotionEvent ev, View view) {
 		return callbackClient.dispatchTouchEvent(ev, view);
 	}
 
-	// 4
 	public boolean overScrollBy(int deltaX, int deltaY, int scrollX,
 			int scrollY, int scrollRangeX, int scrollRangeY,
 			int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent,
@@ -252,12 +242,10 @@ public class X5WebViewEventHandler extends ProxyWebViewClientExtension
 				isTouchEvent, view);
 	}
 
-	// 5
 	public void onScrollChanged(int l, int t, int oldl, int oldt, View view) {
 		callbackClient.onScrollChanged(l, t, oldl, oldt, view);
 	}
 
-	// 6
 	public void onOverScrolled(int scrollX, int scrollY, boolean clampedX,
 			boolean clampedY, View view) {
 		callbackClient.onOverScrolled(scrollX, scrollY, clampedX, clampedY,

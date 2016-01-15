@@ -53,8 +53,8 @@ public class ArticleListAdapter extends BaseAdapter {
 			viewHolder = new ViewHolder();
 			viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
 			viewHolder.title = (TextView) convertView.findViewById(R.id.title);
-			viewHolder.content = (TextView) convertView
-					.findViewById(R.id.content);
+			// viewHolder.content = (TextView) convertView
+			// .findViewById(R.id.content);
 			viewHolder.viewCount = (TextView) convertView
 					.findViewById(R.id.view_count);
 			viewHolder.likeCount = (TextView) convertView
@@ -70,7 +70,7 @@ public class ArticleListAdapter extends BaseAdapter {
 				.into(viewHolder.image);
 
 		viewHolder.title.setText(articles.get(position).getTitle());
-		viewHolder.content.setText(articles.get(position).getContent());
+		// viewHolder.content.setText(articles.get(position).getContent());
 
 		String viewCount = context.getString(R.string.view_count)
 				+ articles.get(position).getViewCount();
@@ -85,7 +85,7 @@ public class ArticleListAdapter extends BaseAdapter {
 	public class ViewHolder {
 		public ImageView image;
 		public TextView title;
-		public TextView content;
+		// public TextView content;
 		public TextView viewCount;
 		public TextView likeCount;
 	}

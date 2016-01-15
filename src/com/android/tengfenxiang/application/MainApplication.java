@@ -15,6 +15,7 @@ import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.LoginUtil;
 import com.android.tengfenxiang.util.LoginUtil.OnLoginListener;
 import com.android.volley.VolleyError;
+import com.tencent.smtt.sdk.QbSdk;
 
 /**
  * 复写application，初始化参数
@@ -29,6 +30,7 @@ public class MainApplication extends Application {
 	private static LoginUtil loginUtil;
 	private SharedPreferences preferences;
 
+	@SuppressWarnings("deprecation")
 	public void onCreate() {
 		super.onCreate();
 		// 初始化账户登录工具类
@@ -37,6 +39,10 @@ public class MainApplication extends Application {
 		registerReceiver();
 		preferences = getSharedPreferences(getPackageName(),
 				Context.MODE_PRIVATE);
+		// X5内核尚未初始化，则需要初始化内核
+		if (!QbSdk.isTbsCoreInited()) {
+			QbSdk.preInit(this);
+		}
 	}
 
 	@Override

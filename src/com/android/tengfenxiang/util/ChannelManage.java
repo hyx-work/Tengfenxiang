@@ -58,7 +58,8 @@ public class ChannelManage {
 				if (isUserChannel(infos.get(i).getCode())) {
 					defaultUserChannels.add(item);
 				} else {
-					defaultOtherChannels.add(item);
+					// 第一期不显示这些频道
+					// defaultOtherChannels.add(item);
 				}
 			}
 		}

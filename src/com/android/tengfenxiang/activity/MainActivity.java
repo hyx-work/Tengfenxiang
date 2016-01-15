@@ -7,6 +7,7 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.receiver.LogoutReceiver;
 import com.android.tengfenxiang.receiver.LogoutReceiver.OnLogoutListener;
 import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.DensityUtil;
 import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.RequestUtil;
 
@@ -15,6 +16,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.SparseIntArray;
@@ -146,6 +149,14 @@ public class MainActivity extends AbstractActivityGroup {
 				button.setCompoundDrawablesWithIntrinsicBounds(0,
 						normalIcons.get(button.getId()), 0, 0);
 			}
+
+			// 设置图片大小为30dp
+			Drawable[] drawables = button.getCompoundDrawables();
+			drawables[1].setBounds(new Rect(0, 0, DensityUtil.dip2px(
+					getApplication(), 25), DensityUtil.dip2px(getApplication(),
+					25)));
+			button.setCompoundDrawables(drawables[0], drawables[1],
+					drawables[2], drawables[3]);
 		}
 	}
 

@@ -71,7 +71,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:checked="true"
-        android:text="@string/save_password" />
+        android:text="@string/save_password"
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/login_btn"
@@ -83,7 +84,8 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/button_bg"
         android:text="@string/login"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/register"

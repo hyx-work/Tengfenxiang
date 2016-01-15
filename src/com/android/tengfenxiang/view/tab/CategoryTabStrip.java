@@ -38,8 +38,9 @@ public class CategoryTabStrip extends HorizontalScrollView {
 
 	private Drawable indicator;
 	private TextDrawable[] drawables;
-	private Drawable left_edge;
-	private Drawable right_edge;
+
+	// private Drawable left_edge;
+	// private Drawable right_edge;
 
 	public CategoryTabStrip(Context context) {
 		this(context, null);
@@ -80,10 +81,6 @@ public class CategoryTabStrip extends HorizontalScrollView {
 
 		indicator = getResources()
 				.getDrawable(R.drawable.bg_category_indicator);
-		left_edge = getResources()
-				.getDrawable(R.drawable.ic_category_left_edge);
-		right_edge = getResources().getDrawable(
-				R.drawable.ic_category_right_edge);
 	}
 
 	public void setViewPager(ViewPager pager) {
@@ -107,7 +104,6 @@ public class CategoryTabStrip extends HorizontalScrollView {
 		for (int i = 0; i < tabCount; i++) {
 			addTab(i, pager.getAdapter().getPageTitle(i).toString());
 		}
-
 	}
 
 	private void addTab(final int position, String title) {
@@ -127,7 +123,6 @@ public class CategoryTabStrip extends HorizontalScrollView {
 				pager.setCurrentItem(position);
 			}
 		});
-
 		tabsContainer.addView(tab, position, defaultTabLayoutParams);
 	}
 
@@ -160,7 +155,6 @@ public class CategoryTabStrip extends HorizontalScrollView {
 				((int) width) + getPaddingLeft(), currentTab.getTop()
 						+ getPaddingTop() + category_text.getTop()
 						+ category_text.getHeight());
-
 	}
 
 	private int getScrollRange() {
@@ -187,7 +181,6 @@ public class CategoryTabStrip extends HorizontalScrollView {
 			lastScrollX = newScrollX;
 			scrollTo(newScrollX, 0);
 		}
-
 	}
 
 	@Override
@@ -241,26 +234,7 @@ public class CategoryTabStrip extends HorizontalScrollView {
 
 		i = canvas.save();
 		int top = getScrollX();
-		int height = getHeight();
-		int width = getWidth();
 		canvas.translate((float) top, 0.0f);
-		if (left_edge == null || top <= 0) {
-			if (right_edge == null || top >= getScrollRange()) {
-				canvas.restoreToCount(i);
-			}
-			right_edge.setBounds(width - right_edge.getIntrinsicWidth(), 0,
-					width, height);
-			right_edge.draw(canvas);
-			canvas.restoreToCount(i);
-		}
-		left_edge.setBounds(0, 0, left_edge.getIntrinsicWidth(), height);
-		left_edge.draw(canvas);
-		if (right_edge == null || top >= getScrollRange()) {
-			canvas.restoreToCount(i);
-		}
-		right_edge.setBounds(width - right_edge.getIntrinsicWidth(), 0, width,
-				height);
-		right_edge.draw(canvas);
 		canvas.restoreToCount(i);
 	}
 

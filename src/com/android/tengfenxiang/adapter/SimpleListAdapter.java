@@ -78,10 +78,10 @@ public class SimpleListAdapter extends BaseAdapter {
 		// 如果是双信息类型，则隐藏箭头，显示右边的信息
 		if (null != values && position < values.size()) {
 			viewHolder.value.setText(values.get(position));
-			viewHolder.arrow.setVisibility(View.GONE);
+			viewHolder.arrow.setVisibility(View.INVISIBLE);
 		}
 		if (null != values && values.size() == 0) {
-			viewHolder.arrow.setVisibility(View.GONE);
+			viewHolder.arrow.setVisibility(View.INVISIBLE);
 		}
 		return convertView;
 	}

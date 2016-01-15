@@ -17,28 +17,21 @@ import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
 abstract public class GraphView extends LinearLayout {
 	static final public class GraphViewConfig {
-		// 标题 下边框 间距 单位dp
 		static final float BORDER = 20;
 
-		// 坐标轴右边间距 单位dp
 		static final float RIGHT_BORDER = 25;
 
-		// 坐标轴刻度的长度
 		static final float RULING_LENGTH = 5;
 
-		// 数值标记 高度偏移 单位dp
 		static final int MARKER_HEIGHT_OFFSET = 36;
 
-		// 数值标记 边距 单位dp
 		static final int MARKER_MARGIN = 5;
 
-		// 圆角矩形 半径 单位dp
 		static final int RECT_RADIUS = 3;
 	}
 
@@ -99,6 +92,7 @@ abstract public class GraphView extends LinearLayout {
 				paint.setColor(graphViewStyle.getGridColor());
 				float y = ((graphheight / vers) * (verlabels.length - 1))
 						+ border;
+				// 画图标的横线
 				canvas.drawLine(horstart, y, getWidth(), y, paint);
 			}
 
@@ -112,7 +106,6 @@ abstract public class GraphView extends LinearLayout {
 
 			paint.setColor(graphViewStyle.getHorizontalLabelsColor());
 			paint.setTextAlign(Align.CENTER);
-			canvas.drawText(title, (graphwidth / 2) + horstart, border, paint);
 
 			if (maxY == minY) {
 				if (maxY == 0) {
@@ -221,22 +214,18 @@ abstract public class GraphView extends LinearLayout {
 				verlabels = generateVerlabels(graphheight);
 			}
 
-			paint.setTextAlign(getGraphViewStyle().getVerticalLabelsAlign());
-			int labelsWidth = getWidth();
-			int labelsOffset = 0;
-			if (getGraphViewStyle().getVerticalLabelsAlign() == Align.RIGHT) {
-				labelsOffset = labelsWidth;
-			} else if (getGraphViewStyle().getVerticalLabelsAlign() == Align.CENTER) {
-				labelsOffset = labelsWidth / 2;
-			}
+			paint.setTextAlign(Align.CENTER);
+			// 表格坐标的便宜，单位dp
+			int labelsOffset = 20;
 			int vers = verlabels.length - 1;
 			for (int i = 0; i < verlabels.length; i++) {
 				float y = ((graphheight / vers) * i) + border;
 				paint.setColor(graphViewStyle.getVerticalLabelsColor());
-				canvas.drawText(verlabels[i], labelsOffset,
-						y + DensityUtil.dip2px(context, 5), paint);
+				// 画y轴的各个坐标值
+				canvas.drawText(verlabels[i],
+						DensityUtil.dip2px(context, labelsOffset), y
+								+ DensityUtil.dip2px(context, 3), paint);
 			}
-
 			paint.setTextAlign(Align.LEFT);
 		}
 	}
@@ -245,7 +234,6 @@ abstract public class GraphView extends LinearLayout {
 	protected final Paint paint;
 	private String[] horlabels;
 	private String[] verlabels;
-	private String title;
 	private boolean scrollable;
 	private boolean disableTouch;
 	private double viewportStart;
@@ -287,10 +275,6 @@ abstract public class GraphView extends LinearLayout {
 		setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT));
 
-		if (title == null)
-			this.title = "";
-		else
-			this.title = title;
 		this.context = context;
 
 		graphViewStyle = new GraphViewStyle();
@@ -310,16 +294,13 @@ abstract public class GraphView extends LinearLayout {
 		GraphViewDataInterface[] values = graphSeries.get(idxSeries).values;
 		synchronized (values) {
 			if (viewportStart == 0 && viewportSize == 0) {
-				// all data
 				return values;
 			} else {
-				// viewport
 				List<GraphViewDataInterface> listData = new ArrayList<GraphViewDataInterface>();
 				for (int i = 0; i < values.length; i++) {
 					if (values[i].getX() >= viewportStart) {
 						if (values[i].getX() > viewportStart + viewportSize) {
-							listData.add(values[i]); // one more for nice
-														// scrolling
+							listData.add(values[i]);
 							break;
 						} else {
 							listData.add(values[i]);
@@ -328,8 +309,7 @@ abstract public class GraphView extends LinearLayout {
 						if (listData.isEmpty()) {
 							listData.add(values[i]);
 						}
-						listData.set(0, values[i]); // one before, for nice
-													// scrolling
+						listData.set(0, values[i]);
 					}
 				}
 				return listData.toArray(new GraphViewDataInterface[listData
@@ -376,9 +356,7 @@ abstract public class GraphView extends LinearLayout {
 		int legendWidth = getGraphViewStyle().getLegendWidth();
 
 		int shapeSize = (int) (textSize * 0.8d);
-		Log.d("GraphView", "draw legend size: " + paint.getTextSize());
 
-		// rect
 		paint.setARGB(180, 100, 100, 100);
 		float legendHeight = (shapeSize + spacing) * graphSeries.size() + 2
 				* border - spacing;
@@ -473,10 +451,6 @@ abstract public class GraphView extends LinearLayout {
 			if (graphheight <= 0)
 				graphheight = 1f;
 			numLabels = (int) (graphheight / (labelTextHeight * 3));
-			if (numLabels == 0) {
-				Log.w("GraphView",
-						"Height of Graph is smaller than the label text height, so no vertical labels were shown!");
-			}
 		}
 		String[] labels = new String[numLabels + 1];
 		double min = getMinY();
@@ -724,10 +698,6 @@ abstract public class GraphView extends LinearLayout {
 
 	public void setShowLegend(boolean showLegend) {
 		this.showLegend = showLegend;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public void setVerticalLabels(String[] verlabels) {

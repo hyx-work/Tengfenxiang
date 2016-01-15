@@ -3,8 +3,8 @@
     android:id="@+id/rl_subscribe"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:minHeight="38.0dip"
-    android:minWidth="72.0dip" >
+    android:minHeight="38.0dp"
+    android:minWidth="72.0dp" >
 
     <TextView
         android:id="@+id/text_item"
@@ -13,8 +13,8 @@
         android:layout_centerInParent="true"
         android:background="@drawable/subscribe_item_bg"
         android:gravity="center"
-        android:minHeight="38.0dip"
-        android:minWidth="72.0dip"
+        android:minHeight="38.0dp"
+        android:minWidth="72.0dp"
         android:textColor="@color/black"
         android:textSize="14.0sp" />
 

@@ -22,8 +22,10 @@
         android:layout_below="@+id/title_bar"
         android:layout_margin="10dp"
         android:background="@drawable/button_bg"
-        android:padding="5dp"
-        android:textColor="@color/white" />
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/today_info"
@@ -33,7 +35,7 @@
         android:layout_alignBottom="@+id/signin_button"
         android:layout_alignParentLeft="true"
         android:padding="10dp"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/rencent_info"
@@ -45,7 +47,7 @@
         android:padding="10dp"
         android:text="@string/recent_signin_info"
         android:textColor="@color/gray"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
     <ListView
         android:id="@+id/recent_list"

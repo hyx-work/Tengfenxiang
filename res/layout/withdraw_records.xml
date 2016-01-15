@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/title_bar"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" >
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp" >
 
         <TextView
             android:id="@+id/withdraw_data"
@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="@string/withdraw_data"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/withdraw_count"
@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="@string/withdraw_count"
-            android:textSize="18sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <View
@@ -67,7 +67,7 @@
         android:layout_centerVertical="true"
         android:text="@string/empty_withdraw_hint"
         android:textColor="@color/base_color"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:visibility="gone" />
 
 </RelativeLayout>

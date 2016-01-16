@@ -3,7 +3,7 @@ package com.android.tengfenxiang.activity;
 import java.util.ArrayList;
 
 import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.adapter.SimpleListAdapter;
+import com.android.tengfenxiang.adapter.IntegralListAdapter;
 import com.android.tengfenxiang.bean.Integral;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
@@ -19,7 +19,10 @@ import com.android.volley.toolbox.StringRequest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 public class IntegralActivity extends BaseActivity {
@@ -80,13 +83,18 @@ public class IntegralActivity extends BaseActivity {
 		// 添加数据
 		ArrayList<String> infos = new ArrayList<String>();
 		infos.add(getString(R.string.task_points));
+		infos.add(getString(R.string.task_count));
+		infos.add(getString(R.string.task_view_count));
 		ArrayList<String> values = new ArrayList<String>();
 		if (null != integral) {
-			values.add(integral.getTaskPoints()
-					+ getString(R.string.unit_point));
+			values.add(integral.getTaskPoints() + "");
+			values.add(integral.getTaskCount() + "");
+			values.add(integral.getTaskViewCount() + "");
 		}
-		SimpleListAdapter adapter = new SimpleListAdapter(this, infos, values);
+		IntegralListAdapter adapter = new IntegralListAdapter(this, infos,
+				values);
 		taskListView.setAdapter(adapter);
+		setListViewHeightBasedOnChildren(taskListView);
 	}
 
 	private void initArticleList() {
@@ -98,13 +106,18 @@ public class IntegralActivity extends BaseActivity {
 		// 添加数据
 		ArrayList<String> infos = new ArrayList<String>();
 		infos.add(getString(R.string.article_points));
+		infos.add(getString(R.string.article_count));
+		infos.add(getString(R.string.article_view_count));
 		ArrayList<String> values = new ArrayList<String>();
 		if (null != integral) {
-			values.add(integral.getArticlePoints()
-					+ getString(R.string.unit_point));
+			values.add(integral.getArticlePoints() + "");
+			values.add(integral.getArticleCount() + "");
+			values.add(integral.getArticleViewCount() + "");
 		}
-		SimpleListAdapter adapter = new SimpleListAdapter(this, infos, values);
+		IntegralListAdapter adapter = new IntegralListAdapter(this, infos,
+				values);
 		articleListView.setAdapter(adapter);
+		setListViewHeightBasedOnChildren(articleListView);
 	}
 
 	private void initOtherList() {
@@ -121,17 +134,15 @@ public class IntegralActivity extends BaseActivity {
 		infos.add(getString(R.string.like_article_in_app_points));
 		ArrayList<String> values = new ArrayList<String>();
 		if (null != integral) {
-			values.add(integral.getRegisterPoints()
-					+ getString(R.string.unit_point));
-			values.add(integral.getSigninPoints()
-					+ getString(R.string.unit_point));
-			values.add(integral.getReadArticleInAppPoints()
-					+ getString(R.string.unit_point));
-			values.add(integral.getLikeArticleInAppPoints()
-					+ getString(R.string.unit_point));
+			values.add(integral.getRegisterPoints() + "");
+			values.add(integral.getSigninPoints() + "");
+			values.add(integral.getReadArticleInAppPoints() + "");
+			values.add(integral.getLikeArticleInAppPoints() + "");
 		}
-		SimpleListAdapter adapter = new SimpleListAdapter(this, infos, values);
+		IntegralListAdapter adapter = new IntegralListAdapter(this, infos,
+				values);
 		otherListView.setAdapter(adapter);
+		setListViewHeightBasedOnChildren(otherListView);
 	}
 
 	private void getDetails(int userId, int detailType) {
@@ -165,4 +176,24 @@ public class IntegralActivity extends BaseActivity {
 		StringRequest request = new StringRequest(url, listener, errorListener);
 		RequestUtil.getRequestQueue(getApplication()).add(request);
 	}
+
+	public void setListViewHeightBasedOnChildren(ListView listView) {
+		ListAdapter listAdapter = listView.getAdapter();
+		if (listAdapter == null) {
+			return;
+		}
+
+		int totalHeight = 0;
+		for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
+			View listItem = listAdapter.getView(i, null, listView);
+			listItem.measure(0, 0);
+			totalHeight += listItem.getMeasuredHeight();
+		}
+
+		ViewGroup.LayoutParams params = listView.getLayoutParams();
+		params.height = totalHeight
+				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+		listView.setLayoutParams(params);
+	}
+
 }

@@ -24,6 +24,14 @@ public class Integral {
 
 	private float likeArticleInAppPoints;
 
+	private int articleCount;
+
+	private int articleViewCount;
+
+	private int taskCount;
+
+	private int taskViewCount;
+
 	public float getTaskPoints() {
 		return taskPoints;
 	}
@@ -86,6 +94,38 @@ public class Integral {
 
 	public void setLikeArticleInAppPoints(float likeArticleInAppPoints) {
 		this.likeArticleInAppPoints = likeArticleInAppPoints;
+	}
+
+	public int getArticleCount() {
+		return articleCount;
+	}
+
+	public void setArticleCount(int articleCount) {
+		this.articleCount = articleCount;
+	}
+
+	public int getArticleViewCount() {
+		return articleViewCount;
+	}
+
+	public void setArticleViewCount(int articleViewCount) {
+		this.articleViewCount = articleViewCount;
+	}
+
+	public int getTaskCount() {
+		return taskCount;
+	}
+
+	public void setTaskCount(int taskCount) {
+		this.taskCount = taskCount;
+	}
+
+	public int getTaskViewCount() {
+		return taskViewCount;
+	}
+
+	public void setTaskViewCount(int taskViewCount) {
+		this.taskViewCount = taskViewCount;
 	}
 
 }

@@ -36,11 +36,11 @@ public abstract class AbstractActivityGroup extends ActivityGroup implements
 
 	protected void initTabBarButton(int id) {
 		RadioButton btn = (RadioButton) findViewById(id);
-		// 设置图片大小为30dp
+		// 设置图片大小为22dp
 		Drawable[] drawables = btn.getCompoundDrawables();
 		drawables[1]
 				.setBounds(new Rect(0, 0, DensityUtil.dip2px(getApplication(),
-						25), DensityUtil.dip2px(getApplication(), 25)));
+						22), DensityUtil.dip2px(getApplication(), 22)));
 		btn.setCompoundDrawables(drawables[0], drawables[1], drawables[2],
 				drawables[3]);
 		btn.setOnCheckedChangeListener(this);

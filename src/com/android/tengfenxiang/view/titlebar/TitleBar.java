@@ -81,8 +81,9 @@ public class TitleBar extends RelativeLayout {
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 		titleParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
 		titleParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
-		titleParams.setMargins(0, DensityUtil.dip2px(context, 10), 0,
-				DensityUtil.dip2px(context, 10));
+		// 设置padding不设置margin，否则在不同的ROM上面呈现的效果不一致
+		titleTextView.setPadding(0, DensityUtil.dip2px(context, 7), 0,
+				DensityUtil.dip2px(context, 7));
 		addView(titleTextView, titleParams);
 
 		leftImageView.setOnClickListener(new OnClickListener() {

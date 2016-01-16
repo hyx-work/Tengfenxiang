@@ -3,6 +3,8 @@
 
     <!-- APP主色调 -->
     <color name="base_color">#DB0B09</color>
+    <!-- 透明 -->
+    <color name="transparent">#00000000</color>
     <!-- 白色 -->
     <color name="white">#FFFFFF</color>
     <!-- 黑色 -->

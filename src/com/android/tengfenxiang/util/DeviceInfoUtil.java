@@ -75,6 +75,10 @@ public class DeviceInfoUtil {
 	}
 
 	public String getDeviceId() {
+		// 读取不到信息时置为null
+		if (null == deviceId || deviceId.equals("")) {
+			deviceId = "null";
+		}
 		return deviceId;
 	}
 
@@ -83,6 +87,10 @@ public class DeviceInfoUtil {
 	}
 
 	public String getDeviceInfo() {
+		// 读取不到信息时置为null
+		if (null == deviceInfo || deviceInfo.equals("")) {
+			deviceInfo = "null";
+		}
 		return deviceInfo;
 	}
 
@@ -99,6 +107,10 @@ public class DeviceInfoUtil {
 	}
 
 	public String getAppVersion() {
+		// 读取不到信息时置为null
+		if (null == appVersion || appVersion.equals("")) {
+			appVersion = "null";
+		}
 		return appVersion;
 	}
 
@@ -115,6 +127,10 @@ public class DeviceInfoUtil {
 	}
 
 	public String getOsVersion() {
+		// 读取不到信息时置为null
+		if (null == osVersion || osVersion.equals("")) {
+			osVersion = "null";
+		}
 		return osVersion;
 	}
 
@@ -123,6 +139,10 @@ public class DeviceInfoUtil {
 	}
 
 	public String getModel() {
+		// 读取不到信息时置为null
+		if (null == model || model.equals("")) {
+			model = "null";
+		}
 		return model;
 	}
 

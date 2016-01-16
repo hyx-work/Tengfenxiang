@@ -11,11 +11,8 @@ import com.android.tengfenxiang.util.DensityUtil;
 import com.android.tengfenxiang.util.ImageLoadUtil;
 import com.android.tengfenxiang.util.RequestUtil;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -37,7 +34,6 @@ public class MainActivity extends AbstractActivityGroup {
 	private IntentFilter intentFilter;
 	private LogoutReceiver logoutReceiver;
 	private LocalBroadcastManager localBroadcastManager;
-	private SharedPreferences preferences;
 
 	private SparseIntArray normalIcons = new SparseIntArray();
 	private SparseIntArray selectedIcons = new SparseIntArray();
@@ -65,10 +61,6 @@ public class MainActivity extends AbstractActivityGroup {
 			@Override
 			public void onLogout() {
 				// TODO Auto-generated method stub
-				// 清除缓存的密码
-				Editor editor = preferences.edit();
-				editor.putString("password", "");
-				editor.commit();
 				// 清除cookie缓存
 				RequestUtil.removeCookie(getApplication());
 
@@ -81,9 +73,6 @@ public class MainActivity extends AbstractActivityGroup {
 		});
 		localBroadcastManager = LocalBroadcastManager.getInstance(this);
 		localBroadcastManager.registerReceiver(logoutReceiver, intentFilter);
-
-		preferences = getSharedPreferences(getPackageName(),
-				Context.MODE_PRIVATE);
 
 		((RadioButton) findViewById(R.id.radio_button0)).setChecked(true);
 		setContainerView(CONTENT_0, TaskActivity.class);
@@ -150,11 +139,11 @@ public class MainActivity extends AbstractActivityGroup {
 						normalIcons.get(button.getId()), 0, 0);
 			}
 
-			// 设置图片大小为30dp
+			// 设置图片大小为22dp
 			Drawable[] drawables = button.getCompoundDrawables();
 			drawables[1].setBounds(new Rect(0, 0, DensityUtil.dip2px(
-					getApplication(), 25), DensityUtil.dip2px(getApplication(),
-					25)));
+					getApplication(), 22), DensityUtil.dip2px(getApplication(),
+					22)));
 			button.setCompoundDrawables(drawables[0], drawables[1],
 					drawables[2], drawables[3]);
 		}

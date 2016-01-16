@@ -43,7 +43,11 @@
     <string name="article_profit_hint">转发文章</string>
     <string name="other">其他</string>
     <string name="task_points">转发任务收益</string>
+    <string name="task_count">转发任务数</string>
+    <string name="task_view_count">转发任务阅读数</string>
     <string name="article_points">转发文章收益</string>
+    <string name="article_count">转发文章数</string>
+    <string name="article_view_count">转发文章阅读数</string>
     <string name="read_article_in_app_points">应用内阅读文章</string>
     <string name="like_article_in_app_points">应用内点赞文章</string>
     <string name="about_app">关于玩赚9527</string>

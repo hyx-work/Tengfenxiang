@@ -13,13 +13,6 @@
         titlebar:title="@string/article_list"
         titlebar:titleTextColor="@color/white" />
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/category_strip"
-        android:background="@color/line_color" />
-
     <com.android.tengfenxiang.view.tab.CategoryTabStrip
         android:id="@+id/category_strip"
         android:layout_width="fill_parent"
@@ -45,6 +38,6 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/line" />
+        android:layout_below="@+id/category_strip" />
 
 </RelativeLayout>

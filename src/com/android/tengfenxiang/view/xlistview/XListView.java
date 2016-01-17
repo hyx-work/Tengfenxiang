@@ -204,18 +204,6 @@ public class XListView extends ListView implements OnScrollListener,
 		invalidate();
 	}
 
-	private void updateFooterHeight(float delta) {
-		int height = mFooterView.getBottomMargin() + (int) delta;
-		if (mEnablePullLoad && !mPullLoading) {
-			if (height > PULL_LOAD_MORE_DELTA) {
-				mFooterView.setState(XListViewFooter.STATE_READY);
-			} else {
-				mFooterView.setState(XListViewFooter.STATE_NORMAL);
-			}
-		}
-		mFooterView.setBottomMargin(height);
-	}
-
 	private void resetFooterHeight() {
 		int bottomMargin = mFooterView.getBottomMargin();
 		if (bottomMargin > 0) {
@@ -252,9 +240,6 @@ public class XListView extends ListView implements OnScrollListener,
 					&& (mHeaderView.getVisiableHeight() > 0 || deltaY > 0)) {
 				updateHeaderHeight(deltaY / OFFSET_RADIO);
 				invokeOnScrolling();
-			} else if (getLastVisiblePosition() == mTotalItemCount - 1
-					&& (mFooterView.getBottomMargin() > 0 || deltaY < 0)) {
-				updateFooterHeight(-deltaY / OFFSET_RADIO);
 			}
 			break;
 		default:

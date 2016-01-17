@@ -89,11 +89,27 @@ abstract public class GraphView extends LinearLayout {
 			if (graphViewStyle.getGridStyle() != GridStyle.HORIZONTAL) {
 				paint.setTextAlign(Align.LEFT);
 				int vers = verlabels.length - 1;
+				float start = horstart
+						+ DensityUtil.dip2px(context,
+								GraphViewConfig.BORDER / 2);
+				float end = start
+						+ DensityUtil.dip2px(context,
+								GraphViewConfig.RULING_LENGTH);
 				paint.setColor(graphViewStyle.getGridColor());
-				float y = ((graphheight / vers) * (verlabels.length - 1))
-						+ border;
-				// 画图标的横线
-				canvas.drawLine(horstart, y, getWidth(), y, paint);
+				for (int i = 0; i < verlabels.length; i++) {
+					float y = ((graphheight / vers) * i) + border;
+					if (i == verlabels.length - 1) {
+						// 画统计表的x轴
+						canvas.drawLine(
+								horstart
+										+ DensityUtil.dip2px(context,
+												GraphViewConfig.BORDER / 2), y,
+								getWidth(), y, paint);
+					} else {
+						// 画统计表y轴的刻度
+						canvas.drawLine(start, y, end, y, paint);
+					}
+				}
 			}
 
 			drawHorizontalLabels(
@@ -109,7 +125,7 @@ abstract public class GraphView extends LinearLayout {
 
 			if (maxY == minY) {
 				if (maxY == 0) {
-					maxY = 1.0d;
+					maxY = 2.0d;
 					minY = 0.0d;
 				} else {
 					maxY = maxY * 1.05d;
@@ -214,18 +230,22 @@ abstract public class GraphView extends LinearLayout {
 				verlabels = generateVerlabels(graphheight);
 			}
 
-			paint.setTextAlign(Align.CENTER);
-			// 表格坐标的便宜，单位dp
-			int labelsOffset = 20;
+			paint.setTextAlign(getGraphViewStyle().getVerticalLabelsAlign());
+			int labelsWidth = getWidth();
+			int labelsOffset = 0;
+			if (getGraphViewStyle().getVerticalLabelsAlign() == Align.RIGHT) {
+				labelsOffset = labelsWidth;
+			} else if (getGraphViewStyle().getVerticalLabelsAlign() == Align.CENTER) {
+				labelsOffset = labelsWidth / 2;
+			}
 			int vers = verlabels.length - 1;
 			for (int i = 0; i < verlabels.length; i++) {
 				float y = ((graphheight / vers) * i) + border;
 				paint.setColor(graphViewStyle.getVerticalLabelsColor());
-				// 画y轴的各个坐标值
-				canvas.drawText(verlabels[i],
-						DensityUtil.dip2px(context, labelsOffset), y
-								+ DensityUtil.dip2px(context, 3), paint);
+				canvas.drawText(verlabels[i], labelsOffset,
+						y + DensityUtil.dip2px(context, 3), paint);
 			}
+
 			paint.setTextAlign(Align.LEFT);
 		}
 	}
@@ -332,10 +352,12 @@ abstract public class GraphView extends LinearLayout {
 			float x = ((graphwidth / hors) * i) + horstart;
 			if (graphViewStyle.getGridStyle() != GridStyle.VERTICAL) {
 				if (0 == i) {
-					canvas.drawLine(x, height - border, x, border, paint);
+					// 画统计表y轴
+					canvas.drawLine(x, height - border, x, border / 2, paint);
 				} else {
 					float rulingLength = DensityUtil.dip2px(context,
 							GraphViewConfig.RULING_LENGTH);
+					// 画统计表x轴刻度
 					canvas.drawLine(x, height - border, x, height - border
 							- rulingLength, paint);
 				}
@@ -413,13 +435,7 @@ abstract public class GraphView extends LinearLayout {
 			numberformatter[i] = NumberFormat.getNumberInstance();
 			double highestvalue = isValueX ? getMaxX(false) : getMaxY();
 			double lowestvalue = isValueX ? getMinX(false) : getMinY();
-			if (highestvalue - lowestvalue < 0.1) {
-				numberformatter[i].setMaximumFractionDigits(6);
-			} else if (highestvalue - lowestvalue < 1) {
-				numberformatter[i].setMaximumFractionDigits(4);
-			} else if (highestvalue - lowestvalue < 20) {
-				numberformatter[i].setMaximumFractionDigits(3);
-			} else if (highestvalue - lowestvalue < 100) {
+			if (highestvalue - lowestvalue < 100) {
 				numberformatter[i].setMaximumFractionDigits(1);
 			} else {
 				numberformatter[i].setMaximumFractionDigits(0);
@@ -457,7 +473,7 @@ abstract public class GraphView extends LinearLayout {
 		double max = getMaxY();
 		if (max == min) {
 			if (max == 0) {
-				max = 1.0d;
+				max = 2.0d;
 				min = 0.0d;
 			} else {
 				max = max * 1.05d;

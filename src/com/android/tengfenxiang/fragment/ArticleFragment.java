@@ -175,6 +175,7 @@ public class ArticleFragment extends BaseFragment {
 				LayoutParams.MATCH_PARENT);
 		// 添加ListView，设置监听事件
 		articleListView = new XListView(getActivity());
+		articleListView.setDivider(null);
 		articleListView.setVisibility(View.GONE);
 		articleListView.setXListViewListener(new IXListViewListener() {
 

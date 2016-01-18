@@ -24,7 +24,7 @@ abstract public class GraphView extends LinearLayout {
 	static final public class GraphViewConfig {
 		static final float BORDER = 20;
 
-		static final float RIGHT_BORDER = 25;
+		static final float RIGHT_BORDER = 35;
 
 		static final float RULING_LENGTH = 5;
 
@@ -89,12 +89,14 @@ abstract public class GraphView extends LinearLayout {
 			if (graphViewStyle.getGridStyle() != GridStyle.HORIZONTAL) {
 				paint.setTextAlign(Align.LEFT);
 				int vers = verlabels.length - 1;
+				float rulingLength = DensityUtil.dip2px(context,
+						GraphViewConfig.RULING_LENGTH);
 				float start = horstart
 						+ DensityUtil.dip2px(context,
 								GraphViewConfig.BORDER / 2);
-				float end = start
-						+ DensityUtil.dip2px(context,
-								GraphViewConfig.RULING_LENGTH);
+				float end = start + rulingLength;
+				// x轴的终点
+				float endX = getWidth() - DensityUtil.dip2px(context, 1);
 				paint.setColor(graphViewStyle.getGridColor());
 				for (int i = 0; i < verlabels.length; i++) {
 					float y = ((graphheight / vers) * i) + border;
@@ -104,7 +106,12 @@ abstract public class GraphView extends LinearLayout {
 								horstart
 										+ DensityUtil.dip2px(context,
 												GraphViewConfig.BORDER / 2), y,
-								getWidth(), y, paint);
+								endX, y, paint);
+						// 画统计表x轴的箭头
+						canvas.drawLine(getWidth() - rulingLength, y - 0.5f
+								* rulingLength, endX, y, paint);
+						canvas.drawLine(getWidth() - rulingLength, y + 0.5f
+								* rulingLength, endX, y, paint);
 					} else {
 						// 画统计表y轴的刻度
 						canvas.drawLine(start, y, end, y, paint);
@@ -156,7 +163,6 @@ abstract public class GraphView extends LinearLayout {
 			if (showLegend)
 				drawLegend(canvas, height, width);
 		}
-
 	}
 
 	static public class GraphViewData implements GraphViewDataInterface {
@@ -347,16 +353,23 @@ abstract public class GraphView extends LinearLayout {
 	protected void drawHorizontalLabels(Canvas canvas, float border,
 			float horstart, float height, String[] horlabels, float graphwidth) {
 		int hors = horlabels.length - 1;
+		// y轴的终点
+		float endY = 1.0f * border / 3.0f;
 		for (int i = 0; i < horlabels.length; i++) {
 			paint.setColor(graphViewStyle.getGridColor());
 			float x = ((graphwidth / hors) * i) + horstart;
+			float rulingLength = DensityUtil.dip2px(context,
+					GraphViewConfig.RULING_LENGTH);
 			if (graphViewStyle.getGridStyle() != GridStyle.VERTICAL) {
 				if (0 == i) {
 					// 画统计表y轴
-					canvas.drawLine(x, height - border, x, border / 2, paint);
+					canvas.drawLine(x, height - border, x, endY, paint);
+					// 画统计表y轴箭头
+					canvas.drawLine(x - 0.5f * rulingLength, endY + 0.866f
+							* rulingLength, x, endY, paint);
+					canvas.drawLine(x + 0.5f * rulingLength, endY + 0.866f
+							* rulingLength, x, endY, paint);
 				} else {
-					float rulingLength = DensityUtil.dip2px(context,
-							GraphViewConfig.RULING_LENGTH);
 					// 画统计表x轴刻度
 					canvas.drawLine(x, height - border, x, height - border
 							- rulingLength, paint);

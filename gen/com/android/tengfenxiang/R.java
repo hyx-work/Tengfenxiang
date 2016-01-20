@@ -235,7 +235,7 @@ containing a value of this type.
         public static final int empty_hint=0x7f09005c;
         public static final int empty_message_hint=0x7f09003a;
         public static final int empty_task_hint=0x7f090062;
-        public static final int empty_withdraw_hint=0x7f09007b;
+        public static final int empty_withdraw_hint=0x7f09007c;
         public static final int end_time=0x7f090068;
         public static final int frame_web_video=0x7f09006c;
         public static final int head=0x7f09004c;
@@ -291,7 +291,7 @@ containing a value of this type.
         public static final int radio_button2=0x7f090008;
         public static final int radio_button3=0x7f090009;
         public static final int recent_list=0x7f09005b;
-        public static final int records_list=0x7f09007a;
+        public static final int records_list=0x7f09007b;
         public static final int register=0x7f090038;
         public static final int rencent_info=0x7f09005a;
         public static final int rest_count=0x7f090067;
@@ -318,7 +318,7 @@ containing a value of this type.
         public static final int title=0x7f09000f;
         public static final int title_bar=0x7f090000;
         public static final int today_info=0x7f090059;
-        public static final int top_bar=0x7f090079;
+        public static final int top_bar=0x7f09007a;
         public static final int unit_yuan=0x7f090072;
         public static final int userGridView=0x7f090018;
         public static final int user_head=0x7f09004b;
@@ -332,19 +332,20 @@ containing a value of this type.
         public static final int web_view=0x7f09006f;
         public static final int webview_layout=0x7f09006d;
         public static final int wechat_btn=0x7f090055;
-        public static final int withdraw_count=0x7f090078;
-        public static final int withdraw_data=0x7f090077;
+        public static final int withdraw_count=0x7f090079;
+        public static final int withdraw_data=0x7f090078;
+        public static final int withdraw_info=0x7f090077;
         public static final int withdraw_points=0x7f090073;
         public static final int withdrawable_points=0x7f090071;
-        public static final int xlistview_footer_content=0x7f09007c;
-        public static final int xlistview_footer_hint_textview=0x7f09007e;
-        public static final int xlistview_footer_progressbar=0x7f09007d;
-        public static final int xlistview_header_arrow=0x7f090083;
-        public static final int xlistview_header_content=0x7f09007f;
-        public static final int xlistview_header_hint_textview=0x7f090081;
-        public static final int xlistview_header_progressbar=0x7f090084;
-        public static final int xlistview_header_text=0x7f090080;
-        public static final int xlistview_header_time=0x7f090082;
+        public static final int xlistview_footer_content=0x7f09007d;
+        public static final int xlistview_footer_hint_textview=0x7f09007f;
+        public static final int xlistview_footer_progressbar=0x7f09007e;
+        public static final int xlistview_header_arrow=0x7f090084;
+        public static final int xlistview_header_content=0x7f090080;
+        public static final int xlistview_header_hint_textview=0x7f090082;
+        public static final int xlistview_header_progressbar=0x7f090085;
+        public static final int xlistview_header_text=0x7f090081;
+        public static final int xlistview_header_time=0x7f090083;
     }
     public static final class layout {
         public static final int about=0x7f030000;

@@ -252,7 +252,6 @@ containing a value of this type.
         public static final int invite_code=0x7f09002e;
         public static final int invite_code_text=0x7f090030;
         public static final int like_count=0x7f090011;
-        public static final int limit_count=0x7f090066;
         public static final int line=0x7f090004;
         public static final int line1=0x7f090040;
         public static final int line2=0x7f090043;
@@ -294,7 +293,8 @@ containing a value of this type.
         public static final int records_list=0x7f09007b;
         public static final int register=0x7f090038;
         public static final int rencent_info=0x7f09005a;
-        public static final int rest_count=0x7f090067;
+        public static final int rest_count=0x7f090066;
+        public static final int retweet_count=0x7f090067;
         public static final int rl_subscribe=0x7f09001d;
         public static final int root_view=0x7f090013;
         public static final int save_button=0x7f090021;
@@ -452,7 +452,6 @@ containing a value of this type.
         public static final int launch_gallery_error=0x7f0700a4;
         public static final int like_article_in_app_points=0x7f070030;
         public static final int like_count=0x7f07007f;
-        public static final int limit_count=0x7f070078;
         public static final int login=0x7f070002;
         public static final int login_fail=0x7f07000b;
         public static final int login_success=0x7f07000a;
@@ -492,6 +491,7 @@ containing a value of this type.
         public static final int register=0x7f070003;
         public static final int register_app_acount=0x7f070009;
         public static final int rest_count=0x7f070079;
+        public static final int retweet_count=0x7f070078;
         public static final int save_password=0x7f070006;
         public static final int score=0x7f070035;
         public static final int select_address_title=0x7f07005c;

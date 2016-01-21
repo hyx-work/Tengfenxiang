@@ -66,8 +66,8 @@ public class TaskListAdapter extends BaseAdapter {
 			viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
 			viewHolder.title = (TextView) convertView.findViewById(R.id.title);
 			viewHolder.price = (TextView) convertView.findViewById(R.id.price);
-			viewHolder.limitCount = (TextView) convertView
-					.findViewById(R.id.limit_count);
+			viewHolder.retweetCount = (TextView) convertView
+					.findViewById(R.id.retweet_count);
 			viewHolder.restCount = (TextView) convertView
 					.findViewById(R.id.rest_count);
 			viewHolder.endTime = (TextView) convertView
@@ -91,11 +91,13 @@ public class TaskListAdapter extends BaseAdapter {
 		viewHolder.price.setText(point.toString());
 
 		int limit = tasks.get(position).getLimitRetweetCount();
-		String limitCount = context.getString(R.string.rest_count) + limit;
-		viewHolder.limitCount.setText(limitCount);
+		int retweet = tasks.get(position).getRetweetCount();
+		int rest = limit - retweet;
 
-		int rest = tasks.get(position).getRetweetCount();
-		String restCount = context.getString(R.string.limit_count) + rest;
+		String retweetCount = context.getString(R.string.retweet_count) + retweet;
+		viewHolder.retweetCount.setText(retweetCount);
+
+		String restCount = context.getString(R.string.rest_count) + rest;
 		viewHolder.restCount.setText(restCount);
 
 		String endTimeHint = context.getString(R.string.end_time);
@@ -112,7 +114,7 @@ public class TaskListAdapter extends BaseAdapter {
 		public ImageView image;
 		public TextView title;
 		public TextView price;
-		public TextView limitCount;
+		public TextView retweetCount;
 		public TextView restCount;
 		public TextView endTime;
 		public TextView status;

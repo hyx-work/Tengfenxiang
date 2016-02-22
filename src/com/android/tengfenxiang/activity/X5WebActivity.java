@@ -441,7 +441,7 @@ public class X5WebActivity extends BaseActivity {
 	}
 
 	/**
-	 * 加载缩略囿
+	 * 加载缩略图
 	 * 
 	 * @param imageUrl
 	 *            缩略图URL

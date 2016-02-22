@@ -93,6 +93,21 @@ public class EditActivity extends BaseActivity {
 				}
 			}
 		});
+
+		// 支付宝账户只允许修改一次，如果当前用户的支付宝不为空则不可修改
+		if (attributeName.equals("alipay") && null != attributeValue
+				&& !attributeValue.equals("")) {
+			// 编辑框设置为不可编辑
+			information.setClickable(false);
+			information.setFocusable(false);
+			information.setEnabled(false);
+
+			// 按钮设置为不可点击
+			saveButton.setClickable(false);
+			// 提示联系客服修改
+			Toast.makeText(getApplication(), R.string.change_alipay_notify,
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private void saveInformation(final int userId, final String attributeName,

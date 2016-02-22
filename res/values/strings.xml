@@ -71,6 +71,7 @@
     <string name="withdraw_apply">申请提现</string>
     <string name="apply_withdraw_points">申请提现金额</string>
     <string name="alipay_account">支付宝账号</string>
+    <string name="change_alipay_notify">暂不支持自助修改支付宝账号，请联系客服修改</string>
     <string name="apply_withdraw">提现</string>
     <string name="submit_success">提交成功</string>
     <string name="zero_warn">提现金额不能为0</string>
@@ -88,6 +89,7 @@
     <string name="invite_others">我要邀请</string>
     <string name="invite_user">邀请用户</string>
     <string name="invite_code_hint">邀请码:</string>
+    <string name="invite_text">邀请你来使用玩赚9527，扫描二维码加入吧！</string>
     <string name="click_to_copy">点击这里复制到剪切板</string>
     <string name="edit_email_title">邮箱</string>
     <string name="edit_qq_title">QQ</string>

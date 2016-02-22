@@ -1,6 +1,7 @@
 package com.android.tengfenxiang.activity;
 
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.util.BitmapCompressUtil;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.DensityUtil;
 import com.android.tengfenxiang.util.QRCodeUtil;
@@ -10,8 +11,8 @@ import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tencent.mm.sdk.openapi.WXImageObject;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
+import com.tencent.mm.sdk.openapi.WXWebpageObject;
 import com.tencent.mm.sdk.platformtools.Util;
 
 import android.content.ClipData;
@@ -34,10 +35,16 @@ public class InviteCodeActivity extends BaseActivity {
 	private TextView codeTextView;
 	private TextView hintTextView;
 
+	/**
+	 * 原始的二维码位图
+	 */
 	private Bitmap codeBitmap;
+	/**
+	 * 压缩的二维码位图，用于微信的显示
+	 */
+	private Bitmap thumbCodeBitmap;
 	private SharePopupWindow window;
 
-	private static final int THUMB_SIZE = 150;
 	private IWXAPI wxApi;
 
 	private Handler handler = new Handler() {
@@ -84,6 +91,9 @@ public class InviteCodeActivity extends BaseActivity {
 						+ application.getCurrentUser().getInviteCode(),
 						DensityUtil.dip2px(getApplication(), 200),
 						DensityUtil.dip2px(getApplication(), 200));
+				if (null != codeBitmap)
+					thumbCodeBitmap = BitmapCompressUtil.compressImage(
+							codeBitmap, 32);
 				handler.sendEmptyMessage(1);
 			}
 		}).start();
@@ -159,26 +169,29 @@ public class InviteCodeActivity extends BaseActivity {
 	 *            0:分享到微信好友，1：分享到微信朋友圈
 	 */
 	private void wechatShare(int flag) {
-		WXImageObject imgObj = new WXImageObject(codeBitmap);
+		// 网页对象
+		WXWebpageObject webpage = new WXWebpageObject();
+		String url = Constant.REGISTER_URL + "?inviteCode="
+				+ application.getCurrentUser().getInviteCode();
+		// 分享的网页链掿
+		webpage.webpageUrl = url;
 
-		WXMediaMessage msg = new WXMediaMessage();
-		msg.mediaObject = imgObj;
-
-		Bitmap thumbBmp = Bitmap.createScaledBitmap(codeBitmap, THUMB_SIZE,
-				THUMB_SIZE, true);
-		codeBitmap.recycle();
-		msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
+		WXMediaMessage msg = new WXMediaMessage(webpage);
+		// 分享对话框显示的标题
+		msg.title = getString(R.string.app_name);
+		// 分享对话框显示的文字内容
+		msg.description = getString(R.string.invite_text);
+		// 分享对话框显示的图片
+		if (null != thumbCodeBitmap) {
+			msg.thumbData = Util.bmpToByteArray(thumbCodeBitmap, false);
+		}
 
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
-		req.transaction = buildTransaction("img");
+		req.transaction = String.valueOf(System.currentTimeMillis());
 		req.message = msg;
-		req.scene = (flag == 1) ? SendMessageToWX.Req.WXSceneTimeline
-				: SendMessageToWX.Req.WXSceneSession;
+		req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession
+				: SendMessageToWX.Req.WXSceneTimeline;
 		wxApi.sendReq(req);
 	}
 
-	private String buildTransaction(final String type) {
-		return (type == null) ? String.valueOf(System.currentTimeMillis())
-				: type + System.currentTimeMillis();
-	}
 }

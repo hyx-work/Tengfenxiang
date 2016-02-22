@@ -66,6 +66,18 @@ public class ArticleDao {
 		}
 	}
 
+	public void deleteAll() {
+		SQLiteDatabase db = helper.getWritableDatabase();
+		db.beginTransaction();
+		try {
+			db.delete("article", null, null);
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
+			db.close();
+		}
+	}
+
 	private void insert(Article article, int type) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues values = new ContentValues();

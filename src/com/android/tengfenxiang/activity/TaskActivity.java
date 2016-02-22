@@ -143,7 +143,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 			}
 		});
 
-		// 数据库中的缓存数据不为空，则隐藏提示文字
+		// 数据库中的缓存数据不为空，则隐藏提示文字，静默刷新数据
 		// 如果数据库中的缓存数据为空，隐藏列表，尝试请求数据
 		if (null != tasks && tasks.size() > 0) {
 			hintTextView.setVisibility(View.GONE);
@@ -151,8 +151,8 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 		} else {
 			taskListView.setVisibility(View.GONE);
 			hintTextView.setVisibility(View.VISIBLE);
-			getTaskList(application.getCurrentUser().getId(), limit, offset);
 		}
+		getTaskList(application.getCurrentUser().getId(), limit, offset);
 	}
 
 	@Override

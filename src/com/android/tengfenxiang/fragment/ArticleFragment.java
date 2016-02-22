@@ -261,16 +261,17 @@ public class ArticleFragment extends BaseFragment {
 			adapter = new ArticleListAdapter(getActivity(), articles);
 			articleListView.setAdapter(adapter);
 			mHasLoadedOnce = true;
-			// 没有缓存数据，请求服务器数据
+
 			if (null == articles || articles.size() == 0) {
-				getArticleList(application.getCurrentUser().getId(), limit,
-						offset, position);
 				articleListView.setVisibility(View.GONE);
 				hintTextView.setVisibility(View.VISIBLE);
 			} else {
 				articleListView.setVisibility(View.VISIBLE);
 				hintTextView.setVisibility(View.GONE);
 			}
+			// 修改策略，无论有没有缓存数据，请求服务器数据
+			getArticleList(application.getCurrentUser().getId(), limit, offset,
+					position);
 		}
 	}
 

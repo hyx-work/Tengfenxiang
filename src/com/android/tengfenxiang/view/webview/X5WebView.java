@@ -44,7 +44,6 @@ public class X5WebView extends WebView {
 	private RelativeLayout refreshRela;
 	TextView title;
 
-	@SuppressWarnings("deprecation")
 	@SuppressLint("SetJavaScriptEnabled")
 	public X5WebView(Context arg0, AttributeSet arg1) {
 		super(arg0, arg1);

@@ -30,7 +30,6 @@ public class MainApplication extends Application {
 	private static LoginUtil loginUtil;
 	private SharedPreferences preferences;
 
-	@SuppressWarnings("deprecation")
 	public void onCreate() {
 		super.onCreate();
 		// 初始化账户登录工具类

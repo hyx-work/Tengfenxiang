@@ -9,7 +9,7 @@
 	<classpathentry kind="lib" path="libs/gson-2.2.4.jar"/>
 	<classpathentry kind="lib" path="libs/libammsdk.jar"/>
 	<classpathentry kind="lib" path="libs/glide-3.6.1.jar"/>
-	<classpathentry kind="lib" path="libs/tbs_sdk_v1.5.1.1036_25435_20160107_obfs.jar"/>
+	<classpathentry kind="lib" path="libs/tbs_sdk_v1.5.0.1082_25434_obfs_20151223_171048.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>

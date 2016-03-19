@@ -1,5 +1,13 @@
 package com.android.tengfenxiang.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
+import android.os.Handler;
+import android.widget.TextView;
+
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.db.UserDao;
@@ -10,18 +18,11 @@ import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.volley.NetworkError;
 import com.android.volley.VolleyError;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.widget.TextView;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-
 public class WelcomeActivity extends BaseActivity {
 
 	private final int SPLASH_DISPLAY_LENGHT = 2000;
 	private SharedPreferences preferences;
-	// private Editor editor;
+	private Editor editor;
 	private LoadingDialog dialog;
 	private TextView versionTextView;
 	private LoginUtil loginUtil;
@@ -42,44 +43,30 @@ public class WelcomeActivity extends BaseActivity {
 
 			@Override
 			public void run() {
-				// 去除掉启动界面，如果后期需要启动界面
-				// 则将这个类注释掉的代码还原，删除本段代码即可
-				String phone = preferences.getString("phone", "");
-				String password = preferences.getString("password", "");
-
-				if (phone.equals("") || password.equals("")) {
+				if (preferences.getBoolean("firststart", true)) {
+					editor = preferences.edit();
+					editor.putBoolean("firststart", false);
+					editor.commit();
 					Intent intent = new Intent();
-					intent.setClass(WelcomeActivity.this, LoginActivity.class);
+					intent.setClass(WelcomeActivity.this, IntrudeActivity.class);
 					startActivity(intent);
 					finish();
 				} else {
-					dialog.showDialog();
-					loginUtil.setOnLoginListener(onLoginListener);
-					loginUtil.login(phone, password);
+					String phone = preferences.getString("phone", "");
+					String password = preferences.getString("password", "");
+
+					if (phone.equals("") || password.equals("")) {
+						Intent intent = new Intent();
+						intent.setClass(WelcomeActivity.this,
+								LoginActivity.class);
+						startActivity(intent);
+						finish();
+					} else {
+						dialog.showDialog();
+						loginUtil.setOnLoginListener(onLoginListener);
+						loginUtil.login(phone, password);
+					}
 				}
-				// if (preferences.getBoolean("firststart", true)) {
-				// editor = preferences.edit();
-				// editor.putBoolean("firststart", false);
-				// editor.commit();
-				// Intent intent = new Intent();
-				// intent.setClass(WelcomeActivity.this, IntrudeActivity.class);
-				// startActivity(intent);
-				// finish();
-				// } else {
-				// String phone = preferences.getString("phone", "");
-				// String password = preferences.getString("password", "");
-				//
-				// if (phone.equals("") || password.equals("")) {
-				// Intent intent = new Intent();
-				// intent.setClass(WelcomeActivity.this,
-				// LoginActivity.class);
-				// startActivity(intent);
-				// finish();
-				// } else {
-				// dialog.showDialog();
-				// login(phone, password);
-				// }
-				// }
 			}
 		}, SPLASH_DISPLAY_LENGHT);
 	}

@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="24.0dp"
         android:orientation="horizontal" >
 
         <ImageView
@@ -59,12 +58,12 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/ll"
+        android:layout_above="@+id/ll"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_bg"
+        android:padding="10dp"
         android:text="@string/try_now"
         android:textColor="@color/white"
-        android:padding="10dp"
         android:visibility="gone" />
 
 </RelativeLayout>

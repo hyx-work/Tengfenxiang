@@ -68,15 +68,28 @@ public class User {
 	 */
 	private String inviteCode;
 
+	/**
+	 * 在用户访问页面的时候标识用户
+	 */
 	private String token;
+
+	/**
+	 * 获取签到状态接口返回格式
+	 */
+	private SigninStatus signinStatus;
+
+	/**
+	 * 当前可提现的金额
+	 */
+	private int withdrawableCash;
 
 	public User() {
 
 	}
 
-	public User(int id, String nickName, String phone,
-			String alipay, String avatar, int gender, int province, int city,
-			String wechat, String qq, String email, String inviteCode) {
+	public User(int id, String nickName, String phone, String alipay,
+			String avatar, int gender, int province, int city, String wechat,
+			String qq, String email, String inviteCode) {
 		super();
 		this.id = id;
 		this.nickName = nickName;
@@ -194,6 +207,22 @@ public class User {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public SigninStatus getSigninStatus() {
+		return signinStatus;
+	}
+
+	public void setSigninStatus(SigninStatus signinStatus) {
+		this.signinStatus = signinStatus;
+	}
+
+	public int getWithdrawableCash() {
+		return withdrawableCash;
+	}
+
+	public void setWithdrawableCash(int withdrawableCash) {
+		this.withdrawableCash = withdrawableCash;
 	}
 
 }

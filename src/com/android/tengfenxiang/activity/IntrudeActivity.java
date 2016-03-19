@@ -3,9 +3,6 @@ package com.android.tengfenxiang.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.adapter.ViewPagerAdapter;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +12,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.adapter.ViewPagerAdapter;
+import com.bumptech.glide.Glide;
 
 public class IntrudeActivity extends Activity implements OnClickListener,
 		OnPageChangeListener {
@@ -28,9 +30,9 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 	/**
 	 * 引导图片资源
 	 */
-	private static final int[] pics = { R.drawable.ic_launcher,
-			R.drawable.ic_launcher, R.drawable.ic_launcher,
-			R.drawable.ic_launcher };
+	private static final int[] pics = { R.drawable.launch_picture_01,
+			R.drawable.launch_picture_02, R.drawable.launch_picture_03,
+			R.drawable.launch_picture_04 };
 
 	private ImageView[] dots;
 
@@ -47,13 +49,14 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 		views = new ArrayList<View>();
 
 		LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.WRAP_CONTENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT);
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT);
 
 		for (int i = 0; i < pics.length; i++) {
 			ImageView iv = new ImageView(this);
+			iv.setScaleType(ScaleType.FIT_XY);
 			iv.setLayoutParams(mParams);
-			iv.setImageResource(pics[i]);
+			Glide.with(getApplication()).load(pics[i]).into(iv);
 			views.add(iv);
 		}
 		vp = (ViewPager) findViewById(R.id.viewpager);
@@ -126,7 +129,6 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 		setCurDot(arg0);
 		if (arg0 == 3) {
 			button.setVisibility(View.VISIBLE);
-
 		} else {
 			button.setVisibility(View.GONE);
 		}

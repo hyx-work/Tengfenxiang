@@ -1,13 +1,13 @@
 package com.android.tengfenxiang.util;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.android.tengfenxiang.R;
 import com.android.volley.NetworkError;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-
-import android.content.Context;
-import android.widget.Toast;
 
 /**
  * 处理网络请求的错误

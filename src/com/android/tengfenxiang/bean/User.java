@@ -49,6 +49,16 @@ public class User {
 	private int city;
 
 	/**
+	 * 区
+	 */
+	private int district;
+
+	/**
+	 * 街道信息
+	 */
+	private String streetInfo;
+
+	/**
 	 * 微信账号
 	 */
 	private String wechat;
@@ -88,8 +98,9 @@ public class User {
 	}
 
 	public User(int id, String nickName, String phone, String alipay,
-			String avatar, int gender, int province, int city, String wechat,
-			String qq, String email, String inviteCode) {
+			String avatar, int gender, int province, int city, int district,
+			String streetInfo, String wechat, String qq, String email,
+			String inviteCode, int withdrawableCash) {
 		super();
 		this.id = id;
 		this.nickName = nickName;
@@ -99,10 +110,13 @@ public class User {
 		this.gender = gender;
 		this.province = province;
 		this.city = city;
+		this.district = district;
+		this.streetInfo = streetInfo;
 		this.wechat = wechat;
 		this.qq = qq;
 		this.email = email;
 		this.inviteCode = inviteCode;
+		this.withdrawableCash = withdrawableCash;
 	}
 
 	public int getId() {
@@ -223,6 +237,22 @@ public class User {
 
 	public void setWithdrawableCash(int withdrawableCash) {
 		this.withdrawableCash = withdrawableCash;
+	}
+
+	public int getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(int district) {
+		this.district = district;
+	}
+
+	public String getStreetInfo() {
+		return streetInfo;
+	}
+
+	public void setStreetInfo(String streetInfo) {
+		this.streetInfo = streetInfo;
 	}
 
 }

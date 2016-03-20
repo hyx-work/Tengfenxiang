@@ -34,7 +34,7 @@ public class ChannelManage {
 	/**
 	 * 默认版块的code值
 	 */
-	private int[] defaultUserCodes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11 };
+	// private int[] defaultUserCodes = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11 };
 
 	private ChannelManage(DBHelper paramDBHelper) throws SQLException {
 		if (channelDao == null)
@@ -55,26 +55,27 @@ public class ChannelManage {
 			for (int i = 0; i < infos.size(); i++) {
 				ChannelItem item = new ChannelItem(infos.get(i).getCode(),
 						infos.get(i).getName(), i, 1);
-				if (isUserChannel(infos.get(i).getCode())) {
-					defaultUserChannels.add(item);
-				} else {
-					// 第一期不显示这些频道
-					// defaultOtherChannels.add(item);
-				}
+				defaultUserChannels.add(item);
+				// if (isUserChannel(infos.get(i).getCode())) {
+				// defaultUserChannels.add(item);
+				// } else {
+				// // 第一期不显示这些频道
+				// // defaultOtherChannels.add(item);
+				// }
 			}
 		}
 	}
 
-	private boolean isUserChannel(int code) {
-		boolean result = false;
-		for (int i = 0; i < defaultUserCodes.length; i++) {
-			if (code == defaultUserCodes[i]) {
-				result = true;
-				break;
-			}
-		}
-		return result;
-	}
+	// private boolean isUserChannel(int code) {
+	// boolean result = false;
+	// for (int i = 0; i < defaultUserCodes.length; i++) {
+	// if (code == defaultUserCodes[i]) {
+	// result = true;
+	// break;
+	// }
+	// }
+	// return result;
+	// }
 
 	/**
 	 * 初始化频道管理类

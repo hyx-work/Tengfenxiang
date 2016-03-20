@@ -3,21 +3,6 @@ package com.android.tengfenxiang.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.alibaba.fastjson.JSON;
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.android.tengfenxiang.bean.Setting;
-import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.RequestUtil;
-import com.android.tengfenxiang.util.VolleyErrorUtil;
-import com.android.tengfenxiang.view.dialog.LoadingDialog;
-import com.android.tengfenxiang.view.titlebar.TitleBar;
-import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
-import com.android.volley.VolleyError;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.StringRequest;
-
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -35,6 +20,21 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.adapter.SimpleListAdapter;
+import com.android.tengfenxiang.bean.Setting;
+import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
+import com.android.tengfenxiang.view.dialog.LoadingDialog;
+import com.android.tengfenxiang.view.titlebar.TitleBar;
+import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 public class AboutActivity extends BaseActivity {
 
 	private ListView linkListView;
@@ -42,6 +42,7 @@ public class AboutActivity extends BaseActivity {
 	private TitleBar titleBar;
 
 	private List<String> qqGroup = new ArrayList<String>();
+	private List<String> businessQQ = new ArrayList<String>();
 	private Setting setting;
 
 	private LoadingDialog dialog;
@@ -83,9 +84,11 @@ public class AboutActivity extends BaseActivity {
 		ArrayList<String> values = new ArrayList<String>();
 		infos.add(getString(R.string.qq_group));
 		infos.add(getString(R.string.contact_phone));
+		infos.add(getString(R.string.business_qq));
 		if (null != setting) {
 			values.add(getQQGroupInfo());
 			values.add(setting.getAboutViewSettings().getPhone());
+			values.add(getBussinessQQInfo());
 		}
 		SimpleListAdapter adapter = new SimpleListAdapter(AboutActivity.this,
 				infos, values);
@@ -99,7 +102,8 @@ public class AboutActivity extends BaseActivity {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View arg1,
 						int arg2, long arg3) {
-					if (0 == arg2) {
+					switch (arg2) {
+					case 0:
 						if (qqGroup.size() > 1) {
 							showDialog();
 						} else {
@@ -110,11 +114,30 @@ public class AboutActivity extends BaseActivity {
 									R.string.copy_success, Toast.LENGTH_SHORT)
 									.show();
 						}
-					} else {
+						break;
+
+					case 1:
 						Uri uri = Uri.parse("tel:"
 								+ setting.getAboutViewSettings().getPhone());
 						Intent intent = new Intent(Intent.ACTION_DIAL, uri);
 						startActivity(intent);
+						break;
+
+					case 2:
+						if (businessQQ.size() > 1) {
+							showDialog();
+						} else {
+							ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+							cmb.setPrimaryClip(ClipData.newPlainText(null,
+									getBussinessQQInfo()));
+							Toast.makeText(getApplication(),
+									R.string.copy_success, Toast.LENGTH_SHORT)
+									.show();
+						}
+						break;
+
+					default:
+						break;
 					}
 				}
 			});
@@ -200,9 +223,26 @@ public class AboutActivity extends BaseActivity {
 	 */
 	private String getQQGroupInfo() {
 		StringBuffer buffer = new StringBuffer();
-		qqGroup = setting.getAboutViewSettings().getQQGroups();
+		qqGroup.clear();
+		qqGroup.addAll(setting.getAboutViewSettings().getQQGroups());
 		for (int i = 0; i < qqGroup.size(); i++) {
 			buffer.append(qqGroup.get(i)).append("，");
+		}
+		buffer.deleteCharAt(buffer.length() - 1);
+		return buffer.toString();
+	}
+
+	/**
+	 * 将返回的多个QQ号码拼接成一个字符串
+	 * 
+	 * @return
+	 */
+	private String getBussinessQQInfo() {
+		StringBuffer buffer = new StringBuffer();
+		businessQQ.clear();
+		businessQQ.addAll(setting.getAboutViewSettings().getBusinessQQ());
+		for (int i = 0; i < businessQQ.size(); i++) {
+			buffer.append(businessQQ.get(i)).append("，");
 		}
 		buffer.deleteCharAt(buffer.length() - 1);
 		return buffer.toString();

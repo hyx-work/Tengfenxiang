@@ -57,6 +57,7 @@
     <string name="score">评&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;分</string>
     <string name="qq_group">QQ群</string>
     <string name="contact_phone">客服电话</string>
+    <string name="business_qq">商业QQ</string>
     <string name="select_qq_number">请选择要复制的号码</string>
     <string name="copy_success">已复制到剪切板</string>
     <string name="no_app_market">没有找到应用市场</string>

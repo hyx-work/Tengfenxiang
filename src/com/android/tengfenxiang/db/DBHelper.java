@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 	final private static String DBname = "tengfenxiang";
 
-	// 数据库增加banner表，用于缓存文章页面的顶部banner，版本号修改为2
+	// 数据库增加banner表，用于缓存文章页面的顶部banner
+	// user表增加district, streetInfo, withdrawableCash字段
+	// 数据库版本号修改为2
 	final private static int mDbVersion = 2;
 
 	private Context context;
@@ -28,7 +30,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		String createArticleTable = "create table if not exists article(id integer, title text, content text, thumbnails text, shareUrl text, likeCount integer, viewCount integer, type integer)";
 		String createBannerTable = "create table if not exists banner(id integer, title text, content text, thumbnails text, shareUrl text, likeCount integer, viewCount integer, type integer)";
 		String createChannelTable = "create table if not exists channel(_id integer primary key autoincrement,  id integer , name text , orderId integer , selected selected)";
-		String createUserTable = "create table if not exists user(id integer primary key, nickName text, phone text, alipay text, avatar text, gender integer, province integer, city integer, wechat text, qq text, email text, inviteCode text)";
+		String createUserTable = "create table if not exists user(id integer primary key, nickName text, phone text, alipay text, avatar text, gender integer, province integer, city integer, district integer, streetInfo text, wechat text, qq text, email text, inviteCode text, withdrawableCash integer)";
 		db.execSQL(createArticleTable);
 		db.execSQL(creatTaskTable);
 		db.execSQL(createChannelTable);
@@ -41,7 +43,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 		db.execSQL("DROP TABLE IF EXISTS task");
 		db.execSQL("DROP TABLE IF EXISTS article");
-		db.execSQL("DROP TABLE IF EXISTS channel");
+		// 数据库升级时channel删除，因为这里保存的是用户的数据不是缓存
+		// db.execSQL("DROP TABLE IF EXISTS channel");
 		db.execSQL("DROP TABLE IF EXISTS user");
 		db.execSQL("DROP TABLE IF EXISTS banner");
 		onCreate(db);

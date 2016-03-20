@@ -1,11 +1,11 @@
 package com.android.tengfenxiang.db;
 
-import com.android.tengfenxiang.bean.User;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.android.tengfenxiang.bean.User;
 
 public class UserDao {
 
@@ -39,10 +39,13 @@ public class UserDao {
 		values.put("gender", user.getGender());
 		values.put("province", user.getProvince());
 		values.put("city", user.getCity());
+		values.put("district", user.getDistrict());
+		values.put("streetInfo", user.getStreetInfo());
 		values.put("wechat", user.getWechat());
 		values.put("qq", user.getQq());
 		values.put("email", user.getEmail());
 		values.put("inviteCode", user.getInviteCode());
+		values.put("withdrawableCash", user.getWithdrawableCash());
 		db.beginTransaction();
 		try {
 			db.insert("user", null, values);
@@ -80,7 +83,8 @@ public class UserDao {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		Cursor cursor = db.query("user", new String[] { "id", "nickName",
 				"phone", "alipay", "avatar", "gender", "province", "city",
-				"wechat", "qq", "email", "inviteCode" }, "phone=?",
+				"district", "streetInfo", "wechat", "qq", "email",
+				"inviteCode", "withdrawableCash" }, "phone=?",
 				new String[] { phone }, null, null, null, null);
 		if (cursor.moveToFirst()) {
 			int id = cursor.getInt(cursor.getColumnIndex("id"));
@@ -91,15 +95,21 @@ public class UserDao {
 			int gender = cursor.getInt(cursor.getColumnIndex("gender"));
 			int province = cursor.getInt(cursor.getColumnIndex("province"));
 			int city = cursor.getInt(cursor.getColumnIndex("city"));
+			int district = cursor.getInt(cursor.getColumnIndex("district"));
+			String streetInfo = cursor.getString(cursor
+					.getColumnIndex("streetInfo"));
 			String wechat = cursor.getString(cursor.getColumnIndex("wechat"));
 			String qq = cursor.getString(cursor.getColumnIndex("qq"));
 			String email = cursor.getString(cursor.getColumnIndex("email"));
 			String inviteCode = cursor.getString(cursor
 					.getColumnIndex("inviteCode"));
+			int withdrawableCash = cursor.getInt(cursor
+					.getColumnIndex("withdrawableCash"));
 			cursor.close();
 			db.close();
 			return new User(id, nickName, phone, alipay, avatar, gender,
-					province, city, wechat, qq, email, inviteCode);
+					province, city, district, streetInfo, wechat, qq, email,
+					inviteCode, withdrawableCash);
 		}
 		cursor.close();
 		db.close();
@@ -122,10 +132,13 @@ public class UserDao {
 		values.put("gender", user.getGender());
 		values.put("province", user.getProvince());
 		values.put("city", user.getCity());
+		values.put("district", user.getDistrict());
+		values.put("streetInfo", user.getStreetInfo());
 		values.put("wechat", user.getWechat());
 		values.put("qq", user.getQq());
 		values.put("email", user.getEmail());
 		values.put("inviteCode", user.getInviteCode());
+		values.put("withdrawableCash", user.getWithdrawableCash());
 		db.update("user", values, "id=?",
 				new String[] { String.valueOf(user.getId()) });
 		db.close();

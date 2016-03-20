@@ -11,7 +11,8 @@ public class Constant {
 	/**
 	 * 服务器的IP地址
 	 */
-	// public final static String SERVER_ADDRESS = "http://api.wanzhuan9527.com/TengShare_AppInterface";
+	// public final static String SERVER_ADDRESS =
+	// "http://api.wanzhuan9527.com/TengShare_AppInterface";
 
 	/**
 	 * 测试服务器的IP地址
@@ -50,6 +51,12 @@ public class Constant {
 	 */
 	public final static String ARTICLE_LIST_URL = SERVER_ADDRESS
 			+ "/article/list/";
+
+	/**
+	 * 获取文章banner的URL
+	 */
+	public final static String ARTICLE_BANNER_URL = SERVER_ADDRESS
+			+ "/article/banner/";
 
 	/**
 	 * 文章分享记录的URL

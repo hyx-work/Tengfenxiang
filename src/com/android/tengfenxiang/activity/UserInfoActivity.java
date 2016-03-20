@@ -2,11 +2,9 @@ package com.android.tengfenxiang.activity;
 
 import java.util.ArrayList;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.bumptech.glide.Glide;
-
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,17 +14,26 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.adapter.SimpleListAdapter;
+import com.bumptech.glide.Glide;
+
 public class UserInfoActivity extends BaseActivity {
 
 	private ListView userInfoListView;
 	private TextView nicknameTextView;
 	private ImageView headImageView;
 
+	private MediaPlayer mediaPlayer;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
+
+		mediaPlayer = MediaPlayer.create(UserInfoActivity.this,
+				R.raw.gold_coin_music);
 	}
 
 	@Override
@@ -74,6 +81,18 @@ public class UserInfoActivity extends BaseActivity {
 		userInfoListView.setAdapter(adapter);
 		// 设置用户信息列表的点击监听
 		addClickListener();
+
+		// 播放金币声音
+		mediaPlayer.start();
+		// 监听音效播放完毕
+		mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+
+			@Override
+			public void onCompletion(MediaPlayer arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 	/**
@@ -138,5 +157,15 @@ public class UserInfoActivity extends BaseActivity {
 		} else {
 			return super.onKeyDown(keyCode, event);
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (mediaPlayer.isPlaying()) {
+			mediaPlayer.stop();
+		}
+		mediaPlayer.release();
 	}
 }

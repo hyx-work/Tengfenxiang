@@ -28,7 +28,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/title_bar"
         android:divider="@null"
-        android:overScrollMode="never" >
+        android:overScrollMode="never"
+        android:scrollbars="none" >
     </com.android.tengfenxiang.view.xlistview.XListView>
 
 </RelativeLayout>

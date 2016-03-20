@@ -6,6 +6,10 @@ public class Setting {
 
 	private aboutInfo aboutViewSettings;
 
+	private double pointsToCashRate;
+
+	private List<ItemInfo> articleTypes;
+
 	public aboutInfo getAboutViewSettings() {
 		return aboutViewSettings;
 	}
@@ -14,26 +18,20 @@ public class Setting {
 		this.aboutViewSettings = aboutViewSettings;
 	}
 
-	public static class aboutInfo {
-		private List<String> QQGroups;
-
-		private String phone;
-
-		public List<String> getQQGroups() {
-			return QQGroups;
-		}
-
-		public void setQQGroups(List<String> qQGroups) {
-			QQGroups = qQGroups;
-		}
-
-		public String getPhone() {
-			return phone;
-		}
-
-		public void setPhone(String phone) {
-			this.phone = phone;
-		}
-
+	public double getPointsToCashRate() {
+		return pointsToCashRate;
 	}
+
+	public void setPointsToCashRate(double pointsToCashRate) {
+		this.pointsToCashRate = pointsToCashRate;
+	}
+
+	public List<ItemInfo> getArticleTypes() {
+		return articleTypes;
+	}
+
+	public void setArticleTypes(List<ItemInfo> articleTypes) {
+		this.articleTypes = articleTypes;
+	}
+
 }

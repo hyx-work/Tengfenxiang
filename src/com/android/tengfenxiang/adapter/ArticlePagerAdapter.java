@@ -10,6 +10,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.View;
 
 public class ArticlePagerAdapter extends FragmentStatePagerAdapter {
 
@@ -36,4 +37,9 @@ public class ArticlePagerAdapter extends FragmentStatePagerAdapter {
 		return ArticleFragment.newInstance(catalogs.get(position).getId());
 	}
 
+	@Override
+	public void destroyItem(View container, int position, Object object) {
+		// TODO Auto-generated method stub
+		// super.destroyItem(container, position, object);
+	}
 }

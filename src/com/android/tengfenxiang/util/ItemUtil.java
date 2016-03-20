@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSON;
 import com.android.tengfenxiang.bean.ItemInfo;
+import com.android.tengfenxiang.bean.Setting;
 
 import android.content.Context;
 import android.util.SparseArray;
@@ -18,12 +19,26 @@ public class ItemUtil {
 		parseJsonObject(json);
 	}
 
+	public ItemUtil(String json) {
+		parseConfigJson(json);
+	}
+
+	private void parseConfigJson(String json) {
+		Setting setting = JSON.parseObject(json, Setting.class);
+		List<ItemInfo> infos = setting.getArticleTypes();
+
+		itemInfos = new SparseArray<ItemInfo>();
+		for (ItemInfo info : infos) {
+			itemInfos.put(info.getCode(), info);
+		}
+	}
+
 	private void parseJsonObject(String json) {
 		if (null == json || json.equals("")) {
 			return;
 		}
 		List<ItemInfo> infos = new ArrayList<ItemInfo>();
-		infos = JSON.parseArray(json, ItemInfo.class);		
+		infos = JSON.parseArray(json, ItemInfo.class);
 
 		itemInfos = new SparseArray<ItemInfo>();
 		for (ItemInfo info : infos) {

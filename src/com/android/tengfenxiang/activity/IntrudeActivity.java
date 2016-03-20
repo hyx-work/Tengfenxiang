@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -27,6 +30,9 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 	private List<View> views;
 	private Button button;
 
+	private SharedPreferences preferences;
+	private Editor editor;
+
 	/**
 	 * 引导图片资源
 	 */
@@ -48,6 +54,9 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 		button = (Button) findViewById(R.id.button);
 		views = new ArrayList<View>();
 
+		preferences = getSharedPreferences(getPackageName(),
+				Context.MODE_PRIVATE);
+
 		LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT);
@@ -68,6 +77,10 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 
 			@Override
 			public void onClick(View arg0) {
+				editor = preferences.edit();
+				editor.putBoolean("firststart", false);
+				editor.commit();
+
 				Intent intent = new Intent();
 				intent.setClass(IntrudeActivity.this, LoginActivity.class);
 				IntrudeActivity.this.startActivity(intent);

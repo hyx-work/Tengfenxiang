@@ -1,14 +1,5 @@
 package com.android.tengfenxiang.activity;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.bean.User;
-import com.android.tengfenxiang.db.UserDao;
-import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.LoginUtil;
-import com.android.tengfenxiang.util.LoginUtil.OnLoginListener;
-import com.android.tengfenxiang.view.dialog.LoadingDialog;
-import com.android.volley.VolleyError;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +20,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.LoginUtil;
+import com.android.tengfenxiang.util.LoginUtil.OnLoginListener;
+import com.android.tengfenxiang.view.dialog.LoadingDialog;
+import com.android.volley.VolleyError;
+
 public class LoginActivity extends BaseActivity {
 
 	private LoadingDialog dialog;
@@ -39,7 +37,6 @@ public class LoginActivity extends BaseActivity {
 	private Button loginButton;
 	private TextView registerTextView;
 	private LoginUtil loginUtil;
-	private UserDao userDao;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +45,6 @@ public class LoginActivity extends BaseActivity {
 		setContentView(R.layout.login);
 
 		loginUtil = application.getLoginUtil();
-		userDao = UserDao.getInstance(getApplication());
 		preferences = getSharedPreferences(getPackageName(),
 				Context.MODE_PRIVATE);
 		dialog = new LoadingDialog(this);
@@ -92,14 +88,6 @@ public class LoginActivity extends BaseActivity {
 			editor.putString("password", password);
 		}
 		editor.commit();
-
-		// 将登录的用户信息缓存到本地数据库
-		User user = userDao.findUser(phone);
-		if (null == user) {
-			userDao.insert(application.getCurrentUser());
-		} else {
-			userDao.update(application.getCurrentUser());
-		}
 	}
 
 	private boolean validateParams(String phone, String password) {

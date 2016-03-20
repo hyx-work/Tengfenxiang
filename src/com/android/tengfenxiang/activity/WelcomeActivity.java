@@ -3,7 +3,6 @@ package com.android.tengfenxiang.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
@@ -22,7 +21,7 @@ public class WelcomeActivity extends BaseActivity {
 
 	private final int SPLASH_DISPLAY_LENGHT = 2000;
 	private SharedPreferences preferences;
-	private Editor editor;
+
 	private LoadingDialog dialog;
 	private TextView versionTextView;
 	private LoginUtil loginUtil;
@@ -44,9 +43,6 @@ public class WelcomeActivity extends BaseActivity {
 			@Override
 			public void run() {
 				if (preferences.getBoolean("firststart", true)) {
-					editor = preferences.edit();
-					editor.putBoolean("firststart", false);
-					editor.commit();
 					Intent intent = new Intent();
 					intent.setClass(WelcomeActivity.this, IntrudeActivity.class);
 					startActivity(intent);
@@ -62,9 +58,17 @@ public class WelcomeActivity extends BaseActivity {
 						startActivity(intent);
 						finish();
 					} else {
-						dialog.showDialog();
-						loginUtil.setOnLoginListener(onLoginListener);
-						loginUtil.login(phone, password);
+						if (null == userDao.findUser(phone)) {
+							Intent intent = new Intent();
+							intent.setClass(WelcomeActivity.this,
+									LoginActivity.class);
+							startActivity(intent);
+							finish();
+						} else {
+							dialog.showDialog();
+							loginUtil.setOnLoginListener(onLoginListener);
+							loginUtil.login(phone, password);
+						}
 					}
 				}
 			}

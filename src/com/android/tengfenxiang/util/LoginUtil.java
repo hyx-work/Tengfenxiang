@@ -3,19 +3,20 @@ package com.android.tengfenxiang.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.alibaba.fastjson.JSON;
 import com.android.tengfenxiang.application.MainApplication;
 import com.android.tengfenxiang.bean.ResponseResult;
 import com.android.tengfenxiang.bean.User;
+import com.android.tengfenxiang.db.UserDao;
 import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-
-import android.content.Context;
-import android.widget.Toast;
 
 /**
  * 账户登录工具类
@@ -29,6 +30,8 @@ public class LoginUtil {
 	private Context context;
 	private OnLoginListener onLoginListener;
 
+	private static UserDao userDao;
+
 	private LoginUtil(Context context) {
 		this.context = context;
 	}
@@ -36,6 +39,7 @@ public class LoginUtil {
 	public static LoginUtil getInstance(Context context) {
 		if (null == loginUtil) {
 			loginUtil = new LoginUtil(context);
+			userDao = UserDao.getInstance(context);
 		}
 		return loginUtil;
 	}
@@ -56,6 +60,15 @@ public class LoginUtil {
 							response, User.class);
 					// 登录成功设置User对象
 					((MainApplication) context).setCurrentUser(user);
+
+					// 将登录的用户信息缓存到本地数据库
+					User tmp = userDao.findUser(phone);
+					if (null == tmp) {
+						userDao.insert(user);
+					} else {
+						userDao.update(user);
+					}
+
 					if (null != onLoginListener) {
 						onLoginListener.onLoginSuccess();
 					}

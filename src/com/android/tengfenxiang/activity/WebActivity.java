@@ -1,11 +1,5 @@
 package com.android.tengfenxiang.activity;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.util.RequestUtil;
-import com.android.tengfenxiang.view.dialog.LoadingDialog;
-import com.android.tengfenxiang.view.titlebar.TitleBar;
-import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,11 +12,16 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.view.titlebar.TitleBar;
+import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
+
 public class WebActivity extends BaseActivity {
 
 	private TitleBar titleBar;
 	private WebView webView;
-	private LoadingDialog dialog;
+	// private LoadingDialog dialog;
 	private RelativeLayout webviewLayout;
 
 	/**
@@ -43,7 +42,7 @@ public class WebActivity extends BaseActivity {
 
 		setContentView(R.layout.web_activity);
 
-		dialog = new LoadingDialog(this);
+		// dialog = new LoadingDialog(this);
 
 		Intent intent = getIntent();
 		title = intent.getStringExtra("title");
@@ -85,23 +84,23 @@ public class WebActivity extends BaseActivity {
 				public void onPageStarted(WebView view, String url,
 						Bitmap favicon) {
 					super.onPageStarted(view, url, favicon);
-					dialog.showDialog();
+					// dialog.showDialog();
 				}
 
 				@Override
 				public void onPageFinished(WebView view, String url) {
 					super.onPageFinished(view, url);
-					if (dialog.isShowing()) {
-						dialog.cancelDialog();
-					}
+					// if (dialog.isShowing()) {
+					// dialog.cancelDialog();
+					// }
 				}
 
 				@Override
 				public void onReceivedError(WebView view, int errorCode,
 						String description, String failingUrl) {
-					if (dialog.isShowing()) {
-						dialog.cancelDialog();
-					}
+					// if (dialog.isShowing()) {
+					// dialog.cancelDialog();
+					// }
 					Toast.makeText(getApplication(),
 							R.string.fail_to_load_webpage, Toast.LENGTH_SHORT)
 							.show();

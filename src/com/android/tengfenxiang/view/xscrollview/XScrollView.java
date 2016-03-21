@@ -329,7 +329,7 @@ public class XScrollView extends ScrollView implements OnScrollListener,
 			final float deltaY = ev.getRawY() - mLastY;
 			mLastY = ev.getRawY();
 
-			if (isTop() && (mHeader.getVisiableHeight() > 0 || deltaY > 0)) {
+			if (isTop() && (mHeader.getVisiableHeight() >= 0 || deltaY > 0)) {
 				updateHeaderHeight(deltaY / OFFSET_RADIO);
 				invokeOnScrolling();
 			} else if (isBottom()

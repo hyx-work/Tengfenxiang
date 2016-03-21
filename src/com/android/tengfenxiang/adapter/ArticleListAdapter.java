@@ -2,16 +2,16 @@ package com.android.tengfenxiang.adapter;
 
 import java.util.List;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.bean.Article;
-import com.bumptech.glide.Glide;
-
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.bean.Article;
+import com.bumptech.glide.Glide;
 
 /**
  * 文章列表适配器
@@ -67,8 +67,7 @@ public class ArticleListAdapter extends BaseAdapter {
 		// 利用缓存框架加载图片
 		Glide.with(context.getApplicationContext())
 				.load(articles.get(position).getThumbnails()).centerCrop()
-				.placeholder(R.drawable.ic_empty).crossFade()
-				.into(viewHolder.image);
+				.crossFade().into(viewHolder.image);
 
 		viewHolder.title.setText(articles.get(position).getTitle());
 		// viewHolder.content.setText(articles.get(position).getContent());

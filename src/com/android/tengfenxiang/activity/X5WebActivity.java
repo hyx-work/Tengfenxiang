@@ -3,38 +3,6 @@ package com.android.tengfenxiang.activity;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.receiver.SaveShareRecordReceiver;
-import com.android.tengfenxiang.receiver.SaveShareRecordReceiver.OnSaveRecordsListener;
-import com.android.tengfenxiang.util.BitmapCompressUtil;
-import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.RequestUtil;
-import com.android.tengfenxiang.util.ResponseUtil;
-import com.android.tengfenxiang.util.VolleyErrorUtil;
-import com.android.tengfenxiang.view.dialog.LoadingDialog;
-import com.android.tengfenxiang.view.dialog.SharePopupWindow;
-import com.android.tengfenxiang.view.titlebar.TitleBar;
-import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
-import com.android.tengfenxiang.view.webview.X5WebView;
-import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.StringRequest;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.SendMessageToWX;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tencent.mm.sdk.openapi.WXMediaMessage;
-import com.tencent.mm.sdk.openapi.WXWebpageObject;
-import com.tencent.mm.sdk.platformtools.Util;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
-
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -49,6 +17,38 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.receiver.SaveShareRecordReceiver;
+import com.android.tengfenxiang.receiver.SaveShareRecordReceiver.OnSaveRecordsListener;
+import com.android.tengfenxiang.util.BitmapCompressUtil;
+import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.ResponseUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
+import com.android.tengfenxiang.view.dialog.LoadingDialog;
+import com.android.tengfenxiang.view.dialog.SharePopupWindow;
+import com.android.tengfenxiang.view.titlebar.TitleBar;
+import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
+import com.android.tengfenxiang.view.webview.X5WebView;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.SendMessageToWX;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.sdk.openapi.WXMediaMessage;
+import com.tencent.mm.sdk.openapi.WXWebpageObject;
+import com.tencent.mm.sdk.platformtools.Util;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 public class X5WebActivity extends BaseActivity {
 
@@ -211,23 +211,23 @@ public class X5WebActivity extends BaseActivity {
 				public void onPageStarted(WebView view, String url,
 						Bitmap favicon) {
 					super.onPageStarted(view, url, favicon);
-					dialog.showDialog();
+					// dialog.showDialog();
 				}
 
 				@Override
 				public void onPageFinished(WebView view, String url) {
 					super.onPageFinished(view, url);
-					if (dialog.isShowing()) {
-						dialog.cancelDialog();
-					}
+					// if (dialog.isShowing()) {
+					// dialog.cancelDialog();
+					// }
 				}
 
 				@Override
 				public void onReceivedError(WebView view, int errorCode,
 						String description, String failingUrl) {
-					if (dialog.isShowing()) {
-						dialog.cancelDialog();
-					}
+					// if (dialog.isShowing()) {
+					// dialog.cancelDialog();
+					// }
 					Toast.makeText(getApplication(),
 							R.string.fail_to_load_webpage, Toast.LENGTH_SHORT)
 							.show();
@@ -448,8 +448,8 @@ public class X5WebActivity extends BaseActivity {
 	 */
 	private void loadThumbnails(String imageUrl) {
 		if (null != imageUrl && !imageUrl.equals("")) {
-			Glide.with(this).load(imageUrl).asBitmap().centerCrop()
-					.into(new SimpleTarget<Bitmap>() {
+			Glide.with(this.getApplicationContext()).load(imageUrl).asBitmap()
+					.centerCrop().into(new SimpleTarget<Bitmap>() {
 						@Override
 						public void onResourceReady(Bitmap arg0,
 								GlideAnimation<? super Bitmap> arg1) {

@@ -82,8 +82,7 @@ public class TaskListAdapter extends BaseAdapter {
 		// 利用缓存框架加载图片
 		Glide.with(context.getApplicationContext())
 				.load(tasks.get(position).getThumbnails()).centerCrop()
-				.placeholder(R.drawable.ic_empty).crossFade()
-				.into(viewHolder.image);
+				.crossFade().into(viewHolder.image);
 
 		viewHolder.title.setText(tasks.get(position).getTitle());
 		StringBuffer point = new StringBuffer();

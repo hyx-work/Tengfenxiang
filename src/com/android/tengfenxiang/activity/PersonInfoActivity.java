@@ -5,26 +5,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.adapter.PersonInfoListAdapter;
-import com.android.tengfenxiang.bean.CityInfo;
-import com.android.tengfenxiang.bean.User;
-import com.android.tengfenxiang.db.UserDao;
-import com.android.tengfenxiang.util.CityUtil;
-import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.ImageLoadUtil;
-import com.android.tengfenxiang.util.MultipartEntity;
-import com.android.tengfenxiang.util.MultipartRequest;
-import com.android.tengfenxiang.util.RequestUtil;
-import com.android.tengfenxiang.util.ResponseUtil;
-import com.android.tengfenxiang.util.VolleyErrorUtil;
-import com.android.tengfenxiang.view.titlebar.TitleBar;
-import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
-import com.android.volley.VolleyError;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.bumptech.glide.Glide;
-
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -42,6 +22,26 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.adapter.PersonInfoListAdapter;
+import com.android.tengfenxiang.bean.CityInfo;
+import com.android.tengfenxiang.bean.User;
+import com.android.tengfenxiang.db.UserDao;
+import com.android.tengfenxiang.util.CityUtil;
+import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.ImageLoadUtil;
+import com.android.tengfenxiang.util.MultipartEntity;
+import com.android.tengfenxiang.util.MultipartRequest;
+import com.android.tengfenxiang.util.RequestUtil;
+import com.android.tengfenxiang.util.ResponseUtil;
+import com.android.tengfenxiang.util.VolleyErrorUtil;
+import com.android.tengfenxiang.view.titlebar.TitleBar;
+import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
 
 public class PersonInfoActivity extends BaseActivity {
 
@@ -214,8 +214,8 @@ public class PersonInfoActivity extends BaseActivity {
 	 */
 	private void loadHead() {
 		String imageUrl = application.getCurrentUser().getAvatar();
-		Glide.with(this).load(imageUrl).centerCrop().crossFade()
-				.into(headImageView);
+		Glide.with(this.getApplicationContext()).load(imageUrl).centerCrop()
+				.crossFade().into(headImageView);
 	}
 
 	/**

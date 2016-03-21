@@ -313,8 +313,9 @@ public class ArticleFragment extends LazyFragment {
 				imageView.setLayoutParams(new LayoutParams(
 						LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 				imageView.setScaleType(ScaleType.FIT_XY);
-				Glide.with(context).load(banners.get(i).getThumbnails())
-						.centerCrop().crossFade().into(imageView);
+				Glide.with(context.getApplicationContext())
+						.load(banners.get(i).getThumbnails()).centerCrop()
+						.crossFade().into(imageView);
 
 				final int arg2 = i;
 				imageView.setOnClickListener(new OnClickListener() {

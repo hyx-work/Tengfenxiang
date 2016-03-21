@@ -65,8 +65,9 @@ public class ArticleListAdapter extends BaseAdapter {
 		}
 
 		// 利用缓存框架加载图片
-		Glide.with(context).load(articles.get(position).getThumbnails())
-				.centerCrop().placeholder(R.drawable.ic_empty).crossFade()
+		Glide.with(context.getApplicationContext())
+				.load(articles.get(position).getThumbnails()).centerCrop()
+				.placeholder(R.drawable.ic_empty).crossFade()
 				.into(viewHolder.image);
 
 		viewHolder.title.setText(articles.get(position).getTitle());

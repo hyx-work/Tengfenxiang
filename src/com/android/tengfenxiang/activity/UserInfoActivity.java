@@ -143,8 +143,8 @@ public class UserInfoActivity extends BaseActivity {
 	 */
 	private void loadHead() {
 		String imageUrl = application.getCurrentUser().getAvatar();
-		Glide.with(this).load(imageUrl).centerCrop().crossFade()
-				.into(headImageView);
+		Glide.with(this.getApplicationContext()).load(imageUrl).centerCrop()
+				.crossFade().into(headImageView);
 	}
 
 	/**

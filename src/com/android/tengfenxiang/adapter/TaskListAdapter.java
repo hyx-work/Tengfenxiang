@@ -2,16 +2,16 @@ package com.android.tengfenxiang.adapter;
 
 import java.util.List;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.bean.Task;
-import com.bumptech.glide.Glide;
-
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.bean.Task;
+import com.bumptech.glide.Glide;
 
 /**
  * 任务列表适配器
@@ -80,8 +80,9 @@ public class TaskListAdapter extends BaseAdapter {
 		}
 
 		// 利用缓存框架加载图片
-		Glide.with(context).load(tasks.get(position).getThumbnails())
-				.centerCrop().placeholder(R.drawable.ic_empty).crossFade()
+		Glide.with(context.getApplicationContext())
+				.load(tasks.get(position).getThumbnails()).centerCrop()
+				.placeholder(R.drawable.ic_empty).crossFade()
 				.into(viewHolder.image);
 
 		viewHolder.title.setText(tasks.get(position).getTitle());
@@ -94,7 +95,8 @@ public class TaskListAdapter extends BaseAdapter {
 		int retweet = tasks.get(position).getRetweetCount();
 		int rest = limit - retweet;
 
-		String retweetCount = context.getString(R.string.retweet_count) + retweet;
+		String retweetCount = context.getString(R.string.retweet_count)
+				+ retweet;
 		viewHolder.retweetCount.setText(retweetCount);
 
 		String restCount = context.getString(R.string.rest_count) + rest;

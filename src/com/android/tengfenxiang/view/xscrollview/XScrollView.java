@@ -464,4 +464,18 @@ public class XScrollView extends ScrollView implements OnScrollListener,
 		// TODO Auto-generated method stub
 		startLoadMore();
 	}
+
+	/**
+	 * 隐藏底部的提示文字
+	 */
+	public void hiddenFooter() {
+		mFooterView.setVisibility(View.GONE);
+	}
+
+	/**
+	 * 显示底部的提示文字
+	 */
+	public void showFooter() {
+		mFooterView.setVisibility(View.VISIBLE);
+	}
 }

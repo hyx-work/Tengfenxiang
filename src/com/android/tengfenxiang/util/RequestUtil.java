@@ -11,9 +11,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.HttpClientStack;
 import com.android.volley.toolbox.Volley;
 
+import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.params.HttpParams;
 
 /**
  * Request管理类，在这里保存seeion
@@ -30,9 +33,10 @@ public class RequestUtil {
 	}
 
 	private static void init(Context context) {
-		mHttpClient = new DefaultHttpClient();
+		mHttpClient = getThreadSafeClient();
 		mRequestQueue = Volley.newRequestQueue(context, new HttpClientStack(
 				mHttpClient));
+		mRequestQueue.start();
 	}
 
 	public static RequestQueue getRequestQueue(Context context) {
@@ -96,5 +100,19 @@ public class RequestUtil {
 		CookieManager cookieManager = CookieManager.getInstance();
 		cookieManager.removeAllCookie();
 		CookieSyncManager.getInstance().sync();
+	}
+
+	/**
+	 * 线程安全的HttpClient
+	 * 
+	 * @return
+	 */
+	private static AbstractHttpClient getThreadSafeClient() {
+		DefaultHttpClient client = new DefaultHttpClient();
+		ClientConnectionManager mgr = client.getConnectionManager();
+		HttpParams params = client.getParams();
+		client = new DefaultHttpClient(new ThreadSafeClientConnManager(params,
+				mgr.getSchemeRegistry()), params);
+		return client;
 	}
 }

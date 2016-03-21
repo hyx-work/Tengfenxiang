@@ -11,7 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
+import android.os.Message;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +55,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 
-public class ArticleFragment extends Fragment {
+public class ArticleFragment extends LazyFragment {
 
 	private static final String ARG_POSITION = "position";
 	private int position;
@@ -88,32 +88,12 @@ public class ArticleFragment extends Fragment {
 	private int pointIndex = 0;
 	private Activity context;
 
-	private Runnable LOAD_DATA = new Runnable() {
-		@Override
-		public void run() {
-			// 加载缓存数据
-			articles.clear();
-			articles.addAll(articleDao.findAll(position));
-			banners.clear();
-			banners.addAll(bannerDao.findAll(position));
-
-			// 设置控件的可见性
-			if (null == articles || articles.size() == 0) {
-				articleListView.setVisibility(View.GONE);
-				hintTextView.setVisibility(View.VISIBLE);
-			} else {
-				articleListView.setVisibility(View.VISIBLE);
-				hintTextView.setVisibility(View.GONE);
-				articleListAdapter.notifyDataSetChanged();
-			}
-			initView();
-			// 请求最新的数据
-			getArticleList(application.getCurrentUser().getId(), limit, offset,
-					position);
-		}
+	private Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			refreshArticleList();
+			refreshBannerList();
+		};
 	};
-
-	private Handler handler = new Handler();
 
 	public static ArticleFragment newInstance(int position) {
 		ArticleFragment fragment = new ArticleFragment();
@@ -130,6 +110,9 @@ public class ArticleFragment extends Fragment {
 		this.context = activity;
 	}
 
+	/**
+	 * 初始化操作
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -143,8 +126,12 @@ public class ArticleFragment extends Fragment {
 		// 初始化适配器
 		articleListAdapter = new ArticleListAdapter(context, articles);
 		bannerAdapter = new BannerAdapter(bannerViews);
+		bannerListener = new BannerListener();
 	}
 
+	/**
+	 * 控件初始化
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -152,73 +139,8 @@ public class ArticleFragment extends Fragment {
 				false);
 		View content = inflater.inflate(R.layout.artical_fragment, null);
 
-		scrollView = (XScrollView) view.findViewById(R.id.scroll_view);
-		articleListView = (ListView) content.findViewById(R.id.article_list);
+		// 初始化提示文字
 		hintTextView = (TextView) view.findViewById(R.id.empty_article_hint);
-		articleListView.setAdapter(articleListAdapter);
-
-		bannerPager = (AutoScrollViewPager) content
-				.findViewById(R.id.viewpager);
-		// 根据屏幕的宽度调节ViewPager的长宽
-		WindowManager wm = (WindowManager) context
-				.getSystemService(Context.WINDOW_SERVICE);
-		@SuppressWarnings("deprecation")
-		int width = wm.getDefaultDisplay().getWidth();
-		int height = width / 2;
-		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-				width, height);
-		bannerPager.setLayoutParams(layoutParams);
-
-		titleTextView = (TextView) content.findViewById(R.id.tv_bannertext);
-		pointLayout = (LinearLayout) content.findViewById(R.id.points);
-		bannerLayout = (LinearLayout) content.findViewById(R.id.banner_layout);
-		bannerPager.setInterval(4000);
-		bannerPager.setAdapter(bannerAdapter);
-
-		scrollView.setView(content);
-		scrollView.setPullRefreshEnable(true);
-		scrollView.setPullLoadEnable(true);
-		scrollView.setAutoLoadEnable(false);
-
-		// 延迟一秒钟加载数据，防止频繁切换时闪退
-		handler.postDelayed(LOAD_DATA, 1000);
-		return view;
-	}
-
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		bannerPager.startAutoScroll();
-	}
-
-	@Override
-	public void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		bannerPager.stopAutoScroll();
-	}
-
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if (!isVisibleToUser) {
-			handler.removeCallbacks(LOAD_DATA);
-		}
-	}
-
-	private void initView() {
-		// TODO Auto-generated method stub
-		initListView();
-		initTextView();
-		initBannerData();
-		initBannerAction();
-	}
-
-	/**
-	 * 初始化提示文字的TextView
-	 */
-	private void initTextView() {
 		hintTextView.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -227,32 +149,13 @@ public class ArticleFragment extends Fragment {
 				dialog.showDialog();
 				getArticleList(application.getCurrentUser().getId(), limit,
 						offset, position);
+				getBannerList(application.getCurrentUser().getId(), position);
 			}
 		});
-	}
 
-	/**
-	 * 初始化文章列表的ListView
-	 */
-	private void initListView() {
-		scrollView.setIXScrollViewListener(new IXScrollViewListener() {
-
-			@Override
-			public void onRefresh() {
-				offset = 0;
-				getArticleList(application.getCurrentUser().getId(), limit,
-						offset, position);
-			}
-
-			@Override
-			public void onLoadMore() {
-				// TODO Auto-generated method stub
-				offset = offset + limit;
-				getArticleList(application.getCurrentUser().getId(), limit,
-						offset, position);
-			}
-		});
-		setListViewHeightBasedOnChildren(articleListView);
+		// 初始化文章列表
+		articleListView = (ListView) content.findViewById(R.id.article_list);
+		articleListView.setAdapter(articleListAdapter);
 		articleListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -274,12 +177,119 @@ public class ArticleFragment extends Fragment {
 				startActivity(intent);
 			}
 		});
+
+		// 初始化banner的PagerView
+		bannerPager = (AutoScrollViewPager) content
+				.findViewById(R.id.viewpager);
+		// 根据屏幕的宽度调节ViewPager的长宽
+		WindowManager wm = (WindowManager) context
+				.getSystemService(Context.WINDOW_SERVICE);
+		@SuppressWarnings("deprecation")
+		int width = wm.getDefaultDisplay().getWidth();
+		int height = width / 2;
+		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+				width, height);
+		bannerPager.setLayoutParams(layoutParams);
+		bannerPager.setInterval(4000);
+		bannerPager.setAdapter(bannerAdapter);
+		// 设置监听器
+		bannerPager.setOnPageChangeListener(bannerListener);
+
+		titleTextView = (TextView) content.findViewById(R.id.tv_bannertext);
+		pointLayout = (LinearLayout) content.findViewById(R.id.points);
+		bannerLayout = (LinearLayout) content.findViewById(R.id.banner_layout);
+
+		// 初始化ScrollView
+		scrollView = (XScrollView) view.findViewById(R.id.scroll_view);
+		scrollView.setView(content);
+		scrollView.hiddenFooter();
+		scrollView.setPullRefreshEnable(true);
+		scrollView.setPullLoadEnable(true);
+		scrollView.setAutoLoadEnable(false);
+		scrollView.setIXScrollViewListener(new IXScrollViewListener() {
+
+			@Override
+			public void onRefresh() {
+				offset = 0;
+				getArticleList(application.getCurrentUser().getId(), limit,
+						offset, position);
+				getBannerList(application.getCurrentUser().getId(), position);
+			}
+
+			@Override
+			public void onLoadMore() {
+				// TODO Auto-generated method stub
+				offset = offset + limit;
+				getArticleList(application.getCurrentUser().getId(), limit,
+						offset, position);
+			}
+		});
+		return view;
 	}
 
 	/**
-	 * 初始化广告banner的显示
+	 * 第一次可见，需要去加载数据
 	 */
-	private void initBannerData() {
+	@Override
+	public void onFirstUserVisible() {
+		// TODO Auto-generated method stub
+		super.onFirstUserVisible();
+		// 在子线程加载数据
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				// 加载缓存数据
+				articles.clear();
+				articles.addAll(articleDao.findAll(position));
+				banners.clear();
+				banners.addAll(bannerDao.findAll(position));
+
+				// 如果缓存的文章列表为空则加载服务器数据
+				if (articles.size() == 0) {
+					getArticleList(application.getCurrentUser().getId(), limit,
+							offset, position);
+				}
+				// 如果缓存的banner列表为空则加载服务器数据
+				if (banners.size() == 0) {
+					getBannerList(application.getCurrentUser().getId(),
+							position);
+				}
+				if (articles.size() > 0 || banners.size() > 0) {
+					handler.sendEmptyMessage(0);
+				}
+			}
+		}).start();
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		bannerPager.stopAutoScroll();
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		bannerPager.startAutoScroll();
+	}
+
+	/**
+	 * 刷新文章Banner列表
+	 */
+	private void refreshBannerList() {
+		// TODO Auto-generated method stub
+		refreshBannerData();
+		refreshBannerAction();
+	}
+
+	/**
+	 * 刷新文章Banner的显示数据
+	 */
+	private void refreshBannerData() {
 		if (null == banners || banners.size() == 0) {
 			bannerPager.setVisibility(View.GONE);
 			titleTextView.setVisibility(View.GONE);
@@ -312,7 +322,6 @@ public class ArticleFragment extends Fragment {
 					@Override
 					public void onClick(View arg0) {
 						// TODO Auto-generated method stub
-						System.err.println("dianjile " + arg2);
 						User user = application.getCurrentUser();
 						Intent intent = new Intent(context, X5WebActivity.class);
 						intent.putExtra("title", getString(R.string.share));
@@ -350,12 +359,10 @@ public class ArticleFragment extends Fragment {
 	}
 
 	/**
-	 * 初始化banner滑动的监听
+	 * 刷新文章Banner滑动动作
 	 */
-	private void initBannerAction() {
+	private void refreshBannerAction() {
 		if (null != banners && banners.size() > 0) {
-			bannerListener = new BannerListener();
-			bannerPager.setOnPageChangeListener(bannerListener);
 			int index = 0;
 			bannerPager.setCurrentItem(index);
 			pointLayout.getChildAt(pointIndex).setEnabled(true);
@@ -366,31 +373,73 @@ public class ArticleFragment extends Fragment {
 	 * 列表刷新完成的回调
 	 */
 	private void loadComplete() {
-		// 列表加载完成后加载banner
-		getBannerList(application.getCurrentUser().getId(), position);
-
+		// 停止刷新动画
 		scrollView.stopRefresh();
 		scrollView.stopLoadMore();
-		setListViewHeightBasedOnChildren(articleListView);
 
+		// 更新最后一次刷新时间
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss",
 				Locale.CHINA);
 		Date curDate = new Date(System.currentTimeMillis());
 		scrollView.setRefreshTime(formatter.format(curDate));
 
-		// 设置控件的可见性
-		if (null == articles || articles.size() == 0) {
-			articleListView.setVisibility(View.GONE);
-			hintTextView.setVisibility(View.VISIBLE);
-		} else {
-			articleListView.setVisibility(View.VISIBLE);
-			hintTextView.setVisibility(View.GONE);
-		}
+		// 更新文章列表
+		refreshArticleList();
 
 		// 隐藏等待对话框
 		if (dialog.isShowing()) {
 			dialog.cancelDialog();
 		}
+	}
+
+	/**
+	 * 更新文章列表的状态，在这里判断文章列表是不是为空，同时通过代码设置高度
+	 */
+	private void refreshArticleList() {
+		// 设置控件的可见性
+		if (null == articles || articles.size() == 0) {
+			articleListView.setVisibility(View.GONE);
+			hintTextView.setVisibility(View.VISIBLE);
+			scrollView.hiddenFooter();
+		} else {
+			articleListView.setVisibility(View.VISIBLE);
+			hintTextView.setVisibility(View.GONE);
+			scrollView.showFooter();
+		}
+		setListViewHeightBasedOnChildren(articleListView);
+		articleListAdapter.notifyDataSetChanged();
+	}
+
+	/**
+	 * 文章Banner的监听器
+	 * 
+	 * @author 陈楚昭
+	 * 
+	 */
+	class BannerListener implements OnPageChangeListener {
+
+		@Override
+		public void onPageScrollStateChanged(int arg0) {
+
+		}
+
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+		}
+
+		@Override
+		public void onPageSelected(int position) {
+			// 设置标题
+			titleTextView.setText(banners.get(position).getTitle());
+			// 设置点的状态为选中
+			pointLayout.getChildAt(position).setEnabled(true);
+			// 设置前一个点的状态为未选中
+			pointLayout.getChildAt(pointIndex).setEnabled(false);
+			// 更新当前选中的索引
+			pointIndex = position;
+		}
+
 	}
 
 	private void setListViewHeightBasedOnChildren(ListView listView) {
@@ -412,29 +461,6 @@ public class ArticleFragment extends Fragment {
 		listView.setLayoutParams(params);
 	}
 
-	// 实现VierPager监听器接口
-	class BannerListener implements OnPageChangeListener {
-
-		@Override
-		public void onPageScrollStateChanged(int arg0) {
-
-		}
-
-		@Override
-		public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-		}
-
-		@Override
-		public void onPageSelected(int position) {
-			titleTextView.setText(banners.get(position).getTitle());
-			pointLayout.getChildAt(position).setEnabled(true);
-			pointLayout.getChildAt(pointIndex).setEnabled(false);
-			pointIndex = position;
-		}
-
-	}
-
 	private void getArticleList(final int userId, final int limit,
 			final int offset, final int type) {
 		String url = Constant.ARTICLE_LIST_URL + "?userId=" + userId
@@ -447,16 +473,22 @@ public class ArticleFragment extends Fragment {
 				ResponseResult result = JSON.parseObject(response,
 						ResponseResult.class);
 				if (result.getCode() == 200) {
-					List<Article> tmp = JSON.parseArray(result.getData()
+					final List<Article> tmp = JSON.parseArray(result.getData()
 							.toString(), Article.class);
 					// 如果是刷新操作则要更新数据库中的缓存数据
 					if (offset == 0) {
 						articles.clear();
-						articleDao.deleteAll(type);
-						articleDao.insert(tmp, type);
+						new Thread(new Runnable() {
+
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								articleDao.deleteAll(type);
+								articleDao.insert(tmp, type);
+							}
+						}).start();
 					}
 					articles.addAll(tmp);
-					articleListAdapter.notifyDataSetChanged();
 					scrollView.setLoadAll(tmp.size() < limit);
 				} else {
 					ResponseUtil.handleErrorInfo(context.getApplication(),
@@ -493,15 +525,20 @@ public class ArticleFragment extends Fragment {
 							.toString(), Article.class);
 					banners.clear();
 					banners.addAll(tmp);
-					bannerDao.deleteAll(type);
-					bannerDao.insert(tmp, type);
+					new Thread(new Runnable() {
+
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							bannerDao.deleteAll(type);
+							bannerDao.insert(banners, type);
+						}
+					}).start();
 				} else {
 					ResponseUtil.handleErrorInfo(context.getApplication(),
 							result);
 				}
-
-				initBannerData();
-				initBannerAction();
+				refreshBannerList();
 			}
 		};
 		// 请求失败的回调函数
@@ -509,8 +546,7 @@ public class ArticleFragment extends Fragment {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				VolleyErrorUtil.handleVolleyError(context, error);
-				initBannerData();
-				initBannerAction();
+				refreshBannerList();
 			}
 		};
 

@@ -3,12 +3,12 @@ package com.android.tengfenxiang.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.tengfenxiang.bean.Task;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.android.tengfenxiang.bean.Task;
 
 public class TaskDao {
 
@@ -26,7 +26,7 @@ public class TaskDao {
 		return taskDao;
 	}
 
-	public List<Task> findAll() {
+	public synchronized List<Task> findAll() {
 		List<Task> tasks = new ArrayList<Task>();
 		SQLiteDatabase db = helper.getWritableDatabase();
 		Cursor cursor = db.rawQuery("select * from task", null);
@@ -52,13 +52,13 @@ public class TaskDao {
 		return tasks;
 	}
 
-	public void insert(List<Task> tasks) {
+	public synchronized void insert(List<Task> tasks) {
 		for (Task task : tasks) {
 			insert(task);
 		}
 	}
 
-	public void deleteAll() {
+	public synchronized void deleteAll() {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		db.beginTransaction();
 		try {
@@ -70,7 +70,7 @@ public class TaskDao {
 		}
 	}
 
-	private void insert(Task task) {
+	private synchronized void insert(Task task) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("id", task.getId());

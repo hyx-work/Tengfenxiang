@@ -28,7 +28,7 @@ public class UserDao {
 	 * 
 	 * @param user
 	 */
-	public void insert(User user) {
+	public synchronized void insert(User user) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("id", user.getId());
@@ -61,7 +61,7 @@ public class UserDao {
 	 * 
 	 * @param phone
 	 */
-	public void deleteUser(String phone) {
+	public synchronized void deleteUser(String phone) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		db.beginTransaction();
 		try {
@@ -79,7 +79,7 @@ public class UserDao {
 	 * @param phone
 	 * @return
 	 */
-	public User findUser(String phone) {
+	public synchronized User findUser(String phone) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		Cursor cursor = db.query("user", new String[] { "id", "nickName",
 				"phone", "alipay", "avatar", "gender", "province", "city",
@@ -121,7 +121,7 @@ public class UserDao {
 	 * 
 	 * @param user
 	 */
-	public void update(User user) {
+	public synchronized void update(User user) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("id", user.getId());

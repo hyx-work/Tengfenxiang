@@ -3,12 +3,12 @@ package com.android.tengfenxiang.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.tengfenxiang.bean.Article;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.android.tengfenxiang.bean.Article;
 
 public class ArticleDao {
 
@@ -26,7 +26,7 @@ public class ArticleDao {
 		return articleDao;
 	}
 
-	public List<Article> findAll(int type) {
+	public synchronized List<Article> findAll(int type) {
 		List<Article> articles = new ArrayList<Article>();
 		SQLiteDatabase db = helper.getWritableDatabase();
 		Cursor cursor = db.rawQuery("select * from article where type=?",
@@ -48,13 +48,13 @@ public class ArticleDao {
 		return articles;
 	}
 
-	public void insert(List<Article> articles, int type) {
+	public synchronized void insert(List<Article> articles, int type) {
 		for (Article article : articles) {
 			insert(article, type);
 		}
 	}
 
-	public void deleteAll(int type) {
+	public synchronized void deleteAll(int type) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		db.beginTransaction();
 		try {
@@ -66,7 +66,7 @@ public class ArticleDao {
 		}
 	}
 
-	public void deleteAll() {
+	public synchronized void deleteAll() {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		db.beginTransaction();
 		try {
@@ -78,7 +78,7 @@ public class ArticleDao {
 		}
 	}
 
-	private void insert(Article article, int type) {
+	private synchronized void insert(Article article, int type) {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("id", article.getId());

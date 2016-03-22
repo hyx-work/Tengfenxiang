@@ -2,13 +2,6 @@ package com.android.tengfenxiang.activity;
 
 import java.util.ArrayList;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.adapter.ArticlePagerAdapter;
-import com.android.tengfenxiang.bean.ChannelItem;
-import com.android.tengfenxiang.db.DBHelper;
-import com.android.tengfenxiang.util.ChannelManage;
-import com.android.tengfenxiang.view.tab.CategoryTabStrip;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -18,13 +11,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.adapter.ArticlePagerAdapter;
+import com.android.tengfenxiang.bean.ChannelItem;
+import com.android.tengfenxiang.util.ChannelUtil;
+import com.android.tengfenxiang.view.tab.CategoryTabStrip;
+
 public class ArticleActivity extends FragmentActivity {
 
 	private CategoryTabStrip tabs;
 	private ViewPager pager;
 	private ArticlePagerAdapter adapter;
 	private ImageView channelImageView;
-	private DBHelper helper;
 	private ArrayList<ChannelItem> userChannelList = new ArrayList<ChannelItem>();
 
 	@Override
@@ -33,9 +31,8 @@ public class ArticleActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(initResource());
 
-		helper = new DBHelper(getApplication());
-		userChannelList = ((ArrayList<ChannelItem>) ChannelManage.getManage(
-				helper).getUserChannel());
+		userChannelList = ((ArrayList<ChannelItem>) ChannelUtil.getInstance(
+				getApplication()).getUserChannelItems());
 		initComponent();
 	}
 
@@ -79,8 +76,8 @@ public class ArticleActivity extends FragmentActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		if (requestCode == 0 && resultCode == -1) {
-			userChannelList = ((ArrayList<ChannelItem>) ChannelManage
-					.getManage(helper).getUserChannel());
+			userChannelList = ((ArrayList<ChannelItem>) ChannelUtil
+					.getInstance(getApplication()).getUserChannelItems());
 			pager.setOffscreenPageLimit(1);
 			adapter = new ArticlePagerAdapter(getSupportFragmentManager(),
 					getApplication(), userChannelList);

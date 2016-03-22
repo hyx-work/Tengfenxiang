@@ -116,7 +116,8 @@ public class LoginActivity extends BaseActivity {
 			if (dialog.isShowing()) {
 				dialog.cancelDialog();
 			}
-			Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+			Intent intent = new Intent(LoginActivity.this,
+					GoldCoinActivity.class);
 			startActivity(intent);
 			finish();
 		}

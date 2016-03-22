@@ -55,7 +55,7 @@ public class AboutActivity extends BaseActivity {
 
 		dialog = new LoadingDialog(this);
 		dialog.showDialog();
-		getInfo();
+		getConfig();
 	}
 
 	private void initView() {
@@ -251,8 +251,8 @@ public class AboutActivity extends BaseActivity {
 	/**
 	 * 获取联系方式的信息
 	 */
-	private void getInfo() {
-		String url = Constant.SETTING_URL;
+	private void getConfig() {
+		String url = Constant.CONFIG_URL;
 
 		// 请求成功的回调函数
 		Listener<String> listener = new Listener<String>() {

@@ -2,23 +2,11 @@ package com.android.tengfenxiang.activity;
 
 import java.util.ArrayList;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.adapter.MyChannelAdapter;
-import com.android.tengfenxiang.adapter.OtherChannelAdapter;
-import com.android.tengfenxiang.bean.ChannelItem;
-import com.android.tengfenxiang.db.DBHelper;
-import com.android.tengfenxiang.util.ChannelManage;
-import com.android.tengfenxiang.view.dialog.LoadingDialog;
-import com.android.tengfenxiang.view.gridview.ChannelGridView;
-import com.android.tengfenxiang.view.gridview.OtherGridView;
-import com.android.tengfenxiang.view.titlebar.TitleBar;
-import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
-
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -27,11 +15,22 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.adapter.MyChannelAdapter;
+import com.android.tengfenxiang.adapter.OtherChannelAdapter;
+import com.android.tengfenxiang.bean.ChannelItem;
+import com.android.tengfenxiang.util.ChannelUtil;
+import com.android.tengfenxiang.view.dialog.LoadingDialog;
+import com.android.tengfenxiang.view.gridview.ChannelGridView;
+import com.android.tengfenxiang.view.gridview.OtherGridView;
+import com.android.tengfenxiang.view.titlebar.TitleBar;
+import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 
 public class ChannelActivity extends BaseActivity implements
 		OnItemClickListener {
@@ -43,7 +42,6 @@ public class ChannelActivity extends BaseActivity implements
 	private ArrayList<ChannelItem> otherChannelList = new ArrayList<ChannelItem>();
 	private ArrayList<ChannelItem> userChannelList = new ArrayList<ChannelItem>();
 	private boolean isMove = false;
-	private DBHelper helper;
 	private TitleBar titleBar;
 	private LoadingDialog dialog;
 
@@ -66,19 +64,17 @@ public class ChannelActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.channel);
-
 		dialog = new LoadingDialog(this);
-		helper = new DBHelper(getApplication());
 
 		initView();
 		initData();
 	}
 
 	private void initData() {
-		userChannelList = ((ArrayList<ChannelItem>) ChannelManage.getManage(
-				helper).getUserChannel());
-		otherChannelList = ((ArrayList<ChannelItem>) ChannelManage.getManage(
-				helper).getOtherChannel());
+		userChannelList = ((ArrayList<ChannelItem>) ChannelUtil.getInstance(
+				application).getUserChannelItems());
+		otherChannelList = ((ArrayList<ChannelItem>) ChannelUtil.getInstance(
+				application).getOtherChannelItems());
 		userAdapter = new MyChannelAdapter(this, userChannelList);
 		userGridView.setAdapter(userAdapter);
 		otherAdapter = new OtherChannelAdapter(this, otherChannelList);
@@ -253,10 +249,10 @@ public class ChannelActivity extends BaseActivity implements
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				ChannelManage.getManage(helper).deleteAllChannel();
-				ChannelManage.getManage(helper).saveUserChannel(
+				ChannelUtil.getInstance(application).deleteAllChannel();
+				ChannelUtil.getInstance(application).saveUserChannel(
 						userAdapter.getChannnelLst());
-				ChannelManage.getManage(helper).saveOtherChannel(
+				ChannelUtil.getInstance(application).saveOtherChannel(
 						otherAdapter.getChannnelLst());
 				handler.sendEmptyMessage(0);
 			}

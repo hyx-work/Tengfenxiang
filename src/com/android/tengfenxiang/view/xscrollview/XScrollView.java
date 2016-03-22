@@ -315,7 +315,8 @@ public class XScrollView extends ScrollView implements OnScrollListener,
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent ev) {
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		// TODO Auto-generated method stub
 		if (mLastY == -1) {
 			mLastY = ev.getRawY();
 		}
@@ -344,7 +345,7 @@ public class XScrollView extends ScrollView implements OnScrollListener,
 			break;
 		}
 
-		return super.onTouchEvent(ev);
+		return super.dispatchTouchEvent(ev);
 	}
 
 	private void resetHeaderOrBottom() {

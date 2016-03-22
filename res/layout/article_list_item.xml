@@ -10,7 +10,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/app_name"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/title"

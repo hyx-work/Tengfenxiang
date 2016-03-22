@@ -57,6 +57,7 @@
         android:layout_below="@+id/line"
         android:divider="@null"
         android:overScrollMode="never"
+        android:scrollbars="none"
         android:visibility="gone" >
     </com.android.tengfenxiang.view.xlistview.XListView>
 

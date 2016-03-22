@@ -1,171 +1,136 @@
 package com.android.tengfenxiang.db;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.android.tengfenxiang.bean.ChannelItem;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class ChannelDao implements ChannelDaoInface {
-	private DBHelper helper = null;
+import com.android.tengfenxiang.bean.ChannelItem;
+import com.android.tengfenxiang.bean.ArticleType;
 
-	public ChannelDao(Context context) {
+public class ChannelDao {
+	private DBHelper helper;
+	private static ChannelDao channelDao;
+
+	private ChannelDao(Context context) {
 		helper = new DBHelper(context);
 	}
 
-	@Override
-	public boolean addCache(ChannelItem item) {
-		// TODO Auto-generated method stub
-		boolean flag = false;
-		SQLiteDatabase database = null;
-		long id = -1;
-		try {
-			database = helper.getWritableDatabase();
-			ContentValues values = new ContentValues();
-			values.put("name", item.getName());
-			values.put("id", item.getId());
-			values.put("orderId", item.getOrderId());
-			values.put("selected", item.getSelected());
-			id = database.insert("channel", null, values);
-			flag = (id != -1 ? true : false);
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			if (database != null) {
-				database.close();
-			}
+	public static ChannelDao getInstance(Context context) {
+		if (null == channelDao) {
+			channelDao = new ChannelDao(context);
 		}
-		return flag;
+		return channelDao;
 	}
 
-	@Override
-	public boolean deleteCache(String whereClause, String[] whereArgs) {
-		// TODO Auto-generated method stub
-		boolean flag = false;
-		SQLiteDatabase database = null;
-		int count = 0;
-		try {
-			database = helper.getWritableDatabase();
-			count = database.delete("channel", whereClause, whereArgs);
-			flag = (count > 0 ? true : false);
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			if (database != null) {
-				database.close();
-			}
+	public synchronized void insertUserChannel(List<ArticleType> types) {
+		for (int i = 0; i < types.size(); i++) {
+			insert(types.get(i), i);
 		}
-		return flag;
 	}
 
-	@Override
-	public boolean updateCache(ContentValues values, String whereClause,
-			String[] whereArgs) {
-		// TODO Auto-generated method stub
-		boolean flag = false;
-		SQLiteDatabase database = null;
-		int count = 0;
-		try {
-			database = helper.getWritableDatabase();
-			count = database.update("channel", values, whereClause, whereArgs);
-			flag = (count > 0 ? true : false);
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			if (database != null) {
-				database.close();
-			}
-		}
-		return flag;
-	}
-
-	@Override
-	public Map<String, String> viewCache(String selection,
-			String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		SQLiteDatabase database = null;
-		Cursor cursor = null;
-		Map<String, String> map = new HashMap<String, String>();
-		try {
-			database = helper.getReadableDatabase();
-			cursor = database.query(true, "channel", null, selection,
-					selectionArgs, null, null, null, null);
-			int cols_len = cursor.getColumnCount();
-			while (cursor.moveToNext()) {
-				for (int i = 0; i < cols_len; i++) {
-					String cols_name = cursor.getColumnName(i);
-					String cols_values = cursor.getString(cursor
-							.getColumnIndex(cols_name));
-					if (cols_values == null) {
-						cols_values = "";
-					}
-					map.put(cols_name, cols_values);
-				}
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			if (database != null) {
-				database.close();
-			}
-		}
-		return map;
-	}
-
-	@Override
-	public List<Map<String, String>> listCache(String selection,
-			String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-		SQLiteDatabase database = null;
-		Cursor cursor = null;
-		try {
-			database = helper.getReadableDatabase();
-			cursor = database.query(false, "channel", null, selection,
-					selectionArgs, null, null, null, null);
-			int cols_len = cursor.getColumnCount();
-			while (cursor.moveToNext()) {
-				Map<String, String> map = new HashMap<String, String>();
-				for (int i = 0; i < cols_len; i++) {
-
-					String cols_name = cursor.getColumnName(i);
-					String cols_values = cursor.getString(cursor
-							.getColumnIndex(cols_name));
-					if (cols_values == null) {
-						cols_values = "";
-					}
-					map.put(cols_name, cols_values);
-				}
-				list.add(map);
-			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		} finally {
-			if (database != null) {
-				database.close();
-			}
-		}
-		return list;
-	}
-
-	public void clearFeedTable() {
-		String sql = "DELETE FROM channel;";
+	private synchronized void insert(ArticleType type, int order) {
 		SQLiteDatabase db = helper.getWritableDatabase();
-		db.execSQL(sql);
-		revertSeq();
+		ContentValues values = new ContentValues();
+		values.put("id", type.getCode());
+		values.put("name", type.getName());
+		values.put("orderId", order);
+		values.put("selected", 1);
+
+		db.beginTransaction();
+		try {
+			db.insert("channel", null, values);
+			db.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.endTransaction();
+			db.close();
+		}
 	}
 
-	private void revertSeq() {
-		String sql = "update sqlite_sequence set seq=0 where name='channel'";
+	public synchronized void insertChannel(ChannelItem item) {
 		SQLiteDatabase db = helper.getWritableDatabase();
-		db.execSQL(sql);
+		ContentValues values = new ContentValues();
+		values.put("id", item.getId());
+		values.put("name", item.getName());
+		values.put("orderId", item.getOrderId());
+		values.put("selected", item.getSelected());
+
+		db.beginTransaction();
+		try {
+			db.insert("channel", null, values);
+			db.setTransactionSuccessful();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.endTransaction();
+			db.close();
+		}
+	}
+
+	public synchronized void deleteAll() {
+		SQLiteDatabase db = helper.getWritableDatabase();
+		db.beginTransaction();
+		try {
+			db.delete("channel", null, null);
+			// 重置_id从0开始自增长
+			String sql = "update sqlite_sequence set seq=0 where name='channel'";
+			db.execSQL(sql);
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
+			db.close();
+		}
+	}
+
+	public synchronized List<ChannelItem> findAllChannel(int selected) {
+		List<ChannelItem> items = new ArrayList<ChannelItem>();
+		SQLiteDatabase db = helper.getWritableDatabase();
+		Cursor cursor = db.rawQuery("select * from channel where selected=?",
+				new String[] { selected + "" });
+		while (cursor.moveToNext()) {
+			int id = cursor.getInt(cursor.getColumnIndex("id"));
+			String name = cursor.getString(cursor.getColumnIndex("name"));
+			int orderId = cursor.getInt(cursor.getColumnIndex("orderId"));
+
+			ChannelItem item = new ChannelItem(id, name, orderId, selected);
+			items.add(item);
+		}
+		cursor.close();
+		db.close();
+		return items;
+	}
+
+	public synchronized List<ArticleType> findAllItem(int selected) {
+		List<ArticleType> items = new ArrayList<ArticleType>();
+		SQLiteDatabase db = helper.getWritableDatabase();
+		Cursor cursor = db.rawQuery("select * from channel where selected=?",
+				new String[] { selected + "" });
+		while (cursor.moveToNext()) {
+			int id = cursor.getInt(cursor.getColumnIndex("id"));
+			String name = cursor.getString(cursor.getColumnIndex("name"));
+			ArticleType item = new ArticleType(id, name);
+			items.add(item);
+		}
+		cursor.close();
+		db.close();
+		return items;
+	}
+
+	public synchronized void delete(ArticleType info) {
+		SQLiteDatabase db = helper.getWritableDatabase();
+		db.beginTransaction();
+		try {
+			db.delete("channel", "id=?", new String[] { info.getCode() + "" });
+			db.setTransactionSuccessful();
+		} finally {
+			db.endTransaction();
+			db.close();
+		}
 	}
 
 }

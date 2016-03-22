@@ -129,9 +129,9 @@ public class Constant {
 			+ "/system/message/list/";
 
 	/**
-	 * 获取QQ群和客服电话的URL
+	 * 获取静态配置文件的URL
 	 */
-	public final static String SETTING_URL = SERVER_ADDRESS
+	public final static String CONFIG_URL = SERVER_ADDRESS
 			+ "/static/config.json";
 
 	/**

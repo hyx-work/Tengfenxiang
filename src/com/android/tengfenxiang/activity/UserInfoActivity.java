@@ -2,9 +2,9 @@ package com.android.tengfenxiang.activity;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,15 +16,20 @@ import android.widget.TextView;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.SimpleListAdapter;
+import com.android.tengfenxiang.bean.Setting;
+import com.android.tengfenxiang.util.ListViewUtil;
 import com.bumptech.glide.Glide;
 
 public class UserInfoActivity extends BaseActivity {
 
 	private ListView userInfoListView;
 	private TextView nicknameTextView;
+	private TextView pointTextView;
 	private ImageView headImageView;
 
-	private MediaPlayer mediaPlayer;
+	private Setting setting;
+	private int cash;
+	private SharedPreferences preferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +37,10 @@ public class UserInfoActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
 
-		mediaPlayer = MediaPlayer.create(UserInfoActivity.this,
-				R.raw.gold_coin_music);
+		setting = application.getSetting();
+		cash = application.getCurrentUser().getWithdrawableCash();
+		preferences = getSharedPreferences(getPackageName(),
+				Context.MODE_PRIVATE);
 	}
 
 	@Override
@@ -49,7 +56,6 @@ public class UserInfoActivity extends BaseActivity {
 	}
 
 	private void initView() {
-
 		// 初始化头像的显示
 		headImageView = (ImageView) findViewById(R.id.head);
 		loadHead();
@@ -57,6 +63,17 @@ public class UserInfoActivity extends BaseActivity {
 		// 初始化昵称的显示
 		nicknameTextView = (TextView) findViewById(R.id.nickname);
 		nicknameTextView.setText(application.getCurrentUser().getNickName());
+
+		// 初始化银两的显示
+		pointTextView = (TextView) findViewById(R.id.points);
+		float pointsToCashRate = 0.1f;
+		if (null != setting) {
+			pointsToCashRate = (float) setting.getPointsToCashRate();
+		} else {
+			pointsToCashRate = preferences.getFloat("pointsToCashRate", 0.02f);
+		}
+		int point = (int) (cash / pointsToCashRate);
+		pointTextView.setText(getString(R.string.current_point) + point);
 
 		// 初始化用户信息列表
 		userInfoListView = (ListView) findViewById(R.id.user_info_list);
@@ -79,20 +96,9 @@ public class UserInfoActivity extends BaseActivity {
 		SimpleListAdapter adapter = new SimpleListAdapter(icons, infos,
 				UserInfoActivity.this);
 		userInfoListView.setAdapter(adapter);
+		ListViewUtil.setListViewHeightBasedOnChildren(userInfoListView);
 		// 设置用户信息列表的点击监听
 		addClickListener();
-
-		// 播放金币声音
-		mediaPlayer.start();
-		// 监听音效播放完毕
-		mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
-
-			@Override
-			public void onCompletion(MediaPlayer arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 	}
 
 	/**
@@ -159,13 +165,4 @@ public class UserInfoActivity extends BaseActivity {
 		}
 	}
 
-	@Override
-	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		if (mediaPlayer.isPlaying()) {
-			mediaPlayer.stop();
-		}
-		mediaPlayer.release();
-	}
 }

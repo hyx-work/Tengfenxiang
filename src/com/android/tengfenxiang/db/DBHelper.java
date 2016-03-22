@@ -41,8 +41,9 @@ public class DBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
-		db.execSQL("DROP TABLE IF EXISTS task");
-		db.execSQL("DROP TABLE IF EXISTS article");
+		// task表和article表没有修改，不需要drop操作
+		// db.execSQL("DROP TABLE IF EXISTS task");
+		// db.execSQL("DROP TABLE IF EXISTS article");
 		// 数据库升级时channel删除，因为这里保存的是用户的数据不是缓存
 		// db.execSQL("DROP TABLE IF EXISTS channel");
 		db.execSQL("DROP TABLE IF EXISTS user");

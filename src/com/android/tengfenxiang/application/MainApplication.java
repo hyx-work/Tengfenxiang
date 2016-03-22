@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.widget.Toast;
 
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.bean.Setting;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.receiver.ConnectionChangeReceiver;
 import com.android.tengfenxiang.receiver.ConnectionChangeReceiver.OnNetworkChangedListener;
@@ -26,6 +27,7 @@ import com.tencent.smtt.sdk.QbSdk;
 public class MainApplication extends Application {
 
 	private static User currentUser;
+	private static Setting setting;
 	private ConnectionChangeReceiver myReceiver;
 	private static LoginUtil loginUtil;
 	private SharedPreferences preferences;
@@ -127,6 +129,14 @@ public class MainApplication extends Application {
 
 	public void setCurrentUser(User currentUser) {
 		MainApplication.currentUser = currentUser;
+	}
+
+	public Setting getSetting() {
+		return setting;
+	}
+
+	public void setSetting(Setting setting) {
+		MainApplication.setting = setting;
 	}
 
 	public LoginUtil getLoginUtil() {

@@ -2,28 +2,26 @@ package com.android.tengfenxiang.activity;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.ViewStub;
+import android.widget.ListView;
+
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.IntegralListAdapter;
 import com.android.tengfenxiang.bean.Integral;
 import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.ListViewUtil;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
-import com.android.volley.VolleyError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewStub;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 public class IntegralActivity extends BaseActivity {
 
@@ -94,7 +92,7 @@ public class IntegralActivity extends BaseActivity {
 		IntegralListAdapter adapter = new IntegralListAdapter(this, infos,
 				values);
 		taskListView.setAdapter(adapter);
-		setListViewHeightBasedOnChildren(taskListView);
+		ListViewUtil.setListViewHeightBasedOnChildren(taskListView);
 	}
 
 	private void initArticleList() {
@@ -117,7 +115,7 @@ public class IntegralActivity extends BaseActivity {
 		IntegralListAdapter adapter = new IntegralListAdapter(this, infos,
 				values);
 		articleListView.setAdapter(adapter);
-		setListViewHeightBasedOnChildren(articleListView);
+		ListViewUtil.setListViewHeightBasedOnChildren(articleListView);
 	}
 
 	private void initOtherList() {
@@ -142,7 +140,7 @@ public class IntegralActivity extends BaseActivity {
 		IntegralListAdapter adapter = new IntegralListAdapter(this, infos,
 				values);
 		otherListView.setAdapter(adapter);
-		setListViewHeightBasedOnChildren(otherListView);
+		ListViewUtil.setListViewHeightBasedOnChildren(otherListView);
 	}
 
 	private void getDetails(int userId, int detailType) {
@@ -175,25 +173,6 @@ public class IntegralActivity extends BaseActivity {
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
 		RequestUtil.getRequestQueue(getApplication()).add(request);
-	}
-
-	public void setListViewHeightBasedOnChildren(ListView listView) {
-		ListAdapter listAdapter = listView.getAdapter();
-		if (listAdapter == null) {
-			return;
-		}
-
-		int totalHeight = 0;
-		for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-			View listItem = listAdapter.getView(i, null, listView);
-			listItem.measure(0, 0);
-			totalHeight += listItem.getMeasuredHeight();
-		}
-
-		ViewGroup.LayoutParams params = listView.getLayoutParams();
-		params.height = totalHeight
-				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-		listView.setLayoutParams(params);
 	}
 
 }

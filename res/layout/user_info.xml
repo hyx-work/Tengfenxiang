@@ -14,43 +14,63 @@
         titlebar:titleTextColor="@color/white" >
     </com.android.tengfenxiang.view.titlebar.TitleBar>
 
-    <LinearLayout
-        android:id="@+id/head_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:layout_alignParentLeft="true"
+        android:layout_height="match_parent"
         android:layout_below="@+id/title_bar"
-        android:background="@drawable/user_head_bg"
-        android:orientation="vertical" >
+        android:overScrollMode="never"
+        android:scrollbars="none" >
 
-        <com.android.tengfenxiang.view.circleimage.CircleImageView
-            android:id="@+id/head"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/default_head" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/head_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/light_gray"
+                android:orientation="vertical" >
 
-    <ListView
-        android:id="@+id/user_info_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/head_layout"
-        android:overScrollMode="never" >
-    </ListView>
+                <com.android.tengfenxiang.view.circleimage.CircleImageView
+                    android:id="@+id/head"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/default_head" />
+
+                <TextView
+                    android:id="@+id/nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/points"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/user_info_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/head_layout"
+                android:overScrollMode="never" >
+            </ListView>
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

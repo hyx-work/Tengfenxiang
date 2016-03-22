@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,10 +41,13 @@ import com.android.tengfenxiang.db.ArticleDao;
 import com.android.tengfenxiang.db.BannerDao;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.DensityUtil;
+import com.android.tengfenxiang.util.ListViewUtil;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
+import com.android.tengfenxiang.view.toptoast.TopToast;
+import com.android.tengfenxiang.view.toptoast.TopToast.Style;
 import com.android.tengfenxiang.view.viewpager.AutoScrollViewPager;
 import com.android.tengfenxiang.view.xscrollview.XScrollView;
 import com.android.tengfenxiang.view.xscrollview.XScrollView.IXScrollViewListener;
@@ -88,10 +90,35 @@ public class ArticleFragment extends LazyFragment {
 	private int pointIndex = 0;
 	private Activity context;
 
+	/**
+	 * 加载缓存数据完成
+	 */
+	private final int LOAD_CECHE_FINISH = 0;
+	/**
+	 * 存储缓存数据完成
+	 */
+	private final int STORE_CECHE_FINISH = 1;
+	/**
+	 * bundle数据的key
+	 */
+	private final String BUNDLE_KEY = "refresh_number";
+
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
-			refreshArticleList();
-			refreshBannerList();
+			switch (msg.what) {
+			case LOAD_CECHE_FINISH:
+				refreshArticleList();
+				refreshBannerList();
+				break;
+
+			case STORE_CECHE_FINISH:
+				int number = msg.getData().getInt(BUNDLE_KEY);
+				showRefreshNumber(number);
+				break;
+
+			default:
+				break;
+			}
 		};
 	};
 
@@ -141,17 +168,17 @@ public class ArticleFragment extends LazyFragment {
 
 		// 初始化提示文字
 		hintTextView = (TextView) view.findViewById(R.id.empty_article_hint);
-		hintTextView.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				dialog.showDialog();
-				getArticleList(application.getCurrentUser().getId(), limit,
-						offset, position);
-				getBannerList(application.getCurrentUser().getId(), position);
-			}
-		});
+		// hintTextView.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View arg0) {
+		// // TODO Auto-generated method stub
+		// dialog.showDialog();
+		// getArticleList(application.getCurrentUser().getId(), limit,
+		// offset, position);
+		// getBannerList(application.getCurrentUser().getId(), position);
+		// }
+		// });
 
 		// 初始化文章列表
 		articleListView = (ListView) content.findViewById(R.id.article_list);
@@ -164,7 +191,7 @@ public class ArticleFragment extends LazyFragment {
 				// TODO Auto-generated method stub
 				User user = application.getCurrentUser();
 				Intent intent = new Intent(context, X5WebActivity.class);
-				intent.putExtra("title", getString(R.string.share));
+				intent.putExtra("title", context.getString(R.string.share));
 				String url = articles.get(arg2).getShareUrl();
 				if (null != user.getToken() && !user.getToken().equals("")) {
 					url = url + "&token=" + user.getToken();
@@ -257,7 +284,7 @@ public class ArticleFragment extends LazyFragment {
 							position);
 				}
 				if (articles.size() > 0 || banners.size() > 0) {
-					handler.sendEmptyMessage(0);
+					handler.sendEmptyMessage(LOAD_CECHE_FINISH);
 				}
 			}
 		}).start();
@@ -325,7 +352,8 @@ public class ArticleFragment extends LazyFragment {
 						// TODO Auto-generated method stub
 						User user = application.getCurrentUser();
 						Intent intent = new Intent(context, X5WebActivity.class);
-						intent.putExtra("title", getString(R.string.share));
+						intent.putExtra("title",
+								context.getString(R.string.share));
 						String url = banners.get(arg2).getShareUrl();
 						if (null != user.getToken()
 								&& !user.getToken().equals("")) {
@@ -407,7 +435,7 @@ public class ArticleFragment extends LazyFragment {
 			hintTextView.setVisibility(View.GONE);
 			scrollView.showFooter();
 		}
-		setListViewHeightBasedOnChildren(articleListView);
+		ListViewUtil.setListViewHeightBasedOnChildren(articleListView);
 		articleListAdapter.notifyDataSetChanged();
 	}
 
@@ -443,23 +471,44 @@ public class ArticleFragment extends LazyFragment {
 
 	}
 
-	private void setListViewHeightBasedOnChildren(ListView listView) {
-		ListAdapter listAdapter = listView.getAdapter();
-		if (listAdapter == null) {
-			return;
+	/**
+	 * 显示文章更新提示信息
+	 * 
+	 * @param number
+	 */
+	private void showRefreshNumber(int number) {
+		String text;
+		if (number == 0) {
+			text = context.getString(R.string.no_update_article);
+		} else {
+			text = context.getString(R.string.update_article_number);
+			text = text.replace("?", number + "");
 		}
+		Style style = new Style(TopToast.LENGTH_SHORT, R.color.dodger_blue);
+		TopToast toast = TopToast.makeText(context, text, style);
+		toast.show();
+	}
 
-		int totalHeight = 0;
-		for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-			View listItem = listAdapter.getView(i, null, listView);
-			listItem.measure(0, 0);
-			totalHeight += listItem.getMeasuredHeight();
+	/**
+	 * 计算更新了多少篇文章
+	 * 
+	 * @param news
+	 * @param olds
+	 * @return
+	 */
+	private int calculateRefreshNumber(List<Article> news, List<Article> olds) {
+		int number = 0;
+		if (olds.size() > 0) {
+			for (Article article : news) {
+				if (article.getId() == olds.get(0).getId()) {
+					break;
+				}
+				number++;
+			}
+		} else {
+			number = news.size();
 		}
-
-		ViewGroup.LayoutParams params = listView.getLayoutParams();
-		params.height = totalHeight
-				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-		listView.setLayoutParams(params);
+		return number;
 	}
 
 	private void getArticleList(final int userId, final int limit,
@@ -484,8 +533,19 @@ public class ArticleFragment extends LazyFragment {
 							@Override
 							public void run() {
 								// TODO Auto-generated method stub
+								// 计算更新了多少条数据
+								int refreshNumber = calculateRefreshNumber(tmp,
+										articleDao.findAll(type));
 								articleDao.deleteAll(type);
 								articleDao.insert(tmp, type);
+
+								// 数据库操作完成通知UI线程显示刷新的数据数量
+								Message msg = new Message();
+								msg.what = STORE_CECHE_FINISH;
+								Bundle bundle = new Bundle();
+								bundle.putInt(BUNDLE_KEY, refreshNumber);
+								msg.setData(bundle);
+								handler.sendMessage(msg);
 							}
 						}).start();
 					}
@@ -522,7 +582,7 @@ public class ArticleFragment extends LazyFragment {
 				ResponseResult result = JSON.parseObject(response,
 						ResponseResult.class);
 				if (result.getCode() == 200) {
-					List<Article> tmp = JSON.parseArray(result.getData()
+					final List<Article> tmp = JSON.parseArray(result.getData()
 							.toString(), Article.class);
 					banners.clear();
 					banners.addAll(tmp);
@@ -532,7 +592,7 @@ public class ArticleFragment extends LazyFragment {
 						public void run() {
 							// TODO Auto-generated method stub
 							bannerDao.deleteAll(type);
-							bannerDao.insert(banners, type);
+							bannerDao.insert(tmp, type);
 						}
 					}).start();
 				} else {

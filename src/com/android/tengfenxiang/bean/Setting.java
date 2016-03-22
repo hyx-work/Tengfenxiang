@@ -8,7 +8,7 @@ public class Setting {
 
 	private double pointsToCashRate;
 
-	private List<ItemInfo> articleTypes;
+	private List<ArticleType> articleTypes;
 
 	public aboutInfo getAboutViewSettings() {
 		return aboutViewSettings;
@@ -26,11 +26,11 @@ public class Setting {
 		this.pointsToCashRate = pointsToCashRate;
 	}
 
-	public List<ItemInfo> getArticleTypes() {
+	public List<ArticleType> getArticleTypes() {
 		return articleTypes;
 	}
 
-	public void setArticleTypes(List<ItemInfo> articleTypes) {
+	public void setArticleTypes(List<ArticleType> articleTypes) {
 		this.articleTypes = articleTypes;
 	}
 

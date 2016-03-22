@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:titlebar="http://schemas.android.com/apk/res/com.android.tengfenxiang"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <com.android.tengfenxiang.view.titlebar.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:visibility="invisible"
+        titlebar:title="@string/article_list"
+        titlebar:titleTextColor="@color/white" />
+
+    <com.android.tengfenxiang.view.tab.CategoryTabStrip
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:clipToPadding="false"
+        android:paddingLeft="6.0dp"
+        android:paddingRight="6.0dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@android:id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textColor="?android:textColorPrimaryInverse"
+        android:textIsSelectable="false"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

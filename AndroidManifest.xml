@@ -138,6 +138,8 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name="com.android.tengfenxiang.activity.GoldCoinActivity" >
+        </activity>
 
         <meta-data
             android:name="QBSDKAppKey"

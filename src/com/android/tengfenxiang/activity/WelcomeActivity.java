@@ -90,7 +90,8 @@ public class WelcomeActivity extends BaseActivity {
 			if (dialog.isShowing()) {
 				dialog.cancelDialog();
 			}
-			Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+			Intent intent = new Intent(WelcomeActivity.this,
+					GoldCoinActivity.class);
 			startActivity(intent);
 			finish();
 		}

@@ -7,20 +7,22 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.Setting;
 import com.android.tengfenxiang.view.textview.RiseNumberTextView;
-import com.bumptech.glide.Glide;
 
 public class GoldCoinActivity extends BaseActivity {
 
 	private MediaPlayer mediaPlayer;
 	private Button takeInButton;
 	private RiseNumberTextView profitTextView;
-	private ImageView coinImageView;
+	private WebView coinView;
+	private RelativeLayout layout;
 	private Setting setting;
 	private int cash;
 	private SharedPreferences preferences;
@@ -38,7 +40,22 @@ public class GoldCoinActivity extends BaseActivity {
 
 		mediaPlayer = MediaPlayer.create(GoldCoinActivity.this,
 				R.raw.gold_coin_music);
+		layout = (RelativeLayout) findViewById(R.id.gold_coin_layout);
 
+		// 初始化银两显示文字
+		profitTextView = (RiseNumberTextView) findViewById(R.id.profit_number_text);
+		float pointsToCashRate = 0.1f;
+		if (null != setting) {
+			pointsToCashRate = (float) setting.getPointsToCashRate();
+		} else {
+			pointsToCashRate = preferences.getFloat("pointsToCashRate", 0.01f);
+		}
+		int point = (int) (cash / pointsToCashRate);
+		profitTextView.withNumber(point);
+		// 时间设置为2秒，跟音频和gif的时间一致
+		profitTextView.setDuration(2000);
+
+		// 初始化按钮事件
 		takeInButton = (Button) findViewById(R.id.take_in_btn);
 		takeInButton.setOnClickListener(new OnClickListener() {
 
@@ -52,36 +69,41 @@ public class GoldCoinActivity extends BaseActivity {
 			}
 		});
 
-		coinImageView = (ImageView) findViewById(R.id.coin_image);
-		profitTextView = (RiseNumberTextView) findViewById(R.id.profit_number_text);
-
-		float pointsToCashRate = 0.1f;
-		if (null != setting) {
-			pointsToCashRate = (float) setting.getPointsToCashRate();
-		} else {
-			pointsToCashRate = preferences.getFloat("pointsToCashRate", 0.02f);
-		}
-		int point = (int) (cash / pointsToCashRate);
-		profitTextView.withNumber(point);
-		profitTextView.setDuration(2000);
-
-		// 开始显示gif图片
-		Glide.with(this.getApplicationContext()).load(R.drawable.gold_coin)
-				.into(coinImageView);
-		// 数字开始增长
-		profitTextView.start();
-		// 开始播放声音
-		mediaPlayer.start();
+		// 初始化webview用来显示gif图片
+		coinView = (WebView) findViewById(R.id.coin_image);
+		coinView.setWebChromeClient(new WebChromeClient() {
+			@Override
+			public void onProgressChanged(WebView view, int newProgress) {
+				// TODO Auto-generated method stub
+				super.onProgressChanged(view, newProgress);
+				// 网页加载成功后开始播放声音，并且数字从0开始增长
+				if (newProgress == 100) {
+					// 数字开始增长
+					profitTextView.start();
+					// 开始播放声音
+					mediaPlayer.start();
+				}
+			}
+		});
+		coinView.loadUrl("file:///android_asset/gold_coin.html");
 	}
 
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		// 释放媒体播放器资源
 		if (mediaPlayer.isPlaying()) {
 			mediaPlayer.stop();
 		}
 		mediaPlayer.release();
+
+		// 释放webview资源
+		if (null != coinView) {
+			layout.removeView(coinView);
+			coinView.removeAllViews();
+			coinView.destroy();
+		}
 	}
 
 }

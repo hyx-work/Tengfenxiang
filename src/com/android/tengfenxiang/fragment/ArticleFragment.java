@@ -12,18 +12,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,7 +35,6 @@ import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.db.ArticleDao;
 import com.android.tengfenxiang.db.BannerDao;
 import com.android.tengfenxiang.util.Constant;
-import com.android.tengfenxiang.util.DensityUtil;
 import com.android.tengfenxiang.util.ListViewUtil;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
@@ -48,14 +42,14 @@ import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.toptoast.TopToast;
 import com.android.tengfenxiang.view.toptoast.TopToast.Style;
-import com.android.tengfenxiang.view.viewpager.AutoScrollViewPager;
+import com.android.tengfenxiang.view.viewpager.RollPagerView;
+import com.android.tengfenxiang.view.viewpager.RollPagerView.OnPageSelectedListener;
 import com.android.tengfenxiang.view.xscrollview.XScrollView;
 import com.android.tengfenxiang.view.xscrollview.XScrollView.IXScrollViewListener;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.bumptech.glide.Glide;
 
 public class ArticleFragment extends LazyFragment {
 
@@ -69,6 +63,8 @@ public class ArticleFragment extends LazyFragment {
 	private ArticleListAdapter articleListAdapter;
 	private ArticleDao articleDao;
 	private BannerDao bannerDao;
+	private BannerAdapter bannerAdapter;
+	private Activity context;
 
 	private MainApplication application;
 	private List<Article> articles = new ArrayList<Article>();
@@ -78,17 +74,9 @@ public class ArticleFragment extends LazyFragment {
 	private TextView hintTextView;
 	private XScrollView scrollView;
 
-	private AutoScrollViewPager bannerPager;
-	private List<ImageView> bannerViews = new ArrayList<ImageView>();
+	private RollPagerView bannerPager;
 	private TextView titleTextView;
-	private LinearLayout pointLayout;
 	private LinearLayout bannerLayout;
-
-	private BannerAdapter bannerAdapter;
-	private BannerListener bannerListener;
-
-	private int pointIndex = 0;
-	private Activity context;
 
 	/**
 	 * 加载缓存数据完成
@@ -103,12 +91,18 @@ public class ArticleFragment extends LazyFragment {
 	 */
 	private final String BUNDLE_KEY = "refresh_number";
 
+	private int currentIndex = 0;
+
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case LOAD_CECHE_FINISH:
 				refreshArticleList();
 				refreshBannerList();
+				offset = 0;
+				getArticleList(application.getCurrentUser().getId(), limit,
+						offset, position);
+				getBannerList(application.getCurrentUser().getId(), position);
 				break;
 
 			case STORE_CECHE_FINISH:
@@ -152,8 +146,6 @@ public class ArticleFragment extends LazyFragment {
 
 		// 初始化适配器
 		articleListAdapter = new ArticleListAdapter(context, articles);
-		bannerAdapter = new BannerAdapter(bannerViews);
-		bannerListener = new BannerListener();
 	}
 
 	/**
@@ -168,17 +160,6 @@ public class ArticleFragment extends LazyFragment {
 
 		// 初始化提示文字
 		hintTextView = (TextView) view.findViewById(R.id.empty_article_hint);
-		// hintTextView.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View arg0) {
-		// // TODO Auto-generated method stub
-		// dialog.showDialog();
-		// getArticleList(application.getCurrentUser().getId(), limit,
-		// offset, position);
-		// getBannerList(application.getCurrentUser().getId(), position);
-		// }
-		// });
 
 		// 初始化文章列表
 		articleListView = (ListView) content.findViewById(R.id.article_list);
@@ -206,8 +187,7 @@ public class ArticleFragment extends LazyFragment {
 		});
 
 		// 初始化banner的PagerView
-		bannerPager = (AutoScrollViewPager) content
-				.findViewById(R.id.viewpager);
+		bannerPager = (RollPagerView) content.findViewById(R.id.viewpager);
 		// 根据屏幕的宽度调节ViewPager的长宽
 		WindowManager wm = (WindowManager) context
 				.getSystemService(Context.WINDOW_SERVICE);
@@ -217,13 +197,23 @@ public class ArticleFragment extends LazyFragment {
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 				width, height);
 		bannerPager.setLayoutParams(layoutParams);
-		bannerPager.setInterval(4000);
+		bannerAdapter = new BannerAdapter(bannerPager, getActivity(), banners,
+				application.getCurrentUser());
+		bannerPager.setAnimationDurtion(500);
 		bannerPager.setAdapter(bannerAdapter);
-		// 设置监听器
-		bannerPager.setOnPageChangeListener(bannerListener);
+		bannerPager.setOnPageSelectedListener(new OnPageSelectedListener() {
+
+			@Override
+			public void onPageSelected(int position) {
+				// TODO Auto-generated method stub
+				if (banners.size() > 0) {
+					currentIndex = position % banners.size();
+					titleTextView.setText(banners.get(currentIndex).getTitle());
+				}
+			}
+		});
 
 		titleTextView = (TextView) content.findViewById(R.id.tv_bannertext);
-		pointLayout = (LinearLayout) content.findViewById(R.id.points);
 		bannerLayout = (LinearLayout) content.findViewById(R.id.banner_layout);
 
 		// 初始化ScrollView
@@ -272,36 +262,9 @@ public class ArticleFragment extends LazyFragment {
 				articles.addAll(articleDao.findAll(position));
 				banners.clear();
 				banners.addAll(bannerDao.findAll(position));
-
-				// 如果缓存的文章列表为空则加载服务器数据
-				if (articles.size() == 0) {
-					getArticleList(application.getCurrentUser().getId(), limit,
-							offset, position);
-				}
-				// 如果缓存的banner列表为空则加载服务器数据
-				if (banners.size() == 0) {
-					getBannerList(application.getCurrentUser().getId(),
-							position);
-				}
-				if (articles.size() > 0 || banners.size() > 0) {
-					handler.sendEmptyMessage(LOAD_CECHE_FINISH);
-				}
+				handler.sendEmptyMessage(LOAD_CECHE_FINISH);
 			}
 		}).start();
-	}
-
-	@Override
-	public void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		bannerPager.stopAutoScroll();
-	}
-
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		bannerPager.startAutoScroll();
 	}
 
 	/**
@@ -309,92 +272,24 @@ public class ArticleFragment extends LazyFragment {
 	 */
 	private void refreshBannerList() {
 		// TODO Auto-generated method stub
-		refreshBannerData();
-		refreshBannerAction();
-	}
-
-	/**
-	 * 刷新文章Banner的显示数据
-	 */
-	private void refreshBannerData() {
+		bannerAdapter.notifyDataSetChanged();
 		if (null == banners || banners.size() == 0) {
 			bannerPager.setVisibility(View.GONE);
 			titleTextView.setVisibility(View.GONE);
-			pointLayout.setVisibility(View.GONE);
 			bannerLayout.setVisibility(View.GONE);
 		} else {
 			bannerPager.setVisibility(View.VISIBLE);
 			titleTextView.setVisibility(View.VISIBLE);
-			pointLayout.setVisibility(View.VISIBLE);
 			bannerLayout.setVisibility(View.VISIBLE);
-			titleTextView.setText(banners.get(0).getTitle());
 
-			View view;
-			LayoutParams params;
-			bannerViews.clear();
-			pointLayout.removeAllViews();
-
-			for (int i = 0; i < banners.size(); i++) {
-				// 设置广告图
-				ImageView imageView = new ImageView(context);
-				imageView.setLayoutParams(new LayoutParams(
-						LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-				imageView.setScaleType(ScaleType.FIT_XY);
-				Glide.with(context.getApplicationContext())
-						.load(banners.get(i).getThumbnails()).centerCrop()
-						.crossFade().into(imageView);
-
-				final int arg2 = i;
-				imageView.setOnClickListener(new OnClickListener() {
-
-					@Override
-					public void onClick(View arg0) {
-						// TODO Auto-generated method stub
-						User user = application.getCurrentUser();
-						Intent intent = new Intent(context, X5WebActivity.class);
-						intent.putExtra("title",
-								context.getString(R.string.share));
-						String url = banners.get(arg2).getShareUrl();
-						if (null != user.getToken()
-								&& !user.getToken().equals("")) {
-							url = url + "&token=" + user.getToken();
-						}
-						intent.putExtra("url", url);
-						intent.putExtra("article_id", banners.get(arg2).getId());
-						intent.putExtra("web_title", banners.get(arg2)
-								.getTitle());
-						intent.putExtra("web_content", banners.get(arg2)
-								.getContent());
-						intent.putExtra("image", banners.get(arg2)
-								.getThumbnails());
-						startActivity(intent);
-					}
-				});
-				bannerViews.add(imageView);
-
-				// 设置圆圈点
-				view = new View(context);
-				params = new LayoutParams(DensityUtil.dip2px(context, 5),
-						DensityUtil.dip2px(context, 5));
-				params.leftMargin = DensityUtil.dip2px(context, 10);
-				view.setBackgroundResource(R.drawable.point_background);
-				view.setLayoutParams(params);
-				view.setEnabled(false);
-
-				pointLayout.addView(view);
+			// 图片回滚到第一页的位置
+			int current = bannerPager.getViewPager().getCurrentItem();
+			for (int i = 0; i <= current; i++) {
+				bannerPager.getViewPager().setCurrentItem(current - i, false);
 			}
-			bannerAdapter.notifyDataSetChanged();
-		}
-	}
-
-	/**
-	 * 刷新文章Banner滑动动作
-	 */
-	private void refreshBannerAction() {
-		if (null != banners && banners.size() > 0) {
-			int index = 0;
-			bannerPager.setCurrentItem(index);
-			pointLayout.getChildAt(pointIndex).setEnabled(true);
+			currentIndex = 0;
+			// 将标题设置为第一条的标题
+			titleTextView.setText(banners.get(currentIndex).getTitle());
 		}
 	}
 
@@ -402,6 +297,9 @@ public class ArticleFragment extends LazyFragment {
 	 * 列表刷新完成的回调
 	 */
 	private void loadComplete() {
+		// 更新文章列表
+
+		refreshArticleList();
 		// 停止刷新动画
 		scrollView.stopRefresh();
 		scrollView.stopLoadMore();
@@ -411,9 +309,6 @@ public class ArticleFragment extends LazyFragment {
 				Locale.CHINA);
 		Date curDate = new Date(System.currentTimeMillis());
 		scrollView.setRefreshTime(formatter.format(curDate));
-
-		// 更新文章列表
-		refreshArticleList();
 
 		// 隐藏等待对话框
 		if (dialog.isShowing()) {
@@ -440,53 +335,18 @@ public class ArticleFragment extends LazyFragment {
 	}
 
 	/**
-	 * 文章Banner的监听器
-	 * 
-	 * @author 陈楚昭
-	 * 
-	 */
-	class BannerListener implements OnPageChangeListener {
-
-		@Override
-		public void onPageScrollStateChanged(int arg0) {
-
-		}
-
-		@Override
-		public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-		}
-
-		@Override
-		public void onPageSelected(int position) {
-			// 设置标题
-			titleTextView.setText(banners.get(position).getTitle());
-			// 设置点的状态为选中
-			pointLayout.getChildAt(position).setEnabled(true);
-			// 设置前一个点的状态为未选中
-			pointLayout.getChildAt(pointIndex).setEnabled(false);
-			// 更新当前选中的索引
-			pointIndex = position;
-		}
-
-	}
-
-	/**
 	 * 显示文章更新提示信息
 	 * 
 	 * @param number
 	 */
 	private void showRefreshNumber(int number) {
-		String text;
-		if (number == 0) {
-			text = context.getString(R.string.no_update_article);
-		} else {
-			text = context.getString(R.string.update_article_number);
+		if (number != 0) {
+			String text = context.getString(R.string.update_article_number);
 			text = text.replace("?", number + "");
+			Style style = new Style(TopToast.LENGTH_SHORT, R.color.dodger_blue);
+			TopToast toast = TopToast.makeText(context, text, style);
+			toast.show();
 		}
-		Style style = new Style(TopToast.LENGTH_SHORT, R.color.dodger_blue);
-		TopToast toast = TopToast.makeText(context, text, style);
-		toast.show();
 	}
 
 	/**
@@ -534,10 +394,13 @@ public class ArticleFragment extends LazyFragment {
 							public void run() {
 								// TODO Auto-generated method stub
 								// 计算更新了多少条数据
+								List<Article> olds = articleDao.findAll(type);
 								int refreshNumber = calculateRefreshNumber(tmp,
-										articleDao.findAll(type));
-								articleDao.deleteAll(type);
-								articleDao.insert(tmp, type);
+										olds);
+								if (refreshNumber > 0) {
+									articleDao.deleteAll(type);
+									articleDao.insert(tmp, type);
+								}
 
 								// 数据库操作完成通知UI线程显示刷新的数据数量
 								Message msg = new Message();

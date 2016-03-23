@@ -39,9 +39,6 @@ public class CategoryTabStrip extends HorizontalScrollView {
 	private Drawable indicator;
 	private TextDrawable[] drawables;
 
-	// private Drawable left_edge;
-	// private Drawable right_edge;
-
 	public CategoryTabStrip(Context context) {
 		this(context, null);
 	}

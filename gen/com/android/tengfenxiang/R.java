@@ -50,6 +50,94 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int civ_fill_color=0x7f010008;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rollviewpager_hint_alpha=0x7f010011;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rollviewpager_hint_color=0x7f010010;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>left</code></td><td>0</td><td></td></tr>
+<tr><td><code>center</code></td><td>1</td><td></td></tr>
+<tr><td><code>right</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int rollviewpager_hint_gravity=0x7f01000a;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>point</code></td><td>0</td><td></td></tr>
+<tr><td><code>number</code></td><td>1</td><td></td></tr>
+</table>
+         */
+        public static final int rollviewpager_hint_mode=0x7f010009;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rollviewpager_hint_paddingBottom=0x7f01000e;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rollviewpager_hint_paddingLeft=0x7f01000c;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rollviewpager_hint_paddingRight=0x7f01000b;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rollviewpager_hint_paddingTop=0x7f01000d;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int rollviewpager_play_delay=0x7f01000f;
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -86,74 +174,74 @@ containing a value of this type.
     public static final class color {
         /**  APP主色调 
          */
-        public static final int base_color=0x7f060000;
+        public static final int base_color=0x7f070000;
         /**  黑色 
          */
-        public static final int black=0x7f060003;
+        public static final int black=0x7f070003;
         /**  文章类型tab页选中时的背景色，与主色调保持一致 
          */
-        public static final int category_tab_highlight_bg=0x7f06000a;
+        public static final int category_tab_highlight_bg=0x7f07000a;
         /**  文章类型tab页选中时的文字颜色 
          */
-        public static final int category_tab_highlight_text=0x7f06000b;
+        public static final int category_tab_highlight_text=0x7f07000b;
         /**  文章类型tab页的文字颜色 
          */
-        public static final int category_tab_text=0x7f06000c;
+        public static final int category_tab_text=0x7f07000c;
         /**  收益情况表的坐标轴文字颜色 
          */
-        public static final int chart_font_color=0x7f06000d;
+        public static final int chart_font_color=0x7f07000d;
         /**  收益情况表的曲线颜色 
          */
-        public static final int chart_line_color=0x7f06000e;
+        public static final int chart_line_color=0x7f07000e;
         /**  道奇蓝 
          */
-        public static final int dodger_blue=0x7f060006;
+        public static final int dodger_blue=0x7f070006;
         /**  灰色 
          */
-        public static final int gray=0x7f060004;
+        public static final int gray=0x7f070004;
         /**  item正常状态下的颜色 
          */
-        public static final int item_normal=0x7f06000f;
+        public static final int item_normal=0x7f07000f;
         /**  item被按下的颜色 
          */
-        public static final int item_selected=0x7f060010;
+        public static final int item_selected=0x7f070010;
         /**  浅灰色 
          */
-        public static final int light_gray=0x7f060005;
+        public static final int light_gray=0x7f070005;
         /**  线条颜色 
          */
-        public static final int line_color=0x7f060009;
+        public static final int line_color=0x7f070009;
         /**  红色 
          */
-        public static final int red=0x7f060007;
-        public static final int subscribe_item_disabled_bg=0x7f060019;
-        public static final int subscribe_item_disabled_bg_night=0x7f060023;
-        public static final int subscribe_item_disabled_stroke=0x7f06001a;
-        public static final int subscribe_item_drag_bg=0x7f060014;
-        public static final int subscribe_item_drag_bg_night=0x7f060016;
-        public static final int subscribe_item_drag_stroke=0x7f060013;
-        public static final int subscribe_item_drag_stroke_night=0x7f060015;
-        public static final int subscribe_item_focused_bg_night=0x7f06001f;
-        public static final int subscribe_item_focused_stroke=0x7f060012;
-        public static final int subscribe_item_focused_stroke_night=0x7f060020;
-        public static final int subscribe_item_normal_bg=0x7f06001d;
-        public static final int subscribe_item_normal_stroke=0x7f06001e;
-        public static final int subscribe_item_pressed_bg=0x7f06001b;
-        public static final int subscribe_item_pressed_stroke=0x7f06001c;
-        public static final int subscribe_item_selected_bg=0x7f060017;
-        public static final int subscribe_item_selected_bg_night=0x7f060021;
-        public static final int subscribe_item_selected_stroke=0x7f060018;
-        public static final int subscribe_item_selected_stroke_night=0x7f060022;
-        public static final int subscribe_item_text_color_pressed_night=0x7f060011;
+        public static final int red=0x7f070007;
+        public static final int subscribe_item_disabled_bg=0x7f070019;
+        public static final int subscribe_item_disabled_bg_night=0x7f070023;
+        public static final int subscribe_item_disabled_stroke=0x7f07001a;
+        public static final int subscribe_item_drag_bg=0x7f070014;
+        public static final int subscribe_item_drag_bg_night=0x7f070016;
+        public static final int subscribe_item_drag_stroke=0x7f070013;
+        public static final int subscribe_item_drag_stroke_night=0x7f070015;
+        public static final int subscribe_item_focused_bg_night=0x7f07001f;
+        public static final int subscribe_item_focused_stroke=0x7f070012;
+        public static final int subscribe_item_focused_stroke_night=0x7f070020;
+        public static final int subscribe_item_normal_bg=0x7f07001d;
+        public static final int subscribe_item_normal_stroke=0x7f07001e;
+        public static final int subscribe_item_pressed_bg=0x7f07001b;
+        public static final int subscribe_item_pressed_stroke=0x7f07001c;
+        public static final int subscribe_item_selected_bg=0x7f070017;
+        public static final int subscribe_item_selected_bg_night=0x7f070021;
+        public static final int subscribe_item_selected_stroke=0x7f070018;
+        public static final int subscribe_item_selected_stroke_night=0x7f070022;
+        public static final int subscribe_item_text_color_pressed_night=0x7f070011;
         /**  标题栏颜色，与主色调保持一致 
          */
-        public static final int title_bar_color=0x7f060008;
+        public static final int title_bar_color=0x7f070008;
         /**  透明 
          */
-        public static final int transparent=0x7f060001;
+        public static final int transparent=0x7f070001;
         /**  白色 
          */
-        public static final int white=0x7f060002;
+        public static final int white=0x7f070002;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -163,8 +251,8 @@ containing a value of this type.
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f070000;
-        public static final int activity_vertical_margin=0x7f070001;
+        public static final int activity_horizontal_margin=0x7f080000;
+        public static final int activity_vertical_margin=0x7f080001;
     }
     public static final class drawable {
         public static final int bg_category_indicator=0x7f020000;
@@ -224,152 +312,158 @@ containing a value of this type.
         public static final int xlistview_arrow=0x7f020036;
     }
     public static final class id {
-        public static final int alipay_account=0x7f0a0081;
-        public static final int alipay_account_layout=0x7f0a0080;
-        public static final int apply_button=0x7f0a0082;
-        public static final int arrow=0x7f0a0044;
-        public static final int article_hint=0x7f0a002f;
-        public static final int article_list=0x7f0a0011;
-        public static final int banner_layout=0x7f0a000e;
-        public static final int button=0x7f0a0035;
-        public static final int cancel_btn=0x7f0a0060;
-        public static final int category_layout=0x7f0a0023;
-        public static final int category_strip=0x7f0a0012;
-        public static final int category_text=0x7f0a0019;
-        public static final int clear_cache=0x7f0a0059;
-        public static final int code_layout=0x7f0a0036;
-        public static final int coin_image=0x7f0a0029;
-        public static final int confirm_button=0x7f0a0050;
-        public static final int confirm_password=0x7f0a004e;
-        public static final int confirm_password_hint=0x7f0a004d;
-        public static final int container=0x7f0a000a;
-        public static final int content=0x7f0a0046;
-        public static final int content_layout=0x7f0a0079;
-        public static final int dialog_line=0x7f0a005c;
-        public static final int dialog_view=0x7f0a003a;
-        public static final int empty_article_hint=0x7f0a000c;
-        public static final int empty_hint=0x7f0a0065;
-        public static final int empty_message_hint=0x7f0a0043;
-        public static final int empty_task_hint=0x7f0a006b;
-        public static final int empty_withdraw_hint=0x7f0a0088;
-        public static final int end_time=0x7f0a0071;
-        public static final int footer_layout=0x7f0a007a;
-        public static final int frame_web_video=0x7f0a0075;
-        public static final int head=0x7f0a0055;
-        public static final int head_layout=0x7f0a0072;
-        public static final int header_layout=0x7f0a0078;
-        public static final int hint_text=0x7f0a0038;
-        public static final int icon=0x7f0a0069;
-        public static final int icon_category=0x7f0a0013;
-        public static final int icon_new=0x7f0a0026;
-        public static final int icons=0x7f0a005d;
-        public static final int image=0x7f0a0015;
-        public static final int img=0x7f0a003b;
-        public static final int info=0x7f0a0032;
-        public static final int infomation=0x7f0a0027;
-        public static final int invite_code=0x7f0a0037;
-        public static final int invite_code_text=0x7f0a0039;
-        public static final int like_count=0x7f0a0018;
-        public static final int line=0x7f0a0004;
-        public static final int line1=0x7f0a0049;
-        public static final int line2=0x7f0a004c;
-        public static final int line3=0x7f0a004f;
-        public static final int link_list=0x7f0a0002;
-        public static final int list=0x7f0a0057;
-        public static final int ll=0x7f0a0034;
-        public static final int login_btn=0x7f0a0040;
-        public static final int logo=0x7f0a0001;
-        public static final int logout_btn=0x7f0a005a;
-        public static final int main_tabs=0x7f0a0005;
-        public static final int messages=0x7f0a0042;
-        public static final int modify_password=0x7f0a0058;
-        public static final int moment_btn=0x7f0a005f;
-        public static final int more_category_text=0x7f0a0021;
-        public static final int my_category_text=0x7f0a001c;
-        public static final int my_category_tip_text=0x7f0a001d;
-        public static final int new_password=0x7f0a004b;
-        public static final int new_password_hint=0x7f0a004a;
-        public static final int nickname=0x7f0a0073;
-        public static final int old_password=0x7f0a0048;
-        public static final int old_password_hint=0x7f0a0047;
-        public static final int otherGridView=0x7f0a0022;
-        public static final int other_hint=0x7f0a0030;
-        public static final int other_list=0x7f0a0031;
-        public static final int password=0x7f0a003e;
-        public static final int person_info=0x7f0a0056;
-        public static final int phone=0x7f0a003d;
-        public static final int points=0x7f0a0010;
-        public static final int pop_layout=0x7f0a005b;
-        public static final int price=0x7f0a006d;
-        public static final int price_hint=0x7f0a006c;
-        public static final int profit_chart=0x7f0a0053;
-        public static final int profit_number_text=0x7f0a002a;
-        public static final int profit_table_hint=0x7f0a0052;
-        public static final int radio_button0=0x7f0a0006;
-        public static final int radio_button1=0x7f0a0007;
-        public static final int radio_button2=0x7f0a0008;
-        public static final int radio_button3=0x7f0a0009;
-        public static final int recent_list=0x7f0a0064;
-        public static final int records_list=0x7f0a0087;
-        public static final int register=0x7f0a0041;
-        public static final int rencent_info=0x7f0a0063;
-        public static final int rest_count=0x7f0a006f;
-        public static final int retweet_count=0x7f0a0070;
-        public static final int rl_subscribe=0x7f0a0024;
-        public static final int root_view=0x7f0a001a;
-        public static final int save_button=0x7f0a0028;
-        public static final int save_password=0x7f0a003f;
-        public static final int scroll_view=0x7f0a000b;
-        public static final int seperate_line=0x7f0a001e;
-        public static final int seperate_line2=0x7f0a0020;
-        public static final int signin_button=0x7f0a0061;
-        public static final int signin_date=0x7f0a0066;
-        public static final int signin_profit=0x7f0a0068;
-        public static final int signin_status=0x7f0a0067;
-        public static final int simple_list=0x7f0a0003;
-        public static final int status=0x7f0a006e;
-        public static final int subordinate_info=0x7f0a006a;
-        public static final int subscribe_main_layout=0x7f0a001b;
-        public static final int summary=0x7f0a0051;
-        public static final int take_in_btn=0x7f0a002c;
-        public static final int task_hint=0x7f0a002d;
-        public static final int task_list=0x7f0a002e;
-        public static final int textView=0x7f0a002b;
-        public static final int text_item=0x7f0a0025;
-        public static final int time=0x7f0a0045;
-        public static final int tipTextView=0x7f0a003c;
-        public static final int title=0x7f0a0016;
-        public static final int title_bar=0x7f0a0000;
-        public static final int today_info=0x7f0a0062;
-        public static final int top_bar=0x7f0a0086;
-        public static final int tv_bannertext=0x7f0a000f;
-        public static final int unit_yuan=0x7f0a007e;
-        public static final int userGridView=0x7f0a001f;
-        public static final int user_head=0x7f0a0054;
-        public static final int user_info_list=0x7f0a0074;
-        public static final int value=0x7f0a0033;
-        public static final int version=0x7f0a007c;
-        public static final int view_count=0x7f0a0017;
-        public static final int view_pager=0x7f0a0014;
-        public static final int viewpager=0x7f0a000d;
-        public static final int web_filechooser=0x7f0a0077;
-        public static final int web_view=0x7f0a007b;
-        public static final int webview_layout=0x7f0a0076;
-        public static final int wechat_btn=0x7f0a005e;
-        public static final int withdraw_count=0x7f0a0085;
-        public static final int withdraw_data=0x7f0a0084;
-        public static final int withdraw_info=0x7f0a0083;
-        public static final int withdraw_points=0x7f0a007f;
-        public static final int withdrawable_points=0x7f0a007d;
-        public static final int xlistview_footer_content=0x7f0a0089;
-        public static final int xlistview_footer_hint_textview=0x7f0a008b;
-        public static final int xlistview_footer_progressbar=0x7f0a008a;
-        public static final int xlistview_header_arrow=0x7f0a0090;
-        public static final int xlistview_header_content=0x7f0a008c;
-        public static final int xlistview_header_hint_textview=0x7f0a008e;
-        public static final int xlistview_header_progressbar=0x7f0a0091;
-        public static final int xlistview_header_text=0x7f0a008d;
-        public static final int xlistview_header_time=0x7f0a008f;
+        public static final int alipay_account=0x7f060087;
+        public static final int alipay_account_layout=0x7f060086;
+        public static final int apply_button=0x7f060088;
+        public static final int arrow=0x7f060049;
+        public static final int article_hint=0x7f060034;
+        public static final int article_list=0x7f060016;
+        public static final int banner_layout=0x7f060014;
+        public static final int button=0x7f06003a;
+        public static final int cancel_btn=0x7f060065;
+        public static final int category_layout=0x7f060028;
+        public static final int category_strip=0x7f060017;
+        public static final int category_text=0x7f06001e;
+        public static final int center=0x7f060003;
+        public static final int clear_cache=0x7f06005e;
+        public static final int code_layout=0x7f06003b;
+        public static final int coin_image=0x7f06002e;
+        public static final int confirm_button=0x7f060055;
+        public static final int confirm_password=0x7f060053;
+        public static final int confirm_password_hint=0x7f060052;
+        public static final int container=0x7f060010;
+        public static final int content=0x7f06004b;
+        public static final int content_layout=0x7f06007f;
+        public static final int dialog_line=0x7f060061;
+        public static final int dialog_view=0x7f06003f;
+        public static final int empty_article_hint=0x7f060012;
+        public static final int empty_hint=0x7f06006a;
+        public static final int empty_message_hint=0x7f060048;
+        public static final int empty_task_hint=0x7f060070;
+        public static final int empty_withdraw_hint=0x7f06008e;
+        public static final int end_time=0x7f060076;
+        public static final int footer_layout=0x7f060080;
+        public static final int frame_web_video=0x7f06007b;
+        public static final int head=0x7f06005a;
+        public static final int head_layout=0x7f060077;
+        public static final int header_layout=0x7f06007e;
+        public static final int hint_text=0x7f06003d;
+        public static final int icon=0x7f06006e;
+        public static final int icon_category=0x7f060018;
+        public static final int icon_new=0x7f06002b;
+        public static final int icons=0x7f060062;
+        public static final int image=0x7f06001a;
+        public static final int img=0x7f060040;
+        public static final int info=0x7f060037;
+        public static final int infomation=0x7f06002c;
+        public static final int invite_code=0x7f06003c;
+        public static final int invite_code_text=0x7f06003e;
+        public static final int left=0x7f060002;
+        public static final int like_count=0x7f06001d;
+        public static final int line=0x7f06000a;
+        public static final int line1=0x7f06004e;
+        public static final int line2=0x7f060051;
+        public static final int line3=0x7f060054;
+        public static final int link_list=0x7f060008;
+        public static final int list=0x7f06005c;
+        public static final int ll=0x7f060039;
+        public static final int login_btn=0x7f060045;
+        public static final int logo=0x7f060007;
+        public static final int logout_btn=0x7f06005f;
+        public static final int main_tabs=0x7f06000b;
+        public static final int messages=0x7f060047;
+        public static final int modify_password=0x7f06005d;
+        public static final int moment_btn=0x7f060064;
+        public static final int more_category_text=0x7f060026;
+        public static final int my_category_text=0x7f060021;
+        public static final int my_category_tip_text=0x7f060022;
+        public static final int new_password=0x7f060050;
+        public static final int new_password_hint=0x7f06004f;
+        public static final int nickname=0x7f060078;
+        public static final int number=0x7f060001;
+        public static final int old_password=0x7f06004d;
+        public static final int old_password_hint=0x7f06004c;
+        public static final int otherGridView=0x7f060027;
+        public static final int other_hint=0x7f060035;
+        public static final int other_list=0x7f060036;
+        public static final int password=0x7f060043;
+        public static final int person_info=0x7f06005b;
+        public static final int phone=0x7f060042;
+        public static final int point=0x7f060000;
+        public static final int points=0x7f060079;
+        public static final int pop_layout=0x7f060060;
+        public static final int price=0x7f060072;
+        public static final int price_hint=0x7f060071;
+        public static final int profit_chart=0x7f060058;
+        public static final int profit_number_text=0x7f06002f;
+        public static final int profit_table_hint=0x7f060057;
+        public static final int radio_button0=0x7f06000c;
+        public static final int radio_button1=0x7f06000d;
+        public static final int radio_button2=0x7f06000e;
+        public static final int radio_button3=0x7f06000f;
+        public static final int recent_list=0x7f060069;
+        public static final int records_list=0x7f06008d;
+        public static final int register=0x7f060046;
+        public static final int rencent_info=0x7f060068;
+        public static final int rest_count=0x7f060074;
+        public static final int retweet_count=0x7f060075;
+        public static final int right=0x7f060004;
+        public static final int rl_subscribe=0x7f060029;
+        public static final int root_view=0x7f06001f;
+        public static final int save_button=0x7f06002d;
+        public static final int save_password=0x7f060044;
+        public static final int scroll_view=0x7f060011;
+        public static final int seperate_line=0x7f060023;
+        public static final int seperate_line2=0x7f060025;
+        public static final int signin_button=0x7f060066;
+        public static final int signin_date=0x7f06006b;
+        public static final int signin_profit=0x7f06006d;
+        public static final int signin_status=0x7f06006c;
+        public static final int simple_list=0x7f060009;
+        public static final int status=0x7f060073;
+        public static final int subordinate_info=0x7f06006f;
+        public static final int subscribe_main_layout=0x7f060020;
+        public static final int summary=0x7f060056;
+        public static final int take_in_btn=0x7f060031;
+        public static final int task_hint=0x7f060032;
+        public static final int task_list=0x7f060033;
+        public static final int textView=0x7f060030;
+        public static final int text_item=0x7f06002a;
+        public static final int time=0x7f06004a;
+        public static final int tipTextView=0x7f060041;
+        public static final int title=0x7f06001b;
+        public static final int title_bar=0x7f060006;
+        public static final int today_info=0x7f060067;
+        public static final int top_bar=0x7f06008c;
+        public static final int tv_bannertext=0x7f060015;
+        public static final int unit_yuan=0x7f060084;
+        public static final int userGridView=0x7f060024;
+        public static final int user_head=0x7f060059;
+        public static final int user_info_list=0x7f06007a;
+        public static final int value=0x7f060038;
+        public static final int version=0x7f060082;
+        public static final int view_count=0x7f06001c;
+        public static final int view_pager=0x7f060019;
+        public static final int viewpager=0x7f060013;
+        public static final int viewpager_inner=0x7f060005;
+        public static final int web_filechooser=0x7f06007d;
+        public static final int web_view=0x7f060081;
+        public static final int webview_layout=0x7f06007c;
+        public static final int wechat_btn=0x7f060063;
+        public static final int withdraw_count=0x7f06008b;
+        public static final int withdraw_data=0x7f06008a;
+        public static final int withdraw_info=0x7f060089;
+        public static final int withdraw_points=0x7f060085;
+        public static final int withdrawable_points=0x7f060083;
+        public static final int xlistview_footer_content=0x7f06008f;
+        public static final int xlistview_footer_hint_textview=0x7f060091;
+        public static final int xlistview_footer_progressbar=0x7f060090;
+        public static final int xlistview_header_arrow=0x7f060096;
+        public static final int xlistview_header_content=0x7f060092;
+        public static final int xlistview_header_hint_textview=0x7f060094;
+        public static final int xlistview_header_progressbar=0x7f060097;
+        public static final int xlistview_header_text=0x7f060093;
+        public static final int xlistview_header_time=0x7f060095;
     }
     public static final class layout {
         public static final int about=0x7f030000;
@@ -421,183 +515,183 @@ containing a value of this type.
         public static final int gold_coin_music=0x7f050000;
     }
     public static final class string {
-        public static final int about_app=0x7f080031;
-        public static final int alipay=0x7f080055;
-        public static final int alipay_account=0x7f080046;
-        public static final int app_name=0x7f080000;
-        public static final int apply_withdraw=0x7f080048;
-        public static final int apply_withdraw_points=0x7f080045;
-        public static final int article_count=0x7f08002d;
-        public static final int article_list=0x7f08007f;
-        public static final int article_points=0x7f08002c;
-        public static final int article_profit_hint=0x7f080027;
-        public static final int article_view_count=0x7f08002e;
-        public static final int begin_time=0x7f08007d;
-        public static final int business_qq=0x7f080038;
-        public static final int cancel=0x7f08009a;
-        public static final int change_alipay_notify=0x7f080047;
-        public static final int change_head=0x7f080064;
-        public static final int clear_cache=0x7f08001b;
-        public static final int clear_cache_success=0x7f080088;
-        public static final int click_to_copy=0x7f08005a;
-        public static final int confirm=0x7f080099;
-        public static final int confirm_password=0x7f08006f;
-        public static final int confirm_password_hint=0x7f080070;
-        public static final int confirm_to_logout=0x7f08009f;
-        public static final int contact_phone=0x7f080037;
-        public static final int copy_success=0x7f08003a;
-        public static final int current_point=0x7f0800ab;
-        public static final int dialog_title=0x7f08009e;
-        public static final int different_password=0x7f080072;
-        public static final int double_click_exit=0x7f08009c;
-        public static final int edit_channel=0x7f0800a1;
-        public static final int edit_email_title=0x7f08005b;
-        public static final int edit_nickname_title=0x7f08005e;
-        public static final int edit_qq_title=0x7f08005c;
-        public static final int edit_wechat_title=0x7f08005d;
-        public static final int email_account=0x7f080050;
-        public static final int empty_article_hint=0x7f080080;
-        public static final int empty_input=0x7f080098;
-        public static final int empty_message_hint=0x7f08001d;
-        public static final int empty_old_password=0x7f080071;
-        public static final int empty_password=0x7f080008;
-        public static final int empty_phone=0x7f080007;
-        public static final int empty_profit_date=0x7f080025;
-        public static final int empty_signin_info=0x7f080018;
-        public static final int empty_task_hint=0x7f080076;
-        public static final int empty_withdraw_hint=0x7f080043;
-        public static final int end_time=0x7f08007e;
-        public static final int fail_to_get_config=0x7f0800aa;
-        public static final int fail_to_load_webpage=0x7f080094;
-        public static final int feedback=0x7f080034;
-        public static final int female=0x7f080062;
-        public static final int function_introduction=0x7f080032;
-        public static final int gender=0x7f080053;
-        public static final int generate_code_fail=0x7f080063;
-        public static final int get_profit_info=0x7f080014;
-        public static final int gold_coin_hint_text=0x7f0800a8;
-        public static final int have_signin=0x7f080016;
-        public static final int help_center=0x7f080033;
-        public static final int invite_code_hint=0x7f080058;
-        public static final int invite_others=0x7f080056;
-        public static final int invite_text=0x7f080059;
-        public static final int invite_user=0x7f080057;
-        public static final int is_fail_permitted=0x7f080040;
-        public static final int is_not_permitted=0x7f08003f;
-        public static final int is_not_withdraw=0x7f080042;
-        public static final int is_withdraw=0x7f080041;
-        public static final int launch_camera_error=0x7f0800a6;
-        public static final int launch_gallery_error=0x7f0800a7;
-        public static final int like_article_in_app_points=0x7f080030;
-        public static final int like_count=0x7f080082;
-        public static final int login=0x7f080002;
-        public static final int login_fail=0x7f08000b;
-        public static final int login_success=0x7f08000a;
-        public static final int logout=0x7f08001a;
-        public static final int male=0x7f080061;
-        public static final int modify_fail=0x7f080074;
-        public static final int modify_password=0x7f08006a;
-        public static final int modify_success=0x7f080073;
-        public static final int my_profit=0x7f08001e;
-        public static final int my_subordinate=0x7f08000c;
-        public static final int my_subordinate_count=0x7f08000d;
-        public static final int my_subordinate_points=0x7f08000e;
-        public static final int network_error=0x7f08009d;
-        public static final int new_password=0x7f08006d;
-        public static final int new_password_hint=0x7f08006e;
-        public static final int nickname=0x7f080052;
-        public static final int no_app_market=0x7f08003b;
-        public static final int no_exist_sdcard=0x7f080067;
-        public static final int no_update_article=0x7f0800ac;
-        public static final int not_signin=0x7f080017;
-        public static final int not_signin_today=0x7f080011;
-        public static final int old_password=0x7f08006b;
-        public static final int old_password_hint=0x7f08006c;
-        public static final int other=0x7f080028;
-        public static final int overflow_warn=0x7f08004b;
-        public static final int password=0x7f080005;
-        public static final int person_info=0x7f08004c;
-        public static final int phone=0x7f080004;
-        public static final int phone_number=0x7f08004e;
-        public static final int place=0x7f080054;
-        public static final int profit_info=0x7f080015;
-        public static final int profit_table_hint=0x7f080024;
-        public static final int qq_account=0x7f080051;
-        public static final int qq_group=0x7f080036;
-        public static final int read_article_in_app_points=0x7f08002f;
-        public static final int realtime_points=0x7f08001f;
-        public static final int recent_signin_info=0x7f080013;
-        public static final int register=0x7f080003;
-        public static final int register_app_acount=0x7f080009;
-        public static final int rest_count=0x7f08007c;
-        public static final int retweet_count=0x7f08007b;
-        public static final int save_password=0x7f080006;
-        public static final int score=0x7f080035;
-        public static final int select_address_title=0x7f08005f;
-        public static final int select_by_take_photo=0x7f080066;
-        public static final int select_from_gallery=0x7f080065;
-        public static final int select_gender_title=0x7f080060;
-        public static final int select_qq_number=0x7f080039;
-        public static final int server_error=0x7f080090;
-        public static final int share=0x7f08009b;
-        public static final int share_success=0x7f080086;
-        public static final int share_title=0x7f080083;
-        public static final int signin=0x7f08000f;
-        public static final int signin_success=0x7f080012;
-        public static final int signin_today=0x7f080010;
-        public static final int status_finish=0x7f08007a;
-        public static final int status_offline=0x7f080078;
-        public static final int status_online=0x7f080079;
-        public static final int submit_success=0x7f080049;
-        public static final int subscribe_manager_category_info=0x7f0800a4;
-        public static final int subscribe_manager_category_info_2=0x7f0800a5;
-        public static final int subscribe_more_category=0x7f0800a3;
-        public static final int subscribe_my_category=0x7f0800a2;
-        public static final int system_message=0x7f08001c;
-        public static final int system_setting=0x7f080019;
-        public static final int take_in_wallet=0x7f0800a9;
-        public static final int task_count=0x7f08002a;
-        public static final int task_list=0x7f080075;
-        public static final int task_points=0x7f080029;
-        public static final int task_price=0x7f080077;
-        public static final int task_profit_hint=0x7f080026;
-        public static final int task_view_count=0x7f08002b;
-        public static final int timeout_error=0x7f080091;
-        public static final int today_signin=0x7f080069;
-        public static final int total_points=0x7f080021;
-        public static final int try_now=0x7f080087;
-        public static final int try_to_login=0x7f0800a0;
-        public static final int unit_people=0x7f080095;
-        public static final int unit_point=0x7f080097;
-        public static final int unit_yuan=0x7f080096;
-        public static final int unknow_error=0x7f080092;
-        public static final int update_article_number=0x7f0800ad;
-        public static final int user_head=0x7f08004d;
-        public static final int user_info=0x7f080068;
-        public static final int version_text=0x7f080001;
-        public static final int view_count=0x7f080081;
-        public static final int web_loading=0x7f080093;
-        public static final int wechat_account=0x7f08004f;
-        public static final int wechat_friend=0x7f080084;
-        public static final int wechat_moment=0x7f080085;
-        public static final int withdraw_apply=0x7f080044;
-        public static final int withdraw_count=0x7f08003e;
-        public static final int withdraw_data=0x7f08003d;
-        public static final int withdraw_points=0x7f080022;
-        public static final int withdraw_records=0x7f08003c;
-        public static final int withdrawable_points=0x7f080023;
-        public static final int xlistview_footer_hint_normal=0x7f08008d;
-        public static final int xlistview_footer_hint_ready=0x7f08008e;
-        public static final int xlistview_header_hint_loading=0x7f08008b;
-        public static final int xlistview_header_hint_normal=0x7f080089;
-        public static final int xlistview_header_hint_ready=0x7f08008a;
-        public static final int xlistview_header_last_time=0x7f08008c;
-        public static final int xlistview_load_all=0x7f08008f;
-        public static final int yesterday_points=0x7f080020;
-        public static final int zero_warn=0x7f08004a;
+        public static final int about_app=0x7f090031;
+        public static final int alipay=0x7f090055;
+        public static final int alipay_account=0x7f090046;
+        public static final int app_name=0x7f090000;
+        public static final int apply_withdraw=0x7f090048;
+        public static final int apply_withdraw_points=0x7f090045;
+        public static final int article_count=0x7f09002d;
+        public static final int article_list=0x7f09007f;
+        public static final int article_points=0x7f09002c;
+        public static final int article_profit_hint=0x7f090027;
+        public static final int article_view_count=0x7f09002e;
+        public static final int begin_time=0x7f09007d;
+        public static final int business_qq=0x7f090038;
+        public static final int cancel=0x7f09009a;
+        public static final int change_alipay_notify=0x7f090047;
+        public static final int change_head=0x7f090064;
+        public static final int clear_cache=0x7f09001b;
+        public static final int clear_cache_success=0x7f090088;
+        public static final int click_to_copy=0x7f09005a;
+        public static final int confirm=0x7f090099;
+        public static final int confirm_password=0x7f09006f;
+        public static final int confirm_password_hint=0x7f090070;
+        public static final int confirm_to_logout=0x7f09009f;
+        public static final int contact_phone=0x7f090037;
+        public static final int copy_success=0x7f09003a;
+        public static final int current_point=0x7f0900ab;
+        public static final int dialog_title=0x7f09009e;
+        public static final int different_password=0x7f090072;
+        public static final int double_click_exit=0x7f09009c;
+        public static final int edit_channel=0x7f0900a1;
+        public static final int edit_email_title=0x7f09005b;
+        public static final int edit_nickname_title=0x7f09005e;
+        public static final int edit_qq_title=0x7f09005c;
+        public static final int edit_wechat_title=0x7f09005d;
+        public static final int email_account=0x7f090050;
+        public static final int empty_article_hint=0x7f090080;
+        public static final int empty_input=0x7f090098;
+        public static final int empty_message_hint=0x7f09001d;
+        public static final int empty_old_password=0x7f090071;
+        public static final int empty_password=0x7f090008;
+        public static final int empty_phone=0x7f090007;
+        public static final int empty_profit_date=0x7f090025;
+        public static final int empty_signin_info=0x7f090018;
+        public static final int empty_task_hint=0x7f090076;
+        public static final int empty_withdraw_hint=0x7f090043;
+        public static final int end_time=0x7f09007e;
+        public static final int fail_to_get_config=0x7f0900aa;
+        public static final int fail_to_load_webpage=0x7f090094;
+        public static final int feedback=0x7f090034;
+        public static final int female=0x7f090062;
+        public static final int function_introduction=0x7f090032;
+        public static final int gender=0x7f090053;
+        public static final int generate_code_fail=0x7f090063;
+        public static final int get_profit_info=0x7f090014;
+        public static final int gold_coin_hint_text=0x7f0900a8;
+        public static final int have_signin=0x7f090016;
+        public static final int help_center=0x7f090033;
+        public static final int invite_code_hint=0x7f090058;
+        public static final int invite_others=0x7f090056;
+        public static final int invite_text=0x7f090059;
+        public static final int invite_user=0x7f090057;
+        public static final int is_fail_permitted=0x7f090040;
+        public static final int is_not_permitted=0x7f09003f;
+        public static final int is_not_withdraw=0x7f090042;
+        public static final int is_withdraw=0x7f090041;
+        public static final int launch_camera_error=0x7f0900a6;
+        public static final int launch_gallery_error=0x7f0900a7;
+        public static final int like_article_in_app_points=0x7f090030;
+        public static final int like_count=0x7f090082;
+        public static final int login=0x7f090002;
+        public static final int login_fail=0x7f09000b;
+        public static final int login_success=0x7f09000a;
+        public static final int logout=0x7f09001a;
+        public static final int male=0x7f090061;
+        public static final int modify_fail=0x7f090074;
+        public static final int modify_password=0x7f09006a;
+        public static final int modify_success=0x7f090073;
+        public static final int my_profit=0x7f09001e;
+        public static final int my_subordinate=0x7f09000c;
+        public static final int my_subordinate_count=0x7f09000d;
+        public static final int my_subordinate_points=0x7f09000e;
+        public static final int network_error=0x7f09009d;
+        public static final int new_password=0x7f09006d;
+        public static final int new_password_hint=0x7f09006e;
+        public static final int nickname=0x7f090052;
+        public static final int no_app_market=0x7f09003b;
+        public static final int no_exist_sdcard=0x7f090067;
+        public static final int no_update_article=0x7f0900ac;
+        public static final int not_signin=0x7f090017;
+        public static final int not_signin_today=0x7f090011;
+        public static final int old_password=0x7f09006b;
+        public static final int old_password_hint=0x7f09006c;
+        public static final int other=0x7f090028;
+        public static final int overflow_warn=0x7f09004b;
+        public static final int password=0x7f090005;
+        public static final int person_info=0x7f09004c;
+        public static final int phone=0x7f090004;
+        public static final int phone_number=0x7f09004e;
+        public static final int place=0x7f090054;
+        public static final int profit_info=0x7f090015;
+        public static final int profit_table_hint=0x7f090024;
+        public static final int qq_account=0x7f090051;
+        public static final int qq_group=0x7f090036;
+        public static final int read_article_in_app_points=0x7f09002f;
+        public static final int realtime_points=0x7f09001f;
+        public static final int recent_signin_info=0x7f090013;
+        public static final int register=0x7f090003;
+        public static final int register_app_acount=0x7f090009;
+        public static final int rest_count=0x7f09007c;
+        public static final int retweet_count=0x7f09007b;
+        public static final int save_password=0x7f090006;
+        public static final int score=0x7f090035;
+        public static final int select_address_title=0x7f09005f;
+        public static final int select_by_take_photo=0x7f090066;
+        public static final int select_from_gallery=0x7f090065;
+        public static final int select_gender_title=0x7f090060;
+        public static final int select_qq_number=0x7f090039;
+        public static final int server_error=0x7f090090;
+        public static final int share=0x7f09009b;
+        public static final int share_success=0x7f090086;
+        public static final int share_title=0x7f090083;
+        public static final int signin=0x7f09000f;
+        public static final int signin_success=0x7f090012;
+        public static final int signin_today=0x7f090010;
+        public static final int status_finish=0x7f09007a;
+        public static final int status_offline=0x7f090078;
+        public static final int status_online=0x7f090079;
+        public static final int submit_success=0x7f090049;
+        public static final int subscribe_manager_category_info=0x7f0900a4;
+        public static final int subscribe_manager_category_info_2=0x7f0900a5;
+        public static final int subscribe_more_category=0x7f0900a3;
+        public static final int subscribe_my_category=0x7f0900a2;
+        public static final int system_message=0x7f09001c;
+        public static final int system_setting=0x7f090019;
+        public static final int take_in_wallet=0x7f0900a9;
+        public static final int task_count=0x7f09002a;
+        public static final int task_list=0x7f090075;
+        public static final int task_points=0x7f090029;
+        public static final int task_price=0x7f090077;
+        public static final int task_profit_hint=0x7f090026;
+        public static final int task_view_count=0x7f09002b;
+        public static final int timeout_error=0x7f090091;
+        public static final int today_signin=0x7f090069;
+        public static final int total_points=0x7f090021;
+        public static final int try_now=0x7f090087;
+        public static final int try_to_login=0x7f0900a0;
+        public static final int unit_people=0x7f090095;
+        public static final int unit_point=0x7f090097;
+        public static final int unit_yuan=0x7f090096;
+        public static final int unknow_error=0x7f090092;
+        public static final int update_article_number=0x7f0900ad;
+        public static final int user_head=0x7f09004d;
+        public static final int user_info=0x7f090068;
+        public static final int version_text=0x7f090001;
+        public static final int view_count=0x7f090081;
+        public static final int web_loading=0x7f090093;
+        public static final int wechat_account=0x7f09004f;
+        public static final int wechat_friend=0x7f090084;
+        public static final int wechat_moment=0x7f090085;
+        public static final int withdraw_apply=0x7f090044;
+        public static final int withdraw_count=0x7f09003e;
+        public static final int withdraw_data=0x7f09003d;
+        public static final int withdraw_points=0x7f090022;
+        public static final int withdraw_records=0x7f09003c;
+        public static final int withdrawable_points=0x7f090023;
+        public static final int xlistview_footer_hint_normal=0x7f09008d;
+        public static final int xlistview_footer_hint_ready=0x7f09008e;
+        public static final int xlistview_header_hint_loading=0x7f09008b;
+        public static final int xlistview_header_hint_normal=0x7f090089;
+        public static final int xlistview_header_hint_ready=0x7f09008a;
+        public static final int xlistview_header_last_time=0x7f09008c;
+        public static final int xlistview_load_all=0x7f09008f;
+        public static final int yesterday_points=0x7f090020;
+        public static final int zero_warn=0x7f09004a;
     }
     public static final class style {
-        public static final int AnimBottom=0x7f090005;
+        public static final int AnimBottom=0x7f0a0005;
         /** 
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
@@ -610,17 +704,17 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f090000;
+        public static final int AppBaseTheme=0x7f0a0000;
         /**  Application theme. 
          */
-        public static final int AppTheme=0x7f090001;
-        public static final int LoadingDialog=0x7f090002;
-        public static final int subscribe_flow_layout=0x7f090008;
-        public static final int subscribe_more_tip_text=0x7f090009;
-        public static final int subscribe_my_tip_text=0x7f090006;
-        public static final int subscribe_seperate_line=0x7f090007;
-        public static final int tab_bar=0x7f090003;
-        public static final int tab_bar_item=0x7f090004;
+        public static final int AppTheme=0x7f0a0001;
+        public static final int LoadingDialog=0x7f0a0002;
+        public static final int subscribe_flow_layout=0x7f0a0008;
+        public static final int subscribe_more_tip_text=0x7f0a0009;
+        public static final int subscribe_my_tip_text=0x7f0a0006;
+        public static final int subscribe_seperate_line=0x7f0a0007;
+        public static final int tab_bar=0x7f0a0003;
+        public static final int tab_bar_item=0x7f0a0004;
     }
     public static final class styleable {
         /** Attributes that can be used with a CircleImageView.
@@ -702,6 +796,179 @@ containing a value of this type.
           @attr name com.android.tengfenxiang:civ_fill_color
         */
         public static final int CircleImageView_civ_fill_color = 3;
+        /** Attributes that can be used with a RollViewPager.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #RollViewPager_rollviewpager_hint_alpha com.android.tengfenxiang:rollviewpager_hint_alpha}</code></td><td></td></tr>
+           <tr><td><code>{@link #RollViewPager_rollviewpager_hint_color com.android.tengfenxiang:rollviewpager_hint_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #RollViewPager_rollviewpager_hint_gravity com.android.tengfenxiang:rollviewpager_hint_gravity}</code></td><td></td></tr>
+           <tr><td><code>{@link #RollViewPager_rollviewpager_hint_mode com.android.tengfenxiang:rollviewpager_hint_mode}</code></td><td></td></tr>
+           <tr><td><code>{@link #RollViewPager_rollviewpager_hint_paddingBottom com.android.tengfenxiang:rollviewpager_hint_paddingBottom}</code></td><td></td></tr>
+           <tr><td><code>{@link #RollViewPager_rollviewpager_hint_paddingLeft com.android.tengfenxiang:rollviewpager_hint_paddingLeft}</code></td><td></td></tr>
+           <tr><td><code>{@link #RollViewPager_rollviewpager_hint_paddingRight com.android.tengfenxiang:rollviewpager_hint_paddingRight}</code></td><td></td></tr>
+           <tr><td><code>{@link #RollViewPager_rollviewpager_hint_paddingTop com.android.tengfenxiang:rollviewpager_hint_paddingTop}</code></td><td></td></tr>
+           <tr><td><code>{@link #RollViewPager_rollviewpager_play_delay com.android.tengfenxiang:rollviewpager_play_delay}</code></td><td></td></tr>
+           </table>
+           @see #RollViewPager_rollviewpager_hint_alpha
+           @see #RollViewPager_rollviewpager_hint_color
+           @see #RollViewPager_rollviewpager_hint_gravity
+           @see #RollViewPager_rollviewpager_hint_mode
+           @see #RollViewPager_rollviewpager_hint_paddingBottom
+           @see #RollViewPager_rollviewpager_hint_paddingLeft
+           @see #RollViewPager_rollviewpager_hint_paddingRight
+           @see #RollViewPager_rollviewpager_hint_paddingTop
+           @see #RollViewPager_rollviewpager_play_delay
+         */
+        public static final int[] RollViewPager = {
+            0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c,
+            0x7f01000d, 0x7f01000e, 0x7f01000f, 0x7f010010,
+            0x7f010011
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#rollviewpager_hint_alpha}
+          attribute's value can be found in the {@link #RollViewPager} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.android.tengfenxiang:rollviewpager_hint_alpha
+        */
+        public static final int RollViewPager_rollviewpager_hint_alpha = 8;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#rollviewpager_hint_color}
+          attribute's value can be found in the {@link #RollViewPager} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.android.tengfenxiang:rollviewpager_hint_color
+        */
+        public static final int RollViewPager_rollviewpager_hint_color = 7;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#rollviewpager_hint_gravity}
+          attribute's value can be found in the {@link #RollViewPager} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>left</code></td><td>0</td><td></td></tr>
+<tr><td><code>center</code></td><td>1</td><td></td></tr>
+<tr><td><code>right</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name com.android.tengfenxiang:rollviewpager_hint_gravity
+        */
+        public static final int RollViewPager_rollviewpager_hint_gravity = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#rollviewpager_hint_mode}
+          attribute's value can be found in the {@link #RollViewPager} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>point</code></td><td>0</td><td></td></tr>
+<tr><td><code>number</code></td><td>1</td><td></td></tr>
+</table>
+          @attr name com.android.tengfenxiang:rollviewpager_hint_mode
+        */
+        public static final int RollViewPager_rollviewpager_hint_mode = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#rollviewpager_hint_paddingBottom}
+          attribute's value can be found in the {@link #RollViewPager} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.android.tengfenxiang:rollviewpager_hint_paddingBottom
+        */
+        public static final int RollViewPager_rollviewpager_hint_paddingBottom = 5;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#rollviewpager_hint_paddingLeft}
+          attribute's value can be found in the {@link #RollViewPager} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.android.tengfenxiang:rollviewpager_hint_paddingLeft
+        */
+        public static final int RollViewPager_rollviewpager_hint_paddingLeft = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#rollviewpager_hint_paddingRight}
+          attribute's value can be found in the {@link #RollViewPager} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.android.tengfenxiang:rollviewpager_hint_paddingRight
+        */
+        public static final int RollViewPager_rollviewpager_hint_paddingRight = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#rollviewpager_hint_paddingTop}
+          attribute's value can be found in the {@link #RollViewPager} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.android.tengfenxiang:rollviewpager_hint_paddingTop
+        */
+        public static final int RollViewPager_rollviewpager_hint_paddingTop = 4;
+        /**
+          <p>This symbol is the offset where the {@link com.android.tengfenxiang.R.attr#rollviewpager_play_delay}
+          attribute's value can be found in the {@link #RollViewPager} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.android.tengfenxiang:rollviewpager_play_delay
+        */
+        public static final int RollViewPager_rollviewpager_play_delay = 6;
         /** Attributes that can be used with a TitleBar.
            <p>Includes the following attributes:</p>
            <table>

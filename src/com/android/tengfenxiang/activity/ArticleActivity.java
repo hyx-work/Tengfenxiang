@@ -60,7 +60,8 @@ public class ArticleActivity extends FragmentActivity {
 				startActivityForResult(intent, 0);
 			}
 		});
-		pager.setOffscreenPageLimit(1);
+		// 缓存两页
+		pager.setOffscreenPageLimit(2);
 		adapter = new ArticlePagerAdapter(getSupportFragmentManager(),
 				getApplication(), userChannelList);
 		pager.setAdapter(adapter);

@@ -86,6 +86,8 @@
     <string name="nickname">昵&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;称</string>
     <string name="gender">性&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;别</string>
     <string name="place">地&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;区</string>
+    <string name="delivery_address">收货地址</string>
+    <string name="delivery_address_hint">请输入收货地址，最长120字</string>
     <string name="alipay">支&#160;&#160;付&#160;&#160;宝</string>
     <string name="invite_others">我要邀请</string>
     <string name="invite_user">邀请用户</string>

@@ -6,8 +6,7 @@ import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.activity.X5WebActivity;
 import com.android.tengfenxiang.bean.Article;
 import com.android.tengfenxiang.bean.User;
-import com.android.tengfenxiang.view.viewpager.LoopPagerAdapter;
-import com.android.tengfenxiang.view.viewpager.RollPagerView;
+import com.android.tengfenxiang.view.viewpager.DynamicPagerAdapter;
 import com.bumptech.glide.Glide;
 
 import android.app.Activity;
@@ -17,15 +16,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class BannerAdapter extends LoopPagerAdapter {
+public class BannerAdapter extends DynamicPagerAdapter {
 
 	private List<Article> banners;
 	private Activity context;
 	private User user;
 
-	public BannerAdapter(RollPagerView viewPager, Activity context,
-			List<Article> banners, User user) {
-		super(viewPager);
+	public BannerAdapter(Activity context, List<Article> banners, User user) {
 		this.banners = banners;
 		this.context = context;
 		this.user = user;
@@ -66,7 +63,8 @@ public class BannerAdapter extends LoopPagerAdapter {
 	}
 
 	@Override
-	public int getRealCount() {
+	public int getCount() {
+		// TODO Auto-generated method stub
 		return banners.size();
 	}
 

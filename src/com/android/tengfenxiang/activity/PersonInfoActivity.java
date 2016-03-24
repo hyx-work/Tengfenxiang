@@ -163,6 +163,15 @@ public class PersonInfoActivity extends BaseActivity {
 				case 7:
 					intent = new Intent(PersonInfoActivity.this,
 							EditActivity.class);
+					intent.putExtra("attributeName", "streetInfo");
+					intent.putExtra("attributeValue", application
+							.getCurrentUser().getStreetInfo());
+					intent.putExtra("title",
+							getString(R.string.delivery_address));
+					break;
+				case 8:
+					intent = new Intent(PersonInfoActivity.this,
+							EditActivity.class);
 					intent.putExtra("attributeName", "alipay");
 					intent.putExtra("attributeValue", application
 							.getCurrentUser().getAlipay());
@@ -188,6 +197,7 @@ public class PersonInfoActivity extends BaseActivity {
 		infos.add(getString(R.string.nickname));
 		infos.add(getString(R.string.gender));
 		infos.add(getString(R.string.place));
+		infos.add(getString(R.string.delivery_address));
 		infos.add(getString(R.string.alipay));
 
 		ArrayList<String> values = new ArrayList<String>();
@@ -203,6 +213,7 @@ public class PersonInfoActivity extends BaseActivity {
 		}
 
 		values.add(getArea(currentUser.getProvince(), currentUser.getCity()));
+		values.add(currentUser.getStreetInfo());
 		values.add(currentUser.getAlipay());
 
 		adapter = new PersonInfoListAdapter(this, infos, values);

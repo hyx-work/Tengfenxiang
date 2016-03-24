@@ -79,7 +79,7 @@ public class ArticleActivity extends FragmentActivity {
 		if (requestCode == 0 && resultCode == -1) {
 			userChannelList = ((ArrayList<ChannelItem>) ChannelUtil
 					.getInstance(getApplication()).getUserChannelItems());
-			pager.setOffscreenPageLimit(1);
+			pager.setOffscreenPageLimit(2);
 			adapter = new ArticlePagerAdapter(getSupportFragmentManager(),
 					getApplication(), userChannelList);
 			pager.setAdapter(adapter);

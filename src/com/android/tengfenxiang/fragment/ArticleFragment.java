@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,15 +38,15 @@ import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.db.ArticleDao;
 import com.android.tengfenxiang.db.BannerDao;
 import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.DensityUtil;
 import com.android.tengfenxiang.util.ListViewUtil;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.util.VolleyErrorUtil;
-import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.toptoast.TopToast;
 import com.android.tengfenxiang.view.toptoast.TopToast.Style;
-import com.android.tengfenxiang.view.viewpager.RollPagerView;
-import com.android.tengfenxiang.view.viewpager.RollPagerView.OnPageSelectedListener;
+import com.android.tengfenxiang.view.viewpager.InfinitePagerAdapter;
+import com.android.tengfenxiang.view.viewpager.InfiniteViewPager;
 import com.android.tengfenxiang.view.xscrollview.XScrollView;
 import com.android.tengfenxiang.view.xscrollview.XScrollView.IXScrollViewListener;
 import com.android.volley.Response.ErrorListener;
@@ -55,8 +58,6 @@ public class ArticleFragment extends LazyFragment {
 
 	private static final String ARG_POSITION = "position";
 	private int position;
-	private LoadingDialog dialog;
-
 	private int limit = 10;
 	private int offset = 0;
 
@@ -73,10 +74,10 @@ public class ArticleFragment extends LazyFragment {
 	private ListView articleListView;
 	private TextView hintTextView;
 	private XScrollView scrollView;
-
-	private RollPagerView bannerPager;
+	private InfiniteViewPager bannerPager;
 	private TextView titleTextView;
 	private LinearLayout bannerLayout;
+	private LinearLayout pointsLayout;
 
 	/**
 	 * 加载缓存数据完成
@@ -90,9 +91,38 @@ public class ArticleFragment extends LazyFragment {
 	 * bundle数据的key
 	 */
 	private final String BUNDLE_KEY = "refresh_number";
-
+	/**
+	 * 用于标记banner滚动到哪一个
+	 */
 	private int currentIndex = 0;
+	/**
+	 * 标记是否要滚动
+	 */
+	private boolean isStop = false;
+	/**
+	 * 定时滚动的线程
+	 */
+	private Thread bannerThread = new Thread(new Runnable() {
 
+		@Override
+		public void run() {
+			while (!isStop) {
+				// 每4秒钟移动一次
+				SystemClock.sleep(4000);
+				context.runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						// 移动到下一个ViewPager
+						bannerPager.moveToNext();
+					}
+				});
+			}
+		}
+	});
+	/**
+	 * 子线程回调handler
+	 */
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
@@ -139,7 +169,6 @@ public class ArticleFragment extends LazyFragment {
 		super.onCreate(savedInstanceState);
 		position = getArguments().getInt(ARG_POSITION);
 
-		dialog = new LoadingDialog(context);
 		application = (MainApplication) context.getApplication();
 		articleDao = ArticleDao.getInstance(context);
 		bannerDao = BannerDao.getInstance(context);
@@ -160,6 +189,12 @@ public class ArticleFragment extends LazyFragment {
 
 		// 初始化提示文字
 		hintTextView = (TextView) view.findViewById(R.id.empty_article_hint);
+		// 初始化圆点的layout
+		pointsLayout = (LinearLayout) content.findViewById(R.id.points);
+		// 初始化文章的标题
+		titleTextView = (TextView) content.findViewById(R.id.tv_bannertext);
+		// 初始化banner
+		bannerLayout = (LinearLayout) content.findViewById(R.id.banner_layout);
 
 		// 初始化文章列表
 		articleListView = (ListView) content.findViewById(R.id.article_list);
@@ -187,7 +222,7 @@ public class ArticleFragment extends LazyFragment {
 		});
 
 		// 初始化banner的PagerView
-		bannerPager = (RollPagerView) content.findViewById(R.id.viewpager);
+		bannerPager = (InfiniteViewPager) content.findViewById(R.id.viewpager);
 		// 根据屏幕的宽度调节ViewPager的长宽
 		WindowManager wm = (WindowManager) context
 				.getSystemService(Context.WINDOW_SERVICE);
@@ -197,28 +232,14 @@ public class ArticleFragment extends LazyFragment {
 		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 				width, height);
 		bannerPager.setLayoutParams(layoutParams);
-		bannerAdapter = new BannerAdapter(bannerPager, getActivity(), banners,
+		// banner真正的adapter
+		bannerAdapter = new BannerAdapter(context, banners,
 				application.getCurrentUser());
-		bannerPager.setAnimationDurtion(500);
-		bannerPager.setAdapter(bannerAdapter);
-		bannerPager.setOnPageSelectedListener(new OnPageSelectedListener() {
-
-			@Override
-			public void onPageSelected(int position) {
-				// TODO Auto-generated method stub
-				if (banners.size() > 0) {
-					currentIndex = position % banners.size();
-					titleTextView.setText(banners.get(currentIndex).getTitle());
-				}
-			}
-		});
-
-		titleTextView = (TextView) content.findViewById(R.id.tv_bannertext);
-		bannerLayout = (LinearLayout) content.findViewById(R.id.banner_layout);
 
 		// 初始化ScrollView
 		scrollView = (XScrollView) view.findViewById(R.id.scroll_view);
 		scrollView.setView(content);
+		// 初始隐藏底部提示
 		scrollView.hiddenFooter();
 		scrollView.setPullRefreshEnable(true);
 		scrollView.setPullLoadEnable(true);
@@ -272,33 +293,71 @@ public class ArticleFragment extends LazyFragment {
 	 */
 	private void refreshBannerList() {
 		// TODO Auto-generated method stub
-		bannerAdapter.notifyDataSetChanged();
+		// 代理的adapter
+		InfinitePagerAdapter adapter = new InfinitePagerAdapter(bannerAdapter);
+		// 设置代理的adapter
+		bannerPager.setAdapter(adapter);
+		// 设置监听器
+		bannerPager.setOnPageChangeListener(listener);
+
+		// 设置控件的可见性
 		if (null == banners || banners.size() == 0) {
 			bannerPager.setVisibility(View.GONE);
 			titleTextView.setVisibility(View.GONE);
 			bannerLayout.setVisibility(View.GONE);
+			pointsLayout.setVisibility(View.GONE);
+			isStop = true;
 		} else {
 			bannerPager.setVisibility(View.VISIBLE);
 			titleTextView.setVisibility(View.VISIBLE);
 			bannerLayout.setVisibility(View.VISIBLE);
+			pointsLayout.setVisibility(View.VISIBLE);
 
-			// 图片回滚到第一页的位置
-			int current = bannerPager.getViewPager().getCurrentItem();
-			for (int i = 0; i <= current; i++) {
-				bannerPager.getViewPager().setCurrentItem(current - i, false);
-			}
+			// 当前页设置成第一条
 			currentIndex = 0;
 			// 将标题设置为第一条的标题
 			titleTextView.setText(banners.get(currentIndex).getTitle());
+			// 回滚到第一页
+			bannerPager.setCurrentItem(currentIndex);
+			// 设置圆圈点
+			refreshPoint();
+			// 选中第一个点
+			pointsLayout.getChildAt(0).setEnabled(true);
+			// 如果更新banner的线程还没有执行，则让它开始执行
+			if (!bannerThread.isAlive()) {
+				isStop = false;
+				bannerThread.start();
+			}
 		}
 	}
 
 	/**
-	 * 列表刷新完成的回调
+	 * 设置圆圈点
+	 */
+	private void refreshPoint() {
+		View view;
+		LayoutParams params;
+		// 移除掉原来的圆圈点
+		pointsLayout.removeAllViews();
+
+		// 添加新的圆圈点
+		for (int i = 0; i < banners.size(); i++) {
+			view = new View(context);
+			params = new LayoutParams(DensityUtil.dip2px(context, 5),
+					DensityUtil.dip2px(context, 5));
+			params.leftMargin = DensityUtil.dip2px(context, 10);
+			view.setBackgroundResource(R.drawable.point_background);
+			view.setLayoutParams(params);
+			view.setEnabled(false);
+			pointsLayout.addView(view);
+		}
+	}
+
+	/**
+	 * 文章列表刷新完成的回调
 	 */
 	private void loadComplete() {
 		// 更新文章列表
-
 		refreshArticleList();
 		// 停止刷新动画
 		scrollView.stopRefresh();
@@ -309,11 +368,6 @@ public class ArticleFragment extends LazyFragment {
 				Locale.CHINA);
 		Date curDate = new Date(System.currentTimeMillis());
 		scrollView.setRefreshTime(formatter.format(curDate));
-
-		// 隐藏等待对话框
-		if (dialog.isShowing()) {
-			dialog.cancelDialog();
-		}
 	}
 
 	/**
@@ -371,6 +425,37 @@ public class ArticleFragment extends LazyFragment {
 		return number;
 	}
 
+	/**
+	 * banner滚动时候的监听器
+	 */
+	private OnPageChangeListener listener = new OnPageChangeListener() {
+
+		@Override
+		public void onPageSelected(int arg0) {
+			// TODO Auto-generated method stub
+			// 设置上一个点为未选中状态
+			pointsLayout.getChildAt(currentIndex).setEnabled(false);
+			// 更新标记当前的点
+			currentIndex = bannerPager.getCurrentItem();
+			// 将当前的点标记为选中
+			pointsLayout.getChildAt(currentIndex).setEnabled(true);
+			// 更新标题文字
+			titleTextView.setText(banners.get(currentIndex).getTitle());
+		}
+
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onPageScrollStateChanged(int arg0) {
+			// TODO Auto-generated method stub
+
+		}
+	};
+
 	private void getArticleList(final int userId, final int limit,
 			final int offset, final int type) {
 		String url = Constant.ARTICLE_LIST_URL + "?userId=" + userId
@@ -397,6 +482,7 @@ public class ArticleFragment extends LazyFragment {
 								List<Article> olds = articleDao.findAll(type);
 								int refreshNumber = calculateRefreshNumber(tmp,
 										olds);
+								// 如果有更新就更新缓存的数据
 								if (refreshNumber > 0) {
 									articleDao.deleteAll(type);
 									articleDao.insert(tmp, type);
@@ -476,5 +562,12 @@ public class ArticleFragment extends LazyFragment {
 
 		StringRequest request = new StringRequest(url, listener, errorListener);
 		RequestUtil.getRequestQueue(context).add(request);
+	}
+
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		isStop = true;
+		super.onDestroy();
 	}
 }

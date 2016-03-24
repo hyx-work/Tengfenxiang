@@ -108,6 +108,11 @@ public class EditActivity extends BaseActivity {
 			Toast.makeText(getApplication(), R.string.change_alipay_notify,
 					Toast.LENGTH_SHORT).show();
 		}
+
+		// 如果是要输入收货地址，则要增加提醒
+		if (attributeName.equals("streetInfo")) {
+			information.setHint(R.string.delivery_address_hint);
+		}
 	}
 
 	private void saveInformation(final int userId, final String attributeName,

@@ -465,6 +465,7 @@ public class ArticleFragment extends LazyFragment {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
+				System.err.println(response);
 				ResponseResult result = JSON.parseObject(response,
 						ResponseResult.class);
 				if (result.getCode() == 200) {

@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/title_bar"
-        android:overScrollMode="never" >
+        android:overScrollMode="never"
+        android:scrollbars="none" >
     </ListView>
 
 </RelativeLayout>

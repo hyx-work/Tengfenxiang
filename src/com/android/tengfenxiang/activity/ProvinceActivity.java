@@ -3,13 +3,6 @@ package com.android.tengfenxiang.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.adapter.SimpleListAdapter;
-import com.android.tengfenxiang.bean.CityInfo;
-import com.android.tengfenxiang.util.CityUtil;
-import com.android.tengfenxiang.view.titlebar.TitleBar;
-import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +10,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.adapter.SimpleListAdapter;
+import com.android.tengfenxiang.bean.City;
+import com.android.tengfenxiang.util.CityUtil;
+import com.android.tengfenxiang.view.titlebar.TitleBar;
+import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 
 public class ProvinceActivity extends Activity {
 
@@ -68,11 +68,11 @@ public class ProvinceActivity extends Activity {
 	}
 
 	private void getProvinces() {
-		CityUtil cityUtil = CityUtil.getInstance(getApplication());
-		List<CityInfo> infos = cityUtil.getProvince_list();
-		for (CityInfo info : infos) {
-			code.add(info.getId());
-			name.add(info.getCity_name());
+		CityUtil util = CityUtil.getInstance(getApplication());
+		List<City> infos = util.getProvinces(getApplication());
+		for (City info : infos) {
+			code.add(info.getProvinceId());
+			name.add(info.getProvinceName());
 		}
 	}
 

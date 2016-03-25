@@ -9,127 +9,149 @@ import java.util.Map.Entry;
 
 import android.content.Context;
 
-import com.android.tengfenxiang.bean.CityInfo;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.android.tengfenxiang.bean.City;
 
-/**
- * 从文件中解析省份和城市的工具类
- * 
- * @author ccz
- * 
- */
 public class CityUtil {
 
-	private HashMap<String, List<CityInfo>> city_map = new HashMap<String, List<CityInfo>>();
-	private List<CityInfo> province_list = new ArrayList<CityInfo>();
-	private ArrayList<String> province_list_code = new ArrayList<String>();
-	private ArrayList<String> city_list_code = new ArrayList<String>();
+	private static CityUtil util;
 
-	public static CityUtil instance;
+	private List<City> cities;
 
-	private final static String FILE_NAME = "city.json";
-	private final static String PROVINCE_NODE = "province";
-	private final static String CITY_NODE = "city";
+	private final static String FILE_NAME = "city.txt";
 
 	private CityUtil(Context context) {
-		String area_str = FileUtil.readAssets(context, FILE_NAME);
-		province_list = getJSONParserResult(area_str, PROVINCE_NODE);
-		city_map = getJSONParserResultArray(area_str, CITY_NODE);
+		cities = new ArrayList<City>();
+		decodeFile(context);
 	}
 
-	/**
-	 * 获取单例
-	 * 
-	 * @return
-	 */
 	public static CityUtil getInstance(Context context) {
-		if (null == instance) {
-			instance = new CityUtil(context);
+		if (null == util) {
+			util = new CityUtil(context);
 		}
-		return instance;
+		return util;
 	}
 
-	private List<CityInfo> getJSONParserResult(String JSONString, String key) {
-		List<CityInfo> list = new ArrayList<CityInfo>();
-		JsonObject result = new JsonParser().parse(JSONString)
-				.getAsJsonObject().getAsJsonObject(key);
-
-		Iterator<Entry<String, JsonElement>> iterator = result.entrySet()
-				.iterator();
-		while (iterator.hasNext()) {
-			Map.Entry<String, JsonElement> entry = (Entry<String, JsonElement>) iterator
-					.next();
-			CityInfo cityinfo = new CityInfo();
-
-			cityinfo.setCity_name(entry.getValue().getAsString());
-			cityinfo.setId(entry.getKey());
-			province_list_code.add(entry.getKey());
-			list.add(cityinfo);
+	private void decodeFile(Context context) {
+		cities.clear();
+		String content = FileUtil.readAssets(context, FILE_NAME);
+		// 读出所有的行
+		String[] lines = content.split("\n");
+		// 将每一行转为一个City实例
+		for (int i = 0; i < lines.length; i++) {
+			String[] infos = lines[i].split("\t");
+			City city = new City(infos[0], infos[1], infos[2], infos[3],
+					infos[4], infos[5], infos[6], infos[7]);
+			cities.add(city);
 		}
-		return list;
 	}
 
-	private HashMap<String, List<CityInfo>> getJSONParserResultArray(
-			String JSONString, String key) {
-		HashMap<String, List<CityInfo>> hashMap = new HashMap<String, List<CityInfo>>();
-		JsonObject result = new JsonParser().parse(JSONString)
-				.getAsJsonObject().getAsJsonObject(key);
-
-		Iterator<Entry<String, JsonElement>> iterator = result.entrySet()
-				.iterator();
-		while (iterator.hasNext()) {
-			Map.Entry<String, JsonElement> entry = (Entry<String, JsonElement>) iterator
-					.next();
-			List<CityInfo> list = new ArrayList<CityInfo>();
-			JsonArray array = entry.getValue().getAsJsonArray();
-			for (int i = 0; i < array.size(); i++) {
-				CityInfo cityinfo = new CityInfo();
-				cityinfo.setCity_name(array.get(i).getAsJsonArray().get(0)
-						.getAsString());
-				cityinfo.setId(array.get(i).getAsJsonArray().get(1)
-						.getAsString());
-				city_list_code.add(array.get(i).getAsJsonArray().get(1)
-						.getAsString());
-				list.add(cityinfo);
+	public String getProvinceName(Context context, int code) {
+		if (null == cities || cities.isEmpty()) {
+			decodeFile(context);
+		}
+		String province = "";
+		for (City city : cities) {
+			if (city.getProvinceId().equals(code + "")) {
+				province = city.getProvinceName();
+				break;
 			}
-			hashMap.put(entry.getKey(), list);
 		}
-		return hashMap;
+		if (province.equals("")) {
+			for (City city : cities) {
+				if (city.getOldProvinceId().equals(code + "")) {
+					province = city.getProvinceName();
+					break;
+				}
+			}
+		}
+		return province;
 	}
 
-	public HashMap<String, List<CityInfo>> getCity_map() {
-		return city_map;
+	public String getCityName(Context context, int code) {
+		if (null == cities || cities.isEmpty()) {
+			decodeFile(context);
+		}
+		String cityName = "";
+		for (City city : cities) {
+			if (city.getCityId().equals(code + "")) {
+				cityName = city.getCityName();
+				break;
+			}
+		}
+		if (cityName.equals("")) {
+			for (City city : cities) {
+				if (city.getOldCityId().equals(code + "")) {
+					cityName = city.getCityName();
+					break;
+				}
+			}
+		}
+		return cityName;
 	}
 
-	public void setCity_map(HashMap<String, List<CityInfo>> city_map) {
-		this.city_map = city_map;
+	public String getDistrictName(Context context, int code) {
+		if (null == cities || cities.isEmpty()) {
+			decodeFile(context);
+		}
+		String district = "";
+		for (City city : cities) {
+			if (city.getCountyId().equals(code + "")) {
+				district = city.getCountyName();
+				break;
+			}
+		}
+		return district;
 	}
 
-	public List<CityInfo> getProvince_list() {
-		return province_list;
+	public List<City> getProvinces(Context context) {
+		if (null == cities || cities.isEmpty()) {
+			decodeFile(context);
+		}
+		Map<String, City> maps = new HashMap<String, City>();
+		for (City city : cities) {
+			if (!maps.containsKey(city.getProvinceId())) {
+				maps.put(city.getProvinceId(), city);
+			}
+		}
+		List<City> tmp = new ArrayList<City>();
+		Iterator<Entry<String, City>> iter = maps.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<String, City> entry = (Entry<String, City>) iter.next();
+			tmp.add(entry.getValue());
+		}
+		return tmp;
 	}
 
-	public void setProvince_list(List<CityInfo> province_list) {
-		this.province_list = province_list;
+	public List<City> getCities(Context context, String code) {
+		if (null == cities || cities.isEmpty()) {
+			decodeFile(context);
+		}
+		Map<String, City> maps = new HashMap<String, City>();
+		for (City city : cities) {
+			if (!maps.containsKey(city.getCityId())
+					&& city.getProvinceId().equals(code)) {
+				maps.put(city.getCityId(), city);
+			}
+		}
+		Iterator<Entry<String, City>> iter = maps.entrySet().iterator();
+		List<City> tmp = new ArrayList<City>();
+		while (iter.hasNext()) {
+			Entry<String, City> entry = (Entry<String, City>) iter.next();
+			tmp.add(entry.getValue());
+		}
+		return tmp;
 	}
 
-	public ArrayList<String> getProvince_list_code() {
-		return province_list_code;
+	public List<City> getDistricts(Context context, String code) {
+		if (null == cities || cities.isEmpty()) {
+			decodeFile(context);
+		}
+		List<City> tmp = new ArrayList<City>();
+		for (City city : cities) {
+			if (city.getCityId().equals(code)) {
+				tmp.add(city);
+			}
+		}
+		return tmp;
 	}
-
-	public void setProvince_list_code(ArrayList<String> province_list_code) {
-		this.province_list_code = province_list_code;
-	}
-
-	public ArrayList<String> getCity_list_code() {
-		return city_list_code;
-	}
-
-	public void setCity_list_code(ArrayList<String> city_list_code) {
-		this.city_list_code = city_list_code;
-	}
-
 }

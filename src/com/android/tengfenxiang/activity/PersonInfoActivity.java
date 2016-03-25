@@ -3,7 +3,6 @@ package com.android.tengfenxiang.activity;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
@@ -25,7 +24,6 @@ import android.widget.Toast;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.PersonInfoListAdapter;
-import com.android.tengfenxiang.bean.CityInfo;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.db.UserDao;
 import com.android.tengfenxiang.util.CityUtil;
@@ -212,7 +210,8 @@ public class PersonInfoActivity extends BaseActivity {
 			values.add(getString(R.string.female));
 		}
 
-		values.add(getArea(currentUser.getProvince(), currentUser.getCity()));
+		values.add(getArea(currentUser.getProvince(), currentUser.getCity(),
+				currentUser.getDistrict()));
 		values.add(currentUser.getStreetInfo());
 		values.add(currentUser.getAlipay());
 
@@ -236,26 +235,22 @@ public class PersonInfoActivity extends BaseActivity {
 	 * @param city
 	 * @return
 	 */
-	private String getArea(int province, int city) {
-		CityUtil cityUtil = CityUtil.getInstance(getApplication());
-		List<CityInfo> provinces = cityUtil.getProvince_list();
-		String result = "";
-		for (CityInfo cityInfo : provinces) {
-			if (cityInfo.getId().equals(province + "")) {
-				result = cityInfo.getCity_name() + " ";
-				break;
-			}
+	private String getArea(int province, int city, int district) {
+		CityUtil util = CityUtil.getInstance(application);
+		StringBuffer buffer = new StringBuffer();
+		String provinceName = util.getProvinceName(application, province);
+		String cityName = util.getCityName(application, city);
+		String districtName = util.getDistrictName(application, district);
+		if (!provinceName.equals("")) {
+			buffer.append(provinceName);
 		}
-
-		List<CityInfo> citys = cityUtil.getCity_map().get(province + "");
-		for (CityInfo cityInfo : citys) {
-			if (cityInfo.getId().equals(city + "")) {
-				result += cityInfo.getCity_name();
-				break;
-			}
+		if (!cityName.equals("")) {
+			buffer.append(" ").append(cityName);
 		}
-
-		return result;
+		if (!districtName.equals("")) {
+			buffer.append(" ").append(districtName);
+		}
+		return buffer.toString();
 	}
 
 	/**

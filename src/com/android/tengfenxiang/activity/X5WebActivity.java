@@ -308,7 +308,7 @@ public class X5WebActivity extends BaseActivity {
 	 * 微信分享
 	 * 
 	 * @param flag
-	 *            0:分享到微信好友，1：分享到微信朋友圿
+	 *            0:分享到微信好友，1：分享到微信朋友圈
 	 */
 	private void wechatShare(int flag) {
 		// 网页对象

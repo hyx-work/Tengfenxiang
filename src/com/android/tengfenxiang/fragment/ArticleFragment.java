@@ -434,13 +434,15 @@ public class ArticleFragment extends LazyFragment {
 		public void onPageSelected(int arg0) {
 			// TODO Auto-generated method stub
 			// 设置上一个点为未选中状态
-			pointsLayout.getChildAt(currentIndex).setEnabled(false);
-			// 更新标记当前的点
-			currentIndex = bannerPager.getCurrentItem();
-			// 将当前的点标记为选中
-			pointsLayout.getChildAt(currentIndex).setEnabled(true);
-			// 更新标题文字
-			titleTextView.setText(banners.get(currentIndex).getTitle());
+			if (pointsLayout.getChildCount() > 0) {
+				pointsLayout.getChildAt(currentIndex).setEnabled(false);
+				// 更新标记当前的点
+				currentIndex = bannerPager.getCurrentItem();
+				// 将当前的点标记为选中
+				pointsLayout.getChildAt(currentIndex).setEnabled(true);
+				// 更新标题文字
+				titleTextView.setText(banners.get(currentIndex).getTitle());
+			}
 		}
 
 		@Override
@@ -465,7 +467,6 @@ public class ArticleFragment extends LazyFragment {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				System.err.println(response);
 				ResponseResult result = JSON.parseObject(response,
 						ResponseResult.class);
 				if (result.getCode() == 200) {

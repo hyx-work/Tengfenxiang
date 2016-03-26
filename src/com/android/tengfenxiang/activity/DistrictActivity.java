@@ -112,9 +112,13 @@ public class DistrictActivity extends BaseActivity {
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
+					// 因为返回的对象token为null
 					if (null == result.getToken()) {
 						result.setToken(application.getCurrentUser().getToken());
 					}
+					// 因为返回的withdrawableCash为null
+					result.setWithdrawableCash(application.getCurrentUser()
+							.getWithdrawableCash());
 					// 更新内存中的用户对象
 					application.setCurrentUser(result);
 					// 更新数据库中缓存的用户对象

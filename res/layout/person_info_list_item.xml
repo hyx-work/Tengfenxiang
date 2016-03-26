@@ -19,6 +19,9 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
         android:layout_toLeftOf="@+id/arrow"
+        android:layout_toRightOf="@+id/info"
+        android:gravity="right"
+        android:singleLine="true"
         android:textColor="@color/gray"
         android:textSize="15sp" />
 

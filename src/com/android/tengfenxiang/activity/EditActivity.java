@@ -3,6 +3,14 @@ package com.android.tengfenxiang.activity;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.db.UserDao;
@@ -14,19 +22,11 @@ import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 public class EditActivity extends BaseActivity {
 
@@ -123,14 +123,19 @@ public class EditActivity extends BaseActivity {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
+				System.err.println(response);
 				User result = (User) ResponseUtil.handleResponse(
 						getApplication(), response, User.class);
 				if (null != result) {
 					Toast.makeText(getApplication(), R.string.modify_success,
 							Toast.LENGTH_SHORT).show();
+					// 因为返回的对象token为null
 					if (null == result.getToken()) {
 						result.setToken(application.getCurrentUser().getToken());
 					}
+					// 因为返回的withdrawableCash为null
+					result.setWithdrawableCash(application.getCurrentUser()
+							.getWithdrawableCash());
 					// 更新内存中的用户对象
 					application.setCurrentUser(result);
 					// 更新数据库中缓存的用户对象

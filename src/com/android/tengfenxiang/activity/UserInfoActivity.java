@@ -36,17 +36,16 @@ public class UserInfoActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_info);
-
-		setting = application.getSetting();
-		cash = application.getCurrentUser().getWithdrawableCash();
-		preferences = getSharedPreferences(getPackageName(),
-				Context.MODE_PRIVATE);
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		setting = application.getSetting();
+		cash = application.getCurrentUser().getWithdrawableCash();
+		preferences = getSharedPreferences(getPackageName(),
+				Context.MODE_PRIVATE);
 		initView();
 	}
 

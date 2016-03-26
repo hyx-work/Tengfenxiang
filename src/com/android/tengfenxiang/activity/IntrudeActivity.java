@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.ViewPagerAdapter;
@@ -29,6 +30,7 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 	private ViewPagerAdapter vpAdapter;
 	private List<View> views;
 	private Button button;
+	private TextView jumpButton;
 
 	private SharedPreferences preferences;
 	private Editor editor;
@@ -52,6 +54,7 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.intrude);
 		button = (Button) findViewById(R.id.button);
+		jumpButton = (TextView) findViewById(R.id.jump_btn);
 		views = new ArrayList<View>();
 
 		preferences = getSharedPreferences(getPackageName(),
@@ -77,6 +80,22 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 
 			@Override
 			public void onClick(View arg0) {
+				editor = preferences.edit();
+				editor.putBoolean("firststart", false);
+				editor.commit();
+
+				Intent intent = new Intent();
+				intent.setClass(IntrudeActivity.this, LoginActivity.class);
+				IntrudeActivity.this.startActivity(intent);
+				finish();
+			}
+		});
+
+		jumpButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
 				editor = preferences.edit();
 				editor.putBoolean("firststart", false);
 				editor.commit();
@@ -142,8 +161,10 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 		setCurDot(arg0);
 		if (arg0 == 3) {
 			button.setVisibility(View.VISIBLE);
+			jumpButton.setVisibility(View.GONE);
 		} else {
 			button.setVisibility(View.GONE);
+			jumpButton.setVisibility(View.VISIBLE);
 		}
 	}
 

@@ -139,6 +139,7 @@
     <string name="wechat_moment">朋友圈</string>
     <string name="share_success">分享成功</string>
     <string name="try_now">立即体验</string>
+    <string name="jump">跳过</string>
     <string name="clear_cache_success">缓存已清除</string>
     <string name="xlistview_header_hint_normal">下拉刷新</string>
     <string name="xlistview_header_hint_ready">松开刷新数据</string>

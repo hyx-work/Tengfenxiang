@@ -18,11 +18,16 @@ import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.bean.Recommend;
+import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.receiver.SaveShareRecordReceiver;
 import com.android.tengfenxiang.receiver.SaveShareRecordReceiver.OnSaveRecordsListener;
 import com.android.tengfenxiang.util.BitmapCompressUtil;
 import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.JsBridge;
+import com.android.tengfenxiang.util.JsBridge.JsBridgeListener;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.util.VolleyErrorUtil;
@@ -50,7 +55,7 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
-public class X5WebActivity extends BaseActivity {
+public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 
 	private TitleBar titleBar;
 	private X5WebView webView;
@@ -199,12 +204,17 @@ public class X5WebActivity extends BaseActivity {
 		localBroadcastManager.registerReceiver(receiver, intentFilter);
 	}
 
+	private JsBridge bridge;
+
 	private void initWebView() {
 		// TODO Auto-generated method stub
 		if (null != url && !url.equals("")) {
 			webView.getSettings().setSupportZoom(false);
 			webView.getSettings()
 					.setJavaScriptCanOpenWindowsAutomatically(true);
+			bridge = new JsBridge(application);
+			bridge.setJsBridgeListener(this);
+			webView.addJavascriptInterface(bridge, "androidJSUtil");
 			webView.setWebViewClient(new WebViewClient() {
 
 				@Override
@@ -498,6 +508,45 @@ public class X5WebActivity extends BaseActivity {
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void getAppVersion() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void shareWechat() {
+		// TODO Auto-generated method stub
+		wechatShare(0);
+	}
+
+	@Override
+	public void shareWechatSession() {
+		// TODO Auto-generated method stub
+		wechatShare(1);
+	}
+
+	@Override
+	public void showRecommend(String data) {
+		// TODO Auto-generated method stub
+		Recommend recommend = JSON.parseObject(data, Recommend.class);
+		if (null != recommend) {
+			User user = application.getCurrentUser();
+			Intent intent = new Intent(X5WebActivity.this, X5WebActivity.class);
+			intent.putExtra("title", getString(R.string.share));
+			String url = recommend.getUrl();
+			if (null != user.getToken() && !user.getToken().equals("")) {
+				url = url + "&token=" + user.getToken();
+			}
+			intent.putExtra("url", url);
+			intent.putExtra("article_id", recommend.getInfoId());
+			intent.putExtra("web_title", recommend.getTitle());
+			intent.putExtra("web_content", recommend.getIntro());
+			intent.putExtra("image", recommend.getThumbnails());
+			startActivity(intent);
+		}
 	}
 
 }

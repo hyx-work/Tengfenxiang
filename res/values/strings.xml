@@ -172,11 +172,17 @@
     <string name="subscribe_manager_category_info_2">单击增删频道，长按拖拽排序</string>
     <string name="launch_camera_error">打开相机失败，请确保安装了相机软件</string>
     <string name="launch_gallery_error">打开图库失败，请确保安装了图库软件</string>
-    <string name="gold_coin_hint_text">再给点力，你距离高富帅只差一步之遥！</string>
     <string name="take_in_wallet">收入囊中</string>
     <string name="fail_to_get_config">获取配置文件失败</string>
     <string name="current_point">当前银两&#160;&#160;</string>
     <string name="no_update_article">没有文章更新</string>
     <string name="update_article_number">更新了?篇文章</string>
+    <string name="gold_text_01">革命尚未成功，兄台仍需努力！</string>
+    <string name="gold_text_02">业精于勤而荒于嬉，奋斗吧骚年！</string>
+    <string name="gold_text_03">猴赛雷，你快让万千小白膜拜啦！</string>
+    <string name="gold_text_04">成功就是把复杂的问题简单化，然后全力去DO!</string>
+    <string name="gold_text_05">再给点力，你距离高富帅只差一步之遥！</string>
+    <string name="gold_text_06">官人，你好有“财”哦，请受秋香一拜！</string>
+    <string name="gold_text_07">恭喜您成功玩赚9527，请受四大才子跪拜！</string>
 
 </resources>

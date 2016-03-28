@@ -11,6 +11,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.Setting;
@@ -23,9 +24,14 @@ public class GoldCoinActivity extends BaseActivity {
 	private RiseNumberTextView profitTextView;
 	private WebView coinView;
 	private RelativeLayout layout;
+	private TextView goldTextView;
 	private Setting setting;
 	private int cash;
 	private SharedPreferences preferences;
+
+	private int[] goldText = { R.string.gold_text_01, R.string.gold_text_02,
+			R.string.gold_text_03, R.string.gold_text_04,
+			R.string.gold_text_05, R.string.gold_text_06, R.string.gold_text_07 };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,26 @@ public class GoldCoinActivity extends BaseActivity {
 		profitTextView.withNumber(point);
 		// 时间设置为2秒，跟音频和gif的时间一致
 		profitTextView.setDuration(2000);
+
+		// 初始化文案显示
+		goldTextView = (TextView) findViewById(R.id.gold_text);
+		int textIndex = 0;
+		if (point < 1000) {
+			textIndex = 0;
+		} else if (point >= 1000 && point < 2000) {
+			textIndex = 1;
+		} else if (point >= 2000 && point < 3000) {
+			textIndex = 2;
+		} else if (point >= 3000 && point < 5000) {
+			textIndex = 3;
+		} else if (point >= 5000 && point < 10000) {
+			textIndex = 4;
+		} else if (point >= 10000 && point < 20000) {
+			textIndex = 5;
+		} else if (point >= 20000 && point < 500000) {
+			textIndex = 6;
+		}
+		goldTextView.setText(goldText[textIndex]);
 
 		// 初始化按钮事件
 		takeInButton = (Button) findViewById(R.id.take_in_btn);

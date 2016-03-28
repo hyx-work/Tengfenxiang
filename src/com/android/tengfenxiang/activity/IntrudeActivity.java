@@ -116,13 +116,13 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 		// 循环取得小点图片
 		for (int i = 0; i < pics.length; i++) {
 			dots[i] = (ImageView) ll.getChildAt(i);
-			dots[i].setEnabled(true);
+			dots[i].setEnabled(false);
 			dots[i].setOnClickListener(this);
 			dots[i].setTag(i);
 		}
 
 		currentIndex = 0;
-		dots[currentIndex].setEnabled(false);
+		dots[currentIndex].setEnabled(true);
 	}
 
 	private void setCurView(int position) {
@@ -138,8 +138,8 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 			return;
 		}
 
-		dots[positon].setEnabled(false);
-		dots[currentIndex].setEnabled(true);
+		dots[positon].setEnabled(true);
+		dots[currentIndex].setEnabled(false);
 
 		currentIndex = positon;
 	}

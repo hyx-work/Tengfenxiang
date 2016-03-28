@@ -11,9 +11,12 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.DisplayMetrics;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -29,11 +32,19 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 	private ViewPager vp;
 	private ViewPagerAdapter vpAdapter;
 	private List<View> views;
-	private Button button;
 	private TextView jumpButton;
 
 	private SharedPreferences preferences;
 	private Editor editor;
+	private int currentItem = 0;
+	/**
+	 * 当手指划过的宽度为屏幕的1/3则跳转
+	 */
+	private int flaggingWidth;
+	/**
+	 * 手势监听
+	 */
+	private GestureDetector gestureDetector;
 
 	/**
 	 * 引导图片资源
@@ -49,16 +60,21 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 	 */
 	private int currentIndex;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.intrude);
-		button = (Button) findViewById(R.id.button);
 		jumpButton = (TextView) findViewById(R.id.jump_btn);
 		views = new ArrayList<View>();
 
 		preferences = getSharedPreferences(getPackageName(),
 				Context.MODE_PRIVATE);
+		gestureDetector = new GestureDetector(new GuideViewTouch());
+		// 获取分辨率
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		flaggingWidth = dm.widthPixels / 3;
 
 		LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
@@ -76,20 +92,6 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 		vp.setAdapter(vpAdapter);
 		vp.setOnPageChangeListener(this);
 		initDots();
-		button.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				editor = preferences.edit();
-				editor.putBoolean("firststart", false);
-				editor.commit();
-
-				Intent intent = new Intent();
-				intent.setClass(IntrudeActivity.this, LoginActivity.class);
-				IntrudeActivity.this.startActivity(intent);
-				finish();
-			}
-		});
 
 		jumpButton.setOnClickListener(new OnClickListener() {
 
@@ -110,9 +112,7 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 
 	private void initDots() {
 		LinearLayout ll = (LinearLayout) findViewById(R.id.ll);
-
 		dots = new ImageView[pics.length];
-
 		// 循环取得小点图片
 		for (int i = 0; i < pics.length; i++) {
 			dots[i] = (ImageView) ll.getChildAt(i);
@@ -159,13 +159,7 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 	@Override
 	public void onPageSelected(int arg0) {
 		setCurDot(arg0);
-		if (arg0 == 3) {
-			button.setVisibility(View.VISIBLE);
-			jumpButton.setVisibility(View.GONE);
-		} else {
-			button.setVisibility(View.GONE);
-			jumpButton.setVisibility(View.VISIBLE);
-		}
+		currentItem = arg0;
 	}
 
 	@Override
@@ -175,4 +169,38 @@ public class IntrudeActivity extends Activity implements OnClickListener,
 		setCurDot(position);
 	}
 
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent event) {
+		if (gestureDetector.onTouchEvent(event)) {
+			event.setAction(MotionEvent.ACTION_CANCEL);
+		}
+		return super.dispatchTouchEvent(event);
+	}
+
+	class GuideViewTouch extends SimpleOnGestureListener {
+		@Override
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+				float velocityY) {
+			if (currentItem == 3) {
+				if (Math.abs(e1.getX() - e2.getX()) > Math.abs(e1.getY()
+						- e2.getY())
+						&& (e1.getX() - e2.getX() <= (-flaggingWidth) || e1
+								.getX() - e2.getX() >= flaggingWidth)) {
+					if (e1.getX() - e2.getX() >= flaggingWidth) {
+						editor = preferences.edit();
+						editor.putBoolean("firststart", false);
+						editor.commit();
+
+						Intent intent = new Intent();
+						intent.setClass(IntrudeActivity.this,
+								LoginActivity.class);
+						IntrudeActivity.this.startActivity(intent);
+						finish();
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+	}
 }

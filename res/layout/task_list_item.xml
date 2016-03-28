@@ -5,8 +5,8 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="80dp"
-        android:layout_height="60dp"
+        android:layout_width="68dp"
+        android:layout_height="51dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
@@ -23,7 +23,7 @@
         android:layout_toRightOf="@+id/image"
         android:ellipsize="end"
         android:lineSpacingExtra="3dp"
-        android:lines="2"
+        android:singleLine="true"
         android:textSize="15sp" />
 
     <TextView
@@ -32,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/image"
         android:layout_toRightOf="@+id/image"
-        android:text="@string/task_price" />
+        android:text="@string/task_price"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/price"
@@ -41,7 +42,8 @@
         android:layout_alignBaseline="@+id/price_hint"
         android:layout_alignBottom="@+id/price_hint"
         android:layout_toRightOf="@+id/price_hint"
-        android:textColor="@color/base_color" />
+        android:textColor="@color/base_color"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/status"
@@ -50,12 +52,12 @@
         android:layout_alignBottom="@+id/image"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="5dp"
-        android:textColor="@color/white" />
+        android:paddingBottom="3dp"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:paddingTop="3dp"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/rest_count"

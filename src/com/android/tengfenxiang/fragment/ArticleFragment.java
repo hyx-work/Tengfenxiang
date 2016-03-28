@@ -76,7 +76,7 @@ public class ArticleFragment extends LazyFragment {
 	private XScrollView scrollView;
 	private InfiniteViewPager bannerPager;
 	private TextView titleTextView;
-	private LinearLayout bannerLayout;
+	private RelativeLayout bannerLayout;
 	private LinearLayout pointsLayout;
 
 	/**
@@ -185,7 +185,7 @@ public class ArticleFragment extends LazyFragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.activity_scroll_view, container,
 				false);
-		View content = inflater.inflate(R.layout.artical_fragment, null);
+		View content = inflater.inflate(R.layout.article_fragment, null);
 
 		// 初始化提示文字
 		hintTextView = (TextView) view.findViewById(R.id.empty_article_hint);
@@ -194,7 +194,8 @@ public class ArticleFragment extends LazyFragment {
 		// 初始化文章的标题
 		titleTextView = (TextView) content.findViewById(R.id.tv_bannertext);
 		// 初始化banner
-		bannerLayout = (LinearLayout) content.findViewById(R.id.banner_layout);
+		bannerLayout = (RelativeLayout) content
+				.findViewById(R.id.banner_layout);
 
 		// 初始化文章列表
 		articleListView = (ListView) content.findViewById(R.id.article_list);
@@ -336,16 +337,15 @@ public class ArticleFragment extends LazyFragment {
 	 */
 	private void refreshPoint() {
 		View view;
-		LayoutParams params;
+		LayoutParams params = new LayoutParams(DensityUtil.dip2px(context, 6),
+				DensityUtil.dip2px(context, 6));
+		params.leftMargin = DensityUtil.dip2px(context, 8);
 		// 移除掉原来的圆圈点
 		pointsLayout.removeAllViews();
 
 		// 添加新的圆圈点
 		for (int i = 0; i < banners.size(); i++) {
 			view = new View(context);
-			params = new LayoutParams(DensityUtil.dip2px(context, 5),
-					DensityUtil.dip2px(context, 5));
-			params.leftMargin = DensityUtil.dip2px(context, 10);
 			view.setBackgroundResource(R.drawable.point_background);
 			view.setLayoutParams(params);
 			view.setEnabled(false);

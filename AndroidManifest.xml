@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.tengfenxiang"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -45,9 +45,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- LoginActivity设置为singleTop模式，防止栈顶出现多个实例 -->
         <activity
             android:name="com.android.tengfenxiang.activity.LoginActivity"
-            android:label="@string/login" >
+            android:label="@string/login"
+            android:launchMode="singleTop" >
         </activity>
         <activity
             android:name="com.android.tengfenxiang.activity.MainActivity"

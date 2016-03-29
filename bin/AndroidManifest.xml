@@ -45,11 +45,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- LoginActivity设置为singleTop模式，防止栈顶出现多个实例 -->
         <activity
             android:name="com.android.tengfenxiang.activity.LoginActivity"
-            android:label="@string/login"
-            android:launchMode="singleTop" >
+            android:label="@string/login" >
         </activity>
         <activity
             android:name="com.android.tengfenxiang.activity.MainActivity"

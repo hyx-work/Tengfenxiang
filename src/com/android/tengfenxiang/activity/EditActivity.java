@@ -64,6 +64,7 @@ public class EditActivity extends BaseActivity {
 	private void initView() {
 		information = (EditText) findViewById(R.id.infomation);
 		information.setText(attributeValue);
+		alipayTextView = (TextView) findViewById(R.id.alipy_hint_text);
 		titleBar = (TitleBar) findViewById(R.id.title_bar);
 		titleBar.setTitleText(title);
 		titleBar.setOnClickListener(new OnTitleClickListener() {

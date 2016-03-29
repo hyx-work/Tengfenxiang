@@ -63,7 +63,6 @@ public class ApplyWithdrawActivity extends BaseActivity {
 		alipayTextView = (TextView) findViewById(R.id.alipay_account);
 		if (null == alipay || alipay.equals("")) {
 			alipayTextView.setText(R.string.not_setting);
-			showDialog();
 		} else {
 			alipayTextView.setText(alipay);
 		}
@@ -81,23 +80,30 @@ public class ApplyWithdrawActivity extends BaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				String withdrawNum = withdrawEditText.getText().toString();
-				if (null == withdrawNum || withdrawNum.equals("")) {
-					Toast.makeText(getApplication(),
-							R.string.empty_withdraw_input, Toast.LENGTH_SHORT)
-							.show();
+				String alipay = application.getCurrentUser().getAlipay();
+				if (null == alipay || alipay.equals("")) {
+					showDialog();
 				} else {
-					float tmp = Float.parseFloat(withdrawNum);
-					if (tmp == 0) {
-						Toast.makeText(getApplication(), R.string.zero_warn,
-								Toast.LENGTH_SHORT).show();
-					} else if (tmp > withdrawPoints) {
+					String withdrawNum = withdrawEditText.getText().toString();
+					if (null == withdrawNum || withdrawNum.equals("")) {
 						Toast.makeText(getApplication(),
-								R.string.overflow_warn, Toast.LENGTH_SHORT)
-								.show();
+								R.string.empty_withdraw_input,
+								Toast.LENGTH_SHORT).show();
 					} else {
-						dialog.showDialog();
-						applyWithdraw(application.getCurrentUser().getId(), tmp);
+						float tmp = Float.parseFloat(withdrawNum);
+						if (tmp == 0) {
+							Toast.makeText(getApplication(),
+									R.string.zero_warn, Toast.LENGTH_SHORT)
+									.show();
+						} else if (tmp > withdrawPoints) {
+							Toast.makeText(getApplication(),
+									R.string.overflow_warn, Toast.LENGTH_SHORT)
+									.show();
+						} else {
+							dialog.showDialog();
+							applyWithdraw(application.getCurrentUser().getId(),
+									tmp);
+						}
 					}
 				}
 			}
@@ -184,7 +190,6 @@ public class ApplyWithdrawActivity extends BaseActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
-						finish();
 					}
 				});
 		builder.create().show();

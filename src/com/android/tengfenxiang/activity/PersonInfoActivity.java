@@ -199,24 +199,31 @@ public class PersonInfoActivity extends BaseActivity {
 		infos.add(getString(R.string.alipay));
 
 		ArrayList<String> values = new ArrayList<String>();
-		values.add(application.getCurrentUser().getPhone());
-		values.add(currentUser.getEmail());
-		values.add(currentUser.getQq());
-		values.add(currentUser.getWechat());
-		values.add(currentUser.getNickName());
+		values.add(getValues(application.getCurrentUser().getPhone()));
+		values.add(getValues(currentUser.getEmail()));
+		values.add(getValues(currentUser.getQq()));
+		values.add(getValues(currentUser.getWechat()));
+		values.add(getValues(currentUser.getNickName()));
 		if (currentUser.getGender() == 0) {
 			values.add(getString(R.string.male));
 		} else {
 			values.add(getString(R.string.female));
 		}
 
-		values.add(getArea(currentUser.getProvince(), currentUser.getCity(),
-				currentUser.getDistrict()));
-		values.add(currentUser.getStreetInfo());
-		values.add(currentUser.getAlipay());
+		values.add(getValues(getArea(currentUser.getProvince(),
+				currentUser.getCity(), currentUser.getDistrict())));
+		values.add(getValues(currentUser.getStreetInfo()));
+		values.add(getValues(currentUser.getAlipay()));
 
 		adapter = new PersonInfoListAdapter(this, infos, values);
 		userInfos.setAdapter(adapter);
+	}
+
+	private String getValues(String value) {
+		if (null == value || value.equals("")) {
+			return getString(R.string.not_setting);
+		}
+		return value;
 	}
 
 	/**

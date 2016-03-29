@@ -75,6 +75,7 @@
     <string name="change_alipay_notify">暂不支持自助修改支付宝账号，请联系客服修改</string>
     <string name="apply_withdraw">提现</string>
     <string name="submit_success">提交成功</string>
+    <string name="empty_withdraw_input">请输入提现金额</string>
     <string name="zero_warn">提现金额不能为0</string>
     <string name="overflow_warn">提现金额不能超过最大可提现金额</string>
     <string name="person_info">个人资料</string>
@@ -87,7 +88,12 @@
     <string name="gender">性&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;别</string>
     <string name="place">地&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;区</string>
     <string name="delivery_address">收货地址</string>
+    <string name="email_hint">请输入邮箱</string>
+    <string name="qq_hint">请输入QQ号码</string>
+    <string name="wechat_hint">请输入微信号</string>
+    <string name="nickname_hint">请输入昵称</string>
     <string name="delivery_address_hint">请输入收货地址，最长120字</string>
+    <string name="alipay_hint">请输入支付宝账号</string>
     <string name="alipay">支&#160;&#160;付&#160;&#160;宝</string>
     <string name="invite_others">我要邀请</string>
     <string name="invite_user">邀请用户</string>
@@ -184,5 +190,10 @@
     <string name="gold_text_05">再给点力，你距离高富帅只差一步之遥！</string>
     <string name="gold_text_06">官人，你好有“财”哦，请受秋香一拜！</string>
     <string name="gold_text_07">恭喜您成功玩赚9527，请受四大才子跪拜！</string>
+    <string name="alipay_warn">支付宝账号填写后不可修改，请谨慎填写！</string>
+    <string name="not_setting">未设置</string>
+    <string name="empty_alipy">您还没有设置过支付宝账号</string>
+    <string name="cancel_withdraw">取消提现</string>
+    <string name="setting_now">马上设置</string>
 
 </resources>

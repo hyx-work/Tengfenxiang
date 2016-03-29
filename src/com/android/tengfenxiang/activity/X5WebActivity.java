@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.Gravity;
@@ -51,6 +52,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXWebpageObject;
 import com.tencent.mm.sdk.platformtools.Util;
+import com.tencent.smtt.sdk.DownloadListener;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -212,6 +214,8 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 			webView.getSettings().setSupportZoom(false);
 			webView.getSettings()
 					.setJavaScriptCanOpenWindowsAutomatically(true);
+			// 设置下载监听
+			webView.setDownloadListener(new WebViewDownLoadListener());
 			bridge = new JsBridge(application);
 			bridge.setJsBridgeListener(this);
 			webView.addJavascriptInterface(bridge, "androidJSUtil");
@@ -545,6 +549,23 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 			intent.putExtra("web_title", recommend.getTitle());
 			intent.putExtra("web_content", recommend.getIntro());
 			intent.putExtra("image", recommend.getThumbnails());
+			startActivity(intent);
+		}
+	}
+
+	/**
+	 * 下载监听，如果webview要执行下载操作则跳转系统浏览器
+	 * 
+	 * @author 陈楚昭
+	 * 
+	 */
+	class WebViewDownLoadListener implements DownloadListener {
+
+		@Override
+		public void onDownloadStart(String url, String userAgent,
+				String contentDisposition, String mimetype, long contentLength) {
+			Uri uri = Uri.parse(url);
+			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 			startActivity(intent);
 		}
 	}

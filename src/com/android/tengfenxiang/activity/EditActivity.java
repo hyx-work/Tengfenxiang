@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tengfenxiang.R;
@@ -37,6 +38,7 @@ public class EditActivity extends BaseActivity {
 	private EditText information;
 	private TitleBar titleBar;
 	private Button saveButton;
+	private TextView alipayTextView;
 
 	private LoadingDialog dialog;
 	private UserDao userDao;
@@ -104,14 +106,32 @@ public class EditActivity extends BaseActivity {
 
 			// 按钮设置为不可点击
 			saveButton.setClickable(false);
+			// 按钮设置为不可见
+			saveButton.setVisibility(View.GONE);
 			// 提示联系客服修改
 			Toast.makeText(getApplication(), R.string.change_alipay_notify,
 					Toast.LENGTH_SHORT).show();
 		}
 
-		// 如果是要输入收货地址，则要增加提醒
-		if (attributeName.equals("streetInfo")) {
+		// 如果支付宝账户没填写则显示提示文字
+		if (attributeName.equals("alipay")
+				&& (null == attributeValue || attributeValue.equals(""))) {
+			alipayTextView.setVisibility(View.VISIBLE);
+		}
+
+		// 初始化编辑框的提示文字
+		if (attributeName.equals("email")) {
+			information.setHint(R.string.email_hint);
+		} else if (attributeName.equals("qq")) {
+			information.setHint(R.string.qq_hint);
+		} else if (attributeName.equals("wechat")) {
+			information.setHint(R.string.wechat_hint);
+		} else if (attributeName.equals("nickName")) {
+			information.setHint(R.string.nickname_hint);
+		} else if (attributeName.equals("streetInfo")) {
 			information.setHint(R.string.delivery_address_hint);
+		} else if (attributeName.equals("alipay")) {
+			information.setHint(R.string.alipay_hint);
 		}
 	}
 

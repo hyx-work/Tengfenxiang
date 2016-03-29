@@ -332,8 +332,6 @@ public class X5WebView extends WebView {
 	// TBS: Do not use @Override to avoid false calls
 	public boolean tbs_dispatchTouchEvent(MotionEvent ev, View view) {
 		boolean r = super.super_dispatchTouchEvent(ev);
-		android.util.Log.d("Bran", "dispatchTouchEvent " + ev.getAction() + " "
-				+ r);
 		return r;
 	}
 

@@ -42,6 +42,7 @@
         android:background="@color/line_color" />
 
     <TextView
+        android:id="@+id/withdraw_points_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -63,14 +64,14 @@
 
     <EditText
         android:id="@+id/withdraw_points"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/unit_yuan"
         android:layout_below="@+id/line"
         android:layout_toLeftOf="@+id/unit_yuan"
+        android:layout_toRightOf="@+id/withdraw_points_hint"
         android:background="@null"
-        android:ems="5"
-        android:gravity="center"
+        android:gravity="center_vertical|right"
         android:inputType="numberDecimal" >
 
         <requestFocus />
@@ -83,55 +84,37 @@
         android:layout_below="@+id/unit_yuan"
         android:background="@color/line_color" />
 
-    <RelativeLayout
-        android:id="@+id/alipay_account_layout"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_below="@id/line2"
-        android:background="@drawable/item_bg"
-        android:clickable="true" >
+        android:padding="12dp"
+        android:text="@string/alipay_account"
+        android:textSize="15sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:padding="12dp"
-            android:text="@string/alipay_account"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/alipay_account"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toLeftOf="@+id/arrow"
-            android:padding="12dp"
-            android:textColor="@color/gray"
-            android:textSize="15sp" />
-
-        <ImageView
-            android:id="@+id/arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/right_arrow_dark" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/alipay_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/line2"
+        android:padding="12dp"
+        android:textColor="@color/gray"
+        android:textSize="15sp" />
 
     <View
+        android:id="@+id/line3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/alipay_account_layout"
+        android:layout_below="@id/alipay_account"
         android:background="@color/line_color" />
 
     <Button
         android:id="@+id/apply_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/alipay_account_layout"
+        android:layout_below="@+id/line3"
         android:layout_margin="20dp"
         android:background="@drawable/button_bg"
         android:text="@string/apply_withdraw"

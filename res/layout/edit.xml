@@ -26,8 +26,6 @@
         android:inputType="text"
         android:padding="5dp"
         android:singleLine="true" >
-
-        <requestFocus />
     </EditText>
 
     <View
@@ -49,5 +47,17 @@
         android:text="@string/confirm"
         android:textColor="@color/white"
         android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/alipy_hint_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/save_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="@string/alipay_warn"
+        android:textColor="@color/gray"
+        android:visibility="gone" />
 
 </RelativeLayout>

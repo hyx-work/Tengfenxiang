@@ -3,6 +3,17 @@ package com.android.tengfenxiang.activity;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.RequestUtil;
@@ -12,21 +23,11 @@ import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
 import com.android.volley.AuthFailureError;
-import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class ApplyWithdrawActivity extends BaseActivity {
 
@@ -35,7 +36,6 @@ public class ApplyWithdrawActivity extends BaseActivity {
 	private EditText withdrawEditText;
 	private TextView alipayTextView;
 	private Button applybButton;
-	private RelativeLayout alipayLayout;
 
 	private LoadingDialog dialog;
 	private float withdrawPoints;
@@ -59,8 +59,14 @@ public class ApplyWithdrawActivity extends BaseActivity {
 	}
 
 	private void initView() {
+		String alipay = application.getCurrentUser().getAlipay();
 		alipayTextView = (TextView) findViewById(R.id.alipay_account);
-		alipayTextView.setText(application.getCurrentUser().getAlipay());
+		if (null == alipay || alipay.equals("")) {
+			alipayTextView.setText(R.string.not_setting);
+			showDialog();
+		} else {
+			alipayTextView.setText(alipay);
+		}
 
 		withdrawEditText = (EditText) findViewById(R.id.withdraw_points);
 		withdrawEditText.setText(withdrawPoints + "");
@@ -69,39 +75,30 @@ public class ApplyWithdrawActivity extends BaseActivity {
 		withdrawableTextView.setText(withdrawPoints
 				+ getString(R.string.unit_yuan));
 
-		alipayLayout = (RelativeLayout) findViewById(R.id.alipay_account_layout);
-		alipayLayout.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(ApplyWithdrawActivity.this,
-						EditActivity.class);
-				intent.putExtra("attributeName", "alipay");
-				intent.putExtra("attributeValue", application.getCurrentUser()
-						.getAlipay());
-				intent.putExtra("title", getString(R.string.alipay_account));
-				startActivity(intent);
-			}
-		});
-
 		applybButton = (Button) findViewById(R.id.apply_button);
 		applybButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				float tmp = Float.parseFloat(withdrawEditText.getText()
-						.toString());
-				if (tmp == 0) {
-					Toast.makeText(getApplication(), R.string.zero_warn,
-							Toast.LENGTH_SHORT).show();
-				} else if (tmp > withdrawPoints) {
-					Toast.makeText(getApplication(), R.string.overflow_warn,
-							Toast.LENGTH_SHORT).show();
+				String withdrawNum = withdrawEditText.getText().toString();
+				if (null == withdrawNum || withdrawNum.equals("")) {
+					Toast.makeText(getApplication(),
+							R.string.empty_withdraw_input, Toast.LENGTH_SHORT)
+							.show();
 				} else {
-					dialog.showDialog();
-					applyWithdraw(application.getCurrentUser().getId(), tmp);
+					float tmp = Float.parseFloat(withdrawNum);
+					if (tmp == 0) {
+						Toast.makeText(getApplication(), R.string.zero_warn,
+								Toast.LENGTH_SHORT).show();
+					} else if (tmp > withdrawPoints) {
+						Toast.makeText(getApplication(),
+								R.string.overflow_warn, Toast.LENGTH_SHORT)
+								.show();
+					} else {
+						dialog.showDialog();
+						applyWithdraw(application.getCurrentUser().getId(), tmp);
+					}
 				}
 			}
 		});
@@ -161,5 +158,35 @@ public class ApplyWithdrawActivity extends BaseActivity {
 			}
 		};
 		RequestUtil.getRequestQueue(getApplication()).add(stringRequest);
+	}
+
+	private void showDialog() {
+		Builder builder = new Builder(ApplyWithdrawActivity.this);
+		builder.setMessage(R.string.empty_alipy);
+		builder.setTitle(R.string.dialog_title);
+		builder.setPositiveButton(R.string.setting_now,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						Intent intent = new Intent(ApplyWithdrawActivity.this,
+								EditActivity.class);
+						intent.putExtra("attributeName", "alipay");
+						intent.putExtra("attributeValue", application
+								.getCurrentUser().getAlipay());
+						intent.putExtra("title",
+								getString(R.string.alipay_account));
+						startActivity(intent);
+					}
+				});
+		builder.setNegativeButton(R.string.cancel_withdraw,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						finish();
+					}
+				});
+		builder.create().show();
 	}
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.Setting;
 import com.android.tengfenxiang.view.textview.RiseNumberTextView;
+import com.umeng.update.UmengUpdateAgent;
 
 public class GoldCoinActivity extends BaseActivity {
 
@@ -37,8 +38,16 @@ public class GoldCoinActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.gold_coin);
+		// 设置为不提示
+		UmengUpdateAgent.setUpdateCheckConfig(false);
+		// 设置为全更新
+		UmengUpdateAgent.setDeltaUpdate(false);
+		// WIFI和数据全提醒
+		UmengUpdateAgent.setUpdateOnlyWifi(false);
+		// 检查更新
+		UmengUpdateAgent.update(this);
 
+		setContentView(R.layout.gold_coin);
 		setting = application.getSetting();
 		cash = application.getCurrentUser().getWithdrawableCash();
 		preferences = getSharedPreferences(getPackageName(),

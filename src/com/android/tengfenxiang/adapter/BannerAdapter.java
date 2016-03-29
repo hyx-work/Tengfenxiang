@@ -2,19 +2,19 @@ package com.android.tengfenxiang.adapter;
 
 import java.util.List;
 
-import com.android.tengfenxiang.R;
-import com.android.tengfenxiang.activity.X5WebActivity;
-import com.android.tengfenxiang.bean.Article;
-import com.android.tengfenxiang.bean.User;
-import com.android.tengfenxiang.view.viewpager.DynamicPagerAdapter;
-import com.bumptech.glide.Glide;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.activity.X5WebActivity;
+import com.android.tengfenxiang.bean.Article;
+import com.android.tengfenxiang.bean.User;
+import com.android.tengfenxiang.view.viewpager.DynamicPagerAdapter;
+import com.bumptech.glide.Glide;
 
 public class BannerAdapter extends DynamicPagerAdapter {
 
@@ -45,7 +45,8 @@ public class BannerAdapter extends DynamicPagerAdapter {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(context, X5WebActivity.class);
-				intent.putExtra("title", context.getString(R.string.share));
+				intent.putExtra("title",
+						context.getString(R.string.article_detail));
 				String url = banners.get(position).getShareUrl();
 				if (null != user.getToken() && !user.getToken().equals("")) {
 					url = url + "&token=" + user.getToken();

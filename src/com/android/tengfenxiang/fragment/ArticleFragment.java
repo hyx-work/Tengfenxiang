@@ -208,7 +208,8 @@ public class ArticleFragment extends LazyFragment {
 				// TODO Auto-generated method stub
 				User user = application.getCurrentUser();
 				Intent intent = new Intent(context, X5WebActivity.class);
-				intent.putExtra("title", context.getString(R.string.share));
+				intent.putExtra("title",
+						context.getString(R.string.article_detail));
 				String url = articles.get(arg2).getShareUrl();
 				if (null != user.getToken() && !user.getToken().equals("")) {
 					url = url + "&token=" + user.getToken();

@@ -27,12 +27,12 @@ import com.android.tengfenxiang.receiver.SaveShareRecordReceiver;
 import com.android.tengfenxiang.receiver.SaveShareRecordReceiver.OnSaveRecordsListener;
 import com.android.tengfenxiang.util.BitmapCompressUtil;
 import com.android.tengfenxiang.util.Constant;
+import com.android.tengfenxiang.util.FormatTools;
 import com.android.tengfenxiang.util.JsBridge;
 import com.android.tengfenxiang.util.JsBridge.JsBridgeListener;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.util.VolleyErrorUtil;
-import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.dialog.SharePopupWindow;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
 import com.android.tengfenxiang.view.titlebar.TitleBar.OnTitleClickListener;
@@ -62,7 +62,6 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 	private TitleBar titleBar;
 	private X5WebView webView;
 	private WebChromeClient webChromeClient;
-	private LoadingDialog dialog;
 	private RelativeLayout webviewLayout;
 
 	/**
@@ -145,7 +144,6 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 
 		setContentView(R.layout.vedio_web_activity);
 
-		dialog = new LoadingDialog(this);
 		wxApi = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID);
 		wxApi.registerApp(Constant.WX_APP_ID);
 
@@ -175,12 +173,6 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 				window = new SharePopupWindow(X5WebActivity.this, itemsOnClick);
 				window.showAtLocation(webView, Gravity.BOTTOM
 						| Gravity.CENTER_HORIZONTAL, 0, 0);
-
-				// 如果当前还没有加载缩略图，则需要加载新闻缩略图
-				if (null == imageBitmap) {
-					dialog.showDialog();
-					loadThumbnails(thumbnails);
-				}
 			}
 
 			@Override
@@ -225,23 +217,20 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 				public void onPageStarted(WebView view, String url,
 						Bitmap favicon) {
 					super.onPageStarted(view, url, favicon);
-					// dialog.showDialog();
 				}
 
 				@Override
 				public void onPageFinished(WebView view, String url) {
 					super.onPageFinished(view, url);
-					// if (dialog.isShowing()) {
-					// dialog.cancelDialog();
-					// }
+					// 如果当前还没有加载缩略图，则需要加载新闻缩略图
+					if (null == imageBitmap) {
+						loadThumbnails(thumbnails);
+					}
 				}
 
 				@Override
 				public void onReceivedError(WebView view, int errorCode,
 						String description, String failingUrl) {
-					// if (dialog.isShowing()) {
-					// dialog.cancelDialog();
-					// }
 					Toast.makeText(getApplication(),
 							R.string.fail_to_load_webpage, Toast.LENGTH_SHORT)
 							.show();
@@ -308,7 +297,6 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 		if (taskId == -1 && articleId == -1) {
 			return;
 		}
-		dialog.showDialog();
 		if (taskId == -1) {
 			saveArticleRetweet(application.getCurrentUser().getId(), articleId,
 					destination);
@@ -338,6 +326,9 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 		// 分享对话框显示的图片
 		if (null != imageBitmap) {
 			msg.thumbData = Util.bmpToByteArray(imageBitmap, false);
+		} else {
+			msg.thumbData = FormatTools.getInstance().Drawable2Bytes(
+					getResources().getDrawable(R.drawable.ic_launcher));
 		}
 
 		SendMessageToWX.Req req = new SendMessageToWX.Req();
@@ -366,9 +357,6 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
 				Object result = ResponseUtil.handleResponse(getApplication(),
 						response, null);
 				if (null != result) {
@@ -381,9 +369,6 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 		ErrorListener errorListener = new ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
 				VolleyErrorUtil.handleVolleyError(getApplication(), error);
 			}
 		};
@@ -419,9 +404,6 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
 				Object result = ResponseUtil.handleResponse(getApplication(),
 						response, null);
 				if (null != result) {
@@ -434,9 +416,6 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 		ErrorListener errorListener = new ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				if (dialog.isShowing()) {
-					dialog.cancelDialog();
-				}
 				VolleyErrorUtil.handleVolleyError(getApplication(), error);
 			}
 		};
@@ -470,9 +449,6 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 							// TODO Auto-generated method stub
 							imageBitmap = BitmapCompressUtil.compressImage(
 									arg0, 32);
-							if (dialog.isShowing()) {
-								dialog.dismiss();
-							}
 						}
 
 						@Override
@@ -483,9 +459,6 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 							Toast.makeText(getApplication(),
 									R.string.fail_to_load_webpage,
 									Toast.LENGTH_SHORT).show();
-							if (dialog.isShowing()) {
-								dialog.dismiss();
-							}
 						}
 					});
 		}
@@ -524,12 +497,14 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 	public void shareWechat() {
 		// TODO Auto-generated method stub
 		wechatShare(0);
+		destination = "wechat_friend";
 	}
 
 	@Override
 	public void shareWechatSession() {
 		// TODO Auto-generated method stub
 		wechatShare(1);
+		destination = "wechat_moment";
 	}
 
 	@Override
@@ -539,7 +514,7 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 		if (null != recommend) {
 			User user = application.getCurrentUser();
 			Intent intent = new Intent(X5WebActivity.this, X5WebActivity.class);
-			intent.putExtra("title", getString(R.string.share));
+			intent.putExtra("title", getString(R.string.article_detail));
 			String url = recommend.getUrl();
 			if (null != user.getToken() && !user.getToken().equals("")) {
 				url = url + "&token=" + user.getToken();
@@ -550,6 +525,7 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 			intent.putExtra("web_content", recommend.getIntro());
 			intent.putExtra("image", recommend.getThumbnails());
 			startActivity(intent);
+			finish();
 		}
 	}
 

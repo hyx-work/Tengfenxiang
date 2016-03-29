@@ -5,6 +5,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
+
 import com.alibaba.fastjson.JSON;
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.adapter.TaskListAdapter;
@@ -19,19 +28,10 @@ import com.android.tengfenxiang.util.VolleyErrorUtil;
 import com.android.tengfenxiang.view.dialog.LoadingDialog;
 import com.android.tengfenxiang.view.xlistview.XListView;
 import com.android.tengfenxiang.view.xlistview.XListView.IXListViewListener;
-import com.android.volley.VolleyError;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
 
 public class TaskActivity extends BaseActivity implements IXListViewListener {
 
@@ -125,7 +125,7 @@ public class TaskActivity extends BaseActivity implements IXListViewListener {
 				if (arg2 >= 1 && arg2 <= tasks.size()) {
 					Intent intent = new Intent(TaskActivity.this,
 							X5WebActivity.class);
-					intent.putExtra("title", getString(R.string.share));
+					intent.putExtra("title", getString(R.string.task_detail));
 					String url = tasks.get(arg2 - 1).getShareUrl();
 					if (null != currentUser.getToken()
 							&& !currentUser.getToken().equals("")) {

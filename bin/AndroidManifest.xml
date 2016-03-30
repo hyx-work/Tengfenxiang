@@ -45,9 +45,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- LoginActivity修改为singleTask启动模式 -->
         <activity
             android:name="com.android.tengfenxiang.activity.LoginActivity"
-            android:label="@string/login" >
+            android:label="@string/login"
+            android:launchMode="singleTask" >
         </activity>
         <activity
             android:name="com.android.tengfenxiang.activity.MainActivity"

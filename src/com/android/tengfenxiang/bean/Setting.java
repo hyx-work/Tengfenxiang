@@ -4,17 +4,19 @@ import java.util.List;
 
 public class Setting {
 
-	private aboutInfo aboutViewSettings;
+	private AboutInfo aboutViewSettings;
 
 	private double pointsToCashRate;
 
 	private List<ArticleType> articleTypes;
 
-	public aboutInfo getAboutViewSettings() {
+	private SnsConfig snsConfig;
+
+	public AboutInfo getAboutViewSettings() {
 		return aboutViewSettings;
 	}
 
-	public void setAboutViewSettings(aboutInfo aboutViewSettings) {
+	public void setAboutViewSettings(AboutInfo aboutViewSettings) {
 		this.aboutViewSettings = aboutViewSettings;
 	}
 
@@ -32,6 +34,14 @@ public class Setting {
 
 	public void setArticleTypes(List<ArticleType> articleTypes) {
 		this.articleTypes = articleTypes;
+	}
+
+	public SnsConfig getSnsConfig() {
+		return snsConfig;
+	}
+
+	public void setSnsConfig(SnsConfig snsConfig) {
+		this.snsConfig = snsConfig;
 	}
 
 }

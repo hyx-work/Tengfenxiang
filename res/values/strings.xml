@@ -196,5 +196,7 @@
     <string name="empty_alipy">您还没有设置过支付宝账号</string>
     <string name="cancel_withdraw">取消提现</string>
     <string name="setting_now">马上设置</string>
+    <string name="setting_network">设置网络</string>
+    <string name="network_error_dialog_message">无网络连接，请检查网络设置</string>
 
 </resources>

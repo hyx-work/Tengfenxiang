@@ -205,6 +205,12 @@ public class LoginUtil {
 					Editor editor = preferences.edit();
 					editor.putFloat("pointsToCashRate",
 							(float) setting.getPointsToCashRate());
+					// 缓存社交平台的key
+					editor.putString("wechatKey", setting.getSnsConfig()
+							.getWechatKey());
+					editor.putString("qqKey", setting.getSnsConfig().getQqKey());
+					editor.putString("weiboKey", setting.getSnsConfig()
+							.getWeiboKey());
 					editor.commit();
 					((MainApplication) context).setSetting(setting);
 

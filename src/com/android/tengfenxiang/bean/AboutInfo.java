@@ -2,7 +2,7 @@ package com.android.tengfenxiang.bean;
 
 import java.util.List;
 
-public class aboutInfo {
+public class AboutInfo {
 
 	private List<String> QQGroups;
 

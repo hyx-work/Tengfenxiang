@@ -3,13 +3,18 @@ package com.android.tengfenxiang.activity;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -22,6 +27,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.Recommend;
+import com.android.tengfenxiang.bean.Setting;
 import com.android.tengfenxiang.bean.User;
 import com.android.tengfenxiang.receiver.SaveShareRecordReceiver;
 import com.android.tengfenxiang.receiver.SaveShareRecordReceiver.OnSaveRecordsListener;
@@ -30,6 +36,7 @@ import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.FormatTools;
 import com.android.tengfenxiang.util.JsBridge;
 import com.android.tengfenxiang.util.JsBridge.JsBridgeListener;
+import com.android.tengfenxiang.util.NetworkUtil;
 import com.android.tengfenxiang.util.RequestUtil;
 import com.android.tengfenxiang.util.ResponseUtil;
 import com.android.tengfenxiang.util.VolleyErrorUtil;
@@ -63,6 +70,10 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 	private X5WebView webView;
 	private WebChromeClient webChromeClient;
 	private RelativeLayout webviewLayout;
+
+	private Setting setting;
+	private SharedPreferences preferences;
+	private String appId;
 
 	/**
 	 * activity显示的标题
@@ -144,8 +155,17 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 
 		setContentView(R.layout.vedio_web_activity);
 
-		wxApi = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID);
-		wxApi.registerApp(Constant.WX_APP_ID);
+		preferences = getSharedPreferences(getPackageName(),
+				Context.MODE_PRIVATE);
+		setting = application.getSetting();
+		if (setting != null && setting.getSnsConfig() != null) {
+			appId = application.getSetting().getSnsConfig().getWechatKey();
+		} else {
+			appId = preferences.getString("wechatKey",
+					Constant.DEFAULT_WX_APP_ID);
+		}
+		wxApi = WXAPIFactory.createWXAPI(this, appId);
+		wxApi.registerApp(appId);
 
 		Intent intent = getIntent();
 		title = intent.getStringExtra("title");
@@ -170,9 +190,14 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 
 			@Override
 			public void OnClickRight() {
-				window = new SharePopupWindow(X5WebActivity.this, itemsOnClick);
-				window.showAtLocation(webView, Gravity.BOTTOM
-						| Gravity.CENTER_HORIZONTAL, 0, 0);
+				if (NetworkUtil.isNetworkAvailable(getApplicationContext())) {
+					window = new SharePopupWindow(X5WebActivity.this,
+							itemsOnClick);
+					window.showAtLocation(webView, Gravity.BOTTOM
+							| Gravity.CENTER_HORIZONTAL, 0, 0);
+				} else {
+					showNetworkDialog();
+				}
 			}
 
 			@Override
@@ -546,4 +571,27 @@ public class X5WebActivity extends BaseActivity implements JsBridgeListener {
 		}
 	}
 
+	private void showNetworkDialog() {
+		Builder builder = new Builder(this);
+		builder.setMessage(R.string.network_error_dialog_message);
+		builder.setTitle(R.string.dialog_title);
+		builder.setPositiveButton(R.string.setting_network,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						Intent intent = new Intent(
+								Settings.ACTION_DATA_ROAMING_SETTINGS);
+						startActivity(intent);
+					}
+				});
+		builder.setNegativeButton(R.string.cancel,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		builder.create().show();
+	}
 }

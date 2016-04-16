@@ -1,5 +1,7 @@
 package com.android.tengfenxiang.wxapi;
 
+import com.android.tengfenxiang.activity.BaseActivity;
+import com.android.tengfenxiang.bean.Setting;
 import com.android.tengfenxiang.util.Constant;
 import com.tencent.mm.sdk.openapi.BaseReq;
 import com.tencent.mm.sdk.openapi.BaseResp;
@@ -7,8 +9,9 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 
@@ -18,14 +21,26 @@ import android.support.v4.content.LocalBroadcastManager;
  * @author ccz
  * 
  */
-public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
+public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 
 	private IWXAPI api;
 	private LocalBroadcastManager localBroadcastManager;
+	private Setting setting;
+	private SharedPreferences preferences;
+	private String appId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		api = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID, false);
+		preferences = getSharedPreferences(getPackageName(),
+				Context.MODE_PRIVATE);
+		setting = application.getSetting();
+		if (setting != null && setting.getSnsConfig() != null) {
+			appId = application.getSetting().getSnsConfig().getWechatKey();
+		} else {
+			appId = preferences.getString("wechatKey",
+					Constant.DEFAULT_WX_APP_ID);
+		}
+		api = WXAPIFactory.createWXAPI(this, appId, false);
 		api.handleIntent(getIntent(), this);
 		super.onCreate(savedInstanceState);
 	}

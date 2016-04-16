@@ -20,9 +20,9 @@ public class Constant {
 	public final static String SERVER_ADDRESS = "http://112.124.29.147:8080/TengShare_AppInterface";
 
 	/**
-	 * 微信的APP_ID
+	 * 微信默认的APP_ID
 	 */
-	public final static String WX_APP_ID = "wxe3da6f4746e58d27";
+	public final static String DEFAULT_WX_APP_ID = "wx1e48a171d3827d62";
 
 	/**
 	 * 登陆的URL

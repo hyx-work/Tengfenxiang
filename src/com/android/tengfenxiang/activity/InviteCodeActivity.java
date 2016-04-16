@@ -1,9 +1,11 @@
 package com.android.tengfenxiang.activity;
 
 import com.android.tengfenxiang.R;
+import com.android.tengfenxiang.bean.Setting;
 import com.android.tengfenxiang.util.BitmapCompressUtil;
 import com.android.tengfenxiang.util.Constant;
 import com.android.tengfenxiang.util.DensityUtil;
+import com.android.tengfenxiang.util.NetworkUtil;
 import com.android.tengfenxiang.util.QRCodeUtil;
 import com.android.tengfenxiang.view.dialog.SharePopupWindow;
 import com.android.tengfenxiang.view.titlebar.TitleBar;
@@ -15,12 +17,17 @@ import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXWebpageObject;
 import com.tencent.mm.sdk.platformtools.Util;
 
+import android.app.AlertDialog.Builder;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,6 +53,9 @@ public class InviteCodeActivity extends BaseActivity {
 	private SharePopupWindow window;
 
 	private IWXAPI wxApi;
+	private Setting setting;
+	private SharedPreferences preferences;
+	private String appId;
 
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -73,8 +83,17 @@ public class InviteCodeActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.invite_code);
 
-		wxApi = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID);
-		wxApi.registerApp(Constant.WX_APP_ID);
+		preferences = getSharedPreferences(getPackageName(),
+				Context.MODE_PRIVATE);
+		setting = application.getSetting();
+		if (setting != null && setting.getSnsConfig() != null) {
+			appId = application.getSetting().getSnsConfig().getWechatKey();
+		} else {
+			appId = preferences.getString("wechatKey",
+					Constant.DEFAULT_WX_APP_ID);
+		}
+		wxApi = WXAPIFactory.createWXAPI(this, appId);
+		wxApi.registerApp(appId);
 	}
 
 	@Override
@@ -127,11 +146,15 @@ public class InviteCodeActivity extends BaseActivity {
 
 			@Override
 			public void OnClickRight() {
-				window = new SharePopupWindow(InviteCodeActivity.this,
-						itemsOnClick);
-				window.setTitle(getString(R.string.invite_user));
-				window.showAtLocation(findViewById(R.id.invite_code_text),
-						Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+				if (NetworkUtil.isNetworkAvailable(getApplicationContext())) {
+					window = new SharePopupWindow(InviteCodeActivity.this,
+							itemsOnClick);
+					window.setTitle(getString(R.string.invite_user));
+					window.showAtLocation(findViewById(R.id.invite_code_text),
+							Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+				} else {
+					showNetworkDialog();
+				}
 			}
 
 			@Override
@@ -194,4 +217,27 @@ public class InviteCodeActivity extends BaseActivity {
 		wxApi.sendReq(req);
 	}
 
+	private void showNetworkDialog() {
+		Builder builder = new Builder(this);
+		builder.setMessage(R.string.network_error_dialog_message);
+		builder.setTitle(R.string.dialog_title);
+		builder.setPositiveButton(R.string.setting_network,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						Intent intent = new Intent(
+								Settings.ACTION_DATA_ROAMING_SETTINGS);
+						startActivity(intent);
+					}
+				});
+		builder.setNegativeButton(R.string.cancel,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		builder.create().show();
+	}
 }

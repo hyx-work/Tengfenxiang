@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.android.tengfenxiang.R;
 import com.android.tengfenxiang.bean.Setting;
 import com.android.tengfenxiang.view.textview.RiseNumberTextView;
-import com.umeng.update.UmengUpdateAgent;
+import com.tencent.bugly.beta.Beta;
 
 public class GoldCoinActivity extends BaseActivity {
 
@@ -38,15 +38,6 @@ public class GoldCoinActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		// 设置为不提示
-		UmengUpdateAgent.setUpdateCheckConfig(false);
-		// 设置为全更新
-		UmengUpdateAgent.setDeltaUpdate(false);
-		// WIFI和数据全提醒
-		UmengUpdateAgent.setUpdateOnlyWifi(false);
-		// 检查更新
-		UmengUpdateAgent.update(this);
-
 		setContentView(R.layout.gold_coin);
 		setting = application.getSetting();
 		cash = application.getCurrentUser().getWithdrawableCash();
@@ -121,6 +112,9 @@ public class GoldCoinActivity extends BaseActivity {
 			}
 		});
 		coinView.loadUrl("file:///android_asset/gold_coin.html");
+
+		// 检查版本更新
+		Beta.checkUpgrade(false, false);
 	}
 
 	@Override

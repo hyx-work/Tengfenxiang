@@ -25,6 +25,11 @@ public class Constant {
 	public final static String DEFAULT_WX_APP_ID = "wx1e48a171d3827d62";
 
 	/**
+	 * Bugly的APP_ID
+	 */
+	public final static String BUGLY_APP_ID = "900028871";
+
+	/**
 	 * 登陆的URL
 	 */
 	public final static String LOGIN_URL = SERVER_ADDRESS + "/user/login/";

@@ -11,7 +11,7 @@
 	<classpathentry kind="lib" path="libs/glide-3.7.0.jar"/>
 	<classpathentry kind="lib" path="libs/nineoldandroids-2.4.0.jar"/>
 	<classpathentry kind="lib" path="libs/tbs_sdk_v1.5.1.1052_25436_obfs_20160317_144408.jar"/>
-	<classpathentry kind="lib" path="libs/umeng-update-v2.7.0.jar"/>
+	<classpathentry kind="lib" path="libs/bugly_crash_upgrade_1.0.1.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>

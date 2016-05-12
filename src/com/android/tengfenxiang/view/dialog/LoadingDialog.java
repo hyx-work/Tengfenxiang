@@ -33,7 +33,12 @@ public class LoadingDialog extends Dialog {
 		Animation animation = AnimationUtils.loadAnimation(context,
 				R.anim.dialog_load_animation);
 		ivProgress.startAnimation(animation);
-		show();
+		// 显示对话框时捕获异常，防止程序崩溃
+		try {
+			show();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	public void cancelDialog() {

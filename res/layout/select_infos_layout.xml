@@ -11,7 +11,7 @@
         android:background="@color/title_bar_color"
         android:gravity="center_vertical"
         titlebar:title="@string/select_address_title"
-        titlebar:titleLeftImg="@drawable/left_arrow"
+        titlebar:titleLeftImg="@drawable/back_button"
         titlebar:titleTextColor="@color/white" />
 
     <ListView

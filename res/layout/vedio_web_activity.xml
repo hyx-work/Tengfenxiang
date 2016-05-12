@@ -11,8 +11,8 @@
         android:layout_alignParentTop="true"
         android:background="@color/title_bar_color"
         android:gravity="center_vertical"
-        titlebar:titleLeftImg="@drawable/left_arrow"
-        titlebar:titleRightImg="@drawable/share_btn"
+        titlebar:titleLeftImg="@drawable/back_button"
+        titlebar:titleRightImg="@drawable/share_button"
         titlebar:titleTextColor="@color/white" />
 
     <FrameLayout

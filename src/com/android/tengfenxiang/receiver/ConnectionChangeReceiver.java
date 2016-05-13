@@ -25,14 +25,19 @@ public class ConnectionChangeReceiver extends BroadcastReceiver {
 		NetworkInfo wifiNetInfo = connectivityManager
 				.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-		if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
-			if (null != onNetworkChangedListener) {
-				onNetworkChangedListener.onUnusable();
+		// try捕获错误
+		try {
+			if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
+				if (null != onNetworkChangedListener) {
+					onNetworkChangedListener.onUnusable();
+				}
+			} else {
+				if (null != onNetworkChangedListener) {
+					onNetworkChangedListener.onUsable();
+				}
 			}
-		} else {
-			if (null != onNetworkChangedListener) {
-				onNetworkChangedListener.onUsable();
-			}
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 

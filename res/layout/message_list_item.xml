@@ -66,6 +66,6 @@
         android:layout_centerVertical="true"
         android:contentDescription="@string/app_name"
         android:padding="10dp"
-        android:src="@drawable/right_arrow_dark" />
+        android:src="@drawable/ic_right_arrow" />
 
 </RelativeLayout>

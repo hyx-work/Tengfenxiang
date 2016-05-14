@@ -70,7 +70,9 @@
         android:layout_below="@+id/password"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
+        android:button="@drawable/checkbox_bg"
         android:checked="true"
+        android:paddingLeft="5dp"
         android:text="@string/save_password"
         android:textSize="15sp" />
 

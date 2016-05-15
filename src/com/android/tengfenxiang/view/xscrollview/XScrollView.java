@@ -292,7 +292,6 @@ public class XScrollView extends ScrollView implements OnScrollListener,
 	private void updateFooterHeight(float delta) {
 		int height = mFooterView.getBottomMargin();
 		mFooterView.setBottomMargin(height);
-
 	}
 
 	private void resetFooterHeight() {
@@ -328,13 +327,15 @@ public class XScrollView extends ScrollView implements OnScrollListener,
 
 		case MotionEvent.ACTION_MOVE:
 			final float deltaY = ev.getRawY() - mLastY;
-			mLastY = ev.getRawY();
 
-			if (isTop() && (mHeader.getVisiableHeight() >= 0 || deltaY > 0)) {
+			if (mEnablePullRefresh && isTop()
+					&& (mHeader.getVisiableHeight() >= 0 || deltaY > 0)) {
+				mLastY = ev.getRawY();
 				updateHeaderHeight(deltaY / OFFSET_RADIO);
 				invokeOnScrolling();
 			} else if (isBottom()
 					&& (mFooterView.getBottomMargin() > 0 || deltaY < 0)) {
+				mLastY = ev.getRawY();
 				updateFooterHeight(-deltaY / OFFSET_RADIO);
 			}
 			break;

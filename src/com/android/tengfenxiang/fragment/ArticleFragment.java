@@ -15,7 +15,9 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -237,6 +239,23 @@ public class ArticleFragment extends LazyFragment {
 		// banner真正的adapter
 		bannerAdapter = new BannerAdapter(context, banners,
 				application.getCurrentUser());
+		// 解决banner和下拉刷新的冲突
+		bannerPager.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				// TODO Auto-generated method stub
+				switch (arg1.getAction()) {
+				case MotionEvent.ACTION_MOVE:
+					scrollView.setPullRefreshEnable(false);
+					break;
+				case MotionEvent.ACTION_UP:
+				case MotionEvent.ACTION_CANCEL:
+					scrollView.setPullRefreshEnable(true);
+					break;
+				}
+				return false;
+			}
+		});
 
 		// 初始化ScrollView
 		scrollView = (XScrollView) view.findViewById(R.id.scroll_view);

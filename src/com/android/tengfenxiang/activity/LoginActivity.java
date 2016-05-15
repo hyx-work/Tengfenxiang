@@ -86,6 +86,8 @@ public class LoginActivity extends BaseActivity {
 		editor.putBoolean("remember", saveCheckBox.isChecked());
 		if (saveCheckBox.isChecked()) {
 			editor.putString("password", password);
+		} else {
+			editor.putString("password", "");
 		}
 		editor.commit();
 	}
